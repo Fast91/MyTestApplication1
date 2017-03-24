@@ -17,7 +17,7 @@
         >
 
         <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
-            android:id="@+id/b1" android:text="@string/b1_string" />
+            android:id="@+id/b1" android:text="@string/b1_string" style="@style/AppTheme" />
 
         <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
             android:id="@+id/b2" android:text="@string/b2_string"/>
