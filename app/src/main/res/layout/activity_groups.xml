@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.MainActivity"
+    tools:context="com.example.faust.mytestapplication1.GroupsActivity"
     android:id="@+id/linearLayout0"
     android:padding="2dp"
     android:background="@android:color/white"
@@ -13,7 +13,7 @@
     android:weightSum="1">
 
 
-        <include layout="@layout/top" />
+    <include layout="@layout/top" />
 
 
 
@@ -25,6 +25,18 @@
         android:layout_weight="1"
         android:orientation="vertical"
         >
+
+
+        <Button
+            android:id="@+id/b5"
+            style="@style/textButton"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_span="6"
+
+            android:background="@drawable/buttonshape"
+            android:text="@string/b5_string"
+            />
 
 
         <ScrollView
@@ -45,3 +57,4 @@
 
 
 </LinearLayout>
+
