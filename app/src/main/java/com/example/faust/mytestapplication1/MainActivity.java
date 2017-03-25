@@ -5,54 +5,70 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
-    private int count_b=-1;
+    private int count_b=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            final Button b1 = (Button) findViewById(R.id.b1);
-            final Button b2 = (Button) findViewById(R.id.b2);
-            final Button b3 = (Button) findViewById(R.id.b3);
-
-      //      count_b = savedInstanceState.getInt("COUNT_B");
-
-            if(count_b==1) {
-                b1.setPressed(true);
-            }
-            else if (count_b==2){
-                b2.setPressed(true);
-            }
-            else{
-                b3.setPressed(true);
-            }
-
-
+       if (savedInstanceState != null) {
+                updateFragAndButton();
         }
+
 
 
         final Button b1 = (Button) findViewById(R.id.b1);
         final Button b2 = (Button) findViewById(R.id.b2);
         final Button b3 = (Button) findViewById(R.id.b3);
 
+        if (savedInstanceState == null) {
+            //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
+
+            b1.setPressed(true);
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentById(R.id.fragment1);
+            if (fragment == null) {
+                fragment = new GlobalListFragment();
+                ;
+                fm.beginTransaction()
+                        .add(R.id.fragment1, fragment)
+                        .commit();
+            }
+        }
+
 
         b1.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                b1.setPressed(true);
+
                 b2.setPressed(false);
                 b3.setPressed(false);
+
+                b1.setPressed(true);
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                if(count_b==1){
+                     ft.replace(R.id.fragment1, new GlobalListFragment());}
+                if(count_b==2){
+                    ft.replace(R.id.fragment2_groups, new GlobalListFragment());}
+                if(count_b==3){
+                    ft.replace(R.id.fragment3_activity, new GlobalListFragment());}
+
+                ft.commit();
+
                 count_b=1;
                 return true;
             }
@@ -66,20 +82,19 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(false);
                 b3.setPressed(false);
                 b2.setPressed(true);
-                count_b = 2;
-                /*
-                Intent i = new Intent(MainActivity.this,GroupsActivity.class);
-                startActivity(i);
-                return true;
-                */
-                /*
-                View MainView = findViewById(R.id.linearLayoutMain);
-                ViewGroup parent = (ViewGroup) MainView.getParent();
-                int index = parent.indexOfChild(MainView);
-                parent.removeView(MainView);
-                parent.addView(findViewById(R.id.linearLayoutGroups),index);
-                */
 
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                if(count_b==1){
+                    ft.replace(R.id.fragment1, new GroupsListFragment());}
+                if(count_b==2){
+                    ft.replace(R.id.fragment2_groups, new GroupsListFragment());}
+                if(count_b==3){
+                    ft.replace(R.id.fragment3_activity, new GroupsListFragment());}
+
+                ft.commit();
+
+                count_b=2;
                 return true;
             }
         });
@@ -91,8 +106,20 @@ public class MainActivity extends AppCompatActivity {
                 b3.setPressed(true);
                 b1.setPressed(false);
                 b2.setPressed(false);
+
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                if(count_b==1){
+                    ft.replace(R.id.fragment1, new ActivityListFragment());}
+                if(count_b==2){
+                    ft.replace(R.id.fragment2_groups, new ActivityListFragment());}
+                if(count_b==3){
+                    ft.replace(R.id.fragment3_activity, new ActivityListFragment());}
+
+                ft.commit();
+
                 count_b=3;
-                return true;
+                 return true;
             }
         });
 
@@ -115,21 +142,7 @@ public class MainActivity extends AppCompatActivity {
           protected void onRestart(){
               super.onRestart();
 
-              final Button b1 = (Button) findViewById(R.id.b1);
-              final Button b2 = (Button) findViewById(R.id.b2);
-              final Button b3 = (Button) findViewById(R.id.b3);
-
-              //      count_b = savedInstanceState.getInt("COUNT_B");
-
-              if(count_b==1) {
-                  b1.setPressed(true);
-              }
-              else if (count_b==2){
-                  b2.setPressed(true);
-              }
-              else{
-                  b3.setPressed(true);
-              }
+             updateFragAndButton();
 
           }
 
@@ -148,5 +161,45 @@ public class MainActivity extends AppCompatActivity {
          protected void onStop() {
                 super.onStop();
              }
+
+
+        private void updateFragAndButton(){
+            final Button b1 = (Button) findViewById(R.id.b1);
+            final Button b2 = (Button) findViewById(R.id.b2);
+            final Button b3 = (Button) findViewById(R.id.b3);
+
+            //      count_b = savedInstanceState.getInt("COUNT_B");
+
+            if(count_b==1) {
+                b1.setPressed(true);
+                b2.setPressed(false);
+                b3.setPressed(false);
+                count_b=1;
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment1));
+                ft.commit();
+            }
+            else if (count_b==2){
+                b1.setPressed(false);
+                b3.setPressed(false);
+                b2.setPressed(true);
+                count_b = 2;
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment2_groups, fm.findFragmentById(R.id.fragment2_groups));
+                ft.commit();
+            }
+            else{
+                b3.setPressed(true);
+                b1.setPressed(false);
+                b2.setPressed(false);
+                count_b=3;
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragment3_activity, fm.findFragmentById(R.id.fragment3_activity));
+                ft.commit();
+            }
+        }
 }
 

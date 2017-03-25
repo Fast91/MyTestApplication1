@@ -16,9 +16,6 @@
         <include layout="@layout/top" />
 
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,16 +24,31 @@
         android:id="@+id/linearLayoutMain"
         >
 
-
-        <ScrollView
-            android:id="@+id/scrollViewGroups"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_span="2"
-            android:padding="3dp">
+            android:id="@+id/fragment1"
+            android:name="com.example.faust.mytestapplication1.GlobalListFragment">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment2_groups"
+            android:name="com.example.faust.mytestapplication1.GroupsListFragment">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment3_activity"
+            android:name="com.example.faust.mytestapplication1.ActivityListFragment">
+
+        </FrameLayout>
 
 
-        </ScrollView>
 
 
     </LinearLayout>

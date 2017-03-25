@@ -1,11 +1,17 @@
 package com.example.faust.mytestapplication1;
 
+/**
+ * Created by robertospaziani on 25/03/17.
+ */
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
 
 //import com.example.faust.mytestapplication1.GlobalListFragment.OnListFragmentInteractionListener;
 
@@ -13,32 +19,32 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRecyclerViewAdapter.UserHolder> {
+public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRecyclerViewAdapter.GroupHolder> {
 
-    private final List<User> items;
-   // private final OnListFragmentInteractionListener mListener;
+    private final List<MyGroup> items;
+    // private final OnListFragmentInteractionListener mListener;
 
 
 
-    //public MyGlobalRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-         public MyGlobalRecyclerViewAdapter(List<User> items) {
+    //public MyGroupsRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
+    public MyGroupsRecyclerViewAdapter(List<MyGroup> items) {
         this.items = items;
-       // mListener = listener;
+        // mListener = listener;
     }
 
 
     @Override
-    public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GroupHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_global, parent, false);
-        return new UserHolder(view);
+                .inflate(R.layout.fragment_groups, parent, false);
+        return new GroupHolder(view);
     }
 
 
 
     @Override
-    public void onBindViewHolder(final UserHolder holder, int position) {
-        User u = items.get(position);
+    public void onBindViewHolder(final GroupHolder holder, int position) {
+        MyGroup u = items.get(position);
         holder.bindData(u);
 
        /*  holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -60,22 +66,22 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
 
 
 
-    public class UserHolder extends RecyclerView.ViewHolder {
-        private User user;
+    public class GroupHolder extends RecyclerView.ViewHolder {
+        private MyGroup group;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
 
-        public UserHolder(View view) {
+        public GroupHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.image_user_global);
-            nameView = (TextView) view.findViewById(R.id.name_user_global);
-            balanceView = (TextView) view.findViewById(R.id.money_user_global);
+            imageView = (ImageView) view.findViewById(R.id.image_groups_group);
+            nameView = (TextView) view.findViewById(R.id.name_groups_group);
+            balanceView = (TextView) view.findViewById(R.id.money_groups_group);
 
         }
 
-        public void bindData(User u){
-            user=u;
+        public void bindData(MyGroup u){
+            group=u;
             imageView.setImageResource(u.getImageId());
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getBalance()));
@@ -87,3 +93,4 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
 
 
 }
+

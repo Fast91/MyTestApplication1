@@ -15,47 +15,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GlobalListFragment extends Fragment {
+public class GroupsListFragment extends Fragment {
 
 
-    private MyGlobalRecyclerViewAdapter adapter;
-
-    private int mColumnCount=1;
+    private MyGroupsRecyclerViewAdapter adapter;
+    private int mColumnCount = 1;
     //private OnListFragmentInteractionListener mListener;
 
-    private String[] names= {"Roberto", "Pasquale"};
-    private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle};
-    private double[] balances = {100.00,-25.00};
-    private ArrayList<User> users;
+    private String[] names = {"G1", "G2"};
+    private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
+    private double[] balances = {100.00, -25.00};
+    private ArrayList<MyGroup> groups;
 
 
-    public GlobalListFragment() {
+    public GroupsListFragment() {
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-          users=new ArrayList<>();
+        groups = new ArrayList<>();
 
-        for(int i=0;i<names.length;i++){
-            User u=new User(names[i],images[i],balances[i]);
-            users.add(u);
+        for (int i = 0; i < names.length; i++) {
+            MyGroup u = new MyGroup(names[i], images[i], balances[i]);
+            groups.add(u);
         }
-
 
 
     }
 
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_global_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -69,15 +65,15 @@ public class GlobalListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            adapter = new MyGlobalRecyclerViewAdapter(users);
+            adapter = new MyGroupsRecyclerViewAdapter(groups);
             recyclerView.setAdapter(adapter);
         }
         else{
 
-            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.global_list);
-         //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
+            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.groups_list);
+            //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
             recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyGlobalRecyclerViewAdapter(users);
+            adapter = new MyGroupsRecyclerViewAdapter(groups);
             recyclerView2.setAdapter(adapter);
 
         }
@@ -139,4 +135,7 @@ public class GlobalListFragment extends Fragment {
         void onListFragmentInteraction(User item);
     }
     */
+
+
+
 }
