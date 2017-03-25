@@ -19,19 +19,19 @@
         >
 
         <Button
+            android:id="@+id/b1"
+            style="@style/AppTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_span="2"
-            android:id="@+id/b1"
-            android:text="@string/b1_string"
-            style="@style/AppTheme" />
+            android:text="@string/b1_string" />
 
         <Button
+            android:id="@+id/b2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_span="2"
-            android:id="@+id/b2"
-            android:text="@string/b2_string"/>
+            android:text="@string/b2_string" />
 
         <Button
             android:layout_width="match_parent"
@@ -70,6 +70,8 @@
 
     </TableRow>
 
+    <!--ciao -->
+
     <TableRow
         android:id="@+id/tableRow2"
         android:layout_height="wrap_content"
@@ -89,10 +91,9 @@
 
     <TableRow
         android:id="@+id/tableRow3"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        >
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
 
         <ScrollView
@@ -103,7 +104,6 @@
 
 
         </ScrollView>
-
 
 
     </TableRow>
