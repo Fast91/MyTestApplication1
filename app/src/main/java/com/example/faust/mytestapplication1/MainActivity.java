@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -65,9 +66,20 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(false);
                 b3.setPressed(false);
                 b2.setPressed(true);
-                count_b=2;
+                count_b = 2;
+                /*
                 Intent i = new Intent(MainActivity.this,GroupsActivity.class);
                 startActivity(i);
+                return true;
+                */
+                /*
+                View MainView = findViewById(R.id.linearLayoutMain);
+                ViewGroup parent = (ViewGroup) MainView.getParent();
+                int index = parent.indexOfChild(MainView);
+                parent.removeView(MainView);
+                parent.addView(findViewById(R.id.linearLayoutGroups),index);
+                */
+
                 return true;
             }
         });

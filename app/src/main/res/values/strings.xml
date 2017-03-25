@@ -14,4 +14,6 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s crimes</string>
     <string name="title_activity_groups">GroupsActivity</string>
+    <string name="total_user_global_string">100€</string>
+    <string name="name_user_global_string">Francesco</string>
 </resources>
