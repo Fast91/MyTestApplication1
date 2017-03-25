@@ -31,7 +31,7 @@
                  android:id="@+id/b5"
                  style="@style/textButton"
                  android:layout_width="match_parent"
-                 android:layout_height="50sp"
+                 android:layout_height="35sp"
                  android:layout_span="6"
 
                  android:background="@drawable/buttonshape"
@@ -39,24 +39,21 @@
                 />
 
 
-          <ScrollView
-                 android:id="@+id/scrollViewGroups"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_span="2"
-                 android:padding="3dp">
+        <ScrollView
+            android:id="@+id/scrollViewGroups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_span="2"
+            android:padding="3dp">
 
 
-             </ScrollView>
+        </ScrollView>
 
 
     </LinearLayout>
 
 
-
-
-        <include layout="@layout/down" />
-
+    <include layout="@layout/down" />
 
 
 </LinearLayout>
