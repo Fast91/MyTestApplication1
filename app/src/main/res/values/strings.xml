@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Breaking-MAD!</string>
+    <string name="app_name">Breaking MAD</string>
     <string name="intro_string">INTRO STRING</string>
     <string name="b1_string">Global</string>
     <string name="b2_string">Groups</string>
@@ -8,7 +8,7 @@
     <string name="b4_string">Add expense</string>
     <string name="b5_string">Add new Group</string>
     <string name="b6_string">Mobile fantastica</string>
-    <string name="breaking_mad">Breaking MAD</string>
+    <!--string name="breaking_mad">Breaking MAD</string-->
     <string name="account_menu_item_string">Account</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
