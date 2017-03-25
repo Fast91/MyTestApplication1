@@ -16,7 +16,8 @@
 
         <item name="android:textStyle">normal</item>
 
-        <item name="android:fontFamily"></item>
+        <item name="android:fontFamily">normal</item>
+        <item name="android:textAllCaps">false</item>
 
    </style>
 
