@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.faust.mytestapplication1.MainActivity"
     android:id="@+id/tableLayout0"
-    android:padding="5dp"
+    android:padding="2dp"
     android:stretchColumns="*"
     android:background="@android:color/white">
 
@@ -20,25 +20,32 @@
 
         <Button
             android:id="@+id/b1"
-            style="@style/AppTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_span="2"
-            android:text="@string/b1_string" />
+            android:text="@string/b1_string"
+            style="@style/textButton"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"
+          />
 
         <Button
             android:id="@+id/b2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_span="2"
-            android:text="@string/b2_string" />
+            android:text="@string/b2_string"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"
+            />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_span="2"
             android:id="@+id/b3"
-            android:text="@string/b3_string"/>
+            android:text="@string/b3_string"
+            android:background="@drawable/buttonshape"/>
 
     </TableRow>
 
@@ -83,7 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_span="6"
             android:id="@+id/b5"
-            android:text="@string/b5_string"/>
+            android:text="@string/b5_string"
+            android:background="@drawable/buttonshape"/>
 
 
     </TableRow>
@@ -120,7 +128,9 @@
             android:layout_height="wrap_content"
             android:layout_span="6"
             android:id="@+id/b4"
-            android:text="@string/b4_string"/>
+            android:text="@string/b4_string"
+            android:background="@drawable/buttonshape"
+            />
 
 
     </TableRow>
