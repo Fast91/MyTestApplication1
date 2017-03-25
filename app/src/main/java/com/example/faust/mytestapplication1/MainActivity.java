@@ -12,7 +12,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button b1 = (Button) findViewById(R.id.b1);
-        Typeface font = Typeface.createFromAsset(getAssets(), "GoodDog.otf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "Amatic-Bold.ttf");
         b1.setTypeface(font);
 
     }
