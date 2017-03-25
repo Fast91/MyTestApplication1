@@ -67,6 +67,7 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            //da aggi
         }
 
         @Override
