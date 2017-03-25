@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        tools:context="com.example.faust.mytestapplication1.MainActivity"
+        android:id="@+id/tableLayout0"
+        android:padding="2dp"
+        android:stretchColumns="*"
+        android:background="@android:color/white">
+
+
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            >
+
+            <Button
+                android:id="@+id/b1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:text="@string/b1_string"
+                style="@style/textButton"
+                android:background="@drawable/buttonshape"
+                android:layout_marginRight="1dp"
+
+                />
+
+            <Button
+                android:id="@+id/b2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:text="@string/b2_string"
+                android:background="@drawable/buttonshape"
+
+                style="@style/textButton"
+                android:layout_marginRight="1dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:id="@+id/b3"
+                android:text="@string/b3_string"
+
+                style="@style/textButton"
+                android:background="@drawable/buttonshape"/>
+
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:id="@+id/row1_image1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:id="@+id/row1_edit"
+                android:text="@string/balance_string"
+                android:layout_gravity="right"
+                android:textSize="35sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:id="@+id/row1_image2" />
+
+        </TableRow>
+
+</TableLayout>
