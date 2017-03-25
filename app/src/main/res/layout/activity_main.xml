@@ -36,6 +36,8 @@
             android:layout_span="2"
             android:text="@string/b2_string"
             android:background="@drawable/buttonshape"
+
+            style="@style/textButton"
             android:layout_marginRight="1dp"
             />
 
@@ -45,6 +47,8 @@
             android:layout_span="2"
             android:id="@+id/b3"
             android:text="@string/b3_string"
+
+            style="@style/textButton"
             android:background="@drawable/buttonshape"/>
 
     </TableRow>
@@ -91,6 +95,8 @@
             android:layout_span="6"
             android:id="@+id/b5"
             android:text="@string/b5_string"
+
+            style="@style/textButton"
             android:background="@drawable/buttonshape"/>
 
 
@@ -129,6 +135,8 @@
             android:layout_span="6"
             android:id="@+id/b4"
             android:text="@string/b4_string"
+
+            style="@style/textButton"
             android:background="@drawable/buttonshape"
             />
 
