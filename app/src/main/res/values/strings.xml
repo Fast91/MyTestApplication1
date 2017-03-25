@@ -8,4 +8,9 @@
     <string name="b4_string">Add expense</string>
     <string name="b5_string">Add new Group</string>
     <string name="b6_string">Mobile fantastica</string>
+    <string name="breaking_mad">Breaking MAD</string>
+    <string name="account_menu_item_string">Account</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$s crimes</string>
 </resources>
