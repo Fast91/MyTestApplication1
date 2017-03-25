@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 b3.setPressed(false);
                 b2.setPressed(true);
                 count_b=2;
+                Intent i = new Intent(MainActivity.this,GroupsActivity.class);
+                startActivity(i);
                 return true;
             }
         });
