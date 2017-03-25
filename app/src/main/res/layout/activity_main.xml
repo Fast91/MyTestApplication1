@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,19 +12,33 @@
     android:background="@android:color/white">
 
 
-    <TableRow android:id="@+id/tableRow0"
+    <TableRow
+        android:id="@+id/tableRow0"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         >
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
-            android:id="@+id/b1" android:text="@string/b1_string" style="@style/AppTheme" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:id="@+id/b1"
+            android:text="@string/b1_string"
+            style="@style/AppTheme" />
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
-            android:id="@+id/b2" android:text="@string/b2_string"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:id="@+id/b2"
+            android:text="@string/b2_string"/>
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
-            android:id="@+id/b3" android:text="@string/b3_string"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:id="@+id/b3"
+            android:text="@string/b3_string"/>
 
     </TableRow>
 
@@ -32,38 +47,58 @@
         android:layout_width="match_parent"
         >
 
-        <ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
             android:id="@+id/row1_image1"/>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
-            android:id="@+id/row1_edit" android:text="@string/balance_string" android:layout_gravity="right"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:id="@+id/row1_edit"
+            android:text="@string/balance_string"
+            android:layout_gravity="right"
             android:textSize="35sp" />
 
-        <ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
             android:id="@+id/row1_image2" />
 
     </TableRow>
 
-    <TableRow android:id="@+id/tableRow2"
+    <TableRow
+        android:id="@+id/tableRow2"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         >
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="6"
-            android:id="@+id/b5" android:text="@string/b5_string"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="6"
+            android:id="@+id/b5"
+            android:text="@string/b5_string"/>
 
 
     </TableRow>
 
 
-    <TableRow android:id="@+id/tableRow3"
+    <TableRow
+        android:id="@+id/tableRow3"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_weight="1"
         >
 
 
-        <ScrollView android:id="@+id/scrollViewGroups" android:layout_width="match_parent" android:layout_span="2"
+        <ScrollView
+            android:id="@+id/scrollViewGroups"
+            android:layout_width="match_parent"
+            android:layout_span="2"
             android:padding="3dp">
 
 
@@ -73,14 +108,19 @@
 
     </TableRow>
 
-    <TableRow android:id="@+id/tableRow4"
+    <TableRow
+        android:id="@+id/tableRow4"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
 
         >
 
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="6"
-            android:id="@+id/b4" android:text="@string/b4_string"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="6"
+            android:id="@+id/b4"
+            android:text="@string/b4_string"/>
 
 
     </TableRow>
