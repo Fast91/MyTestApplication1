@@ -1,6 +1,8 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -11,6 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
+
+import android.support.v4.app.FragmentTransaction;
 
 
 import java.util.ArrayList;
@@ -22,12 +29,14 @@ public class GroupsListFragment extends Fragment {
 
     private MyGroupsRecyclerViewAdapter adapter;
     private int mColumnCount = 1;
-    //private OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener;
+    private MainActivity mainActivity;
 
     private String[] names = {"G1", "G2"};
     private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
     private double[] balances = {70.00, -7.00};
     private ArrayList<MyGroup> groups;
+
 
 
     public GroupsListFragment() {
@@ -42,6 +51,7 @@ public class GroupsListFragment extends Fragment {
 
         for (int i = 0; i < names.length; i++) {
             MyGroup u = new MyGroup(names[i], images[i], balances[i]);
+            u.setIdgroup(i+1);
             if(i==0){
                 u.addUserinGroup(new User ("Roberto",R.drawable.profilecircle,25.00));
                 u.addUserinGroup(new User ("Pasquale",R.drawable.profilecircle,20.00));
@@ -76,9 +86,9 @@ public class GroupsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
 
-        // Set the adapter
+        // Set the adapter forse il primo if non utile
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -90,15 +100,49 @@ public class GroupsListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            adapter = new MyGroupsRecyclerViewAdapter(groups);
+            adapter = new MyGroupsRecyclerViewAdapter(groups, new OnListFragmentInteractionListener() {
+                @Override
+                public void onListFragmentInteraction(MyGroup item) {
+                    //TODO LISTENER IMPLEMENTARE
+                    Toast.makeText(getContext(),"Cliccato Gruppo: "+item.getName(),Toast.LENGTH_LONG).show();
+                    //You can change the fragment, something like this, not tested, please correct for your desired output:
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment myFragment = new UsersGroupListFragment();
+                    //Create a bundle to pass data, add data, set the bundle to your fragment and:
+                    Bundle mBundle;
+                    mBundle = new Bundle();
+                    mBundle.putInt("GROUP_ID",item.getIdgroup());
+                    myFragment.setArguments(mBundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+                }
+            });
             recyclerView.setAdapter(adapter);
+
         }
         else{
 
             RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.groups_list);
             //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
             recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyGroupsRecyclerViewAdapter(groups);
+            adapter = new MyGroupsRecyclerViewAdapter(groups, new OnListFragmentInteractionListener() {
+                @Override
+                public void onListFragmentInteraction(MyGroup item) {
+                    //TODO LISTENER IMPLEMENTARE
+                    Toast.makeText(getContext(),"Cliccato Gruppo: "+item.getName(),Toast.LENGTH_LONG).show();
+
+                    //You can change the fragment, something like this, not tested, please correct for your desired output:
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment myFragment = new UsersGroupListFragment();
+                    //Create a bundle to pass data, add data, set the bundle to your fragment and:
+                    Bundle mBundle;
+                    mBundle = new Bundle();
+                    mBundle.putInt("GROUP_ID",item.getIdgroup());
+                    myFragment.setArguments(mBundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+                }
+            });
             recyclerView2.setAdapter(adapter);
 
         }
@@ -109,21 +153,9 @@ public class GroupsListFragment extends Fragment {
     }
 
 
-/*
-
-    public void onStart(){
-        super.onStart();
 
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
-    }
-
-    */
 
 //CLASSI NON UTILIZZATE
 
@@ -170,12 +202,15 @@ public class GroupsListFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-/*
+
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(User item);
+
+        void onListFragmentInteraction(MyGroup item);
     }
-    */
+
+
+
+
 
 
 

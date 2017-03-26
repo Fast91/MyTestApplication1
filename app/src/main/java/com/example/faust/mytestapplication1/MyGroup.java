@@ -1,5 +1,8 @@
 package com.example.faust.mytestapplication1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -12,10 +15,22 @@ public class MyGroup {
     private double balance;
     private ArrayList<User> users_in_group;
     private ArrayList<MyActivity> activity_in_group;
+    private int idgroup;
+
+    public int getIdgroup() {
+        return idgroup;
+    }
+
+    public void setIdgroup(int idgroup) {
+        this.idgroup = idgroup;
+    }
+
+
 
     public MyGroup(){
         users_in_group=new ArrayList<>();
         activity_in_group=new ArrayList<>();
+
     }
 
     public MyGroup(String s){
@@ -82,4 +97,6 @@ public class MyGroup {
     public void setImageId(int id){
         ImageId=id;
     }
+
+
 }

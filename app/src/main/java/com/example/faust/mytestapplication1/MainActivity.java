@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new GroupsListFragment();
+                GroupsListFragment f= new GroupsListFragment();
+
                 if(count_b==1){
                     ft.replace(R.id.fragment1, f);
 
@@ -117,12 +118,13 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment f= new ActivityListFragment();
+
                 if(count_b==1){
                     ft.replace(R.id.fragment1, f);}
              //   ft.remove(fm.findFragmentById(R.id.fragment1)).add(R.id.fragment3_activity,f);} sbagliato
                 if(count_b==2){
                     //ft.replace(R.id.fragment2_groups, f);} TODO: capire come implementare lo stack dei frammenti
-                    ft.replace(R.id.fragment1, new ActivityListFragment());}
+                    ft.replace(R.id.fragment1, f);}
                 if(count_b==3){
                     ft.replace(R.id.fragment3_activity, f);}
                 ft.addToBackStack("F3");
@@ -211,5 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
         }
+
+
 }
 
