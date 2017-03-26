@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction ft = fm.beginTransaction();
                 GroupsListFragment f= new GroupsListFragment();
 
+
                 if(count_b==1){
                     ft.replace(R.id.fragment1, f);
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment2_groups, f);}
                 if(count_b==3){
                    // ft.replace(R.id.fragment3_activity, f);} TODO: capire come implementare lo stack dei frammenti
-                    ft.replace(R.id.fragment1, new GroupsListFragment());}
+                    ft.replace(R.id.fragment1, f);}
                 ft.addToBackStack(null);
                 ft.commit();
 

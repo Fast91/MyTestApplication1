@@ -56,6 +56,14 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment5_activity_group"
+            android:name="com.example.faust.mytestapplication1.ActivityGroupListFragment">
+
+        </FrameLayout>
+
 
 
 

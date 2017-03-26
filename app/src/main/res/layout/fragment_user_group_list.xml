@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:id="@+id/linearLayoutGroups"
+    >
+
+
+    <Button
+        android:id="@+id/b5_show_group_activity"
+        style="@style/textButton"
+        android:layout_width="match_parent"
+        android:layout_height="35sp"
+        android:layout_span="6"
+
+        android:background="@drawable/buttonshape"
+        android:text="@string/b5_string_show_group_activity"
+        />
+
+<android.support.v7.widget.RecyclerView
     android:id="@+id/user_group_list"
     android:name="com.example.faust.mytestapplication1.UsersGroupListFragment"
     android:layout_width="match_parent"
@@ -11,3 +32,6 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.example.faust.mytestapplication1.UsersGroupListFragment"
     tools:listitem="@layout/fragment_user_group" />
+
+
+    </LinearLayout>

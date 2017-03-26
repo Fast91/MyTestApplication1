@@ -3,17 +3,12 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -21,78 +16,56 @@ import java.util.ArrayList;
  * Created by robertospaziani on 26/03/17.
  */
 
-public class UsersGroupListFragment extends Fragment{
+public class ActivityGroupListFragment extends Fragment {
 
 
-    private MyUsersGroupRecyclerViewAdapter adapter;
-
-    private int mColumnCount=1;
+    private MyActivityGroupRecyclerViewAdapter adapter;
+    private int mColumnCount = 1;
     //private OnListFragmentInteractionListener mListener;
 
-    private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
-    private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
-    private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
-    private ArrayList<User> users;
+    private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
+    private int[] images = {R.drawable.energia, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
+    private double[] balances = {100.00, 25.00 , 12.00, 6.00};
+    private ArrayList<MyActivity> activity;
 
 
-    public UsersGroupListFragment() {
+    public ActivityGroupListFragment() {
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            int id;
-        Bundle b = this.getArguments();
-        if(b==null){
-            id=1;
-        }
-        else{
-            id= b.getInt("GROUP_ID");
-        }
 
+        activity = new ArrayList<>();
 
-        users=new ArrayList<>();
-
-        if(id==1) {
-            for (int i = 0; i < 3; i++) {
-                User u = new User(names[i], images[i], balances[i]);
-
-                users.add(u);
-
+        for (int i = 0; i < names.length; i++) {
+            MyActivity u = new MyActivity(names[i], images[i], balances[i]);
+            if(i==0){//Luce
 
             }
-        }
+            else if(i==1){
 
-        else {
-            for (int i = 3; i < 5; i++) {
-                User u = new User(names[i], images[i], balances[i]);
+            }
+            else if(i==2){
 
-                users.add(u);
+            }
+            else{//Pranzo
+
             }
 
+            activity.add(u);
         }
-
-
-
-
 
 
     }
-
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
-
-
-      final  View view = inflater.inflate(R.layout.fragment_user_group_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_activity_group_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -106,41 +79,16 @@ public class UsersGroupListFragment extends Fragment{
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            adapter = new MyUsersGroupRecyclerViewAdapter(users);
+            adapter = new MyActivityGroupRecyclerViewAdapter(activity);
             recyclerView.setAdapter(adapter);
         }
         else{
 
-            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.user_group_list);
+            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
             //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
             recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyUsersGroupRecyclerViewAdapter(users);
+            adapter = new MyActivityGroupRecyclerViewAdapter(activity);
             recyclerView2.setAdapter(adapter);
-
-            Button b5_showactivity = (Button) view.findViewById(R.id.b5_show_group_activity);
-            //Listener Button5 show group activity
-            b5_showactivity.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    /*b2.setPressed(false);
-                    b3.setPressed(false);
-
-                    b1.setPressed(true);*/
-
-                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                     Fragment myFragment = new ActivityGroupListFragment();
-                      //Create a bundle to pass data, add data, set the bundle to your fragment and:
-                         Bundle mBundle;
-                     mBundle = new Bundle();
-                   // mBundle.putInt("GROUP_ID",item.getIdgroup());
-                    myFragment.setArguments(mBundle);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-
-                    return true;
-                }
-            });
 
         }
 
@@ -201,5 +149,6 @@ public class UsersGroupListFragment extends Fragment{
         void onListFragmentInteraction(User item);
     }
     */
-}
 
+
+}
