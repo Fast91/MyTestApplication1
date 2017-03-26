@@ -25,11 +25,11 @@ public class GlobalListFragment extends Fragment {
     private int mColumnCount=1;
     //private OnListFragmentInteractionListener mListener;
 
-    private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
+    /*private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
     private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
-    private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
-    private ArrayList<User> users;
-
+    private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};*/
+    //private ArrayList<User> users;
+    private List<User> users;
 
     public GlobalListFragment() {
     }
@@ -40,8 +40,16 @@ public class GlobalListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-          users=new ArrayList<>();
+        try
+        {
+            users = DBManager.getUsers();
+        }
+        catch(Exception e) //sostituire con l'eccezione corretta
+        {
+            // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
+        }
 
+        /*users=new ArrayList<>();
         for(int i=0;i<names.length;i++){
             User u=new User(names[i],images[i],balances[i]);
             if(i==0 || i==1 || i==2){
@@ -51,7 +59,7 @@ public class GlobalListFragment extends Fragment {
                 u.addGrouponUser(new MyGroup("G2"));
             }
             users.add(u);
-        }
+        }*/
 
 
 

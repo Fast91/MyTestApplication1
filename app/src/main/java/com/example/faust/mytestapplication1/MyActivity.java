@@ -3,19 +3,22 @@ package com.example.faust.mytestapplication1;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by robertospaziani on 25/03/17.
  */
 
 public class MyActivity {
+    private String ID;
+    private String version;
     private String name;
     private int ImageId;
     private double balance;
     private Date data;
     private String category;
     private User owner;
-    private ArrayList<User> usersin;
+    private List<User> usersin;
     private HashMap<User,Integer> divide;
     private MyGroup group;
 
@@ -44,6 +47,17 @@ public class MyActivity {
         divide= new HashMap<>();
     }
 
+    public MyActivity(String aid, String s,int id,double b, Date data , String category){
+        this.ID=aid;
+        this.version="0.1";
+        name=s;
+        ImageId=id;
+        balance=b;
+        this.data=data;
+        this.category=category;
+        usersin= new ArrayList<>();
+        divide= new HashMap<>();
+    }
 
     public MyGroup getGroup() {
         return group;
@@ -54,7 +68,10 @@ public class MyActivity {
     }
 
 
-
+    public String getID()
+    {
+        return ID;
+    }
 
     public User getOwner() {
         return owner;
@@ -64,7 +81,7 @@ public class MyActivity {
         this.owner = owner;
     }
 
-    public ArrayList<User> getUsersin() {
+    public List<User> getUsersin() {
         return usersin;
     }
 

@@ -32,11 +32,11 @@ public class GroupsListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private MainActivity mainActivity;
 
-    private String[] names = {"G1", "G2"};
+    /*private String[] names = {"G1", "G2"};
     private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
-    private double[] balances = {70.00, -7.00};
-    private ArrayList<MyGroup> groups;
-
+    private double[] balances = {70.00, -7.00};*/
+    //private ArrayList<MyGroup> groups;
+    private List<MyGroup>groups;
 
 
     public GroupsListFragment() {
@@ -47,8 +47,16 @@ public class GroupsListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        groups = new ArrayList<>();
+        try
+        {
+            groups = DBManager.getGroups();
+        }
+        catch(Exception e) //sostituire con l'eccezione corretta
+        {
+            // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
+        }
 
+        /*groups = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             MyGroup u = new MyGroup(names[i], images[i], balances[i]);
             u.setIdgroup(i+1);
@@ -74,7 +82,7 @@ public class GroupsListFragment extends Fragment {
                 u.addActivityinGroup(a2);
             }
             groups.add(u);
-        }
+        }*/
 
 
 

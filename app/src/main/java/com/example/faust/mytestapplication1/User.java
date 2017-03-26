@@ -5,13 +5,16 @@ package com.example.faust.mytestapplication1;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
+    private String ID;
+    private String version;
     private String name;
     private int ImageId;
     private double balance;
-    private ArrayList<MyGroup> groups;
-    private ArrayList<MyActivity> activity;
+    private List<MyGroup> groups;
+    private List<MyActivity> activity;
 
     public User(){
         groups= new ArrayList<>();
@@ -33,15 +36,30 @@ public class User {
         activity= new ArrayList<>();
     }
 
+    public User(String uid, String s,int id,double b){
+        this.ID=uid;
+        this.version="0.1";
+        name=s;
+        ImageId=id;
+        balance=b;
+        groups= new ArrayList<>();
+        activity= new ArrayList<>();
+    }
+
     public void addGrouponUser(MyGroup g){
         groups.add(g);
+    }
+
+    public String getID()
+    {
+        return ID;
     }
 
     public void addActivityonUser(MyActivity g){
         activity.add(g);
     }
 
-    public ArrayList<MyGroup> getGroups() {
+    public List<MyGroup> getGroups() {
         return groups;
     }
 
@@ -49,7 +67,7 @@ public class User {
         this.groups = groups;
     }
 
-    public ArrayList<MyActivity> getActivity() {
+    public List<MyActivity> getActivity() {
         return activity;
     }
 

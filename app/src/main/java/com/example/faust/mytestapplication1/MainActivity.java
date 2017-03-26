@@ -25,6 +25,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
+        DBManager.init();
+        // PROVO A FARE OPERAZIONI SUL DB
+        try {
+            // aggiungo un gruppo g3
+            MyGroup g3 = new MyGroup("3", "G3 muore",R.drawable.profilecircle,40);
+            DBManager.addGroup(g3);
+            // aggiungo un gruppo g4
+            MyGroup g4 = new MyGroup("4", "G4 vive",R.drawable.profilecircle,50);
+            DBManager.addGroup(g4);
+            // elimino il gruppo g3
+            DBManager.removeGroup(g3);
+            // modifico il gruppo g4 in locale e aggiorno il db
+            g4.setName("G4");
+            DBManager.updateGroup(g4);
+            // ancora bisogna sistemare un po' di cose
+            // io eviterei la modifica dei dati in locale ma direttamente sul db e poi
+            // la copia dal db al locale.
+            // in questo modo i miei dati saranno sempre sincronizzati col db online.
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_main);
 
        if (savedInstanceState != null) {

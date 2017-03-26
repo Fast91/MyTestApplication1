@@ -4,17 +4,20 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by robertospaziani on 25/03/17.
  */
 
 public class MyGroup {
+    private String ID;
+    private String version;
     private String name;
     private int ImageId;
     private double balance;
-    private ArrayList<User> users_in_group;
-    private ArrayList<MyActivity> activity_in_group;
+    private List<User> users_in_group;
+    private List<MyActivity> activity_in_group;
     private int idgroup;
 
     public int getIdgroup() {
@@ -25,7 +28,10 @@ public class MyGroup {
         this.idgroup = idgroup;
     }
 
-
+    public String getID()
+    {
+        return ID;
+    }
 
     public MyGroup(){
         users_in_group=new ArrayList<>();
@@ -47,12 +53,22 @@ public class MyGroup {
         activity_in_group=new ArrayList<>();
     }
 
+    public MyGroup(String gid, String s,int id,double b){
+        this.ID=gid;
+        this.version="0.1";
+        name=s;
+        ImageId=id;
+        balance=b;
+        users_in_group=new ArrayList<>();
+        activity_in_group=new ArrayList<>();
+    }
+
     public void addActivityinGroup(MyActivity a){
         activity_in_group.add(a);
     }
 
 
-    public ArrayList<MyActivity> getActivity_in_group() {
+    public List<MyActivity> getActivity_in_group() {
         return activity_in_group;
     }
 
@@ -61,7 +77,7 @@ public class MyGroup {
     }
 
 
-    public ArrayList<User> getUsers_in_group() {
+    public List<User> getUsers_in_group() {
         return users_in_group;
     }
 

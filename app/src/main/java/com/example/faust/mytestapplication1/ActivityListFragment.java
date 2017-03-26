@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by robertospaziani on 25/03/17.
@@ -28,11 +29,11 @@ public class ActivityListFragment extends  Fragment{
         private int mColumnCount = 1;
         //private OnListFragmentInteractionListener mListener;
 
-        private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
+        /*private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
         private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
-        private double[] balances = {100.00, 25.00 , 12.00, 6.00};
-        private ArrayList<MyActivity> activity;
-
+        private double[] balances = {100.00, 25.00 , 12.00, 6.00};*/
+        //private ArrayList<MyActivity> activity;
+        private List<MyActivity> activities;
 
         public ActivityListFragment() {
         }
@@ -42,8 +43,16 @@ public class ActivityListFragment extends  Fragment{
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            activity = new ArrayList<>();
+            try
+            {
+                activities = DBManager.getActivities();
+            }
+            catch(Exception e) //sostituire con l'eccezione corretta
+            {
+                // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
+            }
 
+            /*activity = new ArrayList<>();
             for (int i = 0; i < names.length; i++) {
                 MyActivity u = new MyActivity(names[i], images[i], balances[i]);
                 if(i==0){//Luce
@@ -60,7 +69,7 @@ public class ActivityListFragment extends  Fragment{
                 }
 
                 activity.add(u);
-            }
+            }*/
 
 
         }
@@ -84,7 +93,7 @@ public class ActivityListFragment extends  Fragment{
                     recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
                 }
 
-                adapter = new MyActivityRecyclerViewAdapter(activity);
+                adapter = new MyActivityRecyclerViewAdapter(activities);//activity);
                 recyclerView.setAdapter(adapter);
             }
             else{
@@ -92,7 +101,7 @@ public class ActivityListFragment extends  Fragment{
                 RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_list);
                 //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
                 recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-                adapter = new MyActivityRecyclerViewAdapter(activity);
+                adapter = new MyActivityRecyclerViewAdapter(activities);//activity);
                 recyclerView2.setAdapter(adapter);
 
             }
