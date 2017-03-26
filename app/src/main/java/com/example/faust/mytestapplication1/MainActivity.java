@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -217,6 +220,48 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
         }
+
+
+
+
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+
+    //-- azioni per il menù della tool_bar--
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int res_id=item.getItemId();
+        if(res_id==R.id.action_settings){
+
+            Toast.makeText(getApplicationContext(),"you selected Settings option",Toast.LENGTH_LONG).show();
+
+        }
+
+        if(res_id==R.id.action_contactus){
+
+            Toast.makeText(getApplicationContext(),"you selected Contact Us option",Toast.LENGTH_LONG).show();
+
+        }
+
+        if(res_id==R.id.action_share){
+
+            Toast.makeText(getApplicationContext(),"you selected Share option",Toast.LENGTH_LONG).show();
+
+        }
+
+        return true;
+    }
 
 
 }
