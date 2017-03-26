@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment2_groups, f);}
                 if(count_b==3){
                     ft.replace(R.id.fragment3_activity, f);}
-               ft.addToBackStack("F1");
+               ft.addToBackStack(null);
                    ft.commit();
 
                 count_b=1;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 if(count_b==3){
                    // ft.replace(R.id.fragment3_activity, f);} TODO: capire come implementare lo stack dei frammenti
                     ft.replace(R.id.fragment1, new GroupsListFragment());}
-                ft.addToBackStack("F2");
+                ft.addToBackStack(null);
                 ft.commit();
 
                 count_b=2;
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment1, f);}
                 if(count_b==3){
                     ft.replace(R.id.fragment3_activity, f);}
-                ft.addToBackStack("F3");
+                ft.addToBackStack(null);
                 ft.commit();
 
                 count_b=3;
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment1));
+                ft.addToBackStack(null);
                 ft.commit();
             }
             else if (count_b==2){
@@ -200,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment2_groups, fm.findFragmentById(R.id.fragment2_groups));
+                ft.addToBackStack(null);
                 ft.commit();
             }
             else{
@@ -210,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment3_activity, fm.findFragmentById(R.id.fragment3_activity));
+                ft.addToBackStack(null);
                 ft.commit();
             }
         }
