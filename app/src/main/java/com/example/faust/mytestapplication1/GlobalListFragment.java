@@ -3,6 +3,8 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +25,9 @@ public class GlobalListFragment extends Fragment {
     private int mColumnCount=1;
     //private OnListFragmentInteractionListener mListener;
 
-    private String[] names= {"Roberto", "Pasquale"};
-    private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle};
-    private double[] balances = {100.00,-25.00};
+    private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
+    private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
+    private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
     private ArrayList<User> users;
 
 
@@ -42,6 +44,12 @@ public class GlobalListFragment extends Fragment {
 
         for(int i=0;i<names.length;i++){
             User u=new User(names[i],images[i],balances[i]);
+            if(i==0 || i==1 || i==2){
+                u.addGrouponUser(new MyGroup("G1"));
+            }
+            else{
+                u.addGrouponUser(new MyGroup("G2"));
+            }
             users.add(u);
         }
 

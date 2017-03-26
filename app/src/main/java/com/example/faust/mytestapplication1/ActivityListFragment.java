@@ -3,6 +3,9 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.support.v4.app.ListFragment;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +30,7 @@ public class ActivityListFragment extends  Fragment{
 
         private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
         private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
-        private double[] balances = {100.00, -25.00 , 10.00, -5.00};
+        private double[] balances = {100.00, 25.00 , 12.00, 6.00};
         private ArrayList<MyActivity> activity;
 
 
@@ -43,6 +46,19 @@ public class ActivityListFragment extends  Fragment{
 
             for (int i = 0; i < names.length; i++) {
                 MyActivity u = new MyActivity(names[i], images[i], balances[i]);
+                if(i==0){//Luce
+
+                }
+                else if(i==1){
+
+                }
+                else if(i==2){
+
+                }
+                else{//Pranzo
+
+                }
+
                 activity.add(u);
             }
 

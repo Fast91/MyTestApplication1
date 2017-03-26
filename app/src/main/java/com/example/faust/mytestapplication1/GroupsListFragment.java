@@ -3,12 +3,14 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class GroupsListFragment extends Fragment {
 
     private String[] names = {"G1", "G2"};
     private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
-    private double[] balances = {100.00, -25.00};
+    private double[] balances = {70.00, -7.00};
     private ArrayList<MyGroup> groups;
 
 
@@ -40,8 +42,31 @@ public class GroupsListFragment extends Fragment {
 
         for (int i = 0; i < names.length; i++) {
             MyGroup u = new MyGroup(names[i], images[i], balances[i]);
+            if(i==0){
+                u.addUserinGroup(new User ("Roberto",R.drawable.profilecircle,25.00));
+                u.addUserinGroup(new User ("Pasquale",R.drawable.profilecircle,20.00));
+                u.addUserinGroup(new User ("Fausto",R.drawable.profilecircle,25.00));
+                MyActivity a1 = new MyActivity("Luce",R.drawable.energia,100.00);
+                a1.setOwner(new User("Possessore App",R.drawable.realphoto));
+                u.addActivityinGroup(a1);
+                MyActivity a2 = new MyActivity("Gas",R.drawable.logogas,25.00);
+                a2.setOwner(new User("Pasquale",R.drawable.profilecircle));
+                u.addActivityinGroup(a2);
+            }
+            else{
+                u.addUserinGroup(new User ("Omar",R.drawable.profilecircle,-4.00));
+                u.addUserinGroup(new User ("Marco",R.drawable.profilecircle,-3.00));
+                MyActivity a1 = new MyActivity("Cena",R.drawable.cibo,12.00);
+                a1.setOwner(new User("Omar",R.drawable.profilecircle));
+                u.addActivityinGroup(a1);
+                MyActivity a2 = new MyActivity("Pranzo",R.drawable.cibo,6.00);
+                a2.setOwner(new User("Marco",R.drawable.profilecircle));
+                u.addActivityinGroup(a2);
+            }
             groups.add(u);
         }
+
+
 
 
     }
@@ -83,6 +108,22 @@ public class GroupsListFragment extends Fragment {
         return view;
     }
 
+
+/*
+
+    public void onStart(){
+        super.onStart();
+
+
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+
+    */
 
 //CLASSI NON UTILIZZATE
 

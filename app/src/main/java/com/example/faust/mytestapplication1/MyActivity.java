@@ -2,6 +2,7 @@ package com.example.faust.mytestapplication1;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by robertospaziani on 25/03/17.
@@ -13,9 +14,15 @@ public class MyActivity {
     private double balance;
     private Date data;
     private String category;
+    private User owner;
+    private ArrayList<User> usersin;
+    private HashMap<User,Integer> divide;
+    private MyGroup group;
 
 
     public MyActivity(){
+        usersin= new ArrayList<>();
+        divide= new HashMap<>();
 
     }
 
@@ -23,6 +30,8 @@ public class MyActivity {
         name=s;
         ImageId=id;
         balance=b;
+        usersin= new ArrayList<>();
+        divide= new HashMap<>();
     }
 
     public MyActivity(String s,int id,double b, Date data , String category){
@@ -31,6 +40,57 @@ public class MyActivity {
         balance=b;
         this.data=data;
         this.category=category;
+        usersin= new ArrayList<>();
+        divide= new HashMap<>();
+    }
+
+
+    public MyGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(MyGroup group) {
+        this.group = group;
+    }
+
+
+
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public ArrayList<User> getUsersin() {
+        return usersin;
+    }
+
+    public void setUsersin(ArrayList<User> usersin) {
+        this.usersin = usersin;
+    }
+
+    public void addUserin(User u){
+
+        if(group.getUsers_in_group().contains(u)) {
+
+            this.usersin.add(u);
+
+        }
+    }
+
+    public HashMap<User, Integer> getDivide() {
+        return divide;
+    }
+
+    public void setDivide(HashMap<User, Integer> divide) {
+        this.divide = divide;
+    }
+
+    public void addDivideforUser(User u,int x){
+        divide.put(u,x);
     }
 
     public Date getData() {
