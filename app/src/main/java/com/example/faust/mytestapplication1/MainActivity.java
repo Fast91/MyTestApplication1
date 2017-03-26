@@ -51,6 +51,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+        
+        // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
+        DBManager.init();
+        // PROVO A FARE OPERAZIONI SUL DB
+        try {
+            // aggiungo un gruppo g3
+            MyGroup g3 = new MyGroup("3", "G3 muore",R.drawable.profilecircle,40);
+            DBManager.addGroup(g3);
+            // aggiungo un gruppo g4
+            MyGroup g4 = new MyGroup("4", "G4 vive",R.drawable.profilecircle,50);
+            DBManager.addGroup(g4);
+            // elimino il gruppo g3
+            DBManager.removeGroup(g3);
+            // modifico il gruppo g4 in locale e aggiorno il db
+            g4.setName("G4");
+            DBManager.updateGroup(g4);
+            // ancora bisogna sistemare un po' di cose
+            // io eviterei la modifica dei dati in locale ma direttamente sul db e poi
+            // la copia dal db al locale.
+            // in questo modo i miei dati saranno sempre sincronizzati col db online.
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
        if (savedInstanceState != null) {
                 updateFragAndButton();
@@ -96,8 +120,12 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment2_groups, f);}
                 if(count_b==3){
                     ft.replace(R.id.fragment3_activity, f);}
+
+
                ft.addToBackStack(null);
                    ft.commit();
+
+
 
                 count_b=1;
                 return true;
@@ -127,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 if(count_b==3){
                    // ft.replace(R.id.fragment3_activity, f);} TODO: capire come implementare lo stack dei frammenti
                     ft.replace(R.id.fragment1, f);}
-                ft.addToBackStack(null);
+               ft.addToBackStack(null);
                 ft.commit();
 
                 count_b=2;
@@ -156,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment1, f);}
                 if(count_b==3){
                     ft.replace(R.id.fragment3_activity, f);}
-                ft.addToBackStack(null);
+               ft.addToBackStack(null);
                 ft.commit();
 
                 count_b=3;
@@ -241,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment3_activity, fm.findFragmentById(R.id.fragment3_activity));
-                ft.addToBackStack(null);
+              ft.addToBackStack(null);
                 ft.commit();
             }
         }

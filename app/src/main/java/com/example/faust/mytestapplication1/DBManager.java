@@ -3,10 +3,13 @@ package com.example.faust.mytestapplication1;
 import android.content.res.Resources;
 import android.util.Log;
 
+/*
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+
+*/
 
 import java.util.ArrayList;
 import java.util.Collections;
