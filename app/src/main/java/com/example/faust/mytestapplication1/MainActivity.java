@@ -60,14 +60,15 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(true);
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
+                Fragment f= new GlobalListFragment();
                 if(count_b==1){
-                     ft.replace(R.id.fragment1, new GlobalListFragment());}
+                     ft.replace(R.id.fragment1, f);}
                 if(count_b==2){
-                    ft.replace(R.id.fragment2_groups, new GlobalListFragment());}
+                    ft.replace(R.id.fragment2_groups, f);}
                 if(count_b==3){
-                    ft.replace(R.id.fragment3_activity, new GlobalListFragment());}
-
-                ft.commit();
+                    ft.replace(R.id.fragment3_activity, f);}
+               ft.addToBackStack("F1");
+                   ft.commit();
 
                 count_b=1;
                 return true;
@@ -85,13 +86,17 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
+                Fragment f= new GroupsListFragment();
                 if(count_b==1){
-                    ft.replace(R.id.fragment1, new GroupsListFragment());}
-                if(count_b==2){
-                    ft.replace(R.id.fragment2_groups, new GroupsListFragment());}
-                if(count_b==3){
-                    ft.replace(R.id.fragment3_activity, new GroupsListFragment());}
+                    ft.replace(R.id.fragment1, f);
 
+                    }
+                if(count_b==2){
+                    ft.replace(R.id.fragment2_groups, f);}
+                if(count_b==3){
+                   // ft.replace(R.id.fragment3_activity, f);} TODO: capire come implementare lo stack dei frammenti
+                    ft.replace(R.id.fragment1, new GroupsListFragment());}
+                ft.addToBackStack("F2");
                 ft.commit();
 
                 count_b=2;
@@ -108,14 +113,18 @@ public class MainActivity extends AppCompatActivity {
                 b2.setPressed(false);
 
                 FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                if(count_b==1){
-                    ft.replace(R.id.fragment1, new ActivityListFragment());}
-                if(count_b==2){
-                    ft.replace(R.id.fragment2_groups, new ActivityListFragment());}
-                if(count_b==3){
-                    ft.replace(R.id.fragment3_activity, new ActivityListFragment());}
 
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment f= new ActivityListFragment();
+                if(count_b==1){
+                    ft.replace(R.id.fragment1, f);}
+             //   ft.remove(fm.findFragmentById(R.id.fragment1)).add(R.id.fragment3_activity,f);} sbagliato
+                if(count_b==2){
+                    //ft.replace(R.id.fragment2_groups, f);} TODO: capire come implementare lo stack dei frammenti
+                    ft.replace(R.id.fragment1, new ActivityListFragment());}
+                if(count_b==3){
+                    ft.replace(R.id.fragment3_activity, f);}
+                ft.addToBackStack("F3");
                 ft.commit();
 
                 count_b=3;

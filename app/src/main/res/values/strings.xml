@@ -4,7 +4,8 @@
     <string name="b1_string">Global</string>
     <string name="b2_string">Groups</string>
     <string name="b3_string">Activity</string>
-    <string name="balance_string">0.00</string>
+    <string name="balance_name">Global Balance</string>
+    <string name="balance_string">0.00€</string>
     <string name="b4_string">Add expense</string>
     <string name="b5_string">Add new Group</string>
     <string name="b6_string">Mobile fantastica</string>
