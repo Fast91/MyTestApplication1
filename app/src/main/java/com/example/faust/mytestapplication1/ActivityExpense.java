@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-public class Activity2Test extends AppCompatActivity {
+public class ActivityExpense extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
