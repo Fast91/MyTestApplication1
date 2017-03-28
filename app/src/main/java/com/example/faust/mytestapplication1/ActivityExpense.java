@@ -11,7 +11,7 @@ public class ActivityExpense extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity2_test);
+        setContentView(R.layout.activity_expense);
 
         final Button b1 = (Button) findViewById(R.id.b1);
         final Button b2 = (Button) findViewById(R.id.b2);
