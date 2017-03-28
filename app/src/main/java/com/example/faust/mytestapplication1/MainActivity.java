@@ -27,29 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
-        DBManager.init();
-        // PROVO A FARE OPERAZIONI SUL DB
-        try {
-            // aggiungo un gruppo g3
-            MyGroup g3 = new MyGroup("3", "G3 muore",R.drawable.profilecircle,40);
-            DBManager.addGroup(g3);
-            // aggiungo un gruppo g4
-            MyGroup g4 = new MyGroup("4", "G4 vive",R.drawable.profilecircle,50);
-            DBManager.addGroup(g4);
-            // elimino il gruppo g3
-            DBManager.removeGroup(g3);
-            // modifico il gruppo g4 in locale e aggiorno il db
-            g4.setName("G4");
-            DBManager.updateGroup(g4);
-            // ancora bisogna sistemare un po' di cose
-            // io eviterei la modifica dei dati in locale ma direttamente sul db e poi
-            // la copia dal db al locale.
-            // in questo modo i miei dati saranno sempre sincronizzati col db online.
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
        if (savedInstanceState != null) {
                 updateFragAndButton();
@@ -63,10 +40,44 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
+            // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
+
+            // PROVO A FARE OPERAZIONI SUL DB
+
+
+                try {
+
+                    if(DBManager.getUsers().isEmpty()) {
+                        DBManager.init();
+
+                        // aggiungo un gruppo g3
+                        MyGroup g3 = new MyGroup("3", "G3 muore", R.drawable.profilecircle, 40);
+                        DBManager.addGroup(g3);
+                        // aggiungo un gruppo g4
+                        MyGroup g4 = new MyGroup("4", "G4 vive", R.drawable.profilecircle, 50);
+                        DBManager.addGroup(g4);
+                        // elimino il gruppo g3
+                        DBManager.removeGroup(g3);
+                        // modifico il gruppo g4 in locale e aggiorno il db
+                        g4.setName("G4");
+                        DBManager.updateGroup(g4);
+                        // ancora bisogna sistemare un po' di cose
+                        // io eviterei la modifica dei dati in locale ma direttamente sul db e poi
+                        // la copia dal db al locale.
+                        // in questo modo i miei dati saranno sempre sincronizzati col db online.
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+
 
             b1.setPressed(true);
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = fm.findFragmentById(R.id.fragment1);
+           Fragment fragment = fm.findFragmentById(R.id.fragment1);
+           // Fragment fragment= new GlobalListFragment();
             if (fragment == null) {
                 fragment = new GlobalListFragment();
                 ;
@@ -97,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
                     ft.replace(R.id.fragment1, f);}
             //   ft.addToBackStack(null);
                    ft.commit();
+
+                //
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStackImmediate();
+                }
+
 
                 count_b=1;
                 return true;
@@ -129,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
               //  ft.addToBackStack(null);
                 ft.commit();
 
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStackImmediate();
+                }
+
                 count_b=2;
                 return true;
             }
@@ -158,10 +179,38 @@ public class MainActivity extends AppCompatActivity {
                // ft.addToBackStack(null);
                 ft.commit();
 
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStackImmediate();
+                }
+
                 count_b=3;
                  return true;
             }
         });
+
+        //ADD EXPENSE
+
+        final Button b4add = (Button) findViewById(R.id.b4);
+
+
+        b4add.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                Intent intent=new Intent(MainActivity.this,ActivityExpense.class);
+                startActivity(intent);
+
+
+                return true;
+            }
+        });
+
+
+
+
+
+
 
     }
 
@@ -286,6 +335,13 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
+
+
+
+
+
 
 
 }

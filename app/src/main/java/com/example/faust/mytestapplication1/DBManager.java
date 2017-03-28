@@ -45,8 +45,8 @@ public class DBManager
 
         private static void initUsersExample()
         {
-            for(int i=0;i<ActivitySamples.names.length;i++){
-                User u=new User(ActivitySamples.names[i],ActivitySamples.images[i],ActivitySamples.balances[i]);
+            for(int i=0;i<UserSamples.names.length;i++){
+                User u=new User(UserSamples.names[i],UserSamples.images[i],UserSamples.balances[i]);
                 if(i==0 || i==1 || i==2){
                     u.addGrouponUser(new MyGroup("G1"));
                 }

@@ -20,6 +20,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ActivityExpense"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

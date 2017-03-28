@@ -5,48 +5,182 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.MainActivity"
-    android:id="@+id/linearLayout0"
+    tools:context="com.example.faust.mytestapplication1.ActivityExpense"
+    android:id="@+id/linearLayout_activityexpense"
     android:padding="2dp"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:weightSum="1">
 
-    <include layout="@layout/top" />
 
-    <LinearLayout
+
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="text"
+        android:id="@+id/Title_newexpense"
+        android:hint="Title"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="text"
+        android:id="@+id/Group_newexpense"
+        android:hint="Group"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."
+
+        android:id="@+id/Total_newexpense"
+        android:hint="Amount"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="text"
+        android:id="@+id/Description_newexpense"
+        android:hint="Description"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="date"
+        android:id="@+id/Data_newexpense"
+        android:hint="Data"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="30dp"
+        android:ems="10"
+        android:inputType="text"
+        android:id="@+id/Category_newexpense"
+        android:hint="Category"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:nextFocusDown="@+id/pass_reg"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:focusableInTouchMode="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/b5_SubmitExpense"
+        style="@style/textButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
+        android:layout_height="35sp"
+        android:layout_span="6"
 
+        android:background="@drawable/buttonshape"
+        android:text="@string/b4_string" />
 
-        <Button
-            android:id="@+id/b5"
-            style="@style/textButton"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_span="6"
-
-            android:background="@drawable/buttonshape"
-            android:text="@string/b5_string"
-            />
-
-
-        <ScrollView
-            android:id="@+id/scrollViewGroups"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_span="2"
-            android:padding="3dp">
-
-
-        </ScrollView>
-
-
-    </LinearLayout>
-
-    <include layout="@layout/down" />
 
 </LinearLayout>

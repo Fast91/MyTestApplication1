@@ -123,6 +123,9 @@ public class GroupsListFragment extends Fragment {
                     myFragment.setArguments(mBundle);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
 
+
+
+
                 }
             });
             recyclerView.setAdapter(adapter);

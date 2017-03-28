@@ -1,14 +1,20 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
+
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +26,14 @@ import java.util.List;
  * Created by robertospaziani on 25/03/17.
  */
 
-public class ActivityListFragment extends  Fragment{
+public class ActivityListFragment extends  Fragment  {
 
 
 
 
         private MyActivityRecyclerViewAdapter adapter;
         private int mColumnCount = 1;
+        View view;
         //private OnListFragmentInteractionListener mListener;
 
         /*private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
@@ -42,6 +49,9 @@ public class ActivityListFragment extends  Fragment{
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+
+
 
             try
             {
@@ -81,6 +91,8 @@ public class ActivityListFragment extends  Fragment{
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_activity_list, container, false);
 
+
+
             // Set the adapter
             if (view instanceof RecyclerView) {
                 Context context = view.getContext();
@@ -110,6 +122,52 @@ public class ActivityListFragment extends  Fragment{
 
             return view;
         }
+
+
+
+
+
+        /*
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((MyActivity) getActivity()).setOnBackPressedListener(this);
+    }
+
+    @Override
+    public void doBack() {
+        //BackPressed in activity will call this;
+    }
+    */
+
+
+
+
+/*
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                String cameback="CameBack";
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+                intent.putExtra("Comingback", cameback);
+                startActivity(intent);
+                return true;
+        }
+        return false;
+    }
+*/
+
+        /*
+    @Override
+    public void onBackPressed()
+    {
+        if(getFragmentManager().getBackStackEntryCount() > 0)
+            getFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
+    }
+    */
 
 
 //CLASSI NON UTILIZZATE
@@ -163,6 +221,7 @@ public class ActivityListFragment extends  Fragment{
         void onListFragmentInteraction(User item);
     }
     */
+
 
 
 
