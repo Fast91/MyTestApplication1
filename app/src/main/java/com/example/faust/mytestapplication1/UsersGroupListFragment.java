@@ -9,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.view.View.OnKeyListener;
 
 import java.util.ArrayList;
 
@@ -129,14 +131,26 @@ public class UsersGroupListFragment extends Fragment{
 
                     b1.setPressed(true);*/
 
-                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
                      Fragment myFragment = new ActivityGroupListFragment();
                       //Create a bundle to pass data, add data, set the bundle to your fragment and:
                          Bundle mBundle;
                      mBundle = new Bundle();
                    // mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+
+
+
+
+                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+
+                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                        activity.getSupportFragmentManager().popBackStackImmediate();
+                    }
+
 
                     return true;
                 }

@@ -121,8 +121,14 @@ public class GroupsListFragment extends Fragment {
                     mBundle = new Bundle();
                     mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
 
+                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+
+                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                        activity.getSupportFragmentManager().popBackStackImmediate();
+                    }
 
 
 
@@ -150,7 +156,14 @@ public class GroupsListFragment extends Fragment {
                     mBundle = new Bundle();
                     mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                        activity.getSupportFragmentManager().popBackStackImmediate();
+                    }
 
                 }
             });

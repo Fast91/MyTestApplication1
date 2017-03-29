@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
            // Fragment fragment= new GlobalListFragment();
             if (fragment == null) {
                 fragment = new GlobalListFragment();
-                ;
+
                 fm.beginTransaction()
                         .add(R.id.fragment1, fragment)
                         .commit();
