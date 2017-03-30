@@ -37,6 +37,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +50,12 @@ public class ActivityExpense extends AppCompatActivity {
 
         Button submitexpense = (Button)  findViewById(R.id.b5_SubmitExpense);
 
-        submitexpense.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
 
 
+                submitexpense.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
 
 
 
@@ -101,7 +102,10 @@ public class ActivityExpense extends AppCompatActivity {
 
                     try {
                        // DBManager.addActivity(myactivity);
-                        DB.setActivity(myactivity);
+
+                            DB.setActivity(myactivity, mygroup);
+
+
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -114,17 +118,18 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                    return true;}
+                    return ;}
 
                 else{
                     Toast.makeText(getApplicationContext(),"Some Fields are empty",Toast.LENGTH_LONG).show();
 
 
-                    return true;}
+                    return ;}
 
 
             }
-        });
+
+    });
 
 
         //Spinner

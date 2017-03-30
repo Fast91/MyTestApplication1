@@ -121,7 +121,7 @@ public class GroupsListFragment extends Fragment {
                     //Create a bundle to pass data, add data, set the bundle to your fragment and:
                     Bundle mBundle;
                     mBundle = new Bundle();
-                    mBundle.putInt("GROUP_ID",item.getIdgroup());
+                    mBundle.putString("GROUP_ID",item.getName());
                     myFragment.setArguments(mBundle);
 
                     //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
@@ -156,7 +156,7 @@ public class GroupsListFragment extends Fragment {
                     //Create a bundle to pass data, add data, set the bundle to your fragment and:
                     Bundle mBundle;
                     mBundle = new Bundle();
-                    mBundle.putInt("GROUP_ID",item.getIdgroup());
+                    mBundle.putString("GROUP_ID",item.getName());
 
                     //set name
                     /*
@@ -183,6 +183,14 @@ public class GroupsListFragment extends Fragment {
 
 
         //Set Name of the group
+
+        final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+        final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+        String name= "Global";
+        namegroup.setText(name);
+
+        final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+        moneygroup.setText("100€");
 
 
 

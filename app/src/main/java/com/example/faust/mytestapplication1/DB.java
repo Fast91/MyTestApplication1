@@ -48,13 +48,84 @@ public class DB {
     }
 
 
-    public static void  setActivity(MyActivity u){
+    public static void  setActivity(MyActivity u,String namegroup){
+
+
+
+        MyGroup group=null;
+        for(MyGroup g : mGroups){
+            if(g.getName().equals(namegroup)){
+                group=g;
+            }
+        }
+        mGroups.remove(group);
+        group.setActivity(u);
+        u.setGroup(group);
         mActivities.add(u);
+        mGroups.add(group);
 
 
-        MyGroup g= mGroups.get(0);
-        g.setActivity(u);
-        mGroups.add(0, g);
+
+
+
+
+    }
+
+    public static void replaceGroup(int index,MyGroup group){
+
+        MyGroup g= mGroups.get(index);
+        mGroups.remove(g);
+        mGroups.add(index, group);
+
+    }
+
+    public static List<User> getUsersofGroup(String name){
+
+
+        MyGroup group=null;
+        for(MyGroup g : mGroups){
+            if(g.getName().equals(name)){
+                group=g;
+            }
+        }
+        /*
+        List<User> users = new ArrayList<>();
+        for( User x : users_in_group){
+
+            if(x.getGroups().contains(group)){
+                users.add(x);
+            }
+
+        }*/
+
+
+        return group.getUsers_in_group();
+
+
+    }
+
+
+    public static List<MyActivity> getActivityofGroup(String name){
+
+        MyGroup group=null;
+        for(MyGroup g : mGroups){
+            if(g.getName().equals(name)){
+                group=g;
+            }
+        }
+        /*
+        List<MyActivity> activities = new ArrayList<>();
+        for( MyActivity x : activity_in_group){
+
+            if(x.getGroups().contains(group)){
+                activities.add(x);
+            }
+
+        }
+        */
+
+        return group.getActivity_in_group();
+
 
     }
 
@@ -84,7 +155,7 @@ public class DB {
 
 
         for(int i=0;i<gnames.length;i++){
-            MyGroup u=new MyGroup(gnames[i],gimages[i],gbalances[i]);
+            MyGroup u=new MyGroup(gids[i],gnames[i],gimages[i],gbalances[i]);
 
             mGroups.add(u);
         }
@@ -97,14 +168,17 @@ public class DB {
                 u.addGrouponUser(mGroups.get(0));
 
                 MyGroup g= mGroups.get(0);
+                mGroups.remove(g);
                 g.addUserinGroup(u);
                 mGroups.add(0, g);
+
 
             }
             else{//G2
                 u.addGrouponUser(mGroups.get(1));
 
                 MyGroup g= mGroups.get(1);
+                mGroups.remove(g);
                 g.addUserinGroup(u);
                 mGroups.add(1, g);
             }
@@ -120,6 +194,7 @@ public class DB {
                 u.setGroup(mGroups.get(0));
 
                 MyGroup g= mGroups.get(0);
+                mGroups.remove(g);
                 g.setActivity(u);
                 mGroups.add(0, g);
 
@@ -128,6 +203,7 @@ public class DB {
                 u.setGroup(mGroups.get(1));
 
                 MyGroup g= mGroups.get(1);
+                mGroups.remove(g);
                 g.setActivity(u);
                 mGroups.add(1, g);
             }

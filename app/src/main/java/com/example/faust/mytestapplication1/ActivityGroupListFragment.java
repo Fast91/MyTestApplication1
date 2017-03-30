@@ -3,14 +3,17 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by robertospaziani on 26/03/17.
@@ -27,6 +30,7 @@ public class ActivityGroupListFragment extends Fragment {
     private int[] images = {R.drawable.energia, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
     private double[] balances = {100.00, 25.00 , 12.00, 6.00};
     private ArrayList<MyActivity> activity;
+    String id_namegroup;
 
 
     public ActivityGroupListFragment() {
@@ -58,8 +62,17 @@ public class ActivityGroupListFragment extends Fragment {
         }
 
 
+        Bundle b = this.getArguments();
+        if(b==null){
+            id_namegroup="G1";
+        }
+        else{
+            id_namegroup= b.getString("GROUP_ID");
+        }
+
+
         activity.clear();
-        activity = (ArrayList<MyActivity>) DB.getmActivities();
+        activity = (ArrayList<MyActivity>) DB.getActivityofGroup(id_namegroup);
 
     }
 
@@ -96,6 +109,14 @@ public class ActivityGroupListFragment extends Fragment {
         }
 
 
+        final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+        final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+        String name= id_namegroup;
+        namegroup.setText(name);
+
+
+        final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+        moneygroup.setText("100€");
 
         return view;
     }

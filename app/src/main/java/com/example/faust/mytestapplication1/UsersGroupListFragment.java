@@ -36,7 +36,7 @@ public class UsersGroupListFragment extends Fragment{
     private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
     private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
     private ArrayList<User> users;
-    int id;
+    String id_namegroup;
 
 
     public UsersGroupListFragment() {
@@ -50,16 +50,19 @@ public class UsersGroupListFragment extends Fragment{
 
         Bundle b = this.getArguments();
         if(b==null){
-            id=1;
+            id_namegroup="G1";
         }
         else{
-            id= b.getInt("GROUP_ID");
+            id_namegroup= b.getString("GROUP_ID");
         }
+
+
 
 
         users=new ArrayList<>();
+        /*
 
-        if(id==1) {
+        if(id_namegroup.equals("G1")) {
             for (int i = 0; i < 3; i++) {
                 User u = new User(names[i], images[i], balances[i]);
 
@@ -77,12 +80,12 @@ public class UsersGroupListFragment extends Fragment{
             }
 
         }
-
+        */
 
 
 
         users.clear();
-        users=(ArrayList<User>) DB.getmUsers();
+        users=(ArrayList<User>) DB.getUsersofGroup(id_namegroup);
 
 
 
@@ -144,12 +147,11 @@ public class UsersGroupListFragment extends Fragment{
                       //Create a bundle to pass data, add data, set the bundle to your fragment and:
                          Bundle mBundle;
                      mBundle = new Bundle();
+                    mBundle.putString("GROUP_ID",id_namegroup);
                    // mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
 
-                    final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
-                    String name= "G"+id;
-                    namegroup.setText(name);
+
 
 
 
@@ -168,14 +170,24 @@ public class UsersGroupListFragment extends Fragment{
                 }
             });
 
-            final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            final  AppCompatActivity activity = (android.support.v7.app.AppCompatActivity) view.getContext();
             final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
-            String name= "G"+id;
+            String name= id_namegroup;
             namegroup.setText(name);
+
+            final TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
+            moneygroup.setText("100€");
 
         }
 
 
+
+             /*
+            final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
+            String name= id_namegroup;
+            namegroup.setText(name);
+            */
 
 
         return view;

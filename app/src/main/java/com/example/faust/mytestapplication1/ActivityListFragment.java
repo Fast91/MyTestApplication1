@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +119,15 @@ public class ActivityListFragment extends  Fragment  {
                 recyclerView2.setAdapter(adapter);
 
             }
+
+            final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+            final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+            String name= "Global";
+            namegroup.setText(name);
+
+            final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+            moneygroup.setText("100€");
+
 
 
 

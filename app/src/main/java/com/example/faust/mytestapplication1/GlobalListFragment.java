@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -99,6 +101,14 @@ public class GlobalListFragment extends Fragment {
 
         }
 
+
+        final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+        final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+        String name= "Global";
+        namegroup.setText(name);
+
+        final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+        moneygroup.setText("100€");
 
 
         return view;
