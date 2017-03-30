@@ -114,5 +114,9 @@ public class MyGroup {
         ImageId=id;
     }
 
+    public void setActivity(MyActivity a){
+        activity_in_group.add(a);
+    }
+
 
 }

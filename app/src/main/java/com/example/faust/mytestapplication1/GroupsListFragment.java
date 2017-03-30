@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentActivity;
@@ -49,7 +50,8 @@ public class GroupsListFragment extends Fragment {
 
         try
         {
-            groups = DBManager.getGroups();
+           // groups = DBManager.getGroups();
+            groups = DB.getmGroups();
         }
         catch(Exception e) //sostituire con l'eccezione corretta
         {
@@ -155,6 +157,13 @@ public class GroupsListFragment extends Fragment {
                     Bundle mBundle;
                     mBundle = new Bundle();
                     mBundle.putInt("GROUP_ID",item.getIdgroup());
+
+                    //set name
+                    /*
+                    final TextView namegroup = (TextView) view.findViewById(R.id.row1_text1);
+                    String name= item.getName();
+                    namegroup.setText(name);*/
+
                     myFragment.setArguments(mBundle);
 
                     //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
@@ -170,6 +179,10 @@ public class GroupsListFragment extends Fragment {
             recyclerView2.setAdapter(adapter);
 
         }
+
+
+
+        //Set Name of the group
 
 
 

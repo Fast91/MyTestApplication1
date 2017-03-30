@@ -2,10 +2,12 @@ package com.example.faust.mytestapplication1;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -53,11 +55,22 @@ public class ActivityExpense extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
 
 
+
+
+
                 EditText title= (EditText) findViewById(R.id.Title_newexpense);
                 String mytitle = title.getText().toString();
 
+
+
                 EditText amount= (EditText) findViewById(R.id.Total_newexpense);
-                Double myamount = Double.parseDouble(amount.getText().toString());
+                String stringamount = amount.getText().toString();
+                Double myamount=null;
+                if(!stringamount.equals("")) {
+                     myamount = Double.parseDouble(stringamount);
+                }
+
+
 
                 Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
                 String mygroup = group.getSelectedItem().toString();
@@ -82,25 +95,34 @@ public class ActivityExpense extends AppCompatActivity {
                 EditText category= (EditText) findViewById(R.id.Category_newexpense);
                 String mycategory = category.getText().toString();
 
-
-                MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
-
-
-                try {
-                    DBManager.addActivity(myactivity);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup.equals(""))&&(!mydescription.equals(""))&&(!mycategory.equals(""))){
+                    MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
-
-                Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
-                startActivity(intent);
+                    try {
+                       // DBManager.addActivity(myactivity);
+                        DB.setActivity(myactivity);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
 
 
-                return true;
+                    Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
+                    startActivity(intent);
+
+
+
+                    return true;}
+
+                else{
+                    Toast.makeText(getApplicationContext(),"Some Fields are empty",Toast.LENGTH_LONG).show();
+
+
+                    return true;}
+
+
             }
         });
 
@@ -112,7 +134,8 @@ public class ActivityExpense extends AppCompatActivity {
         ArrayList<String> items =new ArrayList<>();
         int i=0;
         try {
-            for (MyGroup g : DBManager.getGroups()) {
+           // for (MyGroup g : DBManager.getGroups()) {
+            for (MyGroup g : DB.getmGroups()) {
                 items.add(g.getName());
                 i++;
 
@@ -256,6 +279,21 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to delete this expense?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
+                        ActivityExpense.this.startActivity(intent);
+
+                    }
+                }).create().show();
+    }
 
 
 

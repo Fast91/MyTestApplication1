@@ -1,11 +1,13 @@
 package com.example.faust.mytestapplication1;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -44,8 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
             // PROVO A FARE OPERAZIONI SUL DB
 
+                if(DB.getmUsers().isEmpty()) {
+                    DB.init();
+                }
 
+            /*
                 try {
+
+
 
                     if(DBManager.getUsers().isEmpty()) {
                         DBManager.init();
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                */
 
 
 
@@ -212,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
         @Override
@@ -336,6 +348,31 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
+
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                       //finish();
+
+                    }
+                }).create().show();
+    }
 
 
 

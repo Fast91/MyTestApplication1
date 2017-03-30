@@ -58,7 +58,8 @@ public class ActivityGroupListFragment extends Fragment {
         }
 
 
-
+        activity.clear();
+        activity = (ArrayList<MyActivity>) DB.getmActivities();
 
     }
 

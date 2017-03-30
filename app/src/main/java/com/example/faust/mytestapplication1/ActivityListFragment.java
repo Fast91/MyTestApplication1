@@ -55,7 +55,8 @@ public class ActivityListFragment extends  Fragment  {
 
             try
             {
-                activities = DBManager.getActivities();
+                //activities = DBManager.getActivities();
+                activities = DB.getmActivities();
             }
             catch(Exception e) //sostituire con l'eccezione corretta
             {

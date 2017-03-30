@@ -42,7 +42,8 @@ public class GlobalListFragment extends Fragment {
 
         try
         {
-            users = DBManager.getUsers();
+            //users = DBManager.getUsers();
+            users= DB.getmUsers();
         }
         catch(Exception e) //sostituire con l'eccezione corretta
         {

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View.OnKeyListener;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public class UsersGroupListFragment extends Fragment{
     private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
     private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
     private ArrayList<User> users;
+    int id;
 
 
     public UsersGroupListFragment() {
@@ -45,7 +47,7 @@ public class UsersGroupListFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            int id;
+
         Bundle b = this.getArguments();
         if(b==null){
             id=1;
@@ -79,6 +81,10 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
+        users.clear();
+        users=(ArrayList<User>) DB.getmUsers();
+
+
 
 
     }
@@ -107,6 +113,8 @@ public class UsersGroupListFragment extends Fragment{
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
+
 
             adapter = new MyUsersGroupRecyclerViewAdapter(users);
             recyclerView.setAdapter(adapter);
@@ -139,6 +147,10 @@ public class UsersGroupListFragment extends Fragment{
                    // mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
 
+                    final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
+                    String name= "G"+id;
+                    namegroup.setText(name);
+
 
 
 
@@ -156,7 +168,13 @@ public class UsersGroupListFragment extends Fragment{
                 }
             });
 
+            final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
+            String name= "G"+id;
+            namegroup.setText(name);
+
         }
+
 
 
 
