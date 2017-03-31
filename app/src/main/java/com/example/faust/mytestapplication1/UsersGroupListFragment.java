@@ -132,10 +132,12 @@ public class UsersGroupListFragment extends Fragment{
 
             Button b5_showactivity = (Button) view.findViewById(R.id.b5_show_group_activity);
             //Listener Button5 show group activity
-            b5_showactivity.setOnTouchListener(new View.OnTouchListener() {
+            b5_showactivity.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                public void onClick(View v) {
+
+
 
                     /*b2.setPressed(false);
                     b3.setPressed(false);
@@ -166,7 +168,7 @@ public class UsersGroupListFragment extends Fragment{
                     }
 
 
-                    return true;
+                    return ;
                 }
             });
 

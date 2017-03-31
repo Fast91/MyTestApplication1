@@ -203,16 +203,17 @@ public class MainActivity extends AppCompatActivity {
         final Button b4add = (Button) findViewById(R.id.b4);
 
 
-        b4add.setOnTouchListener(new View.OnTouchListener() {
+        b4add.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
+                //Add expense
 
                 Intent intent=new Intent(MainActivity.this,ActivityExpense.class);
                 startActivity(intent);
 
 
-                return true;
+                return ;
             }
         });
 
