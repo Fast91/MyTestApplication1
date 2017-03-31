@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
             bGlobal.setBackgroundResource(R.drawable.button_pressed);
             bGroups.setBackgroundResource(R.drawable.buttonshape);
             bActivities.setBackgroundResource(R.drawable.buttonshape);
+
+            bGlobal.setPadding(10,10,10,10);
+            bGroups.setPadding(10,10,10,10);
+            bActivities.setPadding(10,10,10,10);
+
             FragmentManager fm = getSupportFragmentManager();
            Fragment fragment = fm.findFragmentById(R.id.fragment1);
            // Fragment fragment= new GlobalListFragment();
@@ -122,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
                 bGlobal.setImageResource(R.drawable.home256x256pressed);
                 bActivities.setImageResource(R.drawable.activities256x256);
                 bGroups.setImageResource(R.drawable.groups900x900);
+
+                bGlobal.setPadding(10,10,10,10);
+                bGroups.setPadding(10,10,10,10);
+                bActivities.setPadding(10,10,10,10);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -162,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
                 bGlobal.setImageResource(R.drawable.home256x256);
                 bActivities.setImageResource(R.drawable.activities256x256);
                 bGroups.setImageResource(R.drawable.groups900x900pressed);
+
+                bGlobal.setPadding(10,10,10,10);
+                bGroups.setPadding(10,10,10,10);
+                bActivities.setPadding(10,10,10,10);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -204,6 +217,10 @@ public class MainActivity extends AppCompatActivity {
                 bGlobal.setImageResource(R.drawable.home256x256);
                 bActivities.setImageResource(R.drawable.activities256x256pressed);
                 bGroups.setImageResource(R.drawable.groups900x900);
+
+                bGlobal.setPadding(10,10,10,10);
+                bGroups.setPadding(10,10,10,10);
+                bActivities.setPadding(10,10,10,10);
 
                 FragmentManager fm = getSupportFragmentManager();
 
@@ -307,6 +324,10 @@ public class MainActivity extends AppCompatActivity {
             b1.setBackgroundResource(R.drawable.buttonshape);
             b2.setBackgroundResource(R.drawable.buttonshape);
             b3.setBackgroundResource(R.drawable.buttonshape);
+
+            b1.setPadding(10,10,10,10);
+            b2.setPadding(10,10,10,10);
+            b3.setPadding(10,10,10,10);
 
             //      count_b = savedInstanceState.getInt("COUNT_B");
 
