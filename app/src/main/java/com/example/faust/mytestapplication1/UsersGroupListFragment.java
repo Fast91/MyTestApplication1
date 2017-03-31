@@ -87,6 +87,11 @@ public class UsersGroupListFragment extends Fragment{
         users.clear();
         users=(ArrayList<User>) DB.getUsersofGroup(id_namegroup);
 
+        //Disabilitare il bottone
+
+
+
+
 
 
 
@@ -190,6 +195,15 @@ public class UsersGroupListFragment extends Fragment{
             String name= id_namegroup;
             namegroup.setText(name);
             */
+
+        final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        final Button b1 = (Button) activity.findViewById(R.id.b1);
+        final Button b2 = (Button) activity.findViewById(R.id.b2);
+        final Button b3 = (Button) activity.findViewById(R.id.b3);
+        b2.setPressed(false);
+        b3.setPressed(false);
+
+        b1.setPressed(false);
 
 
         return view;

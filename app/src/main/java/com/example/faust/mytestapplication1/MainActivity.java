@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
         
 
        if (savedInstanceState != null) {
+           count_b=savedInstanceState.getInt("COUNT_B");
                 updateFragAndButton();
         }
 
@@ -97,11 +100,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
         b1.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
+
 
                 b2.setPressed(false);
                 b3.setPressed(false);
@@ -234,17 +238,17 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-         @Override
-          protected void onRestoreInstanceState(Bundle savedInstanceState) {
+         //@Override
+          /*protected void onRestoreInstanceState(Bundle savedInstanceState) {
              super.onRestoreInstanceState(savedInstanceState);
              count_b=savedInstanceState.getInt("COUNT_B");
-         }
+         }*/
 
           @Override
           protected void onRestart(){
               super.onRestart();
 
-             updateFragAndButton();
+             //updateFragAndButton();
 
           }
 
@@ -257,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
          @Override
          protected void onPause() {
               super.onPause();
+
               }
 
          @Override
@@ -276,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(true);
                 b2.setPressed(false);
                 b3.setPressed(false);
-                count_b=1;
+                //count_b=1;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment1));
@@ -287,18 +292,18 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(false);
                 b3.setPressed(false);
                 b2.setPressed(true);
-                count_b = 2;
+                //count_b = 2;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment2_groups));
               //  ft.addToBackStack(null);
                 ft.commit();
             }
-            else{
+            else  if (count_b==3){
                 b3.setPressed(true);
                 b1.setPressed(false);
                 b2.setPressed(false);
-                count_b=3;
+                //count_b=3;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment3_activity));
@@ -361,7 +366,37 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Really Exit?")
                 .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        final Button b1 = (Button) findViewById(R.id.b1);
+                        final Button b2 = (Button) findViewById(R.id.b2);
+                        final Button b3 = (Button) findViewById(R.id.b3);
+
+                        //      count_b = savedInstanceState.getInt("COUNT_B");
+
+                        if(count_b==1) {
+                            b1.setPressed(true);
+                            b2.setPressed(false);
+                            b3.setPressed(false);
+
+                        }
+                        else if (count_b==2){
+                            b1.setPressed(false);
+                            b3.setPressed(false);
+                            b2.setPressed(true);
+
+                        }
+                        else if (count_b==3){
+                            b3.setPressed(true);
+                            b1.setPressed(false);
+                            b2.setPressed(false);
+
+                        }
+
+                    }
+                })
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

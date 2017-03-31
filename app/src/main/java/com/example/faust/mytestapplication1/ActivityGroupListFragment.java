@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -117,6 +118,14 @@ public class ActivityGroupListFragment extends Fragment {
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
         moneygroup.setText("100€");
+
+        final Button b1 = (Button) myactivity.findViewById(R.id.b1);
+        final Button b2 = (Button) myactivity.findViewById(R.id.b2);
+        final Button b3 = (Button) myactivity.findViewById(R.id.b3);
+        b2.setPressed(false);
+        b3.setPressed(false);
+
+        b1.setPressed(false);
 
         return view;
     }
