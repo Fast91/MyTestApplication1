@@ -5,25 +5,32 @@
     android:layout_margin="0sp"
     android:id="@+id/tableLayout1"
     android:background="@android:color/white"
-     android:layout_gravity="bottom"
-    android:stretchColumns="*">
+     android:layout_gravity="bottom|right">
+
 
     <TableRow
         android:id="@+id/tableRow4"
         android:layout_width="35sp"
         android:layout_height="match_parent"
+        android:layout_gravity="bottom|right"
 
         >
 
-        <Button
-            android:id="@+id/b4"
-            style="@style/textButton"
-            android:layout_width="match_parent"
-            android:layout_height="35sp"
-            android:layout_span="6"
+        <ImageButton style="@style/AppTheme"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="New Button"
+            android:id="@+id/bAddNewExpense"
+            android:src="@drawable/addexpense593x593"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:padding="12dp"
+            android:background="@drawable/buttoncircular"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginRight="24dp"/>
 
-            android:background="@drawable/buttonshape"
-            android:text="@string/b4_string" />
 
 
     </TableRow>

@@ -12,8 +12,7 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-
-        <include layout="@layout/top" />
+    <include layout="@layout/top" />
 
 
     <LinearLayout
@@ -74,3 +73,5 @@
 
 
 </LinearLayout>
+
+

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View.OnKeyListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -196,13 +197,13 @@ public class UsersGroupListFragment extends Fragment{
             namegroup.setText(name);
             */
 
-        final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
-        final Button b1 = (Button) activity.findViewById(R.id.b1);
-        final Button b2 = (Button) activity.findViewById(R.id.b2);
-        final Button b3 = (Button) activity.findViewById(R.id.b3);
-        b1.setBackgroundResource(R.drawable.buttonshape);
-        b2.setBackgroundResource(R.drawable.buttonshape);
-        b3.setBackgroundResource(R.drawable.buttonshape);
+        final  AppCompatActivity myactivity = (AppCompatActivity) view.getContext();
+        final ImageButton bGlobal = (ImageButton) myactivity.findViewById(R.id.bGlobal);
+        final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);
+        final ImageButton bActivities = (ImageButton) myactivity.findViewById(R.id.bActivities);
+        bGlobal.setBackgroundResource(R.drawable.buttonshape);
+        bGroups.setBackgroundResource(R.drawable.buttonshape);
+        bActivities.setBackgroundResource(R.drawable.buttonshape);
 
 
         return view;

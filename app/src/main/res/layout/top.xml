@@ -15,11 +15,11 @@
 
         <TableRow
             android:id="@+id/tableRow0"
-            android:layout_height="10sp"
+            android:layout_height="40sp"
             android:layout_width="wrap_content"
             >
 
-            <Button
+            <!--<Button
                 android:id="@+id/b1"
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
@@ -29,9 +29,20 @@
                 android:background="@drawable/buttonshape"
                 android:layout_marginRight="1dp"
 
-                />
+                />-->
+            <ImageButton
+            android:id="@+id/bGlobal"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:padding="4sp"
+            android:layout_span="2"
+            android:src="@drawable/home256x256"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"/>
 
-            <Button
+            <!--<Button
                 android:id="@+id/b2"
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
@@ -42,8 +53,19 @@
                 style="@style/textButton"
                 android:layout_marginRight="1dp"
                 />
-
-            <Button
+-->
+            <ImageButton
+                android:id="@+id/bGroups"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:padding="4sp"
+                android:layout_span="2"
+                android:src="@drawable/groups900x900"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@drawable/buttonshape"
+                android:layout_marginRight="1dp"/>
+   <!--         <Button
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
                 android:layout_span="2"
@@ -52,7 +74,18 @@
 
                 style="@style/textButton"
                 android:background="@drawable/buttonshape"/>
-
+-->
+            <ImageButton
+                android:id="@+id/bActivities"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:padding="4sp"
+                android:layout_span="2"
+                android:src="@drawable/activities256x256"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@drawable/buttonshape"
+                android:layout_marginRight="1dp"/>
         </TableRow>
 
         <TableRow android:id="@+id/tableRow1"
@@ -73,10 +106,11 @@
                 android:layout_height="match_parent"
                 android:layout_span="2"
                 android:id="@+id/row1_text1"
-                android:text="@string/balance_name"
+                android:text="@string/global_string"
                 android:layout_gravity="fill_vertical"
                 android:textAlignment="center"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:paddingTop="5sp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -86,7 +120,8 @@
                 android:text="@string/balance_string"
                 android:layout_gravity="fill_vertical"
                 android:textAlignment="center"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:paddingTop="5sp"/>
 
         </TableRow>
 

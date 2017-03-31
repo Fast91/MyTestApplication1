@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,11 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 updateFragAndButton();
         }
 
-
-
-        final Button b1 = (Button) findViewById(R.id.b1);
-        final Button b2 = (Button) findViewById(R.id.b2);
-        final Button b3 = (Button) findViewById(R.id.b3);
+        final ImageButton bGlobal = (ImageButton) findViewById(R.id.bGlobal);
+        final ImageButton bGroups = (ImageButton) findViewById(R.id.bGroups);
+        final ImageButton bActivities = (ImageButton) findViewById(R.id.bActivities);
 
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             //b1.setPressed(true);
-            b1.setBackgroundResource(R.drawable.button_pressed);
-            b2.setBackgroundResource(R.drawable.buttonshape);
-            b3.setBackgroundResource(R.drawable.buttonshape);
+            bGlobal.setBackgroundResource(R.drawable.button_pressed);
+            bGroups.setBackgroundResource(R.drawable.buttonshape);
+            bActivities.setBackgroundResource(R.drawable.buttonshape);
             FragmentManager fm = getSupportFragmentManager();
            Fragment fragment = fm.findFragmentById(R.id.fragment1);
            // Fragment fragment= new GlobalListFragment();
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        b1.setOnClickListener(new View.OnClickListener() {
+        bGlobal.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -115,9 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
                 b1.setPressed(true);*/
 
-                b1.setBackgroundResource(R.drawable.button_pressed);
-                b2.setBackgroundResource(R.drawable.buttonshape);
-                b3.setBackgroundResource(R.drawable.buttonshape);
+                bGlobal.setBackgroundResource(R.drawable.button_pressed);
+                bGroups.setBackgroundResource(R.drawable.buttonshape);
+                bActivities.setBackgroundResource(R.drawable.buttonshape);
+
+                bGlobal.setImageResource(R.drawable.home256x256pressed);
+                bActivities.setImageResource(R.drawable.activities256x256);
+                bGroups.setImageResource(R.drawable.groups900x900);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        b2.setOnClickListener(new View.OnClickListener() {
+        bGroups.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -151,9 +155,13 @@ public class MainActivity extends AppCompatActivity {
                 b3.setPressed(false);
                 b2.setPressed(true);*/
 
-                b1.setBackgroundResource(R.drawable.buttonshape);
-                b2.setBackgroundResource(R.drawable.button_pressed);
-                b3.setBackgroundResource(R.drawable.buttonshape);
+                bGlobal.setBackgroundResource(R.drawable.buttonshape);
+                bGroups.setBackgroundResource(R.drawable.button_pressed);
+                bActivities.setBackgroundResource(R.drawable.buttonshape);
+
+                bGlobal.setImageResource(R.drawable.home256x256);
+                bActivities.setImageResource(R.drawable.activities256x256);
+                bGroups.setImageResource(R.drawable.groups900x900pressed);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -181,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        b3.setOnClickListener(new View.OnClickListener() {
+        bActivities.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -189,9 +197,13 @@ public class MainActivity extends AppCompatActivity {
                 b1.setPressed(false);
                 b2.setPressed(false);*/
 
-                b1.setBackgroundResource(R.drawable.buttonshape);
-                b2.setBackgroundResource(R.drawable.buttonshape);
-                b3.setBackgroundResource(R.drawable.button_pressed);
+                bGlobal.setBackgroundResource(R.drawable.buttonshape);
+                bGroups.setBackgroundResource(R.drawable.buttonshape);
+                bActivities.setBackgroundResource(R.drawable.button_pressed);
+
+                bGlobal.setImageResource(R.drawable.home256x256);
+                bActivities.setImageResource(R.drawable.activities256x256pressed);
+                bGroups.setImageResource(R.drawable.groups900x900);
 
                 FragmentManager fm = getSupportFragmentManager();
 
@@ -220,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
 
         //ADD EXPENSE
 
-        final Button b4add = (Button) findViewById(R.id.b4);
+        final ImageButton b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
 
 
         b4add.setOnClickListener(new View.OnClickListener() {
@@ -287,9 +299,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void updateFragAndButton(){
-            final Button b1 = (Button) findViewById(R.id.b1);
-            final Button b2 = (Button) findViewById(R.id.b2);
-            final Button b3 = (Button) findViewById(R.id.b3);
+            final ImageButton b1 = (ImageButton) findViewById(R.id.bGlobal);
+            final ImageButton b3 = (ImageButton) findViewById(R.id.bActivities);
+            final ImageButton b2 = (ImageButton) findViewById(R.id.bGroups);
 
             b1.setBackgroundResource(R.drawable.buttonshape);
             b2.setBackgroundResource(R.drawable.buttonshape);

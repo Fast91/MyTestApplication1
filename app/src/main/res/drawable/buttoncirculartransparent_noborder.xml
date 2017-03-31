@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:state_pressed="true">
+<item android:state_pressed="true"
+   >
 
 <shape
-    android:shape="rectangle" >
+    android:shape="oval" >
 
 
     <corners
         android:radius="6dp"
         />
     <solid
-        android:color="#4caf50"
+        android:color="@android:color/transparent"
         />
     <padding
         android:left="0dp"
@@ -19,11 +20,11 @@
         android:right="0dp"
         android:bottom="0dp"
         />
-
     <stroke
-        android:width="1.5dp"
-        android:color="#ffffff"
-        />
+        android:width="0dp"
+        >
+
+    </stroke>
 
     <shadow
         android:shadowDx="0"
@@ -31,21 +32,23 @@
         android:shadowRadius="5"
         />
 
+    <size
+        android:width="30dp"
+        android:height="30dp"/>
 
 </shape>
 
 </item>
 
-<item>
+<item >
 
 <shape
-    android:shape="rectangle" >
-
+    android:shape="oval" >
     <corners
         android:radius="6dp"
         />
     <solid
-        android:color="#f1f8e9"
+        android:color="@android:color/transparent"
         />
     <padding
         android:left="0dp"
@@ -53,18 +56,22 @@
         android:right="0dp"
         android:bottom="0dp"
         />
-
     <stroke
-        android:width="1.5dp"
-        android:color="#4caf50"
-        />
+        android:width="0dp"
+        >
+
+    </stroke>
+
+    <size
+        android:width="30dp"
+        android:height="30dp"/>
+
 
     <shadow
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
         />
-
 
 </shape>
 

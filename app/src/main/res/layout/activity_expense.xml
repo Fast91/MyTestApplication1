@@ -13,60 +13,54 @@
     android:weightSum="1">
 
 
-
-
     <EditText
+        android:id="@+id/Title_newexpense"
         android:layout_width="260dp"
         android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="text"
-        android:id="@+id/Title_newexpense"
-        android:hint="Title"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:background="@android:color/holo_green_light"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
         android:layout_gravity="center"
+        android:layout_margin="2dp"
+        android:background="@drawable/edittextbackground"
+        android:ems="10"
+        android:focusableInTouchMode="true"
         android:gravity="center"
-        />
+        android:hint="Title"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:nextFocusDown="@+id/pass_reg"
+        android:paddingLeft="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp" />
 
 
     <Spinner
         android:id="@+id/Group_newexpense"
         android:layout_width="260dp"
         android:layout_height="30dp"
-
-        android:gravity="center"
         android:layout_gravity="center"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:textColor="@android:color/black"
-        android:prompt="@string/groupspinner_prompt"
         android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
         android:focusableInTouchMode="true"
-
-       />
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:nextFocusDown="@+id/pass_reg"
+        android:paddingLeft="10dp"
+        android:prompt="@string/groupspinner_prompt"
+        android:textColor="@android:color/black"
+        android:textColorHint="#233ca1"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="15dp" />
 
 
     <EditText
         android:layout_width="260dp"
-        android:layout_height="30dp"
+        android:layout_height="60dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:digits="0123456789."
@@ -74,13 +68,13 @@
         android:id="@+id/Total_newexpense"
         android:hint="Amount"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:background="@android:color/holo_green_light"
+        android:textColorHint="@android:color/darker_gray"
+        android:background="@drawable/edittextbackground"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
         android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
+        android:textSize="30dp"
         android:paddingLeft="10dp"
         android:nextFocusDown="@+id/pass_reg"
         android:imeOptions="actionNext"
@@ -100,8 +94,8 @@
         android:id="@+id/Description_newexpense"
         android:hint="Description"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:background="@android:color/holo_green_light"
+        android:textColorHint="@android:color/darker_gray"
+        android:background="@drawable/edittextbackground"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
@@ -127,8 +121,8 @@
         android:id="@+id/Data_newexpense"
         android:hint="Data"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:background="@android:color/holo_green_light"
+        android:textColorHint="@android:color/darker_gray"
+        android:background="@drawable/edittextbackground"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
@@ -152,8 +146,8 @@
         android:id="@+id/Category_newexpense"
         android:hint="Category"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/holo_green_dark"
-        android:background="@android:color/holo_green_light"
+        android:textColorHint="@android:color/darker_gray"
+        android:background="@drawable/edittextbackground"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
@@ -169,15 +163,140 @@
         android:gravity="center"
         />
 
-    <Button
-        android:id="@+id/b5_SubmitExpense"
-        style="@style/textButton"
-        android:layout_width="match_parent"
-        android:layout_height="35sp"
-        android:layout_span="6"
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="260dp"
+        android:layout_height="135dp"
+        android:id="@+id/tableImage"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:stretchColumns="*"
+        android:layout_marginTop="7dp">
 
-        android:background="@drawable/buttonshape"
-        android:text="@string/b4_string" />
+
+        <TableRow
+            android:id="@+id/tableRowImage"
+            android:layout_height="140dp"
+            android:layout_width="wrap_content"
+            >
+
+        <ImageView
+            android:id="@+id/imagePicture"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="8"
+            android:adjustViewBounds="true"
+            android:background="@drawable/edittextbackground"/>
+
+            <TableLayout android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="2">
+
+                <TableRow
+                    android:id="@+id/tableRowNewPhoto"
+                    android:layout_height="40sp"
+                    android:layout_width="wrap_content"
+                    >
+
+                    <ImageButton
+                        android:id="@+id/buttonPhoto"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="top|center"
+                        android:layout_marginLeft="5dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/buttoncirculartransparent_noborder"
+                        android:scaleType="fitXY"
+                        android:padding="8dp"
+                        android:src="@drawable/icon_camera" />
+            </TableRow>
+            <TableRow
+                android:layout_gravity="bottom|center"
+                android:id="@+id/tableRowGallery"
+                android:layout_height="40sp"
+                android:layout_width="wrap_content"
+                >
+
+                <ImageButton
+                    android:id="@+id/buttonGallery"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginLeft="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/buttoncirculartransparent_noborder"
+                    android:scaleType="fitXY"
+                    android:padding="8dp"
+                    android:src="@drawable/picture_attachment_blue" />
+
+            </TableRow>
+                <TableRow
+                    android:layout_gravity="bottom|center"
+                    android:id="@+id/tableRowDeleteImage"
+                    android:layout_height="40sp"
+                    android:layout_width="wrap_content"
+                    >
+
+                    <ImageButton
+                        android:id="@+id/buttonDeleteImage"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginLeft="5dp"
+                        android:adjustViewBounds="true"
+                        android:padding="8dp"
+                        android:background="@drawable/buttoncirculartransparent_noborder"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/delete480x385" />
+
+                </TableRow>
+            </TableLayout>
+
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="120sp"
+        android:id="@+id/tableLayout0"
+        android:padding="2dp"
+        android:stretchColumns="*"
+        android:background="@android:color/white"
+        android:layout_marginTop="7dp">
+
+
+    <TableRow
+        android:id="@+id/tableRow0"
+        android:layout_height="40sp"
+        android:layout_width="wrap_content"
+        >
+
+        <ImageButton
+            android:id="@+id/buttonSubmitExpense"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/buttoncirculartransparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/tick_icon256x256" />
+
+        <ImageButton
+        android:id="@+id/buttonCancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/x_icon256x256"
+        android:background="@drawable/buttoncirculartransparent"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+            android:adjustViewBounds="true"
+        />
+
+    </TableRow>
+    </TableLayout>
 
 
 </LinearLayout>

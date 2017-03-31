@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -47,7 +48,7 @@ public class ActivityExpense extends AppCompatActivity {
 
         }
 
-        Button submitexpense = (Button)  findViewById(R.id.b5_SubmitExpense);
+        ImageButton submitexpense = (ImageButton)  findViewById(R.id.buttonSubmitExpense);
 
 
 

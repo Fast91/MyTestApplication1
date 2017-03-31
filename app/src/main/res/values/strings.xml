@@ -8,6 +8,7 @@
     <string name="balance_string">0.00€</string>
     <string name="b4_string">Add expense</string>
     <string name="b5_string">Add new Group</string>
+    <string name="global_string">Global</string>
 
     <string name="b5_string_show_group_activity">Show Group Activity</string>
     <string name="b6_string">Mobile fantastica</string>
