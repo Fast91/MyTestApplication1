@@ -122,10 +122,9 @@ public class ActivityGroupListFragment extends Fragment {
         final Button b1 = (Button) myactivity.findViewById(R.id.b1);
         final Button b2 = (Button) myactivity.findViewById(R.id.b2);
         final Button b3 = (Button) myactivity.findViewById(R.id.b3);
-        b2.setPressed(false);
-        b3.setPressed(false);
-
-        b1.setPressed(false);
+        b1.setBackgroundResource(R.drawable.buttonshape);
+        b2.setBackgroundResource(R.drawable.buttonshape);
+        b3.setBackgroundResource(R.drawable.buttonshape);
 
         return view;
     }

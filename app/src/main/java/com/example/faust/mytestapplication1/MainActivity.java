@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            b1.setPressed(true);
+            //b1.setPressed(true);
+            b1.setBackgroundResource(R.drawable.button_pressed);
+            b2.setBackgroundResource(R.drawable.buttonshape);
+            b3.setBackgroundResource(R.drawable.buttonshape);
             FragmentManager fm = getSupportFragmentManager();
            Fragment fragment = fm.findFragmentById(R.id.fragment1);
            // Fragment fragment= new GlobalListFragment();
@@ -100,17 +103,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        b1.setOnTouchListener(new View.OnTouchListener() {
+        b1.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
 
 
 
-                b2.setPressed(false);
+                /*b2.setPressed(false);
                 b3.setPressed(false);
 
-                b1.setPressed(true);
+                b1.setPressed(true);*/
+
+                b1.setBackgroundResource(R.drawable.button_pressed);
+                b2.setBackgroundResource(R.drawable.buttonshape);
+                b3.setBackgroundResource(R.drawable.buttonshape);
+
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment f= new GlobalListFragment();
@@ -130,18 +138,22 @@ public class MainActivity extends AppCompatActivity {
 
 
                 count_b=1;
-                return true;
+                return;
             }
         });
 
 
-        b2.setOnTouchListener(new View.OnTouchListener() {
+        b2.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                b1.setPressed(false);
+            public void onClick(View v) {
+                /*b1.setPressed(false);
                 b3.setPressed(false);
-                b2.setPressed(true);
+                b2.setPressed(true);*/
+
+                b1.setBackgroundResource(R.drawable.buttonshape);
+                b2.setBackgroundResource(R.drawable.button_pressed);
+                b3.setBackgroundResource(R.drawable.buttonshape);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -165,17 +177,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 count_b=2;
-                return true;
+                return;
             }
         });
 
-        b3.setOnTouchListener(new View.OnTouchListener() {
+        b3.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                b3.setPressed(true);
+            public void onClick(View v) {
+                /*b3.setPressed(true);
                 b1.setPressed(false);
-                b2.setPressed(false);
+                b2.setPressed(false);*/
+
+                b1.setBackgroundResource(R.drawable.buttonshape);
+                b2.setBackgroundResource(R.drawable.buttonshape);
+                b3.setBackgroundResource(R.drawable.button_pressed);
 
                 FragmentManager fm = getSupportFragmentManager();
 
@@ -198,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 count_b=3;
-                 return true;
+                 return;
             }
         });
 
@@ -275,12 +291,14 @@ public class MainActivity extends AppCompatActivity {
             final Button b2 = (Button) findViewById(R.id.b2);
             final Button b3 = (Button) findViewById(R.id.b3);
 
+            b1.setBackgroundResource(R.drawable.buttonshape);
+            b2.setBackgroundResource(R.drawable.buttonshape);
+            b3.setBackgroundResource(R.drawable.buttonshape);
+
             //      count_b = savedInstanceState.getInt("COUNT_B");
 
             if(count_b==1) {
-                b1.setPressed(true);
-                b2.setPressed(false);
-                b3.setPressed(false);
+                b1.setBackgroundResource(R.drawable.button_pressed);
                 //count_b=1;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -289,9 +307,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
             else if (count_b==2){
-                b1.setPressed(false);
-                b3.setPressed(false);
-                b2.setPressed(true);
+                b2.setBackgroundResource(R.drawable.button_pressed);
                 //count_b = 2;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -300,9 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
             else  if (count_b==3){
-                b3.setPressed(true);
-                b1.setPressed(false);
-                b2.setPressed(false);
+                b3.setBackgroundResource(R.drawable.button_pressed);
                 //count_b=3;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -366,37 +380,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("Really Exit?")
                 .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        final Button b1 = (Button) findViewById(R.id.b1);
-                        final Button b2 = (Button) findViewById(R.id.b2);
-                        final Button b3 = (Button) findViewById(R.id.b3);
-
-                        //      count_b = savedInstanceState.getInt("COUNT_B");
-
-                        if(count_b==1) {
-                            b1.setPressed(true);
-                            b2.setPressed(false);
-                            b3.setPressed(false);
-
-                        }
-                        else if (count_b==2){
-                            b1.setPressed(false);
-                            b3.setPressed(false);
-                            b2.setPressed(true);
-
-                        }
-                        else if (count_b==3){
-                            b3.setPressed(true);
-                            b1.setPressed(false);
-                            b2.setPressed(false);
-
-                        }
-
-                    }
-                })
+                .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
