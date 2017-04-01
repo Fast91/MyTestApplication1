@@ -201,6 +201,9 @@ public class UsersGroupListFragment extends Fragment{
         final ImageButton bGlobal = (ImageButton) myactivity.findViewById(R.id.bGlobal);
         final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);
         final ImageButton bActivities = (ImageButton) myactivity.findViewById(R.id.bActivities);
+
+        bGroups.setImageResource(R.drawable.groups900x900);
+
         bGlobal.setBackgroundResource(R.drawable.buttonshape);
         bGroups.setBackgroundResource(R.drawable.buttonshape);
         bActivities.setBackgroundResource(R.drawable.buttonshape);
