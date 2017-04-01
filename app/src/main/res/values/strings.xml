@@ -21,4 +21,22 @@
     <string name="total_user_global_string">100€</string>
     <string name="name_user_global_string">Francesco</string>
     <string name="groupspinner_prompt">Group</string>
+    <string name="share_menu" >Share</string>
+    <string name="setting_menu" >Setting</string>
+    <string name="contact_menu" >Contact us</string>
+    <string name="newexpense_title" >Title</string>
+    <string name="newexpense_amount">Amount</string>
+    <string name="newexpense_description">Description</string>
+    <string name="newexpense_data">Date</string>
+    <string name="newexpense_category">Category</string>
+    <string name="backmain_title">Really Exit?</string>
+    <string name="backmain_message">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="toast_mess_settings">you selected Settings option</string>
+    <string name="toast_mess_contactus">you selected Contact Us option</string>
+    <string name="toast_mess_share">you selected Share option</string>
+    <string name="toast_clickedgroup">Clicked Group:</string>
+    <string name="toast_emptyaddexpense">Some Fields are empty</string>
+    <string name="backexpe_message">Are you sure you want to delete this expense?</string>
+    <string name="backexpe_title">Delete expense?</string>
 </resources>

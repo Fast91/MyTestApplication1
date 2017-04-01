@@ -383,19 +383,19 @@ public class MainActivity extends AppCompatActivity {
         int res_id=item.getItemId();
         if(res_id==R.id.action_settings){
 
-            Toast.makeText(getApplicationContext(),"you selected Settings option",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
 
         }
 
         if(res_id==R.id.action_contactus){
 
-            Toast.makeText(getApplicationContext(),"you selected Contact Us option",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
 
         }
 
         if(res_id==R.id.action_share){
 
-            Toast.makeText(getApplicationContext(),"you selected Share option",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.toast_mess_share,Toast.LENGTH_LONG).show();
 
         }
 
@@ -412,10 +412,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage("Are you sure you want to exit?")
+                .setTitle(R.string.backmain_title)
+                .setMessage(R.string.backmain_message)
                 .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);

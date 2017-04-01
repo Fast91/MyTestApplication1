@@ -114,7 +114,7 @@ public class GroupsListFragment extends Fragment {
                 @Override
                 public void onListFragmentInteraction(MyGroup item) {
                     //TODO LISTENER IMPLEMENTARE
-                    Toast.makeText(getContext(),"Cliccato Gruppo: "+item.getName(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),R.string.toast_clickedgroup+item.getName(),Toast.LENGTH_LONG).show();
                     //You can change the fragment, something like this, not tested, please correct for your desired output:
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     Fragment myFragment = new UsersGroupListFragment();

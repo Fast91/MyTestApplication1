@@ -121,7 +121,8 @@ public class ActivityExpense extends AppCompatActivity {
                     return ;}
 
                 else{
-                    Toast.makeText(getApplicationContext(),"Some Fields are empty",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
+
 
 
                     return ;}
@@ -166,8 +167,7 @@ public class ActivityExpense extends AppCompatActivity {
                 // On selecting a spinner item
                 id_group = adapter.getItemAtPosition(position).toString();
                 // Showing selected spinner item
-                Toast.makeText(getApplicationContext(),
-                        "Selected Group : " + id_group, Toast.LENGTH_SHORT).show();
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -287,8 +287,8 @@ public class ActivityExpense extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage("Are you sure you want to delete this expense?")
+                .setTitle(R.string.backexpe_title)
+                .setMessage(R.string.backexpe_message)
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
