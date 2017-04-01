@@ -163,11 +163,22 @@
         android:gravity="center"
         />
 
+    <ImageView
+        android:id="@+id/imagePicture"
+        android:layout_width="260dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:src="@drawable/gallery314x250"
+        android:padding="2dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:background="@drawable/edittextbackground"/>
+
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="260dp"
-        android:layout_height="135dp"
+        android:layout_height="40dp"
         android:id="@+id/tableImage"
         android:layout_gravity="center"
         android:padding="2dp"
@@ -178,80 +189,43 @@
         <TableRow
             android:id="@+id/tableRowImage"
             android:layout_height="140dp"
-            android:layout_width="wrap_content"
-            >
-
-        <ImageView
-            android:id="@+id/imagePicture"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_weight="8"
-            android:adjustViewBounds="true"
-            android:background="@drawable/edittextbackground"/>
-
-            <TableLayout android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="2">
-
-                <TableRow
-                    android:id="@+id/tableRowNewPhoto"
-                    android:layout_height="40sp"
-                    android:layout_width="wrap_content"
-                    >
+            android:layout_width="wrap_content">
 
                     <ImageButton
                         android:id="@+id/buttonPhoto"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="top|center"
+                        android:layout_gravity="left"
                         android:layout_marginLeft="5dp"
                         android:adjustViewBounds="true"
                         android:background="@drawable/buttoncirculartransparent_noborder"
                         android:scaleType="fitXY"
                         android:padding="8dp"
-                        android:src="@drawable/icon_camera" />
-            </TableRow>
-            <TableRow
-                android:layout_gravity="bottom|center"
-                android:id="@+id/tableRowGallery"
-                android:layout_height="40sp"
-                android:layout_width="wrap_content"
-                >
+                        android:src="@drawable/icon_camera128x128" />
 
                 <ImageButton
                     android:id="@+id/buttonGallery"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_gravity="bottom|center"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/buttoncirculartransparent_noborder"
                     android:scaleType="fitXY"
                     android:padding="8dp"
-                    android:src="@drawable/picture_attachment_blue" />
-
-            </TableRow>
-                <TableRow
-                    android:layout_gravity="bottom|center"
-                    android:id="@+id/tableRowDeleteImage"
-                    android:layout_height="40sp"
-                    android:layout_width="wrap_content"
-                    >
+                    android:src="@drawable/picture_attachment256x256" />
 
                     <ImageButton
                         android:id="@+id/buttonDeleteImage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="bottom|center"
+                        android:layout_gravity="right"
                         android:layout_marginLeft="5dp"
                         android:adjustViewBounds="true"
                         android:padding="8dp"
                         android:background="@drawable/buttoncirculartransparent_noborder"
                         android:scaleType="fitXY"
                         android:src="@drawable/delete480x385" />
-
-                </TableRow>
-            </TableLayout>
 
         </TableRow>
     </TableLayout>
@@ -260,12 +234,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="120sp"
+        android:layout_height="45sp"
         android:id="@+id/tableLayout0"
+        android:layout_marginRight="10dp"
         android:padding="2dp"
         android:stretchColumns="*"
         android:background="@android:color/white"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="12dp">
 
 
     <TableRow
@@ -278,22 +253,11 @@
             android:id="@+id/buttonSubmitExpense"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom|right"
             android:adjustViewBounds="true"
             android:background="@drawable/buttoncirculartransparent"
             android:scaleType="fitXY"
             android:src="@drawable/tick_icon256x256" />
-
-        <ImageButton
-        android:id="@+id/buttonCancel"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/x_icon256x256"
-        android:background="@drawable/buttoncirculartransparent"
-        android:scaleType="fitXY"
-        android:layout_gravity="center"
-            android:adjustViewBounds="true"
-        />
 
     </TableRow>
     </TableLayout>
