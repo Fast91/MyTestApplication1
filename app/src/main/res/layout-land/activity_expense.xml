@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="2dp"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="1"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:layout_gravity="center"
 
-    >
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -290,5 +279,3 @@
 </LinearLayout>
 
 </ScrollView>
-
-</LinearLayout>
