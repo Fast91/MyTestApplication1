@@ -6,10 +6,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center"
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="2dp"
+        android:layout_paddingTop="35dp"
+
         android:weightSum="1">
 
         <LinearLayout
@@ -20,8 +21,9 @@
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="2dp"
+            android:layout_gravity="center_horizontal"
             android:weightSum="1"
-            android:layout_gravity="center"
+
             tools:context="com.example.faust.mytestapplication1.ActivityExpense">
 
 
