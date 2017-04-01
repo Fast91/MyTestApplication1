@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+
+
+<android.support.v7.widget.RecyclerView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/global_list"
     android:name="com.example.faust.mytestapplication1.GlobalListFragment"
     android:layout_width="match_parent"
@@ -11,3 +16,4 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.example.faust.mytestapplication1.GlobalListFragment"
     tools:listitem="@layout/fragment_global" />
+

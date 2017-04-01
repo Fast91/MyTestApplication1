@@ -15,7 +15,7 @@
     <include layout="@layout/top" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -64,12 +64,28 @@
         </FrameLayout>
 
 
+        <ImageButton style="@style/AppTheme"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="New Button"
+            android:id="@+id/bAddNewExpense"
+            android:src="@drawable/addexpense593x593"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:padding="12dp"
+            android:background="@drawable/buttoncircular"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginRight="24dp"/>
 
 
-    </LinearLayout>
 
 
-    <include layout="@layout/down" />
+    </RelativeLayout>
+
+
+
 
 
 </LinearLayout>
