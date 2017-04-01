@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Breaking MAD</string>
+    <string name="intro_string">Introduci Stringa</string>
+    <string name="b1_string">Globale</string>
+    <string name="b2_string">Gruppi</string>
+    <string name="b3_string">Attività</string>
+    <string name="balance_name">Bilancio Globale</string>
+    <string name="balance_string">0.00€</string>
+    <string name="b4_string">Nuova Spesa</string>
+    <string name="b5_string">Nuovo Gruppo</string>
+    <string name="global_string">Globale</string>
+
+    <string name="b5_string_show_group_activity">Attività del gruppo</string>
+    //prova
+    <string name="account_menu_item_string">Account</string>
+    <string name="show_subtitle">Mostro sottotitolo</string>
+    <string name="hide_subtitle">Nascondi sottotitolo</string>
+    <string name="subtitle_format">%1$s crimes</string>
+    <string name="title_activity_groups">Attività del gruppo</string>
+    <string name="total_user_global_string">120€</string>
+    <string name="name_user_global_string">Francesco</string>
+    <string name="groupspinner_prompt">Spinner gruppo</string>
+    <string name="share_menu" > Condividi</string>
+    <string name="setting_menu" >Impostazioni</string>
+    <string name="contact_menu" >Contattaci</string>
+    <string name="newexpense_title" >Titolo</string>
+    <string name="newexpense_amount">Totale</string>
+    <string name="newexpense_description">Descrizione</string>
+    <string name="newexpense_data">Data</string>
+    <string name="newexpense_category">Categoria</string>
+    <string name="backmain_title">Sicuro di uscire?</string>
+    <string name="backmain_message">Vuoi veramente uscire?</string>
+    <string name="yes">Si</string>
+    <string name="toast_mess_settings">Hai selezionato Impostazioni</string>
+    <string name="toast_mess_contactus">Hai selezionato Contattaci</string>
+    <string name="toast_mess_share">Hai selezionato Condividi</string>
+    <string name="toast_clickedgroup">Cliccato Gruppo:</string>
+    <string name="toast_emptyaddexpense">Alcuni campi sono vuoti</string>
+    <string name="backexpe_message">Vuoi elimare veramente questa spesa?</string>
+    <string name="backexpe_title">Eliminare spesa?</string>
+
+</resources>
