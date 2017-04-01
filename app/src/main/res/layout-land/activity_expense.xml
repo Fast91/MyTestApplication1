@@ -1,208 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="2dp"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="1"
-    android:layout_height="fill_parent"
-    android:layout_width="wrap_content"
-    android:layout_gravity="center">
 
-<LinearLayout
-
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:context="com.example.faust.mytestapplication1.ActivityExpense"
-    android:id="@+id/linearLayout_activityexpense"
-    android:padding="2dp"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="1">
-
-
-
-
-    <EditText
-        android:id="@+id/Title_newexpense"
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:background="@drawable/edittextbackground"
-        android:ems="10"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:hint="@string/newexpense_title"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:paddingLeft="10dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp" />
-
-
-    <Spinner
-        android:id="@+id/Group_newexpense"
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:paddingLeft="10dp"
-        android:prompt="@string/groupspinner_prompt"
-        android:textColor="@android:color/black"
-        android:textColorHint="#233ca1"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp" />
-
-
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:digits="0123456789."
-
-        android:id="@+id/Total_newexpense"
-        android:hint="@string/newexpense_amount"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="30dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="text"
-        android:id="@+id/Description_newexpense"
-        android:hint="@string/newexpense_description"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-
-
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="date"
-        android:id="@+id/Data_newexpense"
-        android:hint="@string/newexpense_data"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="text"
-        android:id="@+id/Category_newexpense"
-        android:hint="@string/newexpense_category"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-    <ImageView
-        android:id="@+id/imagePicture"
-        android:layout_width="260dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:src="@drawable/gallery314x250"
-        android:padding="2dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:background="@drawable/edittextbackground"/>
-
-    <TableLayout
+    <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:id="@+id/tableImage"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:orientation="vertical"
         android:padding="2dp"
-        android:stretchColumns="*"
-        android:layout_marginTop="7dp">
+        android:weightSum="1">
+
+        <LinearLayout
+
+            android:id="@+id/linearLayout_activityexpense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:weightSum="1"
+            android:layout_gravity="center"
+            tools:context="com.example.faust.mytestapplication1.ActivityExpense">
 
 
-        <TableRow
-            android:id="@+id/tableRowImage"
-            android:layout_height="140dp"
-            android:layout_width="wrap_content">
+            <EditText
+                android:id="@+id/Title_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_title"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="15dp" />
+
+
+            <Spinner
+                android:id="@+id/Group_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:prompt="@string/groupspinner_prompt"
+                android:textColor="@android:color/black"
+                android:textColorHint="#233ca1"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="15dp" />
+
+
+            <EditText
+                android:id="@+id/Total_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/edittextbackground"
+                android:digits="0123456789."
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_amount"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="30dp" />
+
+
+            <EditText
+                android:id="@+id/Description_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_description"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="15dp" />
+
+
+            <EditText
+                android:id="@+id/Data_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_data"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/Category_newexpense"
+                android:layout_width="260dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/edittextbackground"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_category"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/imagePicture"
+                android:layout_width="260dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@drawable/edittextbackground"
+                android:padding="2dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/gallery314x250" />
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/tableImage"
+                android:layout_width="260dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:padding="2dp"
+                android:stretchColumns="*">
+
+
+                <TableRow
+                    android:id="@+id/tableRowImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="140dp">
 
                     <ImageButton
                         android:id="@+id/buttonPhoto"
@@ -212,21 +207,21 @@
                         android:layout_marginLeft="5dp"
                         android:adjustViewBounds="true"
                         android:background="@drawable/buttoncirculartransparent_noborder"
-                        android:scaleType="fitXY"
                         android:padding="8dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/icon_camera128x128" />
 
-                <ImageButton
-                    android:id="@+id/buttonGallery"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/buttoncirculartransparent_noborder"
-                    android:scaleType="fitXY"
-                    android:padding="8dp"
-                    android:src="@drawable/picture_attachment256x256" />
+                    <ImageButton
+                        android:id="@+id/buttonGallery"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/buttoncirculartransparent_noborder"
+                        android:padding="8dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/picture_attachment256x256" />
 
                     <ImageButton
                         android:id="@+id/buttonDeleteImage"
@@ -235,47 +230,45 @@
                         android:layout_gravity="right"
                         android:layout_marginLeft="5dp"
                         android:adjustViewBounds="true"
-                        android:padding="8dp"
                         android:background="@drawable/buttoncirculartransparent_noborder"
+                        android:padding="8dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/delete480x385" />
 
-        </TableRow>
-    </TableLayout>
+                </TableRow>
+            </TableLayout>
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:id="@+id/tableLayout0"
-        android:layout_marginRight="10dp"
-        android:padding="2dp"
-        android:stretchColumns="*"
-        android:background="@android:color/white"
-        android:layout_marginTop="12dp">
-
-
-    <TableRow
-        android:id="@+id/tableRow0"
-        android:layout_height="40sp"
-        android:layout_width="wrap_content"
-        >
-
-        <ImageButton
-            android:id="@+id/buttonSubmitExpense"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|right"
-            android:adjustViewBounds="true"
-            android:background="@drawable/buttoncirculartransparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/tick_icon256x256" />
-
-    </TableRow>
-    </TableLayout>
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/tableLayout0"
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/white"
+                android:padding="2dp"
+                android:stretchColumns="*">
 
 
-</LinearLayout>
+                <TableRow
+                    android:id="@+id/tableRow0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40sp">
 
-</ScrollView>
+                    <ImageButton
+                        android:id="@+id/buttonSubmitExpense"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom|right"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/buttoncirculartransparent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tick_icon256x256" />
+
+                </TableRow>
+            </TableLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
