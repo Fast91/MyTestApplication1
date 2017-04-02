@@ -84,8 +84,14 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                 }
                 */
 
-                textName.setText(userInformation.name);
-                textSurname.setText(userInformation.surname);
+                if(userInformation==null) {
+                    textName.setText(R.string.prompt_name_profile);
+                    textSurname.setText(R.string.prompt_surname_profile);
+                }
+                else{
+                    textName.setText(userInformation.name);
+                    textSurname.setText(userInformation.surname);
+                }
             }
 
             @Override
