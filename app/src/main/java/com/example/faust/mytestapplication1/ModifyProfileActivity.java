@@ -38,6 +38,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_modify_profile);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -61,6 +63,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
 
         buttonSave = (Button) findViewById(R.id.save_profile_button);
         buttonSave.setOnClickListener(this);
+
+
 
 
 

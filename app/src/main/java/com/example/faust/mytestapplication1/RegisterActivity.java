@@ -36,6 +36,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         setContentView(R.layout.activity_register);
 
+
+        firebaseauth=FirebaseAuth.getInstance();
+
+        if(firebaseauth.getCurrentUser() != null){
+            //close this activity
+            finish();
+            //opening profile activity
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
          button=(Button)findViewById(R.id.email_sign_in_button);
          mEmailView=(EditText) findViewById(R.id.email);
          mPasswordView=(EditText) findViewById((R.id.password));
@@ -45,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         button.setOnClickListener(this);
         mLoginFormView.setOnClickListener(this);
 
-        firebaseauth=FirebaseAuth.getInstance();
+
 
     }
 
