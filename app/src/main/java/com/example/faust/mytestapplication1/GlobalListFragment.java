@@ -104,7 +104,7 @@ public class GlobalListFragment extends Fragment {
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
         final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
-        String name= "Global";
+        String name= getString(R.string.global_string);
         namegroup.setText(name);
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
