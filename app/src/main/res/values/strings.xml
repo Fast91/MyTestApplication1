@@ -72,4 +72,8 @@
     <string name="action_save_profile">Save Information</string>
     <string name="toast_mess_save_infouser">Saving information..</string>
     <string name="wrong_login">Email or password incorrect</string>
+    <string name="backprofile_message">Do you want to exit from profile?</string>
+    <string name="backprofile_title">Come back?</string>
+    <string name="title_activity_read_profile">ReadProfileActivity</string>
+    <string name="action_modify_profile">Modify profile</string>
 </resources>

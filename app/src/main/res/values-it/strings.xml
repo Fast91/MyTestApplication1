@@ -66,6 +66,9 @@
     <string name="action_save_profile">Salva Informazioni</string>
     <string name="toast_mess_save_infouser">Salvo le informazioni..</string>
     <string name="wrong_login">Email o password errate</string>
+    <string name="backprofile_message">Vuoi uscire dalle informazioni del profilo?</string>
+    <string name="backprofile_title">Vuoi tornare indietro?</string>
+    <string name="action_modify_profile">Modifica profilo</string>
 
 
 </resources>

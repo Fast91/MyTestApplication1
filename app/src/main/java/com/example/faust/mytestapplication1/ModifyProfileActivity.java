@@ -93,7 +93,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
 
         FirebaseUser fireuser = firebaseAuth.getCurrentUser();
 
-        databaseReference.child(fireuser.getUid()).setValue(user);
+
+        databaseReference.child("Users").child(fireuser.getUid()).setValue(user);
         //databaseReference.child(id_user).setValue(user);
 
         Toast.makeText(this,R.string.toast_mess_save_infouser,Toast.LENGTH_LONG).show();
@@ -110,14 +111,15 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.backexpe_title)
-                .setMessage(R.string.backexpe_message)
+                .setTitle(R.string.backprofile_title)
+                .setMessage(R.string.backprofile_message)
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Intent intent=new Intent(ModifyProfileActivity.this,MainActivity.class);
+                        Intent intent=new Intent(ModifyProfileActivity.this,ReadProfileActivity.class);
                         ModifyProfileActivity.this.startActivity(intent);
+                        finish();
 
                     }
                 }).create().show();
