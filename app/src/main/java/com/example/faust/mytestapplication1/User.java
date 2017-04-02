@@ -9,24 +9,25 @@ import java.util.List;
 
 public class User {
     public String ID;
-    private String version;
+    public String version;
     public String name;
     public String surname;
-    private int ImageId;
-    private double balance;
-    private List<MyGroup> groups;
-    private List<MyActivity> activity;
+    public int ImageId;
+    public double balance;
+    public List<MyGroup> groups= new ArrayList<>();
+    public List<MyActivity> activity= new ArrayList<>();
 
     public User(){
-        groups= new ArrayList<>();
-        activity= new ArrayList<>();
     }
 
     public User(String name,String surname){
-        groups= new ArrayList<>();
-        activity= new ArrayList<>();
         this.name=name;
         this.surname=surname;
+        this.ID="1";
+        this.version="0.1";
+        ImageId=R.drawable.profilecircle;
+        balance=0;
+
     }
 
 

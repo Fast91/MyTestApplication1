@@ -87,7 +87,7 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
         String name= editextName.getText().toString().trim();
         String surname= editextSurname.getText().toString().trim();
 
-        User user = new User(name,surname);
+        UserInformation user = new UserInformation(name,surname);
 
         //Now we have to store and we use the uniq ID
 
@@ -97,6 +97,10 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
         //databaseReference.child(id_user).setValue(user);
 
         Toast.makeText(this,R.string.toast_mess_save_infouser,Toast.LENGTH_LONG).show();
+
+        Intent intent=new Intent(ModifyProfileActivity.this,MainActivity.class);
+        ModifyProfileActivity.this.startActivity(intent);
+        finish();
 
 
 
