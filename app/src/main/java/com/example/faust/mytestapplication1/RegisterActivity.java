@@ -126,11 +126,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
-                        //intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
+                        ////intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
                         intent.addCategory(Intent.CATEGORY_HOME);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        //finish();
+                        finish();
 
                     }
                 }).create().show();
