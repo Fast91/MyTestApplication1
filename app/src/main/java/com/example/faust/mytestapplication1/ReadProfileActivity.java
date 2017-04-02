@@ -58,6 +58,16 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
 
+        /*
+        if(databaseReference==null){
+
+            Intent intent=new Intent(ReadProfileActivity.this,ModifyProfileActivity.class);
+            ReadProfileActivity.this.startActivity(intent);
+            finish();
+
+        }
+        */
+
         textName = (TextView) findViewById(R.id.name_real_profile);
         textSurname = (TextView) findViewById(R.id.surname_real_profile);
 
