@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "742424593300",
+    "firebase_url": "https://mobileapp-group2-912c1.firebaseio.com",
+    "project_id": "mobileapp-group2-912c1",
+    "storage_bucket": "mobileapp-group2-912c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742424593300:android:8a01c6ac9aaf693c",
+        "android_client_info": {
+          "package_name": "com.example.faust.mytestapplication1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742424593300-npp1ng9d9q647bthn20s9gppuv4cl1cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb5eJf-c1vG4ixaWo3TStMJzEEIl6DW3E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
