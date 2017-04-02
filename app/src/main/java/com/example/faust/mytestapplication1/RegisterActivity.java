@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private View mLoginFormView;
     private ProgressDialog myprogressBar;
     private FirebaseAuth firebaseauth;
+
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -56,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         }
         if(v==mLoginFormView){
+            startActivity(new Intent(this, LoginActivity.class));
 
 
         }
@@ -78,9 +81,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this,R.string.enter_password,Toast.LENGTH_SHORT).show();
             return;
         }
-        String s=(String)getString(R.string.progress_bar);
+
+        String s=(String)getString(R.string.progress_bar_register);
         myprogressBar.setMessage(s);
         myprogressBar.show();
+
         firebaseauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -89,6 +94,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     Toast.makeText(RegisterActivity.this,R.string.successful_registration,Toast.LENGTH_SHORT).show();
 
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                 }
                 else{
 
@@ -96,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
                 }
+                myprogressBar.dismiss();
 
             }
         });

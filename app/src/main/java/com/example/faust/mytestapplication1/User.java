@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String ID;
+    public String ID;
     private String version;
-    private String name;
+    public String name;
+    public String surname;
     private int ImageId;
     private double balance;
     private List<MyGroup> groups;
@@ -20,6 +21,14 @@ public class User {
         groups= new ArrayList<>();
         activity= new ArrayList<>();
     }
+
+    public User(String name,String surname){
+        groups= new ArrayList<>();
+        activity= new ArrayList<>();
+        this.name=name;
+        this.surname=surname;
+    }
+
 
     public User(String s,int id){
         name=s;

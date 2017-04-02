@@ -24,9 +24,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity {
     private int count_b=1;
+    //firebase auth object
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,20 @@ public class MainActivity extends AppCompatActivity {
        if (savedInstanceState != null) {
            count_b=savedInstanceState.getInt("COUNT_B");
                 updateFragAndButton();
+        }
+
+
+        //FIREBASE
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //if the user is not logged in
+        //that means current user will return null
+        if(firebaseAuth.getCurrentUser() == null){
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         final ImageButton bGlobal = (ImageButton) findViewById(R.id.bGlobal);
@@ -399,6 +418,21 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if(res_id==R.id.action_myprofile){
+            //logging out the user
+            //starting login activity
+            startActivity(new Intent(this, ModifyProfileActivity.class));
+        }
+
+        if(res_id==R.id.action_logout){
+            //logging out the user
+            firebaseAuth.signOut();
+            //closing activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
         return true;
     }
 
@@ -419,6 +453,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
+                        //intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
                         intent.addCategory(Intent.CATEGORY_HOME);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

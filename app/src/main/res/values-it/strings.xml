@@ -49,10 +49,23 @@
     </string>
     <string name="enter_email">Perfavore, inserire una email</string>
     <string name="enter_password">Perfavore, inserire una password</string>
-    <string name="progress_bar">Registrazione...</string>
+    <string name="progress_bar_register">Registrazione...</string>
     <string name="successful_registration">Registrazione completata</string>
     <string name="unsuccessful_registration">Registrazione fallita, riprovare</string>
     <string name="already_registered">Già registrato? Accedi quì</string>
+    <string name="titleregisteractivity">Registrazione</string>
+    <string name="titleloginactivity">Accedi</string>
+    <string name="action_login">Entra</string>
+    <string name="not_registered">Non sei registrato? Registrati qui</string>
+    <string name="logout_menu">Esci</string>
+    <string name="progress_bar_login">Accesso in corso..</string>
+    <string name="profile_menu">Profilo</string>
+    <string name="profile_title_string">Il mio profilo</string>
+    <string name="prompt_name_profile">Nome</string>
+    <string name="prompt_surname_profile">Cognome</string>
+    <string name="action_save_profile">Salva Informazioni</string>
+    <string name="toast_mess_save_infouser">Salvo le informazioni..</string>
+    <string name="wrong_login">Email o password errate</string>
 
 
 </resources>

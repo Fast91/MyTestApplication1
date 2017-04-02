@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5sp"
+
+    tools:context="com.example.faust.mytestapplication1.ModifyProfileActivity">
+
+
+
+    <TextView
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_title_string"
+        android:textAlignment="center"/>
+
+
+
+    <EditText
+        android:id="@+id/name_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_name_profile"
+        android:inputType="text"
+        android:maxLines="1" />
+
+
+    <EditText
+        android:id="@+id/surname_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_surname_profile"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="text"
+        android:maxLines="2"/>
+
+
+    <Button
+        android:id="@+id/save_profile_button"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/action_save_profile"
+        android:textStyle="bold" />
+
+
+
+</LinearLayout>

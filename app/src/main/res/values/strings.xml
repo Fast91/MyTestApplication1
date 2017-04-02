@@ -55,8 +55,21 @@
     </string>
     <string name="enter_email">Please, enter email</string>
     <string name="enter_password">Please, insert password</string>
-    <string name="progress_bar">Registering user...</string>
+    <string name="progress_bar_register">Registering user...</string>
     <string name="successful_registration">Registered successful</string>
     <string name="unsuccessful_registration">Register unsuccesfully, please try again</string>
     <string name="already_registered">Already registered? Sign here</string>
+    <string name="titleregisteractivity">Registration</string>
+    <string name="titleloginactivity">Log in</string>
+    <string name="action_login">Entra</string>
+    <string name="not_registered">Not registered? Register here</string>
+    <string name="logout_menu">Log out</string>
+    <string name="progress_bar_login">Login Please wait..</string>
+    <string name="profile_menu">Profile</string>
+    <string name="profile_title_string">My profile</string>
+    <string name="prompt_name_profile">Name</string>
+    <string name="prompt_surname_profile">Surname</string>
+    <string name="action_save_profile">Save Information</string>
+    <string name="toast_mess_save_infouser">Saving information..</string>
+    <string name="wrong_login">Email or password incorrect</string>
 </resources>
