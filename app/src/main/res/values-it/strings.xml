@@ -38,5 +38,21 @@
     <string name="toast_emptyaddexpense">Alcuni campi sono vuoti</string>
     <string name="backexpe_message">Vuoi elimare veramente questa spesa?</string>
     <string name="backexpe_title">Eliminare spesa?</string>
+    <string name="action_sign_in">Accedi o Registrati</string>
+    <string name="action_sign_in_short">Accedi</string>
+    <string name="error_invalid_email">Indirizzo email non valido</string>
+    <string name="error_invalid_password">Password troppo corta</string>
+    <string name="error_incorrect_password">Password errata</string>
+    <string name="error_field_required">Campo richiesto</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="enter_email">Perfavore, inserire una email</string>
+    <string name="enter_password">Perfavore, inserire una password</string>
+    <string name="progress_bar">Registrazione...</string>
+    <string name="successful_registration">Registrazione completata</string>
+    <string name="unsuccessful_registration">Registrazione fallita, riprovare</string>
+    <string name="already_registered">Già registrato? Accedi quì</string>
+
 
 </resources>
