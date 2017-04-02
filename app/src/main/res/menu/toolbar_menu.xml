@@ -17,8 +17,24 @@
         />
 
     <item
-        android:id="@+id/action_contactus"
-        android:title="@string/contact_menu"
+    android:id="@+id/action_contactus"
+    android:title="@string/contact_menu"
+
+
+
+    />
+
+    <item
+        android:id="@+id/action_myprofile"
+        android:title="@string/profile_menu"
+
+
+
+        />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/logout_menu"
 
 
 
