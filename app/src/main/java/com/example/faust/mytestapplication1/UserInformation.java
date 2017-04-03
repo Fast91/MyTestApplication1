@@ -5,8 +5,8 @@ package com.example.faust.mytestapplication1;
  */
 
 public class UserInformation {
-    public String name;
-    public String surname;
+    public String Name;
+    public String Surname;
 
     public UserInformation(){
 
@@ -14,7 +14,7 @@ public class UserInformation {
 
 
     public UserInformation(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
+        this.Name = name;
+        this.Surname = surname;
     }
 }

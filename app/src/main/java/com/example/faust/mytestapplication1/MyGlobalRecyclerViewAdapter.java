@@ -15,13 +15,13 @@ import java.util.List;
 
 public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRecyclerViewAdapter.UserHolder> {
 
-    private final List<User> items;
+    private final List<NomeDovuto> items;
    // private final OnListFragmentInteractionListener mListener;
 
 
 
     //public MyGlobalRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-         public MyGlobalRecyclerViewAdapter(List<User> items) {
+         public MyGlobalRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
        // mListener = listener;
     }
@@ -38,7 +38,7 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
 
     @Override
     public void onBindViewHolder(final UserHolder holder, int position) {
-        User u = items.get(position);
+        NomeDovuto u = items.get(position);
         holder.bindData(u);
 
        /*  holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
 
 
     public class UserHolder extends RecyclerView.ViewHolder {
-        private User user;
+        private NomeDovuto user;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
@@ -74,11 +74,11 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
 
         }
 
-        public void bindData(User u){
+        public void bindData(NomeDovuto u){
             user=u;
-            imageView.setImageResource(u.getImageId());
+            imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getBalance()));
+            balanceView.setText(""+(u.getDovuto()));
 
         }
 

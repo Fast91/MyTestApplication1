@@ -99,8 +99,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                     textSurname.setText(R.string.prompt_surname_profile);
                 }
                 else{
-                    textName.setText(userInformation.name);
-                    textSurname.setText(userInformation.surname);
+                    textName.setText(userInformation.Name);
+                    textSurname.setText(userInformation.Surname);
                 }
             }
 
