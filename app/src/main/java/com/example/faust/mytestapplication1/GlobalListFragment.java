@@ -13,9 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,6 +32,7 @@ public class GlobalListFragment extends Fragment {
 
 
     private MyGlobalRecyclerViewAdapter adapter;
+    private FirebaseAuth firebaseAuth;
 
     private int mColumnCount=1;
     //private OnListFragmentInteractionListener mListener;
@@ -41,6 +51,8 @@ public class GlobalListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         try
         {
@@ -74,32 +86,9 @@ public class GlobalListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_global_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        final View view = inflater.inflate(R.layout.fragment_global_list, container, false);
 
 
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-
-            adapter = new MyGlobalRecyclerViewAdapter(users);
-            recyclerView.setAdapter(adapter);
-        }
-        else{
-
-            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.global_list);
-         //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-            recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyGlobalRecyclerViewAdapter(users);
-            recyclerView2.setAdapter(adapter);
-
-        }
 
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
@@ -111,59 +100,169 @@ public class GlobalListFragment extends Fragment {
         moneygroup.setText("100€");
 
 
+
+        ////////////////
+        //// DATABASE
+        ///////////////
+
+
+        //Bilancio Globale
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("GlobalBalance");
+
+        Double  bilancioGlobale;
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Double bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
+
+
+                if (bilancioGlobale == null) {
+                    bilancioGlobale = 0.0;
+                }
+
+                //Bilancio
+                ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(bilancioGlobale.toString()+"€");
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+        /////////////////
+        /// Lista di utenti per l'user autenticato con il rispettivo dovuto
+        //////////////
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups");
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                HashMap<String,NomeDovuto> utenti_dovuto= new HashMap<>();
+
+                //Prendo tutti i gruppi
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+
+                    //prendo gli amici
+                    DataSnapshot friends=postSnapshot.child("Users");
+
+
+
+
+                    //prendo un amico
+                    for (DataSnapshot friend : postSnapshot.child("Users").getChildren()){
+
+                        String id= (String) friend.getKey();
+                        String nome = (String) friend.child("Name").getValue(String.class);
+                        Double dovuto = (Double) friend.child("Total").getValue(Double.class);
+
+
+
+
+
+                        if(utenti_dovuto.get(id)==null || utenti_dovuto.containsKey(id)==false){
+                            //add
+                            NomeDovuto iniziale = new NomeDovuto(nome,dovuto);
+                            utenti_dovuto.put(id,iniziale);
+
+
+                        }
+                        else{
+
+                            //faccio il get e il replace
+                            NomeDovuto iniziale = utenti_dovuto.get(id);
+                            iniziale.setDovuto(iniziale.getDovuto() + dovuto);
+                            utenti_dovuto.remove(id);
+                            utenti_dovuto.put(id,iniziale);
+
+                        }
+
+
+
+
+                    }
+
+
+
+
+                }
+
+
+                ///Adesso che ho la mia cazzo di lista bella piena
+                //Posso settare gli elementi nell'adapter porca puttana eva
+                ///
+
+                // Set the adapter
+
+
+                if (view instanceof RecyclerView) {
+                    Context context = view.getContext();
+                    RecyclerView recyclerView = (RecyclerView) view;
+
+
+                    if (mColumnCount <= 1) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    } else {
+                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                    }
+
+
+                    List list = new ArrayList(utenti_dovuto.values());
+                    adapter = new MyGlobalRecyclerViewAdapter(list);
+                    recyclerView.setAdapter(adapter);
+                }
+                else{
+
+                    RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.global_list);
+                    //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    List list = new ArrayList(utenti_dovuto.values());
+                    adapter = new MyGlobalRecyclerViewAdapter(list);
+                    recyclerView2.setAdapter(adapter);
+
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
+
+
+
+
         return view;
     }
 
 
-//CLASSI NON UTILIZZATE
-
-/*
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static GlobalListFragment newInstance(int columnCount) {
-        GlobalListFragment fragment = new GlobalListFragment();
-        Bundle args = new Bundle();
-        args.putInt("ARG_COLUMN_COUNT", columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-/*
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(User item);
-    }
-    */
 }
