@@ -14,7 +14,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -32,7 +41,10 @@ public class ActivityGroupListFragment extends Fragment {
     private int[] images = {R.drawable.energia, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
     private double[] balances = {100.00, 25.00 , 12.00, 6.00};
     private ArrayList<MyActivity> activity;
-    String id_namegroup;
+
+    String id_group;
+    private FirebaseAuth firebaseAuth;
+    private HashMap<String,NomeDovuto> attivita_dovuto;
 
 
     public ActivityGroupListFragment() {
@@ -45,40 +57,80 @@ public class ActivityGroupListFragment extends Fragment {
 
         activity = new ArrayList<>();
 
-        for (int i = 0; i < names.length; i++) {
-            MyActivity u = new MyActivity(names[i], images[i], balances[i]);
-            if(i==0){//Luce
+        id_group= savedInstanceState.getString("GROUP_ID");
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+         attivita_dovuto= new HashMap<>();
+
+
+        ///////////////
+        //database
+        ///////////////
+
+        ////Ricerca ID per quel Nome che sarebbe GROUP_ID il nome
+        ///// Prendere Tutti gli utenti e settare id_namegroup il vero ID del gruppo utile per il prossimo frammento
+
+        DatabaseReference databaseReference;
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+
+                //Per ogni attivita
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+
+
+                            String id = (String) postSnapshot.getKey();
+                            String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                            Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+
+
+                            if (attivita_dovuto.get(id) == null || attivita_dovuto.containsKey(id) == false) {
+                                //add
+                                NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+                                attivita_dovuto.put(id, iniziale);
+
+
+                            } else {
+
+                                //faccio il get e il replace
+                                NomeDovuto iniziale = attivita_dovuto.get(id);
+                                iniziale.setDovuto(iniziale.getDovuto() + dovuto);
+                                attivita_dovuto.remove(id);
+                                attivita_dovuto.put(id, iniziale);
+
+                            }
+
+
+                        }
+
+
+                    }
+
+
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-            else if(i==1){
 
-            }
-            else if(i==2){
-
-            }
-            else{//Pranzo
-
-            }
-
-            activity.add(u);
-        }
+        });
 
 
-        Bundle b = this.getArguments();
-        if(b==null){
-            id_namegroup="G1";
-        }
-        else{
-            id_namegroup= b.getString("GROUP_ID");
-        }
-
-
-        activity.clear();
-        activity = (ArrayList<MyActivity>) DB.getActivityofGroup(id_namegroup);
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,8 +148,8 @@ public class ActivityGroupListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-
-            adapter = new MyActivityGroupRecyclerViewAdapter(activity);
+            List list = new ArrayList(attivita_dovuto.values());
+            adapter = new MyActivityGroupRecyclerViewAdapter(list);
             recyclerView.setAdapter(adapter);
         }
         else{
@@ -105,13 +157,15 @@ public class ActivityGroupListFragment extends Fragment {
             RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
             //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
             recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyActivityGroupRecyclerViewAdapter(activity);
+            List list = new ArrayList(attivita_dovuto.values());
+            adapter = new MyActivityGroupRecyclerViewAdapter(list);
             recyclerView2.setAdapter(adapter);
 
         }
 
 
         final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+        /*
         final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
         String name= id_namegroup;
         namegroup.setText(name);
@@ -119,6 +173,38 @@ public class ActivityGroupListFragment extends Fragment {
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
         moneygroup.setText("100€");
+        */
+
+        //Settare il valore della riga li sopra
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+                namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
+                TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+                moneygroup.setText(dataSnapshot.child("Total").getValue(String.class));
+                // or double
+                //moneygroup.setText(dataSnapshot.child("Total").getValue(Double.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
+
+
 
         final ImageButton bGlobal = (ImageButton) myactivity.findViewById(R.id.bGlobal);
         final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);

@@ -46,6 +46,7 @@ public class GroupsListFragment extends Fragment {
     private double[] balances = {70.00, -7.00};*/
     //private ArrayList<MyGroup> groups;
     private List<MyGroup>groups;
+    private HashMap<String,String> id_gruppo;
 
 
     public GroupsListFragment() {
@@ -55,6 +56,8 @@ public class GroupsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        id_gruppo=new HashMap<>();
 
         try
         {
@@ -172,6 +175,8 @@ public class GroupsListFragment extends Fragment {
                 //Prendo tutti i gruppi
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
+                    id_gruppo.put(postSnapshot.child("Name").getValue(String.class),postSnapshot.getKey());
+
                     String id = (String) postSnapshot.getKey();
 
                     //prendo nome gruppo
@@ -213,7 +218,10 @@ public class GroupsListFragment extends Fragment {
                             //Create a bundle to pass data, add data, set the bundle to your fragment and:
                             Bundle mBundle;
                             mBundle = new Bundle();
-                            mBundle.putString("GROUP_ID", item.getName());
+
+
+
+                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName())); //Non gestito il fatto che il gruppo può avere nomi uguali
                             myFragment.setArguments(mBundle);
 
                             //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
@@ -246,7 +254,7 @@ public class GroupsListFragment extends Fragment {
                             //Create a bundle to pass data, add data, set the bundle to your fragment and:
                             Bundle mBundle;
                             mBundle = new Bundle();
-                            mBundle.putString("GROUP_ID", item.getName());
+                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName()));
 
                             //set name
                     /*

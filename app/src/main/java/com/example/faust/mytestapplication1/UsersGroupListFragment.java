@@ -19,7 +19,16 @@ import android.view.View.OnKeyListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by robertospaziani on 26/03/17.
@@ -36,9 +45,10 @@ public class UsersGroupListFragment extends Fragment{
     private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
     private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
     private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};
-    private ArrayList<User> users;
-    String id_namegroup;
-
+    private ArrayList<NomeDovuto> users;
+    String id_group;
+    private FirebaseAuth firebaseAuth;
+    private HashMap<String,NomeDovuto> utenti_dovuto;
 
     public UsersGroupListFragment() {
     }
@@ -50,45 +60,103 @@ public class UsersGroupListFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         Bundle b = this.getArguments();
-        if(b==null){
-            id_namegroup="G1";
-        }
-        else{
-            id_namegroup= b.getString("GROUP_ID");
-        }
 
+            id_group= b.getString("GROUP_ID");
 
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference;
 
         users=new ArrayList<>();
-        /*
-
-        if(id_namegroup.equals("G1")) {
-            for (int i = 0; i < 3; i++) {
-                User u = new User(names[i], images[i], balances[i]);
-
-                users.add(u);
-
-
-            }
-        }
-
-        else {
-            for (int i = 3; i < 5; i++) {
-                User u = new User(names[i], images[i], balances[i]);
-
-                users.add(u);
-            }
-
-        }
-        */
-
-
-
         users.clear();
-        users=(ArrayList<User>) DB.getUsersofGroup(id_namegroup);
 
-        //Disabilitare il bottone
+        utenti_dovuto= new HashMap<>();
+
+        ////////////////
+        //database
+        ///////////////
+
+        ////Ricerca ID per quel Nome che sarebbe GROUP_ID il nome
+         ///// Prendere Tutti gli utenti e settare id_namegroup il vero ID del gruppo utile per il prossimo frammento
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups");
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                HashMap<String,NomeDovuto> gruppi_dovuto= new HashMap<>();
+
+                //Prendo tutti i gruppi
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+                    //Se è lo stesso di quello selezionato
+                    if (postSnapshot.getKey().equals(id_group)) {
+
+                        //prendo gli amici
+                        DataSnapshot friends = postSnapshot.child("Users");
+
+
+                        //prendo un amico
+                        for (DataSnapshot friend : friends.getChildren()) {
+
+                            String id = (String) friend.getKey();
+                            String nome = (String) friend.child("Name").getValue(String.class);
+                            Double dovuto = (Double) friend.child("Total").getValue(Double.class);
+
+
+                            if (utenti_dovuto.get(id) == null || utenti_dovuto.containsKey(id) == false) {
+                                //add
+                                NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+                                utenti_dovuto.put(id, iniziale);
+
+
+                            } else {
+
+                                //faccio il get e il replace
+                                NomeDovuto iniziale = utenti_dovuto.get(id);
+                                iniziale.setDovuto(iniziale.getDovuto() + dovuto);
+                                utenti_dovuto.remove(id);
+                                utenti_dovuto.put(id, iniziale);
+
+                            }
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+                ///Adesso che ho la mia cazzo di lista bella piena
+                //Posso settare gli elementi nell'adapter porca puttana eva
+                ///
+
+                // Set the adapter
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
 
 
 
@@ -124,8 +192,8 @@ public class UsersGroupListFragment extends Fragment{
             }
 
 
-
-            adapter = new MyUsersGroupRecyclerViewAdapter(users);
+            List list = new ArrayList(utenti_dovuto.values());
+            adapter = new MyUsersGroupRecyclerViewAdapter(list);
             recyclerView.setAdapter(adapter);
         }
         else{
@@ -133,7 +201,8 @@ public class UsersGroupListFragment extends Fragment{
             RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.user_group_list);
             //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
             recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyUsersGroupRecyclerViewAdapter(users);
+            List list = new ArrayList(utenti_dovuto.values());
+            adapter = new MyUsersGroupRecyclerViewAdapter(list);
             recyclerView2.setAdapter(adapter);
 
             Button b5_showactivity = (Button) view.findViewById(R.id.b5_show_group_activity);
@@ -155,7 +224,7 @@ public class UsersGroupListFragment extends Fragment{
                       //Create a bundle to pass data, add data, set the bundle to your fragment and:
                          Bundle mBundle;
                      mBundle = new Bundle();
-                    mBundle.putString("GROUP_ID",id_namegroup);
+                    mBundle.putString("GROUP_ID",id_group);
                    // mBundle.putInt("GROUP_ID",item.getIdgroup());
                     myFragment.setArguments(mBundle);
 
@@ -179,12 +248,36 @@ public class UsersGroupListFragment extends Fragment{
             });
 
             final  AppCompatActivity activity = (android.support.v7.app.AppCompatActivity) view.getContext();
-            final TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
-            String name= id_namegroup;
-            namegroup.setText(name);
 
-            final TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
-            moneygroup.setText("100€");
+
+
+            //Settare il valore della riga li sopra
+            DatabaseReference databaseReference;
+            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
+
+            //Read content data
+            databaseReference.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
+                    namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
+                    TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
+                    moneygroup.setText(dataSnapshot.child("Total").getValue(String.class));
+                    // or double
+                    //moneygroup.setText(dataSnapshot.child("Total").getValue(Double.class));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+
+
 
         }
 
