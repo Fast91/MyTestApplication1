@@ -15,13 +15,13 @@ import java.util.List;
 
 class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyclerViewAdapter.ActivityHolder>{
 
-    private final List<MyActivity> items;
+    private final List<NomeDovuto> items;
     // private final OnListFragmentInteractionListener mListener;
 
 
 
     //public MyGroupsRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-    public MyActivityRecyclerViewAdapter(List<MyActivity> items) {
+    public MyActivityRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
         // mListener = listener;
     }
@@ -38,7 +38,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
     @Override
     public void onBindViewHolder(final MyActivityRecyclerViewAdapter.ActivityHolder holder, int position) {
-        MyActivity u = items.get(position);
+        NomeDovuto u = items.get(position);
         holder.bindData(u);
 
        /*  holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
 
     public class ActivityHolder extends RecyclerView.ViewHolder {
-        private MyActivity activity;
+        private NomeDovuto activity;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
@@ -74,11 +74,11 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
         }
 
-        public void bindData(MyActivity u){
+        public void bindData(NomeDovuto u){
             activity=u;
-            imageView.setImageResource(u.getImageId());
+            imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getBalance()));
+            balanceView.setText(""+(u.getDovuto()));
 
         }
 

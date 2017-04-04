@@ -209,7 +209,7 @@ public class ActivityListFragment extends  Fragment  {
                         RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_list);
                         //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
                         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        adapter = new MyActivityRecyclerViewAdapter(activities);//activity);
+                        adapter = new MyActivityRecyclerViewAdapter(list);//activity);
                         recyclerView2.setAdapter(adapter);
 
                     }
