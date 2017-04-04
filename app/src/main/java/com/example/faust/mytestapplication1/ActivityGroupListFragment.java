@@ -35,12 +35,7 @@ public class ActivityGroupListFragment extends Fragment {
 
     private MyActivityGroupRecyclerViewAdapter adapter;
     private int mColumnCount = 1;
-    //private OnListFragmentInteractionListener mListener;
 
-    private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
-    private int[] images = {R.drawable.energia, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
-    private double[] balances = {100.00, 25.00 , 12.00, 6.00};
-    private ArrayList<MyActivity> activity;
 
     String id_group;
     private FirebaseAuth firebaseAuth;
@@ -55,13 +50,29 @@ public class ActivityGroupListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = new ArrayList<>();
+        Bundle b = this.getArguments();
 
-        id_group= savedInstanceState.getString("GROUP_ID");
+        id_group= b.getString("GROUP_ID");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
          attivita_dovuto= new HashMap<>();
+
+
+
+    }
+
+
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_activity_group_list, container, false);
+
+
 
 
         ///////////////
@@ -72,6 +83,7 @@ public class ActivityGroupListFragment extends Fragment {
         ///// Prendere Tutti gli utenti e settare id_namegroup il vero ID del gruppo utile per il prossimo frammento
 
         DatabaseReference databaseReference;
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
 
@@ -88,34 +100,53 @@ public class ActivityGroupListFragment extends Fragment {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
+                    String id = (String) postSnapshot.getKey();
+                    String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                    Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
 
 
-                            String id = (String) postSnapshot.getKey();
-                            String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                            Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+                        NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+                        attivita_dovuto.put(id, iniziale);
 
 
-                            if (attivita_dovuto.get(id) == null || attivita_dovuto.containsKey(id) == false) {
-                                //add
-                                NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
-                                attivita_dovuto.put(id, iniziale);
+
+                }
 
 
-                            } else {
+                //Adapter
 
-                                //faccio il get e il replace
-                                NomeDovuto iniziale = attivita_dovuto.get(id);
-                                iniziale.setDovuto(iniziale.getDovuto() + dovuto);
-                                attivita_dovuto.remove(id);
-                                attivita_dovuto.put(id, iniziale);
-
-                            }
+                // Set the adapter
+                if (view instanceof RecyclerView) {
+                    Context context = view.getContext();
+                    RecyclerView recyclerView = (RecyclerView) view;
 
 
-                        }
-
-
+                    if (mColumnCount <= 1) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    } else {
+                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
                     }
+                    List list = new ArrayList(attivita_dovuto.values());
+                    adapter = new MyActivityGroupRecyclerViewAdapter(list);
+                    recyclerView.setAdapter(adapter);
+                }
+                else {
+
+                    RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    List list = new ArrayList(attivita_dovuto.values());
+                    adapter = new MyActivityGroupRecyclerViewAdapter(list);
+                    recyclerView2.setAdapter(adapter);
+                }
+
+
+
+
+                    //End adapter
+
+
+
+            }
 
 
 
@@ -130,53 +161,25 @@ public class ActivityGroupListFragment extends Fragment {
 
 
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_group_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
 
 
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            List list = new ArrayList(attivita_dovuto.values());
-            adapter = new MyActivityGroupRecyclerViewAdapter(list);
-            recyclerView.setAdapter(adapter);
-        }
-        else{
 
-            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
-            //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-            recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            List list = new ArrayList(attivita_dovuto.values());
-            adapter = new MyActivityGroupRecyclerViewAdapter(list);
-            recyclerView2.setAdapter(adapter);
 
-        }
+
+
+
+
+
+
+
+
+
 
 
         final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
-        /*
-        final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
-        String name= id_namegroup;
-        namegroup.setText(name);
 
 
-        final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
-        moneygroup.setText("100€");
-        */
-
-        //Settare il valore della riga li sopra
-        DatabaseReference databaseReference;
+        //Settare il valore della riga li sopra con nome del gruppo ecc
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
 
         //Read content data
@@ -189,9 +192,8 @@ public class ActivityGroupListFragment extends Fragment {
                 TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
                 namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
                 TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
-                moneygroup.setText(dataSnapshot.child("Total").getValue(String.class));
-                // or double
-                //moneygroup.setText(dataSnapshot.child("Total").getValue(Double.class));
+
+                moneygroup.setText(dataSnapshot.child("Total").getValue(Double.class).toString());
             }
 
             @Override
@@ -213,61 +215,12 @@ public class ActivityGroupListFragment extends Fragment {
         bGroups.setBackgroundResource(R.drawable.buttonshape);
         bActivities.setBackgroundResource(R.drawable.buttonshape);
 
+
         return view;
     }
 
 
-//CLASSI NON UTILIZZATE
 
-/*
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static GlobalListFragment newInstance(int columnCount) {
-        GlobalListFragment fragment = new GlobalListFragment();
-        Bundle args = new Bundle();
-        args.putInt("ARG_COLUMN_COUNT", columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-/*
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(User item);
-    }
-    */
 
 
 }

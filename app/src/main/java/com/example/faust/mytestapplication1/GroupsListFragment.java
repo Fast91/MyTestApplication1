@@ -69,33 +69,9 @@ public class GroupsListFragment extends Fragment {
             // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
         }
 
-        /*groups = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            MyGroup u = new MyGroup(names[i], images[i], balances[i]);
-            u.setIdgroup(i+1);
-            if(i==0){
-                u.addUserinGroup(new User ("Roberto",R.drawable.profilecircle,25.00));
-                u.addUserinGroup(new User ("Pasquale",R.drawable.profilecircle,20.00));
-                u.addUserinGroup(new User ("Fausto",R.drawable.profilecircle,25.00));
-                MyActivity a1 = new MyActivity("Luce",R.drawable.energia,100.00);
-                a1.setOwner(new User("Possessore App",R.drawable.realphoto));
-                u.addActivityinGroup(a1);
-                MyActivity a2 = new MyActivity("Gas",R.drawable.logogas,25.00);
-                a2.setOwner(new User("Pasquale",R.drawable.profilecircle));
-                u.addActivityinGroup(a2);
-            }
-            else{
-                u.addUserinGroup(new User ("Omar",R.drawable.profilecircle,-4.00));
-                u.addUserinGroup(new User ("Marco",R.drawable.profilecircle,-3.00));
-                MyActivity a1 = new MyActivity("Cena",R.drawable.cibo,12.00);
-                a1.setOwner(new User("Omar",R.drawable.profilecircle));
-                u.addActivityinGroup(a1);
-                MyActivity a2 = new MyActivity("Pranzo",R.drawable.cibo,6.00);
-                a2.setOwner(new User("Marco",R.drawable.profilecircle));
-                u.addActivityinGroup(a2);
-            }
-            groups.add(u);
-        }*/
+        //FIREBASE
+        //initializing firebase authentication object
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
 
@@ -212,6 +188,7 @@ public class GroupsListFragment extends Fragment {
                         public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
                             //TODO LISTENER IMPLEMENTARE
                             Toast.makeText(getContext(), R.string.toast_clickedgroup + item.getName(), Toast.LENGTH_LONG).show();
+
                             //You can change the fragment, something like this, not tested, please correct for your desired output:
                             AppCompatActivity activity = (AppCompatActivity) view.getContext();
                             Fragment myFragment = new UsersGroupListFragment();
@@ -247,6 +224,7 @@ public class GroupsListFragment extends Fragment {
                         public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
                             //TODO LISTENER IMPLEMENTARE
                             Toast.makeText(getContext(), "Cliccato Gruppo: " + item.getName(), Toast.LENGTH_LONG).show();
+
 
                             //You can change the fragment, something like this, not tested, please correct for your desired output:
                             AppCompatActivity activity = (AppCompatActivity) view.getContext();

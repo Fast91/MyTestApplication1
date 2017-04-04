@@ -39,16 +39,12 @@ public class ActivityListFragment extends  Fragment  {
 
 
 
-    private FirebaseAuth firebaseAuth;
+        private FirebaseAuth firebaseAuth;
         private MyActivityRecyclerViewAdapter adapter;
         private int mColumnCount = 1;
         View view;
-        //private OnListFragmentInteractionListener mListener;
 
-        /*private String[] names = {"Luce", "Gas" , "Cena", "Pranzo"};
-        private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle, R.drawable.profilecircle};
-        private double[] balances = {100.00, 25.00 , 12.00, 6.00};*/
-        //private ArrayList<MyActivity> activity;
+
         private List<MyActivity> activities;
 
         public ActivityListFragment() {
@@ -59,37 +55,11 @@ public class ActivityListFragment extends  Fragment  {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
+            //FIREBASE
+            //initializing firebase authentication object
+            firebaseAuth = FirebaseAuth.getInstance();
 
 
-
-            try
-            {
-                //activities = DBManager.getActivities();
-                activities = DB.getmActivities();
-            }
-            catch(Exception e) //sostituire con l'eccezione corretta
-            {
-                // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
-            }
-
-            /*activity = new ArrayList<>();
-            for (int i = 0; i < names.length; i++) {
-                MyActivity u = new MyActivity(names[i], images[i], balances[i]);
-                if(i==0){//Luce
-
-                }
-                else if(i==1){
-
-                }
-                else if(i==2){
-
-                }
-                else{//Pranzo
-
-                }
-
-                activity.add(u);
-            }*/
 
 
         }
@@ -156,6 +126,9 @@ public class ActivityListFragment extends  Fragment  {
             /// Lista di activities per l'user autenticato con il rispettivo dovuto
             //////////////
 
+
+
+
             databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Activities");
 
             //Read content data
@@ -171,7 +144,7 @@ public class ActivityListFragment extends  Fragment  {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
-                        String id = (String) postSnapshot.getKey();
+                      String id = (String) postSnapshot.getKey();
                         String nome = (String) postSnapshot.child("Name").getValue(String.class);
                         Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
 
@@ -181,6 +154,7 @@ public class ActivityListFragment extends  Fragment  {
 
                         //add
                         NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+
                         attività_dovuto.put(id, iniziale);
 
 
@@ -224,6 +198,8 @@ public class ActivityListFragment extends  Fragment  {
 
 
 
+
+
             return view;
         }
 
@@ -231,100 +207,6 @@ public class ActivityListFragment extends  Fragment  {
 
 
 
-        /*
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((MyActivity) getActivity()).setOnBackPressedListener(this);
-    }
-
-    @Override
-    public void doBack() {
-        //BackPressed in activity will call this;
-    }
-    */
-
-
-
-
-/*
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                String cameback="CameBack";
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                intent.putExtra("Comingback", cameback);
-                startActivity(intent);
-                return true;
-        }
-        return false;
-    }
-*/
-
-        /*
-    @Override
-    public void onBackPressed()
-    {
-        if(getFragmentManager().getBackStackEntryCount() > 0)
-            getFragmentManager().popBackStack();
-        else
-            super.onBackPressed();
-    }
-    */
-
-
-//CLASSI NON UTILIZZATE
-
-/*
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static GlobalListFragment newInstance(int columnCount) {
-        GlobalListFragment fragment = new GlobalListFragment();
-        Bundle args = new Bundle();
-        args.putInt("ARG_COLUMN_COUNT", columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-/*
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(User item);
-    }
-    */
 
 
 
