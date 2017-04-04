@@ -21,7 +21,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,7 +40,7 @@ public class GroupsListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private MainActivity mainActivity;
-
+    private FirebaseAuth firebaseAuth;
     /*private String[] names = {"G1", "G2"};
     private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
     private double[] balances = {70.00, -7.00};*/
@@ -98,90 +106,6 @@ public class GroupsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
 
-        // Set the adapter forse il primo if non utile
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-
-
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-
-            adapter = new MyGroupsRecyclerViewAdapter(groups, new OnListFragmentInteractionListener() {
-                @Override
-                public void onListFragmentInteraction(MyGroup item) {
-                    //TODO LISTENER IMPLEMENTARE
-                    Toast.makeText(getContext(),R.string.toast_clickedgroup+item.getName(),Toast.LENGTH_LONG).show();
-                    //You can change the fragment, something like this, not tested, please correct for your desired output:
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    Fragment myFragment = new UsersGroupListFragment();
-                    //Create a bundle to pass data, add data, set the bundle to your fragment and:
-                    Bundle mBundle;
-                    mBundle = new Bundle();
-                    mBundle.putString("GROUP_ID",item.getName());
-                    myFragment.setArguments(mBundle);
-
-                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
-
-
-                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                        activity.getSupportFragmentManager().popBackStackImmediate();
-                    }
-
-
-
-                }
-            });
-            recyclerView.setAdapter(adapter);
-
-        }
-        else{
-
-            RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.groups_list);
-            //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-            recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-            adapter = new MyGroupsRecyclerViewAdapter(groups, new OnListFragmentInteractionListener() {
-                @Override
-                public void onListFragmentInteraction(MyGroup item) {
-                    //TODO LISTENER IMPLEMENTARE
-                    Toast.makeText(getContext(),"Cliccato Gruppo: "+item.getName(),Toast.LENGTH_LONG).show();
-
-                    //You can change the fragment, something like this, not tested, please correct for your desired output:
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                    Fragment myFragment = new UsersGroupListFragment();
-                    //Create a bundle to pass data, add data, set the bundle to your fragment and:
-                    Bundle mBundle;
-                    mBundle = new Bundle();
-                    mBundle.putString("GROUP_ID",item.getName());
-
-                    //set name
-                    /*
-                    final TextView namegroup = (TextView) view.findViewById(R.id.row1_text1);
-                    String name= item.getName();
-                    namegroup.setText(name);*/
-
-                    myFragment.setArguments(mBundle);
-
-                    //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
-
-                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                        activity.getSupportFragmentManager().popBackStackImmediate();
-                    }
-
-                }
-            });
-            recyclerView2.setAdapter(adapter);
-
-        }
-
-
-
         //Set Name of the group
 
         final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
@@ -191,6 +115,169 @@ public class GroupsListFragment extends Fragment {
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
         moneygroup.setText("100€");
+
+
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("GlobalBalance");
+
+        Double  bilancioGlobale;
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Double bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
+
+
+                if (bilancioGlobale == null) {
+                    bilancioGlobale = 0.0;
+                }
+
+                //Bilancio
+                ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(bilancioGlobale.toString()+"€");
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+        /////////////////
+        /// Lista di gruppi per l'user autenticato con il rispettivo dovuto
+        //////////////
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups");
+
+        //Read content data
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                HashMap<String, NomeDovuto> gruppi_dovuto = new HashMap<>();
+
+                //Prendo tutti i gruppi
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    String id = (String) postSnapshot.getKey();
+
+                    //prendo nome gruppo
+                    String gruppo = postSnapshot.child("Name").getValue(String.class);
+                    Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+
+
+                    //in teoria utente contiene solo una entry per un determinato gruppo
+
+                    NomeDovuto iniziale = new NomeDovuto(gruppo, dovuto);
+                    gruppi_dovuto.put(id, iniziale);
+
+
+                }
+
+                List list = new ArrayList(gruppi_dovuto.values());
+
+
+                // Set the adapter forse il primo if non utile
+                if (view instanceof RecyclerView) {
+                    Context context = view.getContext();
+                    RecyclerView recyclerView = (RecyclerView) view;
+
+
+                    if (mColumnCount <= 1) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    } else {
+                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                    }
+
+                    adapter = new MyGroupsRecyclerViewAdapter(list, new OnListFragmentInteractionListener() {//cambiato qui
+                        @Override
+                        public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
+                            //TODO LISTENER IMPLEMENTARE
+                            Toast.makeText(getContext(), R.string.toast_clickedgroup + item.getName(), Toast.LENGTH_LONG).show();
+                            //You can change the fragment, something like this, not tested, please correct for your desired output:
+                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                            Fragment myFragment = new UsersGroupListFragment();
+                            //Create a bundle to pass data, add data, set the bundle to your fragment and:
+                            Bundle mBundle;
+                            mBundle = new Bundle();
+                            mBundle.putString("GROUP_ID", item.getName());
+                            myFragment.setArguments(mBundle);
+
+                            //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+
+                            for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                                activity.getSupportFragmentManager().popBackStackImmediate();
+                            }
+
+
+                        }
+                    });
+                    recyclerView.setAdapter(adapter);
+
+                } else {
+
+                    RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.groups_list);
+                    //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    adapter = new MyGroupsRecyclerViewAdapter(list, new OnListFragmentInteractionListener() {//cambiato qui
+                        @Override
+                        public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
+                            //TODO LISTENER IMPLEMENTARE
+                            Toast.makeText(getContext(), "Cliccato Gruppo: " + item.getName(), Toast.LENGTH_LONG).show();
+
+                            //You can change the fragment, something like this, not tested, please correct for your desired output:
+                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                            Fragment myFragment = new UsersGroupListFragment();
+                            //Create a bundle to pass data, add data, set the bundle to your fragment and:
+                            Bundle mBundle;
+                            mBundle = new Bundle();
+                            mBundle.putString("GROUP_ID", item.getName());
+
+                            //set name
+                    /*
+                    final TextView namegroup = (TextView) view.findViewById(R.id.row1_text1);
+                    String name= item.getName();
+                    namegroup.setText(name);*/
+
+                            myFragment.setArguments(mBundle);
+
+                            //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
+
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+                            for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                                activity.getSupportFragmentManager().popBackStackImmediate();
+                            }
+
+                        }
+                    });
+                    recyclerView2.setAdapter(adapter);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -250,7 +337,7 @@ public class GroupsListFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
 
-        void onListFragmentInteraction(MyGroup item);
+        void onListFragmentInteraction(NomeDovuto item);
     }
 
 
