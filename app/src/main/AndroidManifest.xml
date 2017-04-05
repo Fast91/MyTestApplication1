@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <!--RegisterActivity-->
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ActivityDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             >
             <intent-filter>
@@ -59,12 +59,12 @@
             android:name=".ReadProfileActivity"
             android:label="@string/title_activity_read_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ActivityDetailActivity"
+        <!--activity android:name=".ActivityDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
-        </activity>
+        </activity-->
     </application>
 
 </manifest>

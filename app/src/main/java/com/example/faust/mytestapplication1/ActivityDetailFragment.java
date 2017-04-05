@@ -71,7 +71,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             mAmountTextView.setText(mDetailEntry.getAmount() + mDetailEntry.getCurrency());
             try {
                 if (mDetailEntry.getAmount().charAt(0) == '-') {
-                    mAmountTextView.setTextColor(Color.parseColor("#d02020"));
+                    mAmountTextView.setTextColor(Color.BLACK);//parseColor("#d02020"));
                 } else {
                     mAmountTextView.setTextColor(Color.parseColor("#08a008"));
                 }
