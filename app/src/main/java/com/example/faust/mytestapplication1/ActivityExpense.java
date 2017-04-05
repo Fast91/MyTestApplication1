@@ -25,10 +25,18 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ActivityExpense extends AppCompatActivity {
     private EditText date;
@@ -36,12 +44,24 @@ public class ActivityExpense extends AppCompatActivity {
     private String id_group;
 
 
+    private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference databaseReference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
 
         if (savedInstanceState != null) {
@@ -74,7 +94,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                 Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
-                String mygroup = group.getSelectedItem().toString();
+                final String mygroup = group.getSelectedItem().toString();
 
                 EditText description= (EditText) findViewById(R.id.Description_newexpense);
                 String mydescription = description.getText().toString();
@@ -83,7 +103,7 @@ public class ActivityExpense extends AppCompatActivity {
                 Date mydata =null;
 
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date myDate;
+                Date myDate=null;
                 try {
                     myDate = df.parse(date.getText().toString());
 
@@ -97,18 +117,102 @@ public class ActivityExpense extends AppCompatActivity {
                 String mycategory = category.getText().toString();
 
                 if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup.equals(""))&&(!mydescription.equals(""))&&(!mycategory.equals(""))){
-                    MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
+                  //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
-                    try {
-                       // DBManager.addActivity(myactivity);
+                 //prendo id gruppo e prendo hashmap con chiave il nome(nickname dell'utente) e valore id utente
+                    final String[] myid_group = new String[1];
+                    final HashMap<String,String> myusers=new HashMap<String, String>();
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
 
-                            DB.setActivity(myactivity, mygroup);
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                                if(postSnapshot.child("Name").getValue(String.class).equals(mygroup)){
+                                    myid_group[0] =postSnapshot.getKey();
+
+
+                                    for (DataSnapshot user : postSnapshot.child("Users").getChildren()) {
+
+                                       myusers.put(user.child("Name").getValue(String.class),user.getKey());
+
+
+                                    }
+
+
+
+
+                                }
+
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+                    //ora ho gli utenti e l'id del gruppo
+
+                        databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                    //genero nuovo id per l'attività
+                    String key = databaseReference.push().getKey();
+                    String Name=mytitle;
+                    Double Total=myamount;
+                    String GroupId=myid_group[0];
+                    String Description=mydescription;
+                    String Category=mycategory;
+                    String Date=myDate.toString();
+
+                    databaseReference.child(key).setValue(Name);
+                    databaseReference.child(key).setValue(Total);
+                    databaseReference.child(key).setValue(GroupId);
+                    databaseReference.child(key).setValue(Description);
+                    databaseReference.child(key).setValue(Category);
+                    databaseReference.child(key).setValue(Date);
+                    databaseReference.child(key).setValue("Users");
+
+                    int count_users=myusers.values().size();
+                    //todo
+
+                    // prendere il vero owner
+                    String first=null;
+                    for(String in : myusers.keySet()){
+
+                    first=in;
+                         break;
 
                     }
-                    catch (Exception e) {
-                        e.printStackTrace();
+
+                    Name=first;
+                    databaseReference.child(key).child("Owner").child(myusers.get(first)).setValue(Name);
+                    Total=myamount/count_users;
+                    //// TODO: 05/04/2017  devo aggiungere tutti gli utenti
+                    //preso tutti i nomi degli utenti
+                    for(String in : myusers.keySet()){
+
+                        if(!in.equals(first)){
+
+                            Name=in;
+                            databaseReference.child(key).child("Users").child(myusers.get(Name)).setValue(Name);
+                            databaseReference.child(key).child("Users").child(myusers.get(Name)).setValue(Total);
+
+
+
+                        }
+
+
+
+
                     }
 
 
@@ -140,7 +244,11 @@ public class ActivityExpense extends AppCompatActivity {
         ArrayList<String> items =new ArrayList<>();
         int i=0;
         try {
-           // for (MyGroup g : DBManager.getGroups()) {
+
+            // devo mettere in items i nomi dei gruppi
+
+
+
             for (MyGroup g : DB.getmGroups()) {
                 items.add(g.getName());
                 i++;
