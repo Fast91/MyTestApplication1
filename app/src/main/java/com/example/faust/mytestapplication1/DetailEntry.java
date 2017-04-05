@@ -1,23 +1,29 @@
 package com.example.faust.mytestapplication1;
 
+
+import android.icu.util.Currency;
+import android.os.Build;
+
+import java.util.Locale;
 import java.util.UUID;
 
 /**
  * Created by faust on 05/04/2017.
  */
 
-public class Detail {
+public class DetailEntry {
     private UUID mId;
     private String mUserName;
     private String mAmount;
+    private String mCurrency;
 
-    public Detail()
+    public DetailEntry()
     {
-        //TO-DO
-        //prendere dal db il nome dell'utente e i soldi che deve
+        //TODO prendere dal db il nome dell'utente e i soldi che deve
 
         mId = UUID.randomUUID();
-        mAmount = "100€";
+        mAmount = "0";
+        mCurrency = "€";
     }
 
     public UUID getId() {
@@ -38,5 +44,12 @@ public class Detail {
 
     public void setAmount(String amount) {
         mAmount = amount;
+    }
+
+    public String getCurrency() {
+        return mCurrency;
+    }
+    public void setCurrency(String currency) {
+        mCurrency = currency;
     }
 }

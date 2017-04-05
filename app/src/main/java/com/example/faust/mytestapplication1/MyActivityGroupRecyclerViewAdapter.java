@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by robertospaziani on 26/03/17.
@@ -66,6 +66,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
     public class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private MyActivity activity;
+        private View mParentView;
         private Context mContext;
         public final ImageView imageView;
         public final TextView nameView;
@@ -73,7 +74,9 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
         public ActivityHolder(View view) {
             super(view);
+            mParentView = view;
             mContext = view.getContext();
+            itemView.setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_activity_group);
             nameView = (TextView) view.findViewById(R.id.name_activity_group);
             balanceView = (TextView) view.findViewById(R.id.money_activity_group);
@@ -88,10 +91,10 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
         }
 
-        // TO-DO NON MI FUNZIONA
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(mContext , ActivityDetail.class);
+            //Intent intent=new Intent(mContext , ActivityDetailActivity.class);
+            Intent intent = ActivityDetailActivity.newIntent(mContext, UUID.randomUUID());
             mContext.startActivity(intent);
         }
     }
