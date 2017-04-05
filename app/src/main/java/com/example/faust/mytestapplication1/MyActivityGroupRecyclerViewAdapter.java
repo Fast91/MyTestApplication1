@@ -1,11 +1,14 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,14 +64,16 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
 
 
-    public class ActivityHolder extends RecyclerView.ViewHolder {
+    public class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private MyActivity activity;
+        private Context mContext;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
 
         public ActivityHolder(View view) {
             super(view);
+            mContext = view.getContext();
             imageView = (ImageView) view.findViewById(R.id.image_activity_group);
             nameView = (TextView) view.findViewById(R.id.name_activity_group);
             balanceView = (TextView) view.findViewById(R.id.money_activity_group);
@@ -83,6 +88,12 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
         }
 
+        // TO-DO NON MI FUNZIONA
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(mContext , ActivityDetail.class);
+            mContext.startActivity(intent);
+        }
     }
 
 }

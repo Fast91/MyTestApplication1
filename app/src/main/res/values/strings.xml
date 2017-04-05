@@ -76,4 +76,7 @@
     <string name="backprofile_title">Come back?</string>
     <string name="title_activity_read_profile">ReadProfileActivity</string>
     <string name="action_modify_profile">Modify profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

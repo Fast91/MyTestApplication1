@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+
+        <shape
+            android:shape="rectangle"
+            >
+
+            <corners
+                android:radius="2dp"
+                />
+            <solid
+                android:color="#4caf50"
+                />
+            <padding
+                android:left="0dp"
+                android:top="10dp"
+                android:right="0dp"
+                android:bottom="5dp"
+                />
+
+            <stroke
+                android:width="10dp"
+                android:color="@android:color/transparent"
+                />
+
+            <shadow
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                />
+
+
+        </shape>
+
+    </item>
+
+</selector>
