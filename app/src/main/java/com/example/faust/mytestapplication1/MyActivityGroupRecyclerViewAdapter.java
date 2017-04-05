@@ -85,6 +85,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
         @Override
         public void onClick(View v) {
             //Intent intent=new Intent(mContext , ActivityDetailActivity.class);
+            //TODO PASSARE AL POSTO DI UUID.randomUUID() L'UUID DELL'ATTIVITA' PRESO DAL DB
             Intent intent = ActivityDetailActivity.newIntent(mContext, UUID.randomUUID());
             mContext.startActivity(intent);
         }
