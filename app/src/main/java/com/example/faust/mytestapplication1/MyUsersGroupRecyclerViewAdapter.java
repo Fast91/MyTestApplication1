@@ -15,13 +15,13 @@ import java.util.List;
 
 class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupRecyclerViewAdapter.UserHolder>{
 
-    private final List<User> items;
+    private final List<NomeDovuto> items;
     // private final OnListFragmentInteractionListener mListener;
 
 
 
     //public MyGlobalRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-    public MyUsersGroupRecyclerViewAdapter(List<User> items) {
+    public MyUsersGroupRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
         // mListener = listener;
     }
@@ -38,7 +38,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
     @Override
     public void onBindViewHolder(final MyUsersGroupRecyclerViewAdapter.UserHolder holder, int position) {
-        User u = items.get(position);
+        NomeDovuto u = items.get(position);
         holder.bindData(u);
 
        /*  holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
 
     public class UserHolder extends RecyclerView.ViewHolder {
-        private User user;
+        private NomeDovuto user;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
@@ -74,11 +74,11 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         }
 
-        public void bindData(User u){
+        public void bindData(NomeDovuto u){
             user=u;
-            imageView.setImageResource(u.getImageId());
+            imageView.setImageResource(R.drawable.giftgreen);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getBalance()));
+            balanceView.setText(""+(u.getDovuto()));
 
         }
 

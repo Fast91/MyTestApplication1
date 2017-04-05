@@ -22,12 +22,12 @@ import java.util.List;
 
 public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRecyclerViewAdapter.GroupHolder> {
 
-    private final List<MyGroup> items;
+    private final List<NomeDovuto> items;
     private final OnListFragmentInteractionListener mListener;
 
 
 
-    public MyGroupsRecyclerViewAdapter(List<MyGroup> items, OnListFragmentInteractionListener listener) {
+    public MyGroupsRecyclerViewAdapter(List<NomeDovuto> items, OnListFragmentInteractionListener listener) {
     //public MyGroupsRecyclerViewAdapter(List<MyGroup> items) {
         this.items = items;
         mListener = listener;
@@ -45,7 +45,7 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
 
     @Override
     public void onBindViewHolder(final GroupHolder holder, int position) {
-        MyGroup u = items.get(position);
+        NomeDovuto u = items.get(position);
         holder.bindData(u);
 
 
@@ -59,7 +59,7 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
 
 
     public class GroupHolder extends RecyclerView.ViewHolder {
-        private MyGroup group;
+        private NomeDovuto group;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
@@ -74,11 +74,11 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
 
         }
 
-        public void bindData(final MyGroup u){
+        public void bindData(final NomeDovuto u){
             group=u;
-            imageView.setImageResource(u.getImageId());
+            imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getBalance()));
+            balanceView.setText(""+(u.getDovuto()));
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

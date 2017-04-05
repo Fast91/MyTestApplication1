@@ -35,12 +35,7 @@ public class GlobalListFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
 
     private int mColumnCount=1;
-    //private OnListFragmentInteractionListener mListener;
 
-    /*private String[] names= {"Roberto", "Pasquale", "Fausto", "Omar", "Marco"};
-    private int[] images= {R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle,R.drawable.profilecircle};
-    private double[] balances = {25.00,20.00,25.00,-4.00,-3.00};*/
-    //private ArrayList<User> users;
     private List<User> users;
 
     public GlobalListFragment() {
@@ -64,17 +59,6 @@ public class GlobalListFragment extends Fragment {
             // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
         }
 
-        /*users=new ArrayList<>();
-        for(int i=0;i<names.length;i++){
-            User u=new User(names[i],images[i],balances[i]);
-            if(i==0 || i==1 || i==2){
-                u.addGrouponUser(new MyGroup("G1"));
-            }
-            else{
-                u.addGrouponUser(new MyGroup("G2"));
-            }
-            users.add(u);
-        }*/
 
 
 
@@ -160,6 +144,8 @@ public class GlobalListFragment extends Fragment {
 
                 //Prendo tutti i gruppi
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
 
 
 

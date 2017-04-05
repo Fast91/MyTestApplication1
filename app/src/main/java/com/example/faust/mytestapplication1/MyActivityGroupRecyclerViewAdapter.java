@@ -19,13 +19,13 @@ import java.util.UUID;
 public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<MyActivityGroupRecyclerViewAdapter.ActivityHolder> {
 
 
-    private final List<MyActivity> items;
+    private final List<NomeDovuto> items;
     // private final OnListFragmentInteractionListener mListener;
 
 
 
     //public MyGroupsRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-    public MyActivityGroupRecyclerViewAdapter(List<MyActivity> items) {
+    public MyActivityGroupRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
         // mListener = listener;
     }
@@ -42,19 +42,10 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
     @Override
     public void onBindViewHolder(final MyActivityGroupRecyclerViewAdapter.ActivityHolder holder, int position) {
-        MyActivity u = items.get(position);
+        NomeDovuto u = items.get(position);
         holder.bindData(u);
 
-       /*  holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });*/
+
     }
 
     @Override
@@ -64,8 +55,8 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
 
 
-    public class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private MyActivity activity;
+    public class ActivityHolder extends RecyclerView.ViewHolder {
+        private NomeDovuto activity;
         private View mParentView;
         private Context mContext;
         public final ImageView imageView;
@@ -83,11 +74,11 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
         }
 
-        public void bindData(MyActivity u){
+        public void bindData(NomeDovuto u){
             activity=u;
-            imageView.setImageResource(u.getImageId());
+            imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getBalance()));
+            balanceView.setText(""+(u.getDovuto()));
 
         }
 
