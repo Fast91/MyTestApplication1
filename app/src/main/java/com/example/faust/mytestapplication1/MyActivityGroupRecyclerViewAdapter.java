@@ -55,7 +55,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
 
 
 
-    public class ActivityHolder extends RecyclerView.ViewHolder {
+    public class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private NomeDovuto activity;
         private View mParentView;
         private Context mContext;
