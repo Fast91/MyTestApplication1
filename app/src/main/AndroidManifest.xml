@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--RegisterActivity-->
+
+        <!-- RegisterActivity -->
         <activity
             android:name=".RegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
@@ -59,11 +60,14 @@
             android:name=".ReadProfileActivity"
             android:label="@string/title_activity_read_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ActivityDetailActivity"
+        <activity
+            android:name=".ActivityDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".PaymentActivity">
         </activity>
     </application>
 

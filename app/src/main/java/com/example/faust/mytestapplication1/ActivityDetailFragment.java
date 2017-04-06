@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -27,6 +35,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
 {
     private RecyclerView mRecyclerView;
     private ActivityDetailAdapter mAdapter;
+    private String mExpenseId;
 
     @Nullable
     @Override
@@ -36,8 +45,28 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         View view = inflater.inflate(R.layout.fragment_activity_detail_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.activity_detail_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        mExpenseId = getArguments().getString("expense_id", null);
         updateUI();
+        // INIZIO DATABASE
+        final AppCompatActivity myActivity = (AppCompatActivity) view.getContext();
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Activities")
+                .child(mExpenseId);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                ((TextView)myActivity.findViewById(R.id.title_expense)).setText((String)dataSnapshot.child("Name").getValue(String.class));
+                //((TextView)myActivity.findViewById(R.id.Group_expense)).setText((String)dataSnapshot.child("Group").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        // FINE DATABASE
         return view;
     }
 

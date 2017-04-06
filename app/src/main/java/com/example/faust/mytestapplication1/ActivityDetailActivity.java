@@ -6,8 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
@@ -23,10 +32,12 @@ public class ActivityDetailActivity extends AppCompatActivity
     private TextView mCategoryTextView;
     private TextView mDescriptionTextView;
 
-    public static Intent newIntent(Context packageContext, UUID uuid)
+    private String mExpenseId;
+
+    public static Intent newIntent(Context packageContext, String id)
     {
         Intent i = new Intent(packageContext, ActivityDetailActivity.class);
-        i.putExtra(EXTRA_EXPENSE_UUID, uuid);
+        i.putExtra(EXTRA_EXPENSE_UUID, id);
         return i;
     }
 
@@ -34,7 +45,7 @@ public class ActivityDetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_EXPENSE_UUID);
+        mExpenseId = (String) getIntent().getStringExtra(EXTRA_EXPENSE_UUID);
         //TODO cercare l'uuid nel db per prendere i dati
 
         mTitleTextView = (TextView) findViewById(R.id.title_expense);
@@ -51,6 +62,9 @@ public class ActivityDetailActivity extends AppCompatActivity
         if(fragment == null)
         {
             fragment = new ActivityDetailFragment();
+            Bundle args = new Bundle();
+            args.putString("expense_id", mExpenseId);
+            fragment.setArguments(args);
             fm.beginTransaction()
                     .add(R.id.activity_detail_fragment, fragment)
                     .commit();

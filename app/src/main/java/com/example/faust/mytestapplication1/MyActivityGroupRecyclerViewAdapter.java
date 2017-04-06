@@ -79,14 +79,13 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
             imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
-
         }
 
         @Override
         public void onClick(View v) {
             //Intent intent=new Intent(mContext , ActivityDetailActivity.class);
-            //TODO PASSARE AL POSTO DI UUID.randomUUID() L'UUID DELL'ATTIVITA' PRESO DAL DB
-            Intent intent = ActivityDetailActivity.newIntent(mContext, UUID.randomUUID());
+            //TODO PASSARE AL POSTO DI "1" L'UUID DELL'ATTIVITA' PRESO DAL DB
+            Intent intent = ActivityDetailActivity.newIntent(mContext,"1");
             mContext.startActivity(intent);
         }
     }
