@@ -164,7 +164,7 @@ public class UsersGroupListFragment extends Fragment{
 
 
                     List list = new ArrayList(utenti_dovuto.values());
-                    adapter = new MyUsersGroupRecyclerViewAdapter(list);
+                    adapter = new MyUsersGroupRecyclerViewAdapter(list, id_group);
                     recyclerView.setAdapter(adapter);
                 }
                 else{
@@ -173,7 +173,7 @@ public class UsersGroupListFragment extends Fragment{
                     //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
                     recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
                     List list = new ArrayList(utenti_dovuto.values());
-                    adapter = new MyUsersGroupRecyclerViewAdapter(list);
+                    adapter = new MyUsersGroupRecyclerViewAdapter(list, id_group);
                     recyclerView2.setAdapter(adapter);
 
                     Button b5_showactivity = (Button) view.findViewById(R.id.b5_show_group_activity);

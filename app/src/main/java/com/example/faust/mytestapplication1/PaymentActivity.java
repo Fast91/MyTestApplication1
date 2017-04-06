@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class PaymentActivity extends AppCompatActivity {
-    private static final String EXTRA_PAYMENT_UUID = ".extra_payment_uuid";
-    private String mPaymentId;
+    private static final String EXTRA_PAYMENT_USER = ".extra_payment_user";
+    private static final String EXTRA_PAYMENT_GROUP = ".extra_payment_group";
+    private String mExtraPaymentReceiver;
+    private String mExtraPaymentGroup;
     //TODO SOSTITUIRE IL PAYMENT ID (ED EXTRA_PAYMENT_UUID) CON LE ROBE QUA SOTTO
     private String mReceiverId;
     private String mSenderId;
@@ -22,9 +24,9 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("PaymentActivity", "onCreate()");
         setContentView(R.layout.activity_payment);
-        mPaymentId = (String) getIntent().getStringExtra(EXTRA_PAYMENT_UUID);
+        mExtraPaymentReceiver = (String) getIntent().getStringExtra(EXTRA_PAYMENT_USER);
+        mExtraPaymentGroup = (String) getIntent().getStringExtra(EXTRA_PAYMENT_GROUP);
         //TODO cercare l'uuid nel db per prendere i dati
 
         FragmentManager fm = getSupportFragmentManager();
@@ -34,7 +36,8 @@ public class PaymentActivity extends AppCompatActivity {
         {
             fragment = new PaymentFragment();
             Bundle args = new Bundle();
-            args.putString("payment_id", mPaymentId);
+            args.putString("payment_receiver", mExtraPaymentReceiver);
+            args.putString("payment_group", mExtraPaymentGroup);
             fragment.setArguments(args);
             fm.beginTransaction()
                     .add(R.id.payment_fragment_container,fragment)
@@ -42,10 +45,11 @@ public class PaymentActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent newIntent(Context packageContext, String id)
+    public static Intent newIntent(Context packageContext, String user, String group)
     {
         Intent i = new Intent(packageContext, PaymentActivity.class);
-        i.putExtra(EXTRA_PAYMENT_UUID, id);
+        i.putExtra(EXTRA_PAYMENT_USER, user);
+        i.putExtra(EXTRA_PAYMENT_GROUP, group);
         return i;
     }
 }

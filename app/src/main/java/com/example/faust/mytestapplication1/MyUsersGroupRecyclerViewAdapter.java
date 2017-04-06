@@ -19,13 +19,15 @@ import java.util.List;
 class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupRecyclerViewAdapter.UserHolder>{
 
     private final List<NomeDovuto> items;
+    private String mIdGroup;
     // private final OnListFragmentInteractionListener mListener;
 
 
 
     //public MyGlobalRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
-    public MyUsersGroupRecyclerViewAdapter(List<NomeDovuto> items) {
+    public MyUsersGroupRecyclerViewAdapter(List<NomeDovuto> items, String id_group) {
         this.items = items;
+        this.mIdGroup = id_group;
         // mListener = listener;
     }
 
@@ -89,11 +91,8 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
         @Override
         public void onClick(View v) {
             //Toast.makeText(imageView.getContext(), "Hai cliccato \"Paga\"", Toast.LENGTH_SHORT).show();
-            Log.d("PaymentActivity", "onClick");
-            Intent i = PaymentActivity.newIntent(imageView.getContext(), "1");
-            Log.d("PaymentActivity", "intent created");
+            Intent i = PaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
             imageView.getContext().startActivity(i);
-            Log.d("PaymentActivity", "activity started");
         }
     }
 
