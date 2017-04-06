@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class ActivityDetailActivity extends AppCompatActivity
 {
-    private static final String EXTRA_EXPENSE_UUID = "com.example.faust.mytestapplication1.expense_uuid";
+    private static final String EXTRA_EXPENSE_UUID = ".extra_expense_uuid"; //"com.example.faust.mytestapplication1.extra_expense_uuid";
 
     private TextView mTitleTextView;
     private ImageView mImageView;

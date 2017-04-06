@@ -37,6 +37,12 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
     private ActivityDetailAdapter mAdapter;
     private String mExpenseId;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mExpenseId = getArguments().getString("expense_id", null);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -45,7 +51,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         View view = inflater.inflate(R.layout.fragment_activity_detail_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.activity_detail_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mExpenseId = getArguments().getString("expense_id", null);
+        //mExpenseId = getArguments().getString("expense_id", null);
         updateUI();
         // INIZIO DATABASE
         final AppCompatActivity myActivity = (AppCompatActivity) view.getContext();

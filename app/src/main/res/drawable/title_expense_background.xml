@@ -50,7 +50,7 @@
                 android:radius="2dp"
                 />
             <solid
-                android:color="#81c784"
+                android:color="@color/BreakingMADLightGreen"
                 />
             <padding
                 android:left="0dp"

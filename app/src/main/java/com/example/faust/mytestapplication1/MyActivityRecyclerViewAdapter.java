@@ -1,5 +1,7 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,14 +62,18 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
 
 
-    public class ActivityHolder extends RecyclerView.ViewHolder {
+    public class ActivityHolder extends RecyclerView.ViewHolder{
         private NomeDovuto activity;
+        private View mParentView;
+        private Context mContext;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
 
         public ActivityHolder(View view) {
             super(view);
+            mParentView = view;
+            mContext = view.getContext();
             imageView = (ImageView) view.findViewById(R.id.image_activity_global);
             nameView = (TextView) view.findViewById(R.id.name_activity_global);
             balanceView = (TextView) view.findViewById(R.id.money_activity_global);
@@ -83,5 +89,6 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
         }
 
     }
+
 
 }

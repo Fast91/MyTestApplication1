@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="BreakingMADLightGreen">#81c784</color>
+    <color name="BreakingMADDarkGreen">#4caf50</color>
+    <color name="BreakingMADGrayButton">#c0c0c0</color>
+
 </resources>
