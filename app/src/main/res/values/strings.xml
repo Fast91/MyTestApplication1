@@ -79,4 +79,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_group_groupName">NameGroup</string>
+    <string name="activity_group_member_mail">MemberMaiil</string>
+    <string name="activity_detail_category">Category</string>
+    <string name="activity_detail_description">Telephone\'s Bill... We have to pay me as soon as possible, please.</string>
+    <string name="backgroup_title">Delete Group?</string>
+    <string name="backgroup_message">Are you sure to delete this group?</string>
+    <string name="activity_group_buttonpassaddmember">Go to add Member</string>
 </resources>

@@ -215,6 +215,69 @@ public class ActivityExpense extends AppCompatActivity {
 
                     }
 
+                    //todo continuare DB con
+                    //1 groups-ACTIVITIES
+                    //2 users- ACTIVITIES x te e x tutti
+                    //3 USERS - BILANCIO x te e x tutti
+                    // 4 USERS - GROUPS  x te e x tutti
+
+
+                    //1 groups-ACTIVITIES
+                    // key
+                    Name = mytitle;
+                    Total=myamount;
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
+                    databaseReference.child(myid_group[0]).child("Activities").child(key).setValue(Total);
+                    databaseReference.child(myid_group[0]).child("Activities").child(key).setValue(Name);
+
+
+
+                    //2 users- ACTIVITIES
+
+                    //users - id - activities - key- -----> Total -----> Name
+
+                    Name = mytitle;
+                    Total=myamount;
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+                    //da fare per tutti gli utenti
+
+
+                    for(String in : myusers.keySet()){
+
+
+                        databaseReference.child(myusers.get(in)).child("Activities").child(key).setValue(Name);
+                        databaseReference.child(myusers.get(in)).child("Activities").child(key).setValue(Total);
+
+
+                    }
+
+
+
+
+
+                    //3 USERS - BILANCIO x te e x tutti
+
+
+
+
+                    // 4 USERS - GROUPS  x te e x tutti
+
+
+
+
+
+
+
+
+
+
+
+                    ///////////
+                    //// FINE DB
+                    //////////
+
+
 
 
                     Intent intent=new Intent(ActivityExpense.this,MainActivity.class);

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     //defining views
-    private Button buttonSignIn;
+    private ImageButton buttonSignIn;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignup;
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.email_login);
         editTextPassword = (EditText) findViewById(R.id.password_login);
-        buttonSignIn = (Button) findViewById(R.id.email_login_button);
+        buttonSignIn = (ImageButton) findViewById(R.id.imageButtonLogin);
         textViewSignup  = (TextView) findViewById(R.id.textview_notregistered);
 
         progressDialog = new ProgressDialog(this);

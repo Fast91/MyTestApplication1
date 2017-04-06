@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.faust.mytestapplication1.PaymentActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.PaymentActivity"
+    android:gravity="center">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:weightSum="1">
@@ -42,10 +46,11 @@
             android:textColor="@color/BreakingMADDarkGreen"
             android:textColorHint="@color/BreakingMADDarkGreen"
             android:textSize="15sp"
-            android:id="@+id/you_have_to_pay_amount_payment_tv"
+            android:id="@+id/amount_label_payment_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="XY"/>
+            android:text=""
+            android:hint="0€"/>
         <TextView
             android:textColor="@android:color/black"
             android:textSize="15sp"
@@ -56,9 +61,10 @@
             android:textColor="@android:color/black"
             android:textColorHint="@android:color/black"
             android:textSize="15sp"
-            android:id="@+id/expense_owner_payment_tv"
+            android:id="@+id/receiver_label_payment_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text=""
             android:hint="Receiver Name"/>
     </LinearLayout>
 
@@ -92,15 +98,17 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:textSize="15sp"
-            android:hint="XY"/>
+            android:text=""
+            android:hint="0€"/>
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.04"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:gravity="center">
             <Button
                 android:enabled="true"
                 android:visibility="visible"
@@ -123,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="Custom Amount"
+                android:text="Custom Amount"
                 android:background="@drawable/sketched_white_rect_shape_rounded"/>
         </RelativeLayout>
     </LinearLayout>
@@ -148,7 +157,6 @@
             android:background="@drawable/sketched_transparent_rect_shape_green">
 
             <TextView
-                android:id="@+id/detail_label_payment_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -172,7 +180,7 @@
                     android:text="Sender: "/>
 
                 <TextView
-                    android:id="@+id/sender_label_payment_tv"
+                    android:id="@+id/sender_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -195,7 +203,7 @@
                     android:text="Receiver: "/>
 
                 <TextView
-                    android:id="@+id/receiver_label_payment_tv"
+                    android:id="@+id/receiver_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -218,7 +226,7 @@
                     android:text="Group: "/>
 
                 <TextView
-                    android:id="@+id/group_label_payment_tv"
+                    android:id="@+id/group_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -241,7 +249,7 @@
                     android:text="Amount: "/>
 
                 <TextView
-                    android:id="@+id/amount_label_payment_tv"
+                    android:id="@+id/amount_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -260,6 +268,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.16"/>
     <Button
+        android:id="@+id/confirm_button_payment_tv"
         android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -269,3 +278,10 @@
         android:textSize="20sp"
         android:text="Confirm"/>
 </LinearLayout>
+    <!--RelativeLayout
+        android:id="@+id/layout_fragment_payment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        ></RelativeLayout-->
+</RelativeLayout>

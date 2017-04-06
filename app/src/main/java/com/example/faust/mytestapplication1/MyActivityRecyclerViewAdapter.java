@@ -62,17 +62,15 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
 
 
-    public class ActivityHolder extends RecyclerView.ViewHolder{
+    public class ActivityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private NomeDovuto activity;
-        private View mParentView;
-        private Context mContext;
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
+        private Context mContext;
 
         public ActivityHolder(View view) {
             super(view);
-            mParentView = view;
             mContext = view.getContext();
             imageView = (ImageView) view.findViewById(R.id.image_activity_global);
             nameView = (TextView) view.findViewById(R.id.name_activity_global);
@@ -88,7 +86,17 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
         }
 
+
+        @Override
+        public void onClick(View v) {
+            //Intent intent=new Intent(mContext , ActivityDetailActivity.class);
+            //TODO PASSARE AL POSTO DI "1" L'UUID DELL'ATTIVITA' PRESO DAL DB
+            Intent intent = ActivityDetailActivity.newIntent(mContext,"1");
+            mContext.startActivity(intent);
+        }
+
     }
+
 
 
 }

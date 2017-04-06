@@ -69,6 +69,13 @@
     <string name="backprofile_message">Vuoi uscire dalle informazioni del profilo?</string>
     <string name="backprofile_title">Vuoi tornare indietro?</string>
     <string name="action_modify_profile">Modifica profilo</string>
+    <string name="activity_group_groupName">Nome del gruppo</string>
+    <string name="activity_group_member_mail">Mail dell\'utente</string>
+    <string name="activity_detail_category">Categoria</string>
+    <string name="activity_detail_description">Bolletta della luce..Per favore pagatemi prima possibile</string>
+    <string name="backgroup_title">Eliminare il gruppo?</string>
+    <string name="backgroup_message">Sei sicuro di eliminare il gruppo?</string>
+    <string name="activity_group_buttonpassaddmember">Prosegui per aggiungere utenti</string>
 
 
 </resources>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText mEmailView;
     private EditText mPasswordView;
-    private  Button button;
+    private ImageButton button;
     private View mLoginFormView;
     private ProgressDialog myprogressBar;
     private FirebaseAuth firebaseauth;
@@ -46,10 +47,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
-         button=(Button)findViewById(R.id.email_sign_in_button);
-         mEmailView=(EditText) findViewById(R.id.email);
-         mPasswordView=(EditText) findViewById((R.id.password));
-        mLoginFormView=findViewById(R.id.email_login_form);
+         button=(ImageButton)findViewById(R.id.imageButtonLogin);
+         mEmailView=(EditText) findViewById(R.id.email_register);
+         mPasswordView=(EditText) findViewById(R.id.password_register);
+        mLoginFormView=findViewById(R.id.textview_alreadyregistered);
         myprogressBar=new ProgressDialog(this);
 
         button.setOnClickListener(this);
