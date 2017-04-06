@@ -1,11 +1,14 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -60,7 +63,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
 
 
-    public class UserHolder extends RecyclerView.ViewHolder {
+    public class UserHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private NomeDovuto user;
         public final ImageView imageView;
         public final TextView nameView;
@@ -68,6 +71,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         public UserHolder(View view) {
             super(view);
+            itemView.findViewById(R.id.fragment_user_group_item_button).setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_user_group);
             nameView = (TextView) view.findViewById(R.id.name_user_group);
             balanceView = (TextView) view.findViewById(R.id.money_user_group);
@@ -82,6 +86,15 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         }
 
+        @Override
+        public void onClick(View v) {
+            //Toast.makeText(imageView.getContext(), "Hai cliccato \"Paga\"", Toast.LENGTH_SHORT).show();
+            Log.d("PaymentActivity", "onClick");
+            Intent i = PaymentActivity.newIntent(imageView.getContext(), "1");
+            Log.d("PaymentActivity", "intent created");
+            imageView.getContext().startActivity(i);
+            Log.d("PaymentActivity", "activity started");
+        }
     }
 
 

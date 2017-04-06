@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 public class PaymentActivity extends AppCompatActivity {
     private static final String EXTRA_PAYMENT_UUID = ".extra_payment_uuid";
@@ -21,6 +22,7 @@ public class PaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("PaymentActivity", "onCreate()");
         setContentView(R.layout.activity_payment);
         mPaymentId = (String) getIntent().getStringExtra(EXTRA_PAYMENT_UUID);
         //TODO cercare l'uuid nel db per prendere i dati
@@ -42,7 +44,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context packageContext, String id)
     {
-        Intent i = new Intent(packageContext, ActivityDetailActivity.class);
+        Intent i = new Intent(packageContext, PaymentActivity.class);
         i.putExtra(EXTRA_PAYMENT_UUID, id);
         return i;
     }
