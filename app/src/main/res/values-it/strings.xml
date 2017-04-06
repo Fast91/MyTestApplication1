@@ -76,6 +76,7 @@
     <string name="backgroup_title">Eliminare il gruppo?</string>
     <string name="backgroup_message">Sei sicuro di eliminare il gruppo?</string>
     <string name="activity_group_buttonpassaddmember">Prosegui per aggiungere utenti</string>
+    <string name="toast_addedusergroup">Aggiunto Utente</string>
 
 
 </resources>

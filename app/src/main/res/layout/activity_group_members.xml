@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.ActivityExpense"
-    android:id="@+id/linearLayout_activityexpense"
+    tools:context="com.example.faust.mytestapplication1.ActivityGroupUsers"
+    android:id="@+id/linearLayout_activitygroupusers"
     android:padding="4dp"
     android:background="@android:color/white"
     android:orientation="vertical"
@@ -36,6 +36,16 @@
         android:textColorHint="@android:color/darker_gray"
         android:textCursorDrawable="@android:color/black"
         android:textSize="15dp"/>
+
+    <ImageButton
+        android:id="@+id/activity_group_members_addmember"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_margin="10sp"
+        android:layout_gravity="center"
+        android:src="@drawable/plus_add_green"
+        android:background="#ffff"
+        />
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

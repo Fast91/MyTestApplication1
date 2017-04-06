@@ -86,4 +86,5 @@
     <string name="backgroup_title">Delete Group?</string>
     <string name="backgroup_message">Are you sure to delete this group?</string>
     <string name="activity_group_buttonpassaddmember">Go to add Member</string>
+    <string name="toast_addedusergroup">Added User</string>
 </resources>

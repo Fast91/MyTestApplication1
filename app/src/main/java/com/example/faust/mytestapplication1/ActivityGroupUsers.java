@@ -28,6 +28,45 @@ public class ActivityGroupUsers extends AppCompatActivity {
 
         }
 
+        //ButtonADD per aggiungere il gruppo
+        ImageButton addGroupUser = (ImageButton)  findViewById(R.id.activity_group_members_addmember);
+
+        addGroupUser.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+
+                EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
+                String userMail = editTextUserMail.getText().toString();
+
+                if(!userMail.equals("")){
+
+
+
+
+                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+
+
+
+                    return ;}
+
+                else{
+                    Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
+
+
+
+                    return ;}
+
+
+            }
+
+        });
+
+
+
+        //ButtonSubmit per finire il gruppo ed andare alla main activity
         ImageButton submitGroupUser = (ImageButton)  findViewById(R.id.buttonSubmit_activity_group_member);
 
         submitGroupUser.setOnClickListener(new View.OnClickListener() {

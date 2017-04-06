@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.FragmentManager;
@@ -267,6 +269,37 @@ public class GroupsListFragment extends Fragment {
 
 
 
+
+
+        ////////////////////
+        //// BOTTONE PER L'ADD GRUPPO
+        ///////////////////
+
+
+        final Button addgroup = (Button) myactivity.findViewById(R.id.b5_addgroup);
+
+        /*
+        addgroup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Add GROUP
+
+                Intent intent=new Intent(getActivity(),ActivityGroup.class);
+
+                startActivity(intent);
+
+
+
+
+                return;
+            }
+        });
+        */
+
+
+
+
         return view;
     }
 
@@ -275,51 +308,6 @@ public class GroupsListFragment extends Fragment {
 
 
 
-//CLASSI NON UTILIZZATE
-
-/*
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static GlobalListFragment newInstance(int columnCount) {
-        GlobalListFragment fragment = new GlobalListFragment();
-        Bundle args = new Bundle();
-        args.putInt("ARG_COLUMN_COUNT", columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-
-
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 
     public interface OnListFragmentInteractionListener {
 

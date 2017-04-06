@@ -18,11 +18,10 @@ import java.util.List;
 class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyclerViewAdapter.ActivityHolder>{
 
     private final List<NomeDovuto> items;
-    // private final OnListFragmentInteractionListener mListener;
 
 
 
-    //public MyGroupsRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
+    //public MyActivityRecyclerViewAdapter(List<NomeDovuto> items, OnListFragmentInteractionListener listener) {
     public MyActivityRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
         // mListener = listener;
@@ -83,6 +82,8 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
             imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+
+
 
         }
 
