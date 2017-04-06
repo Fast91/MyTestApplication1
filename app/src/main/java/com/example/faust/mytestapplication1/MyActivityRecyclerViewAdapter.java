@@ -71,6 +71,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
         public ActivityHolder(View view) {
             super(view);
             mContext = view.getContext();
+            itemView.setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_activity_global);
             nameView = (TextView) view.findViewById(R.id.name_activity_global);
             balanceView = (TextView) view.findViewById(R.id.money_activity_global);

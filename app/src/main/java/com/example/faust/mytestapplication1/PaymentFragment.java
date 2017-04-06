@@ -17,8 +17,11 @@ import android.widget.TextView;
 
 public class PaymentFragment extends Fragment
 {
-    private String mPaymentId;
+    private String mBundlePaymentReceiver;
+    private String mBundlePaymentGroup;
 
+    private String mReceiver;
+    private String mGroup;
     private String mDefaultAmountValue;
     private String mCustomAmountValue;
     private String mAmountValue;
@@ -51,11 +54,14 @@ public class PaymentFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPaymentId = getArguments().getString("expense_id", null);
+        mBundlePaymentReceiver = getArguments().getString("expense_receiver", null);
+        mBundlePaymentGroup = getArguments().getString("expense_group", null);
         mDefaultAmountOptionSelected = true;
         mCustomAmountEditTextOptionSelected = false;
 
         // TODO DB etc etc
+        mReceiver = mBundlePaymentReceiver;
+        mGroup = mBundlePaymentGroup;
         mDefaultAmountValue = "50€"; // da importare dal db
         mCustomAmountValue=mDefaultAmountValue;
         mAmountValue=mDefaultAmountValue;
@@ -123,6 +129,9 @@ public class PaymentFragment extends Fragment
         mAmountLabelTextView.setText(mDefaultAmountValue);
         mDefaultAmountButton.setText(mDefaultAmountValue);
         mCustomAmountEditText.setText(mDefaultAmountValue);
+        mReceiverLabelTextView.setText(mReceiver);
+        mReceiverDetailTextView.setText(mReceiver);
+        mGroupDetailTextView.setText(mGroup);
 
         mDefaultAmountButton.setEnabled(true);
         mCustomAmountButton.setEnabled(true);
