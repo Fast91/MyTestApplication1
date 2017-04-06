@@ -1,26 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.ActivityGroupUsers"
-    android:id="@+id/linearLayout_activitygroupusers"
-    android:padding="4dp"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="1">
+    tools:context="com.example.faust.mytestapplication1.ActivityAddUserToGroup"
+    android:orientation="vertical">
 
-    <include layout="@layout/activity_group_top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10sp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@drawable/activity_group_top_background">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_span="2"
+        android:id="@+id/groupImage_group_activity_members"
+        android:src="@drawable/groups900x900pressed"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_weight="3"
+        android:padding="6dp"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_span="2"
+        android:id="@+id/textGroup_activity_group_members"
+        android:text="@string/activity_group_groupName"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:paddingTop="5sp"
+        android:layout_weight="8"/>
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/memberMail_activity_group_members"
+
         android:layout_width="260dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_margin="2dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/edittextbackground"
         android:ems="10"
         android:focusableInTouchMode="true"
@@ -47,35 +75,19 @@
         android:background="#ffff"
         />
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:id="@+id/tableLayoutSubmitButton_actitivty_group_member"
-        android:layout_marginRight="10dp"
-        android:padding="2dp"
-        android:stretchColumns="*"
-        android:background="@android:color/white"
-        android:layout_marginTop="12dp">
 
-
-        <TableRow
-            android:id="@+id/tableRowSubmitButton_actitivty_group_member"
-            android:layout_height="40sp"
-            android:layout_width="wrap_content"
-            >
 
             <ImageButton
                 android:id="@+id/buttonSubmit_activity_group_member"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom|right"
+                android:layout_margin="20sp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/buttoncirculartransparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/tick_icon256x256" />
+                android:src="@drawable/tick_icon256x256"
+                />
 
-        </TableRow>
-    </TableLayout>
+
 </LinearLayout>

@@ -289,8 +289,8 @@ public class GroupsListFragment extends Fragment {
             public void onClick(View v) {
                 //Add GROUP
 
-                Intent intent=new Intent(getActivity(),ActivityGroup.class);
 
+                Intent intent=new Intent(getActivity(),ActivityAddGroup.class);
                 startActivity(intent);
 
 
