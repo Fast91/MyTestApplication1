@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.FragmentManager;
@@ -74,6 +75,8 @@ public class GroupsListFragment extends Fragment {
         //FIREBASE
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+
+
 
 
 
@@ -276,9 +279,10 @@ public class GroupsListFragment extends Fragment {
         ///////////////////
 
 
-        final Button addgroup = (Button) myactivity.findViewById(R.id.b5_addgroup);
 
-        /*
+        Button addgroup = (Button) view.findViewById(R.id.b5_addgroup);
+
+
         addgroup.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -295,7 +299,11 @@ public class GroupsListFragment extends Fragment {
                 return;
             }
         });
-        */
+
+
+
+
+
 
 
 

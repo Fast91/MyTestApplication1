@@ -18,8 +18,7 @@
         android:layout_span="6"
 
         android:background="@drawable/buttonshape"
-        android:text="@string/b5_string"
-        />
+        android:text="@string/b5_string" />
 
 
 <android.support.v7.widget.RecyclerView
