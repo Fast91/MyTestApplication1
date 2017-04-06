@@ -94,7 +94,8 @@ public class ModifyProfileActivity extends AppCompatActivity implements View.OnC
         FirebaseUser fireuser = firebaseAuth.getCurrentUser();
 
 
-        databaseReference.child("Users").child(fireuser.getUid()).setValue(user);
+        databaseReference.child("Users").child(fireuser.getUid()).child("Name").setValue(name);
+        databaseReference.child("Users").child(fireuser.getUid()).child("Surname").setValue(surname);
         //databaseReference.child(id_user).setValue(user);
 
         Toast.makeText(this,R.string.toast_mess_save_infouser,Toast.LENGTH_LONG).show();

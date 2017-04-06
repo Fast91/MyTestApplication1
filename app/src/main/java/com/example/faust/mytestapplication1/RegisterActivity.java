@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A login screen that offers login via email/password.
@@ -31,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private View mLoginFormView;
     private ProgressDialog myprogressBar;
     private FirebaseAuth firebaseauth;
+    String email;
 
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +73,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             registerUser();
 
 
+
         }
         if(v==mLoginFormView){
+
+
             startActivity(new Intent(this, LoginActivity.class));
 
 
@@ -81,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void registerUser() {
 
-       String email= mEmailView.getText().toString().trim();
+        email= mEmailView.getText().toString().trim();
         String password=mPasswordView.getText().toString().trim();
 
         if(email.isEmpty()){
@@ -106,6 +113,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if(task.isSuccessful()){
 
                     Toast.makeText(RegisterActivity.this,R.string.successful_registration,Toast.LENGTH_SHORT).show();
+                    FirebaseUser fireuser = firebaseauth.getCurrentUser();
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("Users").child(fireuser.getUid()).child("Email").setValue(email);
 
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
