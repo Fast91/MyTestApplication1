@@ -93,7 +93,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
         public void onClick(View v) {
             //Intent intent=new Intent(mContext , ActivityDetailActivity.class);
             //TODO PASSARE AL POSTO DI "1" L'UUID DELL'ATTIVITA' PRESO DAL DB
-            Intent intent = ActivityDetailActivity.newIntent(mContext,"1");
+            Intent intent = ActivityDetailActivity.newIntent(mContext,activity.getId());
             mContext.startActivity(intent);
         }
 

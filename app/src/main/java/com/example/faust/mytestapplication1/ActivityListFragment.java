@@ -154,7 +154,7 @@ public class ActivityListFragment extends  Fragment  {
 
                         //add
                         NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
-
+                        iniziale.setId(id);
                         attività_dovuto.put(id, iniziale);
 
 

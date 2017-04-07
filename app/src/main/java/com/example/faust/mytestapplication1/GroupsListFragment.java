@@ -207,7 +207,7 @@ public class GroupsListFragment extends Fragment {
                             myFragment.setArguments(mBundle);
 
                             //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment)/*.addToBackStack(null)*/.commit();
 
 
                             for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
@@ -310,9 +310,6 @@ public class GroupsListFragment extends Fragment {
 
         return view;
     }
-
-
-
 
 
 

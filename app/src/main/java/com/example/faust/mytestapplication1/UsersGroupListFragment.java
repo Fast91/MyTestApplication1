@@ -50,7 +50,6 @@ public class UsersGroupListFragment extends Fragment{
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,6 +282,7 @@ public class UsersGroupListFragment extends Fragment{
 
         return view;
     }
+
 
 
 }

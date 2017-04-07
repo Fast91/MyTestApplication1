@@ -2,6 +2,7 @@ package com.example.faust.mytestapplication1;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -40,17 +42,29 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class ActivityExpense extends AppCompatActivity {
+    //private Date mydata;
+    private Date myDate;
+    private String mytitle;
+    private Double myamount;
+    private NomeDovuto mygroup_selected;
+    private String mydescription;
+    private String mycategory;
+    private String  keyowner;
+
+
     private EditText date;
     int year=Calendar.YEAR,month=Calendar.MONTH,day=Calendar.DAY_OF_MONTH;
     private String id_group;
     Double  bilancioGlobale, bilanciodelgruppo, bilanciosingolo;
     String id_owner=null;
-    ArrayList<String> items_nomi_gruppi =new ArrayList<>();
-
+    ArrayList<NomeDovuto> items_nomi_gruppi =new ArrayList<>();
 
     private FirebaseAuth firebaseAuth;
 
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference3;
+    private DatabaseReference databaseReference4, databaseReference5, databaseReference6;
 
 
     @Override
@@ -84,13 +98,13 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                 EditText title= (EditText) findViewById(R.id.Title_newexpense);
-                String mytitle = title.getText().toString();
+                mytitle = title.getText().toString();
 
 
 
                 EditText amount= (EditText) findViewById(R.id.Total_newexpense);
                 String stringamount = amount.getText().toString();
-                Double myamount=null;
+                myamount=null;
                 if(!stringamount.equals("")) {
                      myamount = Double.parseDouble(stringamount);
                 }
@@ -98,34 +112,34 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                 Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
-                final String mygroup = group.getSelectedItem().toString();
+                mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
                 EditText description= (EditText) findViewById(R.id.Description_newexpense);
-                String mydescription = description.getText().toString();
+                mydescription = description.getText().toString();
 
 
-                Date mydata =null;
+                //mydata =null;
 
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date myDate=null;
+                myDate=null;
                 try {
                     myDate = df.parse(date.getText().toString());
 
-                    String myText = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + (1900 + myDate.getYear());
+                    String myText = myDate.getDay() + "/" + (myDate.getMonth() + 1) + "/" + (1900 + myDate.getYear());
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 EditText category= (EditText) findViewById(R.id.Category_newexpense);
-                String mycategory = category.getText().toString();
+                mycategory = category.getText().toString();
 
-                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup.equals(""))&&(!mydescription.equals(""))&&(!mycategory.equals(""))){
+                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup_selected.getName().equals("Select Group"))&&(!mydescription.equals(""))&&(!mycategory.equals(""))){
                   //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
                  //prendo id gruppo e prendo hashmap con chiave il nome(nickname dell'utente) e valore id utente
-                    final String[] myid_group = new String[1];
+
                     final HashMap<String,String> myusers=new HashMap<String, String>();
 
                     /////////////
@@ -133,27 +147,67 @@ public class ActivityExpense extends AppCompatActivity {
                     /////////////
 
 
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
+                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(mygroup_selected.getId()).child("Users");
 
-                    databaseReference.addValueEventListener(new ValueEventListener() {
+                    databaseReference2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                                //Trovato identification ID del gruppo
-                                if(postSnapshot.child("Name").getValue(String.class).equals(mygroup)){
 
-                                    myid_group[0] =postSnapshot.getKey();
-
-                                        //prendiamo tutti gli utenti -- name key --- id value
-                                    for (DataSnapshot user : postSnapshot.child("Users").getChildren()) {
-
-                                       myusers.put(user.child("Name").getValue(String.class),user.getKey());
-
+                                       myusers.put(postSnapshot.getKey(),postSnapshot.child("Name").getValue(String.class));
+                                        //Toast.makeText(getApplicationContext(),postSnapshot.getKey()+" "+ postSnapshot.child("Name").getValue(String.class), Toast.LENGTH_SHORT);
+                                        Log.d("EXPENSE", postSnapshot.getKey()+" "+ postSnapshot.child("Name").getValue(String.class));
 
                                     }
 
+//ora ho gli utenti e l'id del gruppo
+
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                            //genero nuovo id per l'attività
+                            String key = databaseReference.push().getKey();
+                            String Name=mytitle;
+                            Double Total=myamount;
+                            String GroupId=mygroup_selected.getId();
+                            String Description=mydescription;
+                            String Category=mycategory;
+                            String Date=""+myDate.getDate()+"/"+myDate.getMonth()+"/"+(myDate.getYear()+1900);
+
+
+                            databaseReference.child(key).child("Name").setValue(Name);
+                            databaseReference.child(key).child("Total").setValue(Total);
+
+                            databaseReference.child(key).child("GroupId").setValue(GroupId);
+                            databaseReference.child(key).child("Description").setValue(Description);
+                            databaseReference.child(key).child("Category").setValue(Category);
+                            databaseReference.child(key).child("Date").setValue(Date);
+
+                            int count_users=myusers.size();
+                            //todo
+
+                            // prendere il vero owner
+                            //in questo caso prendiamo il primo che capita dalla lista
+                             keyowner= firebaseAuth.getCurrentUser().getUid();
+
+                            Name=myusers.get(keyowner);
+                            Total=myamount/count_users;
+
+
+                            //lo settiamo come owner
+                            databaseReference.child(key).child("Owner").child(keyowner).child("Name").setValue(Name);
+                            databaseReference.child(key).child("Owner").child(keyowner).child("Total").setValue(Total);
+                            Log.d("EXPENSE", Name + " " + Total + " (DB)" );
+
+                            //preso tutti i nomi degli utenti
+                            for(String in : myusers.keySet()){
+
+                                if(!in.equals(keyowner)){
+
+                                    Name=in;
+                                    //Setto la spesa a tutti gli utenti
+                                    databaseReference.child(key).child("Users").child(in).child("Name").setValue(myusers.get(in));
+                                    databaseReference.child(key).child("Users").child(in).child("Total").setValue(Total);
 
 
 
@@ -161,86 +215,8 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
 
 
-
-                    //ora ho gli utenti e l'id del gruppo
-
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
-                    //genero nuovo id per l'attività
-                    String key = databaseReference.push().getKey();
-                    String Name=mytitle;
-                    Double Total=myamount;
-                    String GroupId=myid_group[0];
-                    String Description=mydescription;
-                    String Category=mycategory;
-                    String Date=myDate.toString();
-
-
-                    databaseReference.child(key).child("Name").setValue(Name);
-                    databaseReference.child(key).child("Total").setValue(Total);
-                    databaseReference.child(key).child("GroupId").setValue(GroupId);
-                    databaseReference.child(key).child("Description").setValue(Description);
-                    databaseReference.child(key).child("Category").setValue(Category);
-                    databaseReference.child(key).child("Date").setValue(Date);
-
-
-                    int count_users=myusers.values().size();
-                    //todo
-
-                    // prendere il vero owner
-                    //in questo caso prendiamo il primo che capita dalla lista
-                    String first=null;
-                    for(String in : myusers.keySet()){
-
-                    first=in;
-                         break;
-
-                    }
-
-                    Name=first;
-                    Total=myamount/count_users;
-
-
-                    //lo settiamo come owner
-                    databaseReference.child(key).child("Owner").child(myusers.get(first)).child("Name").setValue(Name);
-                    databaseReference.child(key).child("Owner").child(myusers.get(first)).child("Total").setValue(Total);
-
-
-                    //// TODO: 05/04/2017  devo aggiungere tutti gli utenti
-                    //preso tutti i nomi degli utenti
-                    for(String in : myusers.keySet()){
-
-                        if(!in.equals(first)){
-
-                            Name=in;
-                            //Setto la spesa a tutti gli utenti
-                            databaseReference.child(key).child("Users").child(myusers.get(Name)).child("Name").setValue(Name);
-                            databaseReference.child(key).child("Users").child(myusers.get(Name)).child("Total").setValue(Total);
-
-
-
-                        }
-                        else{
-                            id_owner = myusers.get(in);
-                        }
-
-
-
-
-                    }
-
-
-                    /*
 
 
                     //1 groups-ACTIVITIES
@@ -254,9 +230,9 @@ public class ActivityExpense extends AppCompatActivity {
                     Name = mytitle;
                     Total=myamount;
 
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
-                    databaseReference.child(myid_group[0]).child("Activities").child(key).child("Total").setValue(Total);
-                    databaseReference.child(myid_group[0]).child("Activities").child(key).child("Name").setValue(Name);
+                    databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+                    databaseReference3.child(key).child("Total").setValue(Total);
+                    databaseReference3.child(key).child("Name").setValue(Name);
 
 
 
@@ -266,20 +242,18 @@ public class ActivityExpense extends AppCompatActivity {
 
                     Name = mytitle;
                     Total=myamount;
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+                    databaseReference4 = FirebaseDatabase.getInstance().getReference("Users");
                     //da fare per tutti gli utenti
 
 
-                    for(String id_user : myusers.values()){
+                    for(String id_user : myusers.keySet()){
 
 
-                        databaseReference.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
-                        databaseReference.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
 
 
                     }
-
-
 
 
 
@@ -287,35 +261,50 @@ public class ActivityExpense extends AppCompatActivity {
                     //per l'owner deve ricevere +
                     //per gli altri devono dare -
 
-                    Total= myamount/count_users; // per persona
+                    final Double Total2= myamount/count_users; // per persona
                     //First sarebbe in questo momento chi paga owner
 
 
 
 
 
-                    for(String name_user : myusers.keySet()){
+                    for(final String  name_user : myusers.keySet()){
 
                         //Prendermi il bilancio
                         ////////// INIZIO
                         ///////////////
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(myusers.get(name_user)).child("GlobalBalance");
+                        databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance");
 
 
 
                         //Read content data
-                        databaseReference.addValueEventListener(new ValueEventListener() {
+                        databaseReference5.addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
                                  bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
 
 
                                 if (bilancioGlobale == null) {
                                     bilancioGlobale = 0.0;
                                 }
+                                    Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
 
+                                if(!name_user.equals(keyowner)){
+                                    //devo levare
+
+                                    databaseReference5.setValue(bilancioGlobale-Total2);
+                                    //databaseReference5.removeEventListener(this);
+                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (bilancioGlobale-Total2));
+                                }
+                                else{
+                                    //sono chi ha pagato l'owner devo aggiungere
+
+                                    databaseReference5.setValue(bilancioGlobale+Total2);
+                                    //databaseReference5.removeEventListener(this);
+                                    Log.d("EXPENSE", "bilancioGlobale+Total2: " + (bilancioGlobale+Total2));
+                                }
+                                databaseReference5.removeEventListener(this);
 
                             }
 
@@ -333,19 +322,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                        if(!name_user.equals(first)){
-                            //devo levare
 
-
-                            databaseReference.setValue(bilancioGlobale-Total);
-
-                         }
-                         else{
-                            //sono chi ha pagato l'owner devo aggiungere
-
-                            databaseReference.setValue(bilancioGlobale+Total);
-
-                        }
 
 
 
@@ -369,15 +346,15 @@ public class ActivityExpense extends AppCompatActivity {
 
                     for(String name_user : myusers.keySet()){
 
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(myusers.get(name_user)).child("Groups")
-                                                .child(myid_group[0]);
+                        databaseReference6 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
+                                                .child(mygroup_selected.getId());
 
 
 
                         //ABBIAMO AGGIORNATO IL BILANCIO DEL GRUPPO
 
                         //Read content data
-                        databaseReference.addValueEventListener(new ValueEventListener() {
+                        databaseReference6.addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -405,11 +382,11 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                        if(!name_user.equals(first)){
+                        if(!name_user.equals(keyowner)){
                             //devo levare
 
                             //aggiorno il bilancio del gruppo
-                            databaseReference.child("Total").setValue(bilanciodelgruppo-Total);
+                            databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
 
                             //adesso devo modificare a chi devo i soldi
 
@@ -420,7 +397,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                             //Read content data
-                            databaseReference.addValueEventListener(new ValueEventListener() {
+                            databaseReference6.addValueEventListener(new ValueEventListener() {
 
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -454,7 +431,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                             //step 2 aggiornalo
 
-                            databaseReference.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+                            databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
 
                             //DEVO FARE L'INVERSO
                             //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
@@ -468,7 +445,7 @@ public class ActivityExpense extends AppCompatActivity {
                             //sono chi ha pagato l'owner devo aggiungere
 
                             //aggiorno il bilancio del gruppo
-                            databaseReference.child("Total").setValue(bilanciodelgruppo+myamount-Total);
+                            databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
 
 
                             //adesso devo modificare da chi devo ricevere i soldi
@@ -511,7 +488,21 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                    */
+
+
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
 
                     Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
                     startActivity(intent);
@@ -550,6 +541,7 @@ public class ActivityExpense extends AppCompatActivity {
         /// Lista di gruppi per l'user autenticato con il rispettivo dovuto
         //////////////
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups");
 
         //Read content data
@@ -558,16 +550,13 @@ public class ActivityExpense extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-
                 //Prendo tutti i gruppi
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
+                {
 
-
-                    items_nomi_gruppi.add(postSnapshot.child("Name").getValue(String.class));
+                    String name= postSnapshot.child("Name").getValue(String.class);
+                    items_nomi_gruppi.add(new NomeDovuto(postSnapshot.getKey(), name));
                     //todo trovare metodo per salvare id
-
-
                 }
             }
 
@@ -582,6 +571,8 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
+
+
                 ///////////////////////////////////////
 
                 ////// FINE DB
@@ -592,13 +583,14 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
+        items_nomi_gruppi.add(new NomeDovuto("0","Select Group"));
 
 
 
 
+        //items_nomi_gruppi.add("Group1");
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,items_nomi_gruppi);
+        ArrayAdapter<NomeDovuto> adapter = new ArrayAdapter<NomeDovuto>(this, android.R.layout.simple_spinner_item,items_nomi_gruppi);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         dropdown.setAdapter(adapter);

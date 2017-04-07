@@ -91,45 +91,7 @@ public class ActivityDetailActivity extends AppCompatActivity
 
 
 
-       final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Activities").child("1");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //prendere il titolo della spesa
-              mTitleTextView.setText( dataSnapshot.child("Name").getValue(String.class) );
-
-                //prendere l'id del gruppi
-                String id_group =  dataSnapshot.child("GroupId").getValue(String.class);
-                //prendere il nome del gruppo e settarlo
-                DatabaseReference dbref2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Name");
-                dbref2.addValueEventListener(new ValueEventListener() {
-                                                 @Override
-                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                     mGroupTextView.setText(dataSnapshot.getValue(String.class));
-                                                 }
-
-                                                 @Override
-                                                 public void onCancelled(DatabaseError databaseError) {
-
-                                                 }
-                                             }
-                                             );
-
-
-
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 
