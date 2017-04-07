@@ -240,7 +240,7 @@ public class ActivityExpense extends AppCompatActivity {
                     }
 
 
-
+                    /*
 
 
                     //1 groups-ACTIVITIES
@@ -502,13 +502,16 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-
+                    //////////
                     ///////////
                     //// FINE DB
+                    //////////
                     //////////
 
 
 
+
+                    */
 
                     Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
                     startActivity(intent);

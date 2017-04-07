@@ -31,6 +31,7 @@ public class ActivityDetailActivity extends AppCompatActivity
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
     private TextView mDescriptionTextView;
+    private FirebaseAuth firebaseAuth;
 
     private String mExpenseId;
 
@@ -45,6 +46,8 @@ public class ActivityDetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        firebaseAuth = FirebaseAuth.getInstance();
         mExpenseId = (String) getIntent().getStringExtra(EXTRA_EXPENSE_UUID);
         //TODO cercare l'uuid nel db per prendere i dati
 
@@ -69,5 +72,80 @@ public class ActivityDetailActivity extends AppCompatActivity
                     .add(R.id.activity_detail_fragment, fragment)
                     .commit();
         }
+
+
+        /////////////////////////
+        //////
+        ////// DBB
+        ///////////////////////////
+        //////////////////////////
+
+
+/*
+        mImageView = (ImageView) findViewById(R.id.imageDetailPicture);
+        mGroupTextView = (TextView) findViewById(R.id.Group_expense);
+        mDateTextView = (TextView) findViewById(R.id.Date_expense);
+        mAmountTextView = (TextView) findViewById(R.id.Total_expense);
+        mCategoryTextView = (TextView) findViewById(R.id.Category_expense);
+        mDescriptionTextView = (TextView) findViewById(R.id.Description_expense); */
+
+
+
+       final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Activities").child("1");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //prendere il titolo della spesa
+              mTitleTextView.setText( dataSnapshot.child("Name").getValue(String.class) );
+
+                //prendere l'id del gruppi
+                String id_group =  dataSnapshot.child("GroupId").getValue(String.class);
+                //prendere il nome del gruppo e settarlo
+                DatabaseReference dbref2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Name");
+                dbref2.addValueEventListener(new ValueEventListener() {
+                                                 @Override
+                                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                                     mGroupTextView.setText(dataSnapshot.getValue(String.class));
+                                                 }
+
+                                                 @Override
+                                                 public void onCancelled(DatabaseError databaseError) {
+
+                                                 }
+                                             }
+                                             );
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+        /////////////////////////
+        //////
+        ////// fine  DBB
+        ///////////////////////////
+        //////////////////////////
+
+
+
     }
 }
