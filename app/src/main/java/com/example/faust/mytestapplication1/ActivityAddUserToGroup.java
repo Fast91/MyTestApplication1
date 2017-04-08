@@ -9,12 +9,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
 public class ActivityAddUserToGroup extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth;
+    private String id_group, name_group;
+    private DatabaseReference databaseReference, databaseReference2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user_to_group);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        id_group = getIntent().getExtras().getString("ID_GROUP");
+        name_group = getIntent().getExtras().getString("NAME_GROUP");
 
 
 
@@ -39,6 +50,76 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                 if(!userMail.equals("")){
 
 
+
+
+
+                    //////////////////
+                    /////
+                    ///// DB cercare l'utente e controllare se esiste
+                    /////
+                    /////////////////
+
+                    //step 0 prendere gli utenti già registrati
+
+                    //if esiste lo aggiungo
+                    //step 1
+                    // aggiunge al gruppo l'utente
+                    // groups - idgruppo - users - idutente - name
+
+                    //step 2
+                    // aggiungere l'utente al gruppo
+                    // users- id utente - groups - id group ---> namegroup + total 0
+                    // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
+
+
+                    //step 3
+                    // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
+
+
+                    //DATI UTILI --> Utenti già presenti hashmap key, name
+                    //nome del gruppo e id del gruppo
+                    // id_group e name_group
+
+
+
+                    //step 0 prendere gli utenti già registrati
+
+
+
+
+                    //todo cambiare l'if
+                    if(id_group.equals(id_group)){
+                        //Se e' registrato lo aggiungo
+
+
+                    }
+
+                    else{
+                        //Se non è registrato
+
+
+
+                    }
+
+
+
+
+
+
+
+                    //else chiedo se vuole invitarlo o no
+
+
+
+
+
+
+
+                    //////////////////
+                    /////
+                    ///// FINE DB
+                    /////
+                    /////////////////
 
 
                     Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();

@@ -11,13 +11,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class ActivityAddGroup extends AppCompatActivity {
+
+
+    private FirebaseAuth firebaseAuth;
+    private String id_group, name_group;
+    private DatabaseReference databaseReference, databaseReference2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
 
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         Button submitGroup = (Button) findViewById(R.id.buttonSubmit_activity_group);
@@ -30,24 +43,84 @@ public class ActivityAddGroup extends AppCompatActivity {
 
 
                 EditText editTextName = (EditText) findViewById(R.id.nameGroup_actitivty_expense);
-                String name = editTextName.getText().toString();
+                name_group = editTextName.getText().toString();
 
-                if (!name.equals("")) {
-                    MyGroup mygroup = new MyGroup(name);
-
-
-                    try {
-                        // DBManager.addActivity(myactivity);
-
-                        DB.setGroup(mygroup);
+                if (!name_group.equals("")) {
 
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+
+
+                    //////////////////
+                    /////
+                    ///// DB todo io metterei già il gruppo e come unico utente chi lo ha creato
+                    /////
+                    /////////////////
+
+
+                    ///STEP 1
+                    /// Group - ID - name - image - users
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
+                    //genero nuovo id per il gruppo
+                   id_group = databaseReference.push().getKey();
+
+                    //setto il nome
+                    databaseReference.child(id_group).child("Name").setValue(name_group);
+
+
+
+
+
+
+
+                    //setto l'utente loggato prima mi serve il suo NOME
+                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
+
+                      //Read content data
+                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                            String name_user = dataSnapshot.child("Name").getValue(String.class);
+
+                            //setto il nome all'utente loggato
+                            databaseReference.child(id_group).child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Name").setValue(name_user);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+                    //// STEP 2
+                    // USERS - ID loggato - GROUPS - ID - NAME - TOTAL 0
+
+                    databaseReference2.child("Groups").child(id_group).child("Name").setValue(name_group);
+
+                    Double tot=0.0;
+                    databaseReference2.child("Groups").child(id_group).child("Total").setValue(tot);
+
+                    //////////////////
+                    /////
+                    ///// FINE DB
+                    /////
+                    /////////////////
+
+                    //step 0 mandare all'altra attività id group e name group
 
 
                     Intent intent = new Intent(ActivityAddGroup.this, ActivityAddUserToGroup.class);
+                    intent.putExtra("ID_GROUP",id_group);
+                    intent.putExtra("NAME_GROUP",name_group);
                     startActivity(intent);
 
 
