@@ -1,6 +1,8 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -280,6 +282,30 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
     private void popUpInvitation(){
+
+
+        new AlertDialog.Builder(getApplicationContext())
+                .setTitle(R.string.user_not_registered_title)
+                .setMessage(R.string.user_not_registered_msg)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        Toast.makeText(getApplicationContext(),"INVITATO",Toast.LENGTH_SHORT).show();
+
+                                        /*
+                                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                                        //intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
+
+                                        intent.addCategory(Intent.CATEGORY_HOME);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();*/
+
+                    }
+                }).create().show();
 
 
 
