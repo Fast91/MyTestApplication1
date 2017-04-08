@@ -364,6 +364,12 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         }
 
 
+        Intent intent = new Intent(ActivityAddUserToGroup.this, ActivityAddUserToGroup.class);
+        intent.putExtra("ID_GROUP",id_group);
+        intent.putExtra("NAME_GROUP",name_group);
+        startActivity(intent);
+
+
 
 
         //aggiornare mappa hash map
