@@ -294,14 +294,16 @@ public class ActivityExpense extends AppCompatActivity {
                                 if(!name_user.equals(keyowner)){
                                     //devo levare
                                     Double tmp= bilancioGlobale-Total2;
-                                    dataSnapshot.getRef().setValue(tmp);
+                                  FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
+
                                     //databaseReference5.removeEventListener(this);
                                     Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
                                 }
                                 else{
                                     //sono chi ha pagato l'owner devo aggiungere
                                     Double tmp= bilancioGlobale+Total2;
-                                    dataSnapshot.getRef().setValue(tmp);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
+
                                     //databaseReference5.removeEventListener(this);
                                     Log.d("EXPENSE", "bilancioGlobale+Total2: " + (tmp));
                                 }
