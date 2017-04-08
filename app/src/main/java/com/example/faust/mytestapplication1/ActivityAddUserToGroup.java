@@ -25,10 +25,11 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private String id_group, name_group;
-    private DatabaseReference databaseReference, databaseReference2;
+    private DatabaseReference databaseReference, databaseReference2, getDatabaseReference3;
     private HashMap<String,String> key_nameuser;
     String userMail=null;
     Boolean exists=false;
+    String id_nuovoutentedaaggiungere, name_nuovoutentedaaggiungere;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +77,6 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     ///// DB cercare l'utente e controllare se esiste
                     /////
                     /////////////////
-
-                    //step 0 prendere gli utenti già registrati
-
-                    //if esiste lo aggiungo
-                    //step 1
-                    // aggiunge al gruppo l'utente
-                    // groups - idgruppo - users - idutente - name
-
-                    //step 2
-                    // aggiungere l'utente al gruppo
-                    // users- id utente - groups - id group ---> namegroup + total 0
-                    // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
-
-
-                    //step 3
-                    // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
 
 
                     //DATI UTILI --> Utenti già presenti hashmap key, name
@@ -152,6 +137,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                                 if(user.child("Email").getValue(String.class).equals(userMail)){
                                     //esiste
                                     exists=true;
+                                    id_nuovoutentedaaggiungere = user.getKey();
+                                    name_nuovoutentedaaggiungere = user.child("Name").getValue(String.class);
                                 }
                              }//fine FOR
 
@@ -161,7 +148,17 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
                             if(exists==true){
 
-                                addUserToGroup();
+
+                                //controllare se già è stato aggiunto
+                                if(key_nameuser.containsKey(id_nuovoutentedaaggiungere)){
+
+                                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroupAlreadyAdded,Toast.LENGTH_LONG).show();
+
+                                }
+                                else {
+                                    addUserToGroup();
+                                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                                }
                             }
                             else{
 
@@ -194,7 +191,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     /////////////////
 
 
-                   // Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+
 
 
 
@@ -222,24 +219,14 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
                 TextView textViewGroupName = (TextView) findViewById(R.id.textGroup_activity_group_members);
                 String groupName = textViewGroupName.getText().toString();
 
                 EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
                 String userMail = editTextUserMail.getText().toString();
 
-                if(!groupName.equals("") && !userMail.equals("")){
-
-                    MyGroup mygroup=new MyGroup(groupName);
-                    User myuser = new User(userMail,0);
-
-                    try {
-                        mygroup.addUserinGroup(myuser);
-
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
+               */
 
 
 
@@ -248,14 +235,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                    return ;}
-
-                else{
-                    Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
-
-
-
-                    return ;}
+                    return ;
 
 
             }
@@ -269,33 +249,81 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
+
+
+
     private void addUserToGroup(){
 
         //step 1
         // aggiunge al gruppo l'utente
         // groups - idgruppo - users - idutente - name
 
+       FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
+                      .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
+
+
         //step 2
         // aggiungere l'utente al gruppo
         // users- id utente - groups - id group ---> namegroup + total 0
+
+        FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                .child("Groups").child(id_group).child("Name").setValue(name_group);
+
+
+        Double tmp=0.0;
+        FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                .child("Groups").child(id_group).child("Total").setValue(tmp);
+
+
         // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
+
+        for(String id_user : key_nameuser.keySet()){
+
+            String Name = key_nameuser.get(id_user);
+           tmp=0.0;
+
+            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                    .child("Groups").child(id_group).child("Users").child(id_user)
+                    .child("Name").setValue(Name);
+
+            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                    .child("Groups").child(id_group).child("Users").child(id_user)
+                    .child("Total").setValue(tmp);
+
+        }
+
 
 
         //step 3
         // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
 
-
-        //DATI UTILI --> Utenti già presenti hashmap key, name
-        //nome del gruppo e id del gruppo
-        // id_group e name_group
-        //userMail
-        //key_nameuser hashmap
+        for(String id_user : key_nameuser.keySet()){
 
 
+            tmp=0.0;
 
+            FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                    .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                    .child("Name").setValue(name_nuovoutentedaaggiungere);
+
+            FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                    .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                    .child("Total").setValue(tmp);
+
+        }
+
+
+        //aggiornare mappa hash map
+
+        Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
+        key_nameuser.remove(id_nuovoutentedaaggiungere);
+       key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
+        Log.d("EXISTS", "LEVATO");
 
 
     }
+
+
 
 
     private void popUpInvitation(){
@@ -310,7 +338,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        Toast.makeText(ActivityAddUserToGroup.this,"INVITATO",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"INVITATO",Toast.LENGTH_SHORT).show();
 
                                         /*
                                         Intent intent = new Intent(Intent.ACTION_MAIN);
