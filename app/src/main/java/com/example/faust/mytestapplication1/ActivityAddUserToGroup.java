@@ -176,14 +176,16 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                            Log.d("EXISTS", "Fine ondatachange");
+                            Log.d("EXISTS", "Fine  ondatachange");
 
-
+                            return ;
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
+
+                            return ;
                         }
                     });
 
