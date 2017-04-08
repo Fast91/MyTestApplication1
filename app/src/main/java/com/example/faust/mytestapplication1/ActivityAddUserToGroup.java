@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,10 +61,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         //ButtonADD per aggiungere il gruppo
         ImageButton addGroupUser = (ImageButton)  findViewById(R.id.activity_group_members_addmember);
 
-        addGroupUser.setOnClickListener(new View.OnClickListener() {
+        addGroupUser.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
 
 
 
@@ -111,6 +112,86 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                             }
 
 
+
+
+                            ////////////////////
+
+
+                            //step 0.1
+                            // controllare se l'utente è registrato userMail
+                            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Users");
+                            rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    //non esiste
+                                    exists = false;
+
+                                    //per tutti gli utenti controllare se esiste quello con quella mail
+                                    for(DataSnapshot user : snapshot.getChildren()){
+
+                                        if(user.child("Email").getValue(String.class).equals(userMail)){
+                                            //esiste
+                                            exists=true;
+                                            id_nuovoutentedaaggiungere = user.getKey();
+                                            name_nuovoutentedaaggiungere = user.child("Name").getValue(String.class);
+                                        }
+                                    }//fine FOR
+
+                                    Log.d("EXISTS", "usermail : "+userMail + " GROUPNAME : " + name_group +"  GROUPID : " +id_group );
+                                    Log.d("EXISTS", "esiste : "+exists );
+
+
+                                    if(exists==true){
+
+
+                                        //controllare se già è stato aggiunto
+                                        if(key_nameuser.containsKey(id_nuovoutentedaaggiungere)){
+
+                                            Toast.makeText(getApplicationContext(),R.string.toast_addedusergroupAlreadyAdded,Toast.LENGTH_LONG).show();
+
+                                        }
+                                        else {
+                                            addUserToGroup();
+                                            Log.d("EXISTS", "Sono uscito dal metodo");
+
+                                            Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                                            Log.d("EXISTS", "Fine toast");
+                                        }
+                                    }
+                                    else{
+
+                                        popUpInvitation();
+
+                                    }
+
+
+
+                                    Log.d("EXISTS", "Fine  ondatachange");
+
+                                  // return;
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+
+                                   // return ;
+                                }
+                            });
+
+
+
+
+
+
+
+
+
+                            /////////////////////
+
+
+
+
                         }
 
                         @Override
@@ -127,67 +208,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                    //step 0.1
-                    // controllare se l'utente è registrato userMail
-                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Users");
-                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            //non esiste
-                             exists = false;
 
-                            //per tutti gli utenti controllare se esiste quello con quella mail
-                            for(DataSnapshot user : snapshot.getChildren()){
-
-                                if(user.child("Email").getValue(String.class).equals(userMail)){
-                                    //esiste
-                                    exists=true;
-                                    id_nuovoutentedaaggiungere = user.getKey();
-                                    name_nuovoutentedaaggiungere = user.child("Name").getValue(String.class);
-                                }
-                             }//fine FOR
-
-                            Log.d("EXISTS", "usermail : "+userMail + " GROUPNAME : " + name_group +"  GROUPID : " +id_group );
-                            Log.d("EXISTS", "esiste : "+exists );
-
-
-                            if(exists==true){
-
-
-                                //controllare se già è stato aggiunto
-                                if(key_nameuser.containsKey(id_nuovoutentedaaggiungere)){
-
-                                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroupAlreadyAdded,Toast.LENGTH_LONG).show();
-
-                                }
-                                else {
-                                    addUserToGroup();
-                                    Log.d("EXISTS", "Sono uscito dal metodo");
-
-                                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
-                                    Log.d("EXISTS", "Fine toast");
-                                }
-                            }
-                            else{
-
-                                popUpInvitation();
-
-                            }
-
-
-
-                            Log.d("EXISTS", "Fine  ondatachange");
-
-                            return ;
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-
-                            return ;
-                        }
-                    });
 
 
 
@@ -205,14 +226,14 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                    return ;}
+                    return true;}
 
                 else{
                     Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
 
 
 
-                    return ;}
+                    return true;}
 
 
             }
