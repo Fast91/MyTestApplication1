@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,9 +35,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user_to_group);
 
+
+        Log.d("EXISTS", "Provo AUTH" );
         firebaseAuth = FirebaseAuth.getInstance();
+        Log.d("EXISTS", "Provo a prendere id e name group" );
         id_group = getIntent().getExtras().getString("ID_GROUP");
         name_group = getIntent().getExtras().getString("NAME_GROUP");
+        Log.d("EXISTS", "finito di prenderli" );
         key_nameuser= new HashMap<>();
 
 
@@ -98,6 +103,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     //step 0 prendere gli utenti già registrati
                     // GROUPS - ID - USERS
 
+                    Log.d("EXISTS", "PROVO a prendere i vecchi utenti" );
+
+
+
                     databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,6 +130,11 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     });
 
 
+                    Log.d("EXISTS", "finito di prenderli" );
+
+
+
+
 
 
                     //step 0.1
@@ -140,6 +154,9 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                                     exists=true;
                                 }
                              }//fine FOR
+
+                            Log.d("EXISTS", "usermail : "+userMail + " GROUPNAME : " + name_group +"  GROUPID : " +id_group );
+                            Log.d("EXISTS", "esiste : "+exists );
 
 
                             if(exists==true){
@@ -177,7 +194,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     /////////////////
 
 
-                    Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
 
 
 
