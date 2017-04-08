@@ -88,4 +88,6 @@
     <string name="activity_group_buttonpassaddmember">Go to add Member</string>
     <string name="toast_addedusergroup">Added User</string>
     <string name="activity_detail_title">Telephone</string>
+    <string name="user_not_registered_title">Do you want to invite user?</string>
+    <string name="user_not_registered_msg">Do you want to invite user?</string>
 </resources>

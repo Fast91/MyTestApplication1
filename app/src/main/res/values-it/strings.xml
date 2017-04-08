@@ -78,6 +78,8 @@
     <string name="activity_group_buttonpassaddmember">Prosegui per aggiungere utenti</string>
     <string name="toast_addedusergroup">Aggiunto Utente</string>
     <string name="activity_detail_title">Telefono</string>
+    <string name="user_not_registered_title">Invitare l\'utente?</string>
+    <string name="user_not_registered_msg">Vuoi invitare l\'utente?</string>
 
 
 </resources>
