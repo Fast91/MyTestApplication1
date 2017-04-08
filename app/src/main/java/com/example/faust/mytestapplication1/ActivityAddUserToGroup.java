@@ -46,6 +46,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         key_nameuser= new HashMap<>();
 
 
+        TextView text_name =(TextView) findViewById(R.id.textGroup_activity_group_members);
+        text_name.setText(name_group);
+
+
 
 
 
