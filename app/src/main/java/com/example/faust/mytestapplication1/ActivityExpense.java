@@ -383,64 +383,6 @@ public class ActivityExpense extends AppCompatActivity {
                                     //adesso devo modificare a chi devo i soldi
 
 
-                                    //step 1 prendere il totale per quella persona
-
-
-
-
-                                    //Read content i dati del singolo utente
-                                    databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                            .child(mygroup_selected.getId()).child("Users").child(id_owner).child("Total");
-                                    databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                                            bilanciosingolo= (Double) dataSnapshot.getValue(Double.class);
-
-
-                                            if (bilanciosingolo == null) {
-                                                bilanciosingolo = 0.0;
-                                            }
-
-
-
-
-                                            //step 2 aggiornalo
-                                            Double tmp= bilanciosingolo-Total2;
-                                            FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
-                                                    .child("Users").child(id_owner).child("Total").setValue(tmp);
-
-
-                                            //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
-
-                                            //DEVO FARE L'INVERSO
-                                            //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
-
-                                             tmp= -tmp;
-                                            FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                    .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
-
-
-
-
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-
-                                    });
-
-
-                                    ///////////// FINE BILANCIO singolo
-
-
-
-
 
 
                                 }
@@ -499,6 +441,69 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
+
+
+
+                        ////// punto 5 aggiornare i singoli bilanci all'interno del gruppo
+                                // per quelle persone convolte
+
+
+                        /*
+
+                                for(final String name_user : myusers.keySet()) {
+
+                                    //step 1 prendere il totale per quella persona
+
+
+                                    //Read content i dati del singolo utente
+                                    databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
+                                            .child(mygroup_selected.getId()).child("Users").child(id_owner).child("Total");
+                                    databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                            bilanciosingolo = (Double) dataSnapshot.getValue(Double.class);
+
+
+                                            if (bilanciosingolo == null) {
+                                                bilanciosingolo = 0.0;
+                                            }
+
+
+                                            //step 2 aggiornalo
+                                            Double tmp = bilanciosingolo - Total2;
+                                            FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                    .child("Users").child(id_owner).child("Total").setValue(tmp);
+
+
+                                            //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+
+                                            //DEVO FARE L'INVERSO
+                                            //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
+
+                                            tmp = -tmp;
+                                            FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
+                                                    .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+
+                                    });
+
+
+                                    ///////////// FINE BILANCIO singolo
+
+
+                                }//fine for
+
+                                */
 
 
 

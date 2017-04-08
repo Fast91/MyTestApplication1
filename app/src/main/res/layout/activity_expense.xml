@@ -51,7 +51,7 @@
         android:maxLines="1"
         android:nextFocusDown="@+id/pass_reg"
         android:paddingLeft="10dp"
-        android:popupBackground="#ff0000"
+        android:popupBackground="#fff"
 
         android:prompt="@string/groupspinner_prompt"
 
