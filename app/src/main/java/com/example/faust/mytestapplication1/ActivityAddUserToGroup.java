@@ -105,6 +105,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                             //Per tutti gli utenti aggiungerli
                             for(DataSnapshot users : dataSnapshot.getChildren()){
 
+                                key_nameuser.remove(users.getKey());
                                 key_nameuser.put(users.getKey(),users.child("Name").getValue(String.class));
 
                             }
@@ -161,7 +162,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                                 }
                                 else {
                                     addUserToGroup();
+                                    Log.d("EXISTS", "Sono uscito dal metodo");
+
                                     Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                                    Log.d("EXISTS", "Fine toast");
                                 }
                             }
                             else{
@@ -172,7 +176,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-
+                            Log.d("EXISTS", "Fine ondatachange");
 
 
                         }
@@ -186,7 +190,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-
+                    Log.d("EXISTS", "Uscito listener");
 
                     //////////////////
                     /////
@@ -213,6 +217,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
         });
 
+
+        Log.d("EXISTS", "Continuazione");
 
 
         //ButtonSubmit per finire il gruppo ed andare alla main activity
@@ -248,6 +254,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
+        Log.d("EXISTS", "End");
+
 
     }
 
@@ -257,6 +265,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
     private void addUserToGroup(){
+
+        Log.d("EXISTS", "INIZIO ADDUSERTOGROUP");
 
         //step 1
         // aggiunge al gruppo l'utente
