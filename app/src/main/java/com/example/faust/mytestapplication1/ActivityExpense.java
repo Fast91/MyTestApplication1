@@ -449,7 +449,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-
+                                id_owner=keyowner;
                                 for(final String name_user : myusers.keySet()) {
 
                                     //step 1 prendere il totale per quella persona
@@ -458,7 +458,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                                     if(!name_user.equals(id_owner)) {
 
-
+                                        Log.d("SINGOLO"," io sono : "+ name_user+" "+" quindi non sono owner "+id_owner);
                                         //Read content i dati del singolo utente
                                         databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
                                                 .child(mygroup_selected.getId()).child("Users");
