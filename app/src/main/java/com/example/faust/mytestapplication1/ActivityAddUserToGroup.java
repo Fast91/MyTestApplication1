@@ -350,12 +350,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
                 Log.d("STRONZO", "idgroup :" + id_group +"  id_nuovoutentedaaggiungere "+ id_nuovoutentedaaggiungere + "  name_nuovoutentedaaggiungere  " + name_nuovoutentedaaggiungere);
 
-                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+
+                DatabaseReference dbref=  FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                        .child("Groups");
+                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
                         .child("Name").setValue(name_nuovoutentedaaggiungere);
 
-                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
                         .child("Total").setValue(tmp);
 
             }
