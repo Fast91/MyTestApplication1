@@ -278,7 +278,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                         //Read content data
-                        databaseReference5.addValueEventListener(new ValueEventListener() {
+                        databaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
