@@ -10,13 +10,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class ActivityAddUserToGroup extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private String id_group, name_group;
     private DatabaseReference databaseReference, databaseReference2;
+    private HashMap<String,String> key_nameuser;
+    String userMail=null;
+    Boolean exists=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         id_group = getIntent().getExtras().getString("ID_GROUP");
         name_group = getIntent().getExtras().getString("NAME_GROUP");
+        key_nameuser= new HashMap<>();
+
 
 
 
@@ -45,7 +56,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
                 EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
-                String userMail = editTextUserMail.getText().toString();
+                 userMail = editTextUserMail.getText().toString();
 
                 if(!userMail.equals("")){
 
@@ -83,32 +94,74 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
                     //step 0 prendere gli utenti già registrati
+                    // GROUPS - ID - USERS
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            //Per tutti gli utenti aggiungerli
+                            for(DataSnapshot users : dataSnapshot.getChildren()){
+
+                                key_nameuser.put(users.getKey(),users.child("Name").getValue(String.class));
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
 
 
-                    //todo cambiare l'if
-                    if(id_group.equals(id_group)){
-                        //Se e' registrato lo aggiungo
+                    //step 0.1
+                    // controllare se l'utente è registrato userMail
+                    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Users");
+                    rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            //non esiste
+                             exists = false;
+
+                            //per tutti gli utenti controllare se esiste quello con quella mail
+                            for(DataSnapshot user : snapshot.getChildren()){
+
+                                if(user.child("Email").getValue(String.class).equals(userMail)){
+                                    //esiste
+                                    exists=true;
+                                }
+                             }//fine FOR
 
 
-                    }
+                            if(exists==true){
 
-                    else{
-                        //Se non è registrato
+                                addUserToGroup();
+                            }
+                            else{
 
+                                popUpInvitation();
 
-
-                    }
-
-
-
+                            }
 
 
 
 
-                    //else chiedo se vuole invitarlo o no
 
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
 
@@ -189,6 +242,44 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
             }
 
         });
+
+
+
+
+    }
+
+
+
+    private void addUserToGroup(){
+
+        //step 1
+        // aggiunge al gruppo l'utente
+        // groups - idgruppo - users - idutente - name
+
+        //step 2
+        // aggiungere l'utente al gruppo
+        // users- id utente - groups - id group ---> namegroup + total 0
+        // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
+
+
+        //step 3
+        // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
+
+
+        //DATI UTILI --> Utenti già presenti hashmap key, name
+        //nome del gruppo e id del gruppo
+        // id_group e name_group
+        //userMail
+        //key_nameuser hashmap
+
+
+
+
+
+    }
+
+
+    private void popUpInvitation(){
 
 
 
