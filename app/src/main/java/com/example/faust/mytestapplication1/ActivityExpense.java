@@ -288,21 +288,22 @@ public class ActivityExpense extends AppCompatActivity {
                                 if (bilancioGlobale == null) {
                                     bilancioGlobale = 0.0;
                                 }
-                                    Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
+                                Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
+                                Log.d("EXPENSE", "Id: " + name_user);
 
                                 if(!name_user.equals(keyowner)){
                                     //devo levare
-
-                                    databaseReference5.setValue(bilancioGlobale-Total2);
+                                    Double tmp= bilancioGlobale-Total2;
+                                    dataSnapshot.getRef().setValue(tmp);
                                     //databaseReference5.removeEventListener(this);
-                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (bilancioGlobale-Total2));
+                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
                                 }
                                 else{
                                     //sono chi ha pagato l'owner devo aggiungere
-
-                                    databaseReference5.setValue(bilancioGlobale+Total2);
+                                    Double tmp= bilancioGlobale+Total2;
+                                    dataSnapshot.getRef().setValue(tmp);
                                     //databaseReference5.removeEventListener(this);
-                                    Log.d("EXPENSE", "bilancioGlobale+Total2: " + (bilancioGlobale+Total2));
+                                    Log.d("EXPENSE", "bilancioGlobale+Total2: " + (tmp));
                                 }
                                 databaseReference5.removeEventListener(this);
 
