@@ -456,67 +456,71 @@ public class ActivityExpense extends AppCompatActivity {
 
                                     Log.d("SINGOLO"," inizio il primo id : "+ name_user);
 
-
-                                    //Read content i dati del singolo utente
-                                    databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                            .child(mygroup_selected.getId()).child("Users");
-                                    databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(!name_user.equals(id_owner)) {
 
 
-                                            for(DataSnapshot persone : dataSnapshot.getChildren()){
+                                        //Read content i dati del singolo utente
+                                        databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
+                                                .child(mygroup_selected.getId()).child("Users");
+                                        databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                                                Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : "+persone.getKey());
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                                for (DataSnapshot persone : dataSnapshot.getChildren()) {
+
+                                                    Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : " + persone.getKey());
+
+                                                }
+
+
+                                                Log.d("SINGOLO", " Provo a prendere il bilancio per quella persona: ");
+
+
+                                                bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
+
+
+                                                if (bilanciosingolo == null) {
+                                                    bilanciosingolo = 0.0;
+                                                }
+
+
+                                                Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
+
+                                                //step 2 aggiornalo
+                                                Double tmp = bilanciosingolo - Total2;
+                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                        .child("Users").child(id_owner).child("Total").setValue(tmp);
+
+
+                                                Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
+
+
+                                                //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+
+                                                //DEVO FARE L'INVERSO
+                                                //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
+
+                                                tmp = -tmp;
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
+                                                        .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
+
 
                                             }
 
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
-                                            Log.d("SINGOLO"," Provo a prendere il bilancio per quella persona: ");
-
-
-                                            bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
-
-
-                                            if (bilanciosingolo == null) {
-                                                bilanciosingolo = 0.0;
                                             }
 
-
-                                            Log.d("SINGOLO"," bilancio singolo : "+ bilanciosingolo);
-
-                                            //step 2 aggiornalo
-                                            Double tmp = bilanciosingolo - Total2;
-                                            FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
-                                                    .child("Users").child(id_owner).child("Total").setValue(tmp);
+                                        });
 
 
-                                            Log.d("SINGOLO"," bilancio aggiornato : "+ tmp);
+                                        ///////////// FINE BILANCIO singolo
 
 
-                                            //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
-
-                                            //DEVO FARE L'INVERSO
-                                            //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
-
-                                            tmp = -tmp;
-                                            FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                    .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
-
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-
-                                    });
-
-
-                                    ///////////// FINE BILANCIO singolo
-
+                                    }//fine if
 
                                 }//fine for
 
