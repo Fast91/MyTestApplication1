@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -61,10 +60,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         //ButtonADD per aggiungere il gruppo
         ImageButton addGroupUser = (ImageButton)  findViewById(R.id.activity_group_members_addmember);
 
-        addGroupUser.setOnTouchListener(new View.OnTouchListener() {
+        addGroupUser.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
 
 
 
@@ -151,10 +150,90 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
                                         }
                                         else {
-                                            addUserToGroup();
+                                            //addUserToGroup();
+
+                                            //////////////////
+                                            /////////////////
+
+
+                                            Log.d("EXISTS", "INIZIO ADDUSERTOGROUP");
+
+                                            //step 1
+                                            // aggiunge al gruppo l'utente
+                                            // groups - idgruppo - users - idutente - name
+
+                                            FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
+                                                    .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
+
+
+                                            //step 2
+                                            // aggiungere l'utente al gruppo
+                                            // users- id utente - groups - id group ---> namegroup + total 0
+
+                                            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                                                    .child("Groups").child(id_group).child("Name").setValue(name_group);
+
+
+                                            Double tmp=0.0;
+                                            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                                                    .child("Groups").child(id_group).child("Total").setValue(tmp);
+
+
+                                            // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
+
+                                            for(String id_user : key_nameuser.keySet()){
+
+                                                String Name = key_nameuser.get(id_user);
+                                                tmp=0.0;
+
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                                                        .child("Groups").child(id_group).child("Users").child(id_user)
+                                                        .child("Name").setValue(Name);
+
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                                                        .child("Groups").child(id_group).child("Users").child(id_user)
+                                                        .child("Total").setValue(tmp);
+
+                                            }
+
+
+
+                                            //step 3
+                                            // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
+
+                                            for(String id_user : key_nameuser.keySet()){
+
+
+                                                tmp=0.0;
+
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                                                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                                                        .child("Name").setValue(name_nuovoutentedaaggiungere);
+
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                                                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                                                        .child("Total").setValue(tmp);
+
+                                            }
+
+
+                                            //aggiornare mappa hash map
+
+                                            Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
+                                            key_nameuser.remove(id_nuovoutentedaaggiungere);
+                                            key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
+                                            Log.d("EXISTS", "LEVATO");
+
+
+
+
+
+
+                                            //////////////////
+                                            /////////////////
                                             Log.d("EXISTS", "Sono uscito dal metodo");
 
-                                            Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
                                             Log.d("EXISTS", "Fine toast");
                                         }
                                     }
@@ -226,14 +305,14 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                    return true;}
+                    return ;}
 
                 else{
                     Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
 
 
 
-                    return true;}
+                    return ;}
 
 
             }
@@ -285,7 +364,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-
+/*
 
     private void addUserToGroup(){
 
@@ -361,7 +440,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
     }
 
 
-
+*/
 
     private void popUpInvitation(){
 
