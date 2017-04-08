@@ -459,16 +459,24 @@ public class ActivityExpense extends AppCompatActivity {
 
                                     //Read content i dati del singolo utente
                                     databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                            .child(mygroup_selected.getId());
+                                            .child(mygroup_selected.getId()).child("Users");
                                     databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+                                            for(DataSnapshot persone : dataSnapshot.getChildren()){
+
+                                                Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : "+persone.getKey());
+
+                                            }
+
+
                                             Log.d("SINGOLO"," Provo a prendere il bilancio per quella persona: ");
 
 
-                                            bilanciosingolo = (Double) dataSnapshot.child("Users").child(id_owner).child("Total").getValue(Double.class);
+                                            bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
 
 
                                             if (bilanciosingolo == null) {
