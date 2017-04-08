@@ -331,7 +331,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                     }
-/*
+
 
 
                     ////////////////////////////////////////////
@@ -347,7 +347,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                    for(String name_user : myusers.keySet()){
+                    for(final String name_user : myusers.keySet()){
 
                         databaseReference6 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
                                                 .child(mygroup_selected.getId());
@@ -356,8 +356,8 @@ public class ActivityExpense extends AppCompatActivity {
 
                         //ABBIAMO AGGIORNATO IL BILANCIO DEL GRUPPO
 
-                        //Read content data
-                        databaseReference6.addValueEventListener(new ValueEventListener() {
+                        //Read  il bilancio del gruppo
+                        databaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -368,6 +368,112 @@ public class ActivityExpense extends AppCompatActivity {
                                 if (bilanciodelgruppo == null) {
                                     bilanciodelgruppo = 0.0;
                                 }
+
+
+
+                                if(!name_user.equals(keyowner)){
+                                    //devo levare
+
+                                    //aggiorno il bilancio del gruppo
+                                    Double tmp= bilanciodelgruppo-Total2;
+                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
+
+                                    //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
+
+                                    //adesso devo modificare a chi devo i soldi
+
+
+                                    //step 1 prendere il totale per quella persona
+
+
+
+
+                                    //Read content data
+                                    databaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                            bilanciosingolo= (Double) dataSnapshot.child("Users").child(id_owner).child("Total").getValue(Double.class);
+
+
+                                            if (bilanciosingolo == null) {
+                                                bilanciosingolo = 0.0;
+                                            }
+
+
+
+
+                                            //step 2 aggiornalo
+                                            Double tmp= bilanciosingolo-Total2;
+                                            FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                    .child("Users").child(id_owner).child("Total").setValue(tmp);
+
+
+                                            //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+
+                                            //DEVO FARE L'INVERSO
+                                            //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
+
+                                             tmp= bilanciosingolo-Total2;
+                                            FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
+                                                    .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
+
+
+
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+
+                                    });
+
+
+                                    ///////////// FINE BILANCIO singolo
+
+
+
+
+
+
+                                }
+                                else{
+                                    //sono chi ha pagato l'owner devo aggiungere
+
+                                    //aggiorno il bilancio del gruppo
+                                    Double tmp= bilanciodelgruppo-Total2+myamount;
+                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
+
+                                  //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
+
+
+                                    //adesso devo modificare da chi devo ricevere i soldi
+
+
+                                    //per tutti gli utenti a cui ho prestato soldi
+
+
+                                    //step 1 prendere il totale per quella persona
+
+
+                                    //step 2 aggiornalo
+
+
+                                }
+
+
+
+
+
+
+
+
+
 
 
                             }
@@ -385,90 +491,9 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                        if(!name_user.equals(keyowner)){
-                            //devo levare
-
-                            //aggiorno il bilancio del gruppo
-                            databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
-
-                            //adesso devo modificare a chi devo i soldi
 
 
-                            //step 1 prendere il totale per quella persona
-
-
-
-
-                            //Read content data
-                            databaseReference6.addValueEventListener(new ValueEventListener() {
-
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-
-
-                                    bilanciosingolo= (Double) dataSnapshot.child("Users").child(id_owner).child("Total").getValue(Double.class);
-
-
-                                    if (bilanciosingolo == null) {
-                                        bilanciosingolo = 0.0;
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-
-                            });
-
-
-                            ///////////// FINE BILANCIO singolo
-
-
-
-
-                            //step 2 aggiornalo
-
-                            databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
-
-                            //DEVO FARE L'INVERSO
-                            //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
-                             FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                    .child(myid_group[0]).child("Users").child(myusers.get(name_user)).child("Total").setValue(bilanciosingolo+Total);
-
-
-
-                        }
-                        else{
-                            //sono chi ha pagato l'owner devo aggiungere
-
-                            //aggiorno il bilancio del gruppo
-                            databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
-
-
-                            //adesso devo modificare da chi devo ricevere i soldi
-
-
-                            //per tutti gli utenti a cui ho prestato soldi
-
-
-                            //step 1 prendere il totale per quella persona
-
-
-                            //step 2 aggiornalo
-
-
-                        }
-
-
-
-
-                    }
+                    }//fine for
 
 
 
@@ -491,7 +516,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-*/
+
 
 
 
