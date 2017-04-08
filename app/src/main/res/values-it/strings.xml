@@ -80,6 +80,7 @@
     <string name="activity_detail_title">Telefono</string>
     <string name="user_not_registered_title">Invitare?</string>
     <string name="user_not_registered_msg">Vuoi invitare l\'utente?</string>
+    <string name="toast_addedusergroupAlreadyAdded">Già aggiunto</string>
 
 
 </resources>
