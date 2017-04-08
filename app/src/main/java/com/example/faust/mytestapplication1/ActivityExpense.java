@@ -64,7 +64,7 @@ public class ActivityExpense extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference3;
-    private DatabaseReference databaseReference4, databaseReference5, databaseReference6;
+    private DatabaseReference databaseReference4, databaseReference5, databaseReference6, databaseReference7;
 
 
     @Override
@@ -388,14 +388,16 @@ public class ActivityExpense extends AppCompatActivity {
 
 
 
-                                    //Read content data
-                                    databaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    //Read content i dati del singolo utente
+                                    databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
+                                            .child(mygroup_selected.getId()).child("Users").child(id_owner).child("Total");
+                                    databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                                            bilanciosingolo= (Double) dataSnapshot.child("Users").child(id_owner).child("Total").getValue(Double.class);
+                                            bilanciosingolo= (Double) dataSnapshot.getValue(Double.class);
 
 
                                             if (bilanciosingolo == null) {
@@ -416,7 +418,7 @@ public class ActivityExpense extends AppCompatActivity {
                                             //DEVO FARE L'INVERSO
                                             //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
 
-                                             tmp= bilanciosingolo-Total2;
+                                             tmp= -tmp;
                                             FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
                                                     .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
 
