@@ -150,90 +150,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
                                         }
                                         else {
-                                            //addUserToGroup();
-
-                                            //////////////////
-                                            /////////////////
-
-
-                                            Log.d("EXISTS", "INIZIO ADDUSERTOGROUP");
-
-                                            //step 1
-                                            // aggiunge al gruppo l'utente
-                                            // groups - idgruppo - users - idutente - name
-
-                                            FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
-                                                    .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
-
-
-                                            //step 2
-                                            // aggiungere l'utente al gruppo
-                                            // users- id utente - groups - id group ---> namegroup + total 0
-
-                                            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                                                    .child("Groups").child(id_group).child("Name").setValue(name_group);
-
-
-                                            Double tmp=0.0;
-                                            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                                                    .child("Groups").child(id_group).child("Total").setValue(tmp);
-
-
-                                            // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
-
-                                            for(String id_user : key_nameuser.keySet()){
-
-                                                String Name = key_nameuser.get(id_user);
-                                                tmp=0.0;
-
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                                                        .child("Groups").child(id_group).child("Users").child(id_user)
-                                                        .child("Name").setValue(Name);
-
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                                                        .child("Groups").child(id_group).child("Users").child(id_user)
-                                                        .child("Total").setValue(tmp);
-
-                                            }
-
-
-
-                                            //step 3
-                                            // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
-
-                                            for(String id_user : key_nameuser.keySet()){
-
-
-                                                tmp=0.0;
-
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                                                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                                                        .child("Name").setValue(name_nuovoutentedaaggiungere);
-
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                                                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                                                        .child("Total").setValue(tmp);
-
-                                            }
-
-
-                                            //aggiornare mappa hash map
-
-                                            Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
-                                            key_nameuser.remove(id_nuovoutentedaaggiungere);
-                                            key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
-                                            Log.d("EXISTS", "LEVATO");
-
-
-
-
-
-
-                                            //////////////////
-                                            /////////////////
+                                            addUserToGroup();
                                             Log.d("EXISTS", "Sono uscito dal metodo");
 
-                                            //Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(),R.string.toast_addedusergroup,Toast.LENGTH_LONG).show();
                                             Log.d("EXISTS", "Fine toast");
                                         }
                                     }
@@ -364,7 +284,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-/*
+
 
     private void addUserToGroup(){
 
@@ -378,6 +298,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                       .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
 
 
+
+
         //step 2
         // aggiungere l'utente al gruppo
         // users- id utente - groups - id group ---> namegroup + total 0
@@ -386,9 +308,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                 .child("Groups").child(id_group).child("Name").setValue(name_group);
 
 
+
+
         Double tmp=0.0;
         FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
                 .child("Groups").child(id_group).child("Total").setValue(tmp);
+
+
 
 
         // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
@@ -416,17 +342,27 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
         for(String id_user : key_nameuser.keySet()){
 
 
+
+                Log.d("STRONZO", "sono id :" + id_user +"  name "+ key_nameuser.get(id_user));
             tmp=0.0;
 
-            FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                    .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                    .child("Name").setValue(name_nuovoutentedaaggiungere);
+            if(!id_user.equals(id_nuovoutentedaaggiungere)) {
 
-            FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                    .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                    .child("Total").setValue(tmp);
+                Log.d("STRONZO", "idgroup :" + id_group +"  id_nuovoutentedaaggiungere "+ id_nuovoutentedaaggiungere + "  name_nuovoutentedaaggiungere  " + name_nuovoutentedaaggiungere);
+
+                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                        .child("Name").setValue(name_nuovoutentedaaggiungere);
+
+                FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                        .child("Groups").child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                        .child("Total").setValue(tmp);
+
+            }
 
         }
+
+
 
 
         //aggiornare mappa hash map
@@ -440,7 +376,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
     }
 
 
-*/
+
 
     private void popUpInvitation(){
 
