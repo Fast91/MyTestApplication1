@@ -448,23 +448,27 @@ public class ActivityExpense extends AppCompatActivity {
                                 // per quelle persone convolte
 
 
-                        /*
+
 
                                 for(final String name_user : myusers.keySet()) {
 
                                     //step 1 prendere il totale per quella persona
 
+                                    Log.d("SINGOLO"," inizio il primo id : "+ name_user);
+
 
                                     //Read content i dati del singolo utente
                                     databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                            .child(mygroup_selected.getId()).child("Users").child(id_owner).child("Total");
+                                            .child(mygroup_selected.getId());
                                     databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                            Log.d("SINGOLO"," Provo a prendere il bilancio per quella persona: ");
 
-                                            bilanciosingolo = (Double) dataSnapshot.getValue(Double.class);
+
+                                            bilanciosingolo = (Double) dataSnapshot.child("Users").child(id_owner).child("Total").getValue(Double.class);
 
 
                                             if (bilanciosingolo == null) {
@@ -472,10 +476,15 @@ public class ActivityExpense extends AppCompatActivity {
                                             }
 
 
+                                            Log.d("SINGOLO"," bilancio singolo : "+ bilanciosingolo);
+
                                             //step 2 aggiornalo
                                             Double tmp = bilanciosingolo - Total2;
                                             FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
                                                     .child("Users").child(id_owner).child("Total").setValue(tmp);
+
+
+                                            Log.d("SINGOLO"," bilancio aggiornato : "+ tmp);
 
 
                                             //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
@@ -503,7 +512,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                                 }//fine for
 
-                                */
+
 
 
 
