@@ -301,7 +301,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
     private void popUpInvitation(){
 
 
-        new AlertDialog.Builder(getApplicationContext())
+        new AlertDialog.Builder(this)
                 .setTitle(R.string.user_not_registered_title)
                 .setMessage(R.string.user_not_registered_msg)
                 .setNegativeButton(android.R.string.no, null)
@@ -310,7 +310,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
 
-                        Toast.makeText(getApplicationContext(),"INVITATO",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityAddUserToGroup.this,"INVITATO",Toast.LENGTH_SHORT).show();
 
                                         /*
                                         Intent intent = new Intent(Intent.ACTION_MAIN);
