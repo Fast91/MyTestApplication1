@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Breaking MAD</string>
     <string name="intro_string">Introduci Stringa</string>
-    <string name="b1_string">Globale</string>
+    <string name="b1_string">Bilancio Globale</string>
     <string name="b2_string">Gruppi</string>
     <string name="b3_string">Attività</string>
     <string name="balance_name">Bilancio Globale</string>
-    <string name="balance_string">0.00€</string>
+    <string name="balance_string">000.00€</string>
     <string name="b4_string">Nuova Spesa</string>
     <string name="b5_string">Nuovo Gruppo</string>
-    <string name="global_string">Globale</string>
+    <string name="global_string">Bilancio Globale</string>
 
     <string name="b5_string_show_group_activity">Attività del gruppo</string>
     //prova
@@ -17,7 +17,7 @@
     <string name="hide_subtitle">Nascondi sottotitolo</string>
     <string name="subtitle_format">%1$s crimes</string>
     <string name="title_activity_groups">Attività del gruppo</string>
-    <string name="total_user_global_string">120€</string>
+    <string name="total_user_global_string">000.00€</string>
     <string name="name_user_global_string">Francesco</string>
     <string name="groupspinner_prompt">Spinner gruppo</string>
     <string name="share_menu" > Condividi</string>
@@ -81,6 +81,18 @@
     <string name="user_not_registered_title">Invitare?</string>
     <string name="user_not_registered_msg">Vuoi invitare l\'utente?</string>
     <string name="toast_addedusergroupAlreadyAdded">Già aggiunto</string>
+
+    <string name="invitation_title">Invitare?</string>
+    <string name="invitation_message">Entra nel mio gruppo. Inserisci questo PIN nella sezione inviti: </string>
+    <string name="invitation_cta">Unisciti a noi!</string>
+
+    <string name="email_sent">Email inviata!</string>
+    <string name="email_notsent">Email non inviata</string>
+    <string name="invitationactivity_title">Invito</string>
+    <string name="invitationactivity_message">Se sei stato invitato in un gruppo, per favore entra il tuo PIN qui per essere aggiunto:</string>
+    <string name="enterpinplease">Inserisci il PIN </string>
+    <string name="pinnotregistred">Il PIN non è associato a nessun gruppo</string>
+    <string name="invitation_menu">Inviti</string>
 
 
 </resources>

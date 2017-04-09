@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "742424593300-sgsh8sfmgp0ninjr3csppoeagkvm8kn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.faust.mytestapplication1",
+            "certificate_hash": "e72b43378950d9c37dc88a444789428b4ef9310d"
+          }
+        },
+        {
           "client_id": "742424593300-npp1ng9d9q647bthn20s9gppuv4cl1cb.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742424593300-npp1ng9d9q647bthn20s9gppuv4cl1cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

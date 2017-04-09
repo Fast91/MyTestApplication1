@@ -426,6 +426,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, ReadProfileActivity.class));
         }
 
+        if(res_id==R.id.action_invitation){
+            //logging out the user
+            //starting login activity
+            startActivity(new Intent(this, ActivityInvitation.class));
+        }
+
         if(res_id==R.id.action_logout){
             //logging out the user
             firebaseAuth.signOut();

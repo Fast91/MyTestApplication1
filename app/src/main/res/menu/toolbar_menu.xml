@@ -11,6 +11,14 @@
         />
 
     <item
+        android:id="@+id/action_invitation"
+        android:title="@string/invitation_menu"
+
+
+
+        />
+
+    <item
         android:id="@+id/action_share"
         android:title="@string/share_menu"
 
