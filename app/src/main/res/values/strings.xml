@@ -107,6 +107,6 @@
     <string name="invitationactivity_message">If you have been invited into one group, please put your PIN here to join into the group:</string>
     <string name="enterpinplease">Enter PIN please</string>
     <string name="pinnotregistred">This PIN is not associated with any group</string>
-    <string name="invitation_menu">Invitations</string>
+    <string name="invitation_menu">Invitations </string>
 
 </resources>

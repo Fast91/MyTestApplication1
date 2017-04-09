@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -151,7 +152,8 @@ public class ActivityInvitation extends AppCompatActivity {
 
 
 
-
+                                Intent intent = new Intent(ActivityInvitation.this, MainActivity.class);
+                                startActivity(intent);
 
 
 
