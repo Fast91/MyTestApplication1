@@ -300,6 +300,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
+
         //step 2
         // aggiungere l'utente al gruppo
         // users- id utente - groups - id group ---> namegroup + total 0
@@ -343,31 +344,39 @@ public class ActivityAddUserToGroup extends AppCompatActivity {
 
 
 
-                Log.d("STRONZO", "sono id :" + id_user +"  name "+ key_nameuser.get(id_user));
-            tmp=0.0;
+
+
 
             if(!id_user.equals(id_nuovoutentedaaggiungere)) {
 
-                Log.d("STRONZO", "idgroup :" + id_group +"  id_nuovoutentedaaggiungere "+ id_nuovoutentedaaggiungere + "  name_nuovoutentedaaggiungere  " + name_nuovoutentedaaggiungere);
+
+
+
+
 
 
                 DatabaseReference dbref=  FirebaseDatabase.getInstance().getReference("Users").child(id_user)
                         .child("Groups");
-                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                        .child("Name").setValue(name_nuovoutentedaaggiungere);
+
+
 
                 dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
                         .child("Total").setValue(tmp);
 
+                String nuovastringanome =new String(name_nuovoutentedaaggiungere);
+
+                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                        .child("Name").setValue(nuovastringanome);
+
+
+
             }
+
 
         }
 
 
-        Intent intent = new Intent(ActivityAddUserToGroup.this, ActivityAddUserToGroup.class);
-        intent.putExtra("ID_GROUP",id_group);
-        intent.putExtra("NAME_GROUP",name_group);
-        startActivity(intent);
+
 
 
 
