@@ -75,7 +75,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityAddGroup" />
-        <activity android:name=".ActivityAddUserToGroup"></activity>
+        <activity android:name=".ActivityAddUserToGroup" />
+        <activity android:name=".ActivityInvitation"></activity>
     </application>
 
 </manifest>

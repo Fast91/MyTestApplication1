@@ -28,13 +28,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private EditText mEmailView;
+    private EditText mEmailView , mNameView, mSurnameView;
     private EditText mPasswordView;
     private ImageButton button;
     private View mLoginFormView;
     private ProgressDialog myprogressBar;
     private FirebaseAuth firebaseauth;
-    String email;
+    String email, name, surname;
 
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
          button=(ImageButton)findViewById(R.id.imageButtonLogin);
          mEmailView=(EditText) findViewById(R.id.email_register);
          mPasswordView=(EditText) findViewById(R.id.password_register);
+        mNameView=(EditText) findViewById(R.id.name_register);
+        mSurnameView=(EditText) findViewById(R.id.surname_register);
         mLoginFormView=findViewById(R.id.textview_alreadyregistered);
         myprogressBar=new ProgressDialog(this);
 
@@ -90,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         email= mEmailView.getText().toString().trim();
         String password=mPasswordView.getText().toString().trim();
+         name = mNameView.getText().toString().trim();
+         surname = mSurnameView.getText().toString().trim();
 
         if(email.isEmpty()){
 
@@ -100,6 +104,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             Toast.makeText(this,R.string.enter_password,Toast.LENGTH_SHORT).show();
             return;
+        }
+        if(name.isEmpty() || surname.isEmpty()){
+
+            Toast.makeText(this,R.string.toast_emptyaddexpense,Toast.LENGTH_SHORT).show();
+            return;
+
         }
 
         String s=(String)getString(R.string.progress_bar_register);
@@ -116,6 +126,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     FirebaseUser fireuser = firebaseauth.getCurrentUser();
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     databaseReference.child("Users").child(fireuser.getUid()).child("Email").setValue(email);
+
+                    //setName
+                    String Name = new String(name);
+                    databaseReference.child("Users").child(fireuser.getUid()).child("Name").setValue(Name);
+
+                    //setSurname
+                    String Surname = new String(surname);
+                    databaseReference.child("Users").child(fireuser.getUid()).child("Surname").setValue(Surname);
+
 
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));

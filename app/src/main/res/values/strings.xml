@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">Breaking MAD</string>
     <string name="intro_string">INTRO STRING</string>
-    <string name="b1_string">Global</string>
+    <string name="b1_string">Global Balance</string>
     <string name="b2_string">Groups</string>
     <string name="b3_string">Activity</string>
     <string name="balance_name">Global Balance</string>
-    <string name="balance_string">0.00€</string>
+    <string name="balance_string">000.00€</string>
     <string name="b4_string">Add expense</string>
     <string name="b5_string">Add new Group</string>
-    <string name="global_string">Global</string>
+    <string name="global_string">Global Balance</string>
 
     <string name="b5_string_show_group_activity">Show Group Activity</string>
-    <string name="b6_string">Mobile fantastica</string>
+    <string name="b6_string">Mobile</string>
     <!--string name="breaking_mad">Breaking MAD</string-->
     <string name="account_menu_item_string">Account</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s crimes</string>
     <string name="title_activity_groups">GroupsActivity</string>
-    <string name="total_user_global_string">100€</string>
-    <string name="name_user_global_string">Francesco</string>
+    <string name="total_user_global_string">000.00€</string>
+    <string name="name_user_global_string">Name</string>
     <string name="groupspinner_prompt">Group</string>
     <string name="share_menu">Share</string>
     <string name="setting_menu">Setting</string>
@@ -61,7 +61,7 @@
     <string name="already_registered">Already registered? Sign here</string>
     <string name="titleregisteractivity">Registration</string>
     <string name="titleloginactivity">Log in</string>
-    <string name="action_login">Entra</string>
+    <string name="action_login">Log in</string>
     <string name="not_registered">Not registered? Register here</string>
     <string name="logout_menu">Log out</string>
     <string name="progress_bar_login">Login Please wait..</string>
@@ -91,4 +91,22 @@
     <string name="user_not_registered_title">Invite?</string>
     <string name="user_not_registered_msg">Do you want to invite user?</string>
     <string name="toast_addedusergroupAlreadyAdded">Already added</string>
+
+
+    <string name="invitation_title">Invite?</string>
+    <string name="invitation_message">I want to invite you into my new Group, insert this PIN into "invite": </string>
+    <string name="invitation_deep_link">https://eek7a.app.goo.gl/NLtk</string>
+    <string name="invitation_custom_image">http://turningpointla.org/wp-content/uploads/2014/06/Breaking-Mad-692x304.jpg</string>
+    <string name="invitation_cta">Join us!</string>
+
+
+    <string name="email_sent">Email sent!</string>
+    <string name="email_notsent">Email NOT sent</string>
+    <string name="invitation_hintpin">PIN</string>
+    <string name="invitationactivity_title">Invitation</string>
+    <string name="invitationactivity_message">If you have been invited into one group, please put your PIN here to join into the group:</string>
+    <string name="enterpinplease">Enter PIN please</string>
+    <string name="pinnotregistred">This PIN is not associated with any group</string>
+    <string name="invitation_menu">Invitations </string>
+
 </resources>
