@@ -30,7 +30,7 @@ public class ActivityDetailActivity extends AppCompatActivity
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
-    private TextView mDescriptionTextView;
+
     private FirebaseAuth firebaseAuth;
 
     private String mExpenseId;
@@ -57,7 +57,7 @@ public class ActivityDetailActivity extends AppCompatActivity
         mDateTextView = (TextView) findViewById(R.id.Date_expense);
         mAmountTextView = (TextView) findViewById(R.id.Total_expense);
         mCategoryTextView = (TextView) findViewById(R.id.Category_expense);
-        mDescriptionTextView = (TextView) findViewById(R.id.Description_expense);
+
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.activity_detail_fragment);

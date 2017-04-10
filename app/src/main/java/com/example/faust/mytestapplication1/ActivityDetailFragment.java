@@ -48,7 +48,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
-    private TextView mDescriptionTextView;
+
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -81,7 +81,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         mDateTextView = (TextView) myActivity.findViewById(R.id.Date_expense);
         mAmountTextView = (TextView) myActivity.findViewById(R.id.Total_expense);
         mCategoryTextView = (TextView) myActivity.findViewById(R.id.Category_expense);
-        mDescriptionTextView = (TextView) myActivity.findViewById(R.id.Description_expense);
+
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -118,7 +118,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
                 mDateTextView.setText(dataSnapshot.child("Date").getValue(String.class));
                 mAmountTextView.setText(dataSnapshot.child("Total").getValue(Double.class).toString());
                 mCategoryTextView.setText(dataSnapshot.child("Category").getValue(String.class));
-                mDescriptionTextView.setText(dataSnapshot.child("Description").getValue(String.class));
+
 
 
 

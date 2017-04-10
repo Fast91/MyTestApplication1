@@ -47,7 +47,7 @@ public class ActivityExpense extends AppCompatActivity {
     private String mytitle;
     private Double myamount;
     private NomeDovuto mygroup_selected;
-    private String mydescription;
+
     private String mycategory;
     private String  keyowner;
 
@@ -114,8 +114,7 @@ public class ActivityExpense extends AppCompatActivity {
                 Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
                 mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
-                EditText description= (EditText) findViewById(R.id.Description_newexpense);
-                mydescription = description.getText().toString();
+
 
 
                 //mydata =null;
@@ -134,7 +133,7 @@ public class ActivityExpense extends AppCompatActivity {
                 EditText category= (EditText) findViewById(R.id.Category_newexpense);
                 mycategory = category.getText().toString();
 
-                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup_selected.getName().equals("Select Group"))&&(!mydescription.equals(""))&&(!mycategory.equals(""))){
+                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup_selected.getName().equals("Select Group"))&&(!mycategory.equals(""))){
                   //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
@@ -170,7 +169,7 @@ public class ActivityExpense extends AppCompatActivity {
                             String Name=mytitle;
                             Double Total=myamount;
                             String GroupId=mygroup_selected.getId();
-                            String Description=mydescription;
+
                             String Category=mycategory;
                             String Date=""+myDate.getDate()+"/"+myDate.getMonth()+"/"+(myDate.getYear()+1900);
 
@@ -179,7 +178,7 @@ public class ActivityExpense extends AppCompatActivity {
                             databaseReference.child(key).child("Total").setValue(Total);
 
                             databaseReference.child(key).child("GroupId").setValue(GroupId);
-                            databaseReference.child(key).child("Description").setValue(Description);
+
                             databaseReference.child(key).child("Category").setValue(Category);
                             databaseReference.child(key).child("Date").setValue(Date);
 
