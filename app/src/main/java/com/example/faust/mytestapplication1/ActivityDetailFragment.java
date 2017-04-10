@@ -231,7 +231,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private class ActivityDetailHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ActivityDetailHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private NomeDovuto mDetailEntry;
         private TextView mUserNameTextView;

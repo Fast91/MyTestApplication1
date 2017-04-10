@@ -1,16 +1,25 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.net.Uri;
@@ -29,7 +38,9 @@ import com.google.android.gms.appinvite.*;
 import com.google.android.gms.common.*;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ActivityAddUserToGroup extends AppCompatActivity {// implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -43,8 +54,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     String userMail=null;
     Boolean exists=false;
     String id_nuovoutentedaaggiungere, name_nuovoutentedaaggiungere;
-
-
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Activity myactivity;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -52,7 +65,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user_to_group);
 
-
+        myactivity=this;
         /*
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                                 .addApi(AppInvite.API)
@@ -277,14 +290,76 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
 
-                    return ;}
+                   }
 
                 else{
                     Toast.makeText(getApplicationContext(),R.string.toast_emptyaddexpense,Toast.LENGTH_LONG).show();
 
 
 
-                    return ;}
+                   }
+
+
+
+
+
+
+                //aggiorno recyclerview
+
+                databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+
+                //Read content data
+                databaseReference.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                        HashMap<String, NomeDovuto> utenti_dovuto = new HashMap<>();
+
+                        //Prendo tutti i gruppi
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+                            //prendo gli amici
+                            String name = postSnapshot.child("Name").getValue(String.class);
+                            utenti_dovuto.put(postSnapshot.getKey(), new NomeDovuto(postSnapshot.getKey(), name));
+
+
+
+                        }
+
+
+
+                        ///Adesso che ho la mia cazzo di lista bella piena
+                        //Posso settare gli elementi nell'adapter porca puttana eva
+                        ///
+
+                        // Set the adapter
+                            recyclerView = (RecyclerView) findViewById(R.id.recycler_add_user_to_group);
+
+                                List list = new ArrayList(utenti_dovuto.values());
+                            mLayoutManager = new LinearLayoutManager(myactivity);
+                            recyclerView.setLayoutManager(mLayoutManager);
+
+
+
+
+                            mAdapter = new ActivityDetailAdapter(list);
+                            recyclerView.setAdapter(mAdapter);
+
+
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+
+//fine recycler
+
 
 
             }
@@ -293,6 +368,65 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
         Log.d("EXISTS", "Continuazione");
+
+        //inserisco il recycler
+
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                HashMap<String, NomeDovuto> utenti_dovuto = new HashMap<>();
+
+                //Prendo tutti i gruppi
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+                    //prendo gli amici
+                    String name = postSnapshot.child("Name").getValue(String.class);
+                    utenti_dovuto.put(postSnapshot.getKey(), new NomeDovuto(postSnapshot.getKey(), name));
+
+
+
+                }
+
+
+
+                ///Adesso che ho la mia cazzo di lista bella piena
+                //Posso settare gli elementi nell'adapter porca puttana eva
+                ///
+
+                // Set the adapter
+                recyclerView = (RecyclerView) findViewById(R.id.recycler_add_user_to_group);
+
+                List list = new ArrayList(utenti_dovuto.values());
+                mLayoutManager = new LinearLayoutManager(myactivity);
+                recyclerView.setLayoutManager(mLayoutManager);
+
+
+
+
+                mAdapter = new ActivityDetailAdapter(list);
+                recyclerView.setAdapter(mAdapter);
+
+
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
+        //termino recycler
+
 
 
         //ButtonSubmit per finire il gruppo ed andare alla main activity
@@ -437,7 +571,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
         Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
         key_nameuser.remove(id_nuovoutentedaaggiungere);
-       key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
+        key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
         Log.d("EXISTS", "LEVATO");
 
 
@@ -546,6 +680,69 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     // [END on_activity_result]
 
 
+
+
+    private class ActivityDetailHolder extends RecyclerView.ViewHolder
+    {
+        private NomeDovuto mDetailEntry;
+        private TextView mUserNameTextView;
+        private TextView mAmountTextView;
+
+        public ActivityDetailHolder(LayoutInflater inflater, ViewGroup parent)
+        {
+            super(inflater.inflate(R.layout.list_item_activity_detail, parent, false));
+            mUserNameTextView = (TextView) itemView.findViewById(R.id.detail_user_name);
+            mAmountTextView = (TextView) itemView.findViewById(R.id.detail_amount);
+        }
+
+        public void bind(NomeDovuto detailEntry)
+        {
+            mDetailEntry = detailEntry;
+            mUserNameTextView.setText(mDetailEntry.getName());
+            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + mDetailEntry.getCurrency());
+            try {
+                if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
+                    mAmountTextView.setTextColor(Color.BLACK);//parseColor("#d02020"));
+                } else {
+                    mAmountTextView.setTextColor(Color.parseColor("#08a008"));
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException e) {}
+        }
+
+    }
+
+
+    private class ActivityDetailAdapter extends RecyclerView.Adapter<ActivityAddUserToGroup.ActivityDetailHolder>
+    {
+        private List<NomeDovuto> mDetailEntries;
+
+        public ActivityDetailAdapter(List<NomeDovuto> detailEntries)
+        {
+            mDetailEntries = detailEntries;
+        }
+
+
+        @Override
+        public ActivityAddUserToGroup.ActivityDetailHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+            return new ActivityAddUserToGroup.ActivityDetailHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(ActivityAddUserToGroup.ActivityDetailHolder holder, int position)
+        {
+            NomeDovuto detailEntry = mDetailEntries.get(position);
+            holder.bind(detailEntry);
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return mDetailEntries.size();
+        }
+    }
 
 
 

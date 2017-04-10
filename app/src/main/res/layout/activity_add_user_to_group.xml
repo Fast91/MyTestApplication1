@@ -89,5 +89,16 @@
                 android:src="@drawable/tick_icon256x256"
                 />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_add_user_to_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:listItem="@layout/item_image_name"
+
+
+
+        />
+
 
 </LinearLayout>
