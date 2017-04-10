@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="@string/total_user_global_string"
+
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_toRightOf="@+id/name_user_global"
         android:layout_centerHorizontal="true"/>

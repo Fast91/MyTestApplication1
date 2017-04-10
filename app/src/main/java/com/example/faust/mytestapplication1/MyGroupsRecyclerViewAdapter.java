@@ -4,6 +4,7 @@ package com.example.faust.mytestapplication1;
  * Created by robertospaziani on 25/03/17.
  */
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,12 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
             imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+
+            if (u.getDovuto().toString().charAt(0) == '-') {
+                balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
+            } else {
+                balanceView.setTextColor(Color.parseColor("#08a008"));
+            }
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

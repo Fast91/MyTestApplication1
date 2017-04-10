@@ -252,9 +252,9 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             mAmountTextView.setText(mDetailEntry.getDovuto().toString() + mDetailEntry.getCurrency());
             try {
                 if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
-                    mAmountTextView.setTextColor(Color.BLACK);//parseColor("#d02020"));
+                    mAmountTextView.setTextColor(Color.RED);//parseColor("#d02020"));
                 } else {
-                    mAmountTextView.setTextColor(Color.parseColor("#08a008"));
+                    mAmountTextView.setTextColor(Color.RED);
                 }
             }
             catch (ArrayIndexOutOfBoundsException e) {}

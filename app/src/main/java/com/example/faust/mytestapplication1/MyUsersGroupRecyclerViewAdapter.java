@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,6 +86,12 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
             imageView.setImageResource(R.drawable.giftgreen);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+
+            if (u.getDovuto().toString().charAt(0) == '-') {
+                balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
+            } else {
+                balanceView.setTextColor(Color.parseColor("#08a008"));
+            }
 
         }
 

@@ -110,7 +110,7 @@ public class GlobalListFragment extends Fragment {
                 }
 
                 //Bilancio
-                ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(bilancioGlobale.toString()+"€");
+                ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(String.format("%.2f", bilancioGlobale)+"€");
 
 
 

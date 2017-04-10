@@ -253,7 +253,7 @@ public class UsersGroupListFragment extends Fragment{
                 namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
                 TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
 
-                moneygroup.setText(dataSnapshot.child("Total").getValue(Double.class).toString());
+                moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class)));
             }
 
             @Override
