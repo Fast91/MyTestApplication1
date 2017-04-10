@@ -56,7 +56,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     String id_nuovoutentedaaggiungere, name_nuovoutentedaaggiungere;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
     private Activity myactivity;
     private GoogleApiClient mGoogleApiClient;
 
@@ -304,12 +304,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
 
+
                 //aggiorno recyclerview
 
                 databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
                 //Read content data
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                databaseReference2.addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -339,14 +340,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
                             recyclerView = (RecyclerView) findViewById(R.id.recycler_add_user_to_group);
 
                                 List list = new ArrayList(utenti_dovuto.values());
-                            mLayoutManager = new LinearLayoutManager(myactivity);
-                            recyclerView.setLayoutManager(mLayoutManager);
 
 
 
 
-                            mAdapter = new ActivityDetailAdapter(list);
-                            recyclerView.setAdapter(mAdapter);
+
+                              mAdapter = new ActivityDetailAdapter(list);
+                              recyclerView.setAdapter(mAdapter);
 
 
 
@@ -357,6 +357,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
                     }
 
                 });
+
 
 //fine recycler
 
@@ -371,10 +372,12 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
         //inserisco il recycler
 
+
+
         databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
         //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference2.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -404,14 +407,14 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
                 recyclerView = (RecyclerView) findViewById(R.id.recycler_add_user_to_group);
 
                 List list = new ArrayList(utenti_dovuto.values());
-                mLayoutManager = new LinearLayoutManager(myactivity);
-                recyclerView.setLayoutManager(mLayoutManager);
 
 
 
 
-                mAdapter = new ActivityDetailAdapter(list);
-                recyclerView.setAdapter(mAdapter);
+
+
+                      mAdapter = new ActivityDetailAdapter(list);
+                      recyclerView.setAdapter(mAdapter);
 
 
 
@@ -422,6 +425,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
             }
 
         });
+
 
 
 
@@ -686,28 +690,21 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     {
         private NomeDovuto mDetailEntry;
         private TextView mUserNameTextView;
-        private TextView mAmountTextView;
+
 
         public ActivityDetailHolder(LayoutInflater inflater, ViewGroup parent)
         {
-            super(inflater.inflate(R.layout.list_item_activity_detail, parent, false));
-            mUserNameTextView = (TextView) itemView.findViewById(R.id.detail_user_name);
-            mAmountTextView = (TextView) itemView.findViewById(R.id.detail_amount);
+            super(inflater.inflate(R.layout.item_image_name, parent, false));
+            mUserNameTextView = (TextView) itemView.findViewById(R.id.item_name);
+
         }
 
         public void bind(NomeDovuto detailEntry)
         {
             mDetailEntry = detailEntry;
             mUserNameTextView.setText(mDetailEntry.getName());
-            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + mDetailEntry.getCurrency());
-            try {
-                if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
-                    mAmountTextView.setTextColor(Color.BLACK);//parseColor("#d02020"));
-                } else {
-                    mAmountTextView.setTextColor(Color.parseColor("#08a008"));
-                }
-            }
-            catch (ArrayIndexOutOfBoundsException e) {}
+
+
         }
 
     }
