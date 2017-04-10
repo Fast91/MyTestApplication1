@@ -11,6 +11,11 @@ public class NomeDovuto {
 
     public String Id;
 
+    public NomeDovuto(String name) {
+        this.Name = name;
+        
+    }
+
     public NomeDovuto(String id, String name) {
         this.Name = name;
         this.Id = id;

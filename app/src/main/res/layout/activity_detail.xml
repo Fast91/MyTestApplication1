@@ -177,28 +177,7 @@
         <Space
             android:layout_width="4dp"
             android:layout_height="match_parent"/>
-    <TextView
-        android:background="@drawable/sketched_transparent_rect_shape_green"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/Description_expense"
-        android:hint="@string/activity_detail_description"
-        android:textSize="15sp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/black"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:nextFocusDown="@+id/pass_reg"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_weight="1"
-        />
+
         <Space
             android:layout_width="4dp"
             android:layout_height="match_parent"/>

@@ -91,30 +91,6 @@
         />
 
 
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="text"
-        android:id="@+id/Description_newexpense"
-        android:hint="@string/newexpense_description"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
 
 
 
