@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +40,7 @@ public class UsersGroupListFragment extends Fragment{
 
 
     private MyUsersGroupRecyclerViewAdapter adapter;
+    private AppCompatActivity myactivity;
 
     private int mColumnCount=1;
 
@@ -184,7 +186,7 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-                            final  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                             myactivity = (AppCompatActivity) view.getContext();
                             Fragment myFragment = new ActivityGroupListFragment();
                             //Create a bundle to pass data, add data, set the bundle to your fragment and:
                             Bundle mBundle;
@@ -254,6 +256,14 @@ public class UsersGroupListFragment extends Fragment{
                 TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
 
                 moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class)));
+
+                if (dataSnapshot.child("Total").getValue(Double.class)<0) {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.RED);
+                } else {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.parseColor("#08a008"));
+                }
             }
 
             @Override

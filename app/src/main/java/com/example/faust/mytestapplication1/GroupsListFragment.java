@@ -2,6 +2,7 @@ package com.example.faust.mytestapplication1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -121,6 +122,14 @@ public class GroupsListFragment extends Fragment {
 
                 //Bilancio
                 ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(String.format("%.2f", bilancioGlobale)+"€");
+
+                if (bilancioGlobale<0) {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.RED);
+                } else {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.parseColor("#08a008"));
+                }
 
 
 
