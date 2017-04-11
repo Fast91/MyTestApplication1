@@ -1,10 +1,12 @@
 package com.example.faust.mytestapplication1;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,8 +17,16 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class PaymentFragment extends Fragment
 {
+    private FirebaseAuth firebaseAuth;
     private String mBundlePaymentReceiver;
     private String mBundlePaymentGroup;
 
@@ -54,10 +64,17 @@ public class PaymentFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle b = this.getArguments();
+
+       // mBundlePaymentGroup= b.getString("GROUP_ID");
         mBundlePaymentReceiver = getArguments().getString("expense_receiver", null);
         mBundlePaymentGroup = getArguments().getString("expense_group", null);
         mDefaultAmountOptionSelected = true;
         mCustomAmountEditTextOptionSelected = false;
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // TODO DB etc etc
         mReceiver = mBundlePaymentReceiver;
@@ -73,7 +90,7 @@ public class PaymentFragment extends Fragment
         //View view = super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         wireUpWidgets(view);
-        retrieveDataFromDB();
+        retrieveDataFromDB(view);
         initWidgets();
         setListeners();
 
@@ -115,8 +132,108 @@ public class PaymentFragment extends Fragment
 
     }
 
-    private void retrieveDataFromDB()
+    private void retrieveDataFromDB(View view)
     {
+        final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+
+
+        DatabaseReference databaseReference;
+
+
+        //setto nella text view il sender
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Name");
+
+
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+             mReceiver=(String) dataSnapshot.getValue(String.class);
+
+                ((TextView) myactivity.findViewById(R.id.sender_detail_payment_tv)).setText(mReceiver);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });//fin qui tutto bene
+        
+        //// TODO: 11/04/2017 c'è il problema dei bundle per quando si clicca su pay. voglio avere l'id del ricevente e l'id del gruppo 
+
+/*
+        //inserisco il nome del gruppo nel tv
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(mBundlePaymentGroup).child("Name");
+
+
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                mGroup=(String) dataSnapshot.getValue(String.class);
+
+                ((TextView) myactivity.findViewById(R.id.group_detail_payment_tv)).setText(mGroup);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        //fine nome gruppo
+
+ //inserisco il nome del receiver nel tv
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mBundlePaymentReceiver).child("Name");
+
+
+
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                mReceiver=(String) dataSnapshot.getValue(String.class);
+
+                ((TextView) myactivity.findViewById(R.id.receiver_detail_payment_tv)).setText(mReceiver);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        //fine nome gruppo
+
+
+
+*/
+
+
+
+
+
+
+
+
         //TODO qui acquisiamo le informazioni dal db per modificare i widget
     }
 

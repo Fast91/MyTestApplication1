@@ -257,13 +257,16 @@ public class UsersGroupListFragment extends Fragment{
 
                 moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class)));
 
+
+                ///sta cosa da problemiiii
+/*
                 if (dataSnapshot.child("Total").getValue(Double.class)<0) {
                     TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.RED);
                 } else {
                     TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.parseColor("#08a008"));
-                }
+                }*/
             }
 
             @Override

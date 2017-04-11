@@ -149,116 +149,125 @@
         <Space
             android:layout_width="8dp"
             android:layout_height="match_parent"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@drawable/sketched_transparent_rect_shape_green">
+            android:background="@drawable/sketched_transparent_rect_shape_green"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:paddingBottom="2dp"
+                android:text="Payment detail:"
+                android:textAlignment="textStart"
                 android:textColor="@color/BreakingMADDarkGreen"
                 android:textColorHint="@color/BreakingMADDarkGreen"
-                android:textAlignment="textStart"
-                android:paddingBottom="2dp"
-                android:text="Payment detail:"/>
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:text="Sender: "
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:text="Sender: "/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/sender_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:hint="Sender Name"
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:hint="Sender Name"/>
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:text="Receiver: "
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:text="Receiver: "/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/receiver_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:hint="Receiver Name"
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:hint="Receiver Name"/>
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:text="Group: "
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:text="Group: "/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:hint="Group Name"
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:hint="Group Name"/>
+                    android:textSize="15sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:text="Amount: "
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:text="Amount: "/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/amount_detail_payment_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:hint="Total Amount"
+                    android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
-                    android:textAlignment="textStart"
-                    android:hint="Total Amount"/>
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
+
         <Space
             android:layout_width="8dp"
             android:layout_height="match_parent"/>
