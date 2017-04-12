@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,7 @@ public class UsersGroupListFragment extends Fragment{
 
     private int mColumnCount=1;
 
-    String id_group;
+    String id_group, name_group;
     private FirebaseAuth firebaseAuth;
     private HashMap<String,NomeDovuto> utenti_dovuto;
 
@@ -109,7 +110,8 @@ public class UsersGroupListFragment extends Fragment{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
+                        //aggiunto non testato
+                        name_group = dataSnapshot.child("Name").getValue(String.class);
 
                         //prendo gli amici
                         DataSnapshot friends = dataSnapshot.child("Users");
@@ -126,6 +128,9 @@ public class UsersGroupListFragment extends Fragment{
                             if (utenti_dovuto.get(id) == null || utenti_dovuto.containsKey(id) == false) {
                                 //add
                                 NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+                                iniziale.setId(id);
+                                iniziale.setId_Group(id_group);
+                                iniziale.setName_Group(name_group);
                                 utenti_dovuto.put(id, iniziale);
 
 
@@ -177,7 +182,7 @@ public class UsersGroupListFragment extends Fragment{
                     adapter = new MyUsersGroupRecyclerViewAdapter(list, id_group);
                     recyclerView2.setAdapter(adapter);
 
-                    Button b5_showactivity = (Button) view.findViewById(R.id.b5_show_group_activity);
+                    ImageButton b5_showactivity = (ImageButton) view.findViewById(R.id.bActivities_GroupNavigation);
                     //Listener Button5 show group activity
                     b5_showactivity.setOnClickListener(new View.OnClickListener() {
 
@@ -202,6 +207,35 @@ public class UsersGroupListFragment extends Fragment{
                             for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
                                 activity.getSupportFragmentManager().popBackStackImmediate();
                             }
+
+
+                            return ;
+                        }
+                    });
+
+                    ImageButton b5_adduser = (ImageButton) view.findViewById(R.id.bAddUsers_GroupNavigation);
+
+                    b5_adduser.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+
+
+
+                            myactivity = (AppCompatActivity) view.getContext();
+                            Fragment myFragment = new ActivityGroupListFragment();
+                            //Create a bundle to pass data, add data, set the bundle to your fragment and:
+                            Bundle mBundle;
+                            mBundle = new Bundle();
+                            mBundle.putString("GROUP_ID",id_group);
+                            // mBundle.putInt("GROUP_ID",item.getIdgroup());
+                            myFragment.setArguments(mBundle);
+
+
+                            Intent intent=new Intent(getActivity(),ActivityAddUserToGroup.class);
+                            intent.putExtra("ID_GROUP",id_group);
+                            intent.putExtra("NAME_GROUP",name_group);
+                            startActivity(intent);
 
 
                             return ;
@@ -258,6 +292,8 @@ public class UsersGroupListFragment extends Fragment{
                 moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class)));
 
 
+
+
                 ///sta cosa da problemiiii
 /*
                 if (dataSnapshot.child("Total").getValue(Double.class)<0) {
@@ -267,6 +303,19 @@ public class UsersGroupListFragment extends Fragment{
                     TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.parseColor("#08a008"));
                 }*/
+
+
+                Double value = dataSnapshot.child("Total").getValue(Double.class);
+
+                if (value<0) {
+                    TextView tv= (TextView) activity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.RED);
+                } else {
+                    TextView tv= (TextView) activity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.parseColor("#08a008"));
+                }
+
+
             }
 
             @Override

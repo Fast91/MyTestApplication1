@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.util.DebugUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +34,11 @@ public class PaymentFragment extends Fragment
     private String mBundlePaymentGroup;
 
     private String mReceiver;
+    private String mReceiverId;
+    private String mSenderId;
+    private String mGroupId;
+    private String mActivityId;
+    private String mDefaultAmount;
     private String mGroup;
     private String mDefaultAmountValue;
     private String mCustomAmountValue;
@@ -82,7 +90,34 @@ public class PaymentFragment extends Fragment
         mDefaultAmountValue = "50€"; // da importare dal db
         mCustomAmountValue=mDefaultAmountValue;
         mAmountValue=mDefaultAmountValue;
+
+
+
+        ////PROVO A PRENDERLI
+
+
+        mSenderId = (String) firebaseAuth.getCurrentUser().getUid(); // ok
+        mGroupId = (String) getArguments().getString("ID_GROUP"); // ok
+        mDefaultAmount =(String) getArguments().getString("DOVUTO"); // ok
+        mReceiverId = (String) getArguments().getString("ID_USER");
+
+        mDefaultAmountValue = mDefaultAmount;
+        mCustomAmountValue = mDefaultAmount;
+        mAmountValue = mDefaultAmount;
+
+
+
+
+        Log.d("TAKE", "CIAO");
+
+
     }
+
+
+
+
+
+
 
     @Nullable
     @Override
@@ -137,7 +172,7 @@ public class PaymentFragment extends Fragment
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
 
-        DatabaseReference databaseReference;
+        DatabaseReference databaseReference,databaseReference2,databaseReference3;
 
 
         //setto nella text view il sender
@@ -151,7 +186,7 @@ public class PaymentFragment extends Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-             mReceiver=(String) dataSnapshot.getValue(String.class);
+                mReceiver=(String) dataSnapshot.getValue(String.class);
 
                 ((TextView) myactivity.findViewById(R.id.sender_detail_payment_tv)).setText(mReceiver);
 
@@ -163,6 +198,61 @@ public class PaymentFragment extends Fragment
             }
 
         });//fin qui tutto bene
+
+
+
+
+        //setto nella text view il RECEIVER
+        //todo non capisco perche prende roberto
+
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Name");
+
+
+
+        //Read content data
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String mx=(String) dataSnapshot.getValue(String.class);
+
+                ((TextView) myactivity.findViewById(R.id.receiver_detail_payment_tv)).setText(mx);
+                ((TextView) myactivity.findViewById(R.id.receiver_label_payment_tv)).setText(mx);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });//funziona
+
+
+        //setto nella text view il RECEIVER
+        //todo non capisco perche prende roberto
+
+        databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(mGroupId).child("Name");
+
+
+
+        //Read content data
+        databaseReference3.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String mx=(String) dataSnapshot.getValue(String.class);
+
+                ((TextView) myactivity.findViewById(R.id.group_detail_payment_tv)).setText(mx);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });//funziona
         
         //// TODO: 11/04/2017 c'è il problema dei bundle per quando si clicca su pay. voglio avere l'id del ricevente e l'id del gruppo 
 

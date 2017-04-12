@@ -20,7 +20,7 @@ import java.util.List;
 class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupRecyclerViewAdapter.UserHolder>{
 
     private final List<NomeDovuto> items;
-    private String mIdGroup;
+    private String mIdGroup, nameGroup;
     // private final OnListFragmentInteractionListener mListener;
 
 
@@ -74,24 +74,38 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         public UserHolder(View view) {
             super(view);
-            itemView.findViewById(R.id.fragment_user_group_item_button).setOnClickListener(this);
+            itemView.findViewById(R.id.fragment_user_group_item_button);//.setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_user_group);
             nameView = (TextView) view.findViewById(R.id.name_user_group);
             balanceView = (TextView) view.findViewById(R.id.money_user_group);
 
         }
 
-        public void bindData(NomeDovuto u){
+        public void bindData(final NomeDovuto u){
             user=u;
             imageView.setImageResource(R.drawable.giftgreen);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+
 
             if (u.getDovuto().toString().charAt(0) == '-') {
                 balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
             } else {
                 balanceView.setTextColor(Color.parseColor("#08a008"));
             }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = PaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
+                    i.putExtra("ID_GROUP",mIdGroup);
+                    i.putExtra("DOVUTO",balanceView.getText().toString());
+                    i.putExtra("ID_USER",user.getId());
+                    imageView.getContext().startActivity(i);
+
+                }
+            });
 
         }
 
@@ -100,6 +114,9 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
             //Toast.makeText(imageView.getContext(), "Hai cliccato \"Paga\"", Toast.LENGTH_SHORT).show();
 
             Intent i = PaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
+            i.putExtra("ID_GROUP",mIdGroup);
+            i.putExtra("DOVUTO",balanceView.getText().toString());
+            i.putExtra("ID_USER",user.getId());
             imageView.getContext().startActivity(i);
         }
     }

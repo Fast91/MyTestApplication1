@@ -66,39 +66,6 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         setContentView(R.layout.activity_add_user_to_group);
 
         myactivity=this;
-        /*
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                                .addApi(AppInvite.API)
-                                .enableAutoManage(this,this)
-                                .build();
-        */
-
-        /*
-
-        boolean autoLaunchDeepLink = true;
-        AppInvite.AppInviteApi.getInvitation(mGoogleApiClient,this,autoLaunchDeepLink)
-                .setResultCallback( new ResultCallback<AppInviteInvitationResult>() {
-                    @Override
-                    public void onResult(AppInviteInvitationResult result) {
-                        Log.d(TAG, "getInvitation:onResult:" + result.getStatus());
-                        if (result.getStatus().isSuccess()) {
-                            // Extract information from the intent
-                            Intent intent = result.getInvitationIntent();
-                            String deepLink = AppInviteReferral.getDeepLink(intent);
-                            String invitationId = AppInviteReferral.getInvitationId(intent);
-
-                            // Because autoLaunchDeepLink = true we don't have to do anything
-                            // here, but we could set that to false and manually choose
-                            // an Activity to launch to handle the deep link here.
-                            // ...
-                        }
-                    }
-                });
-
-        */
-
-
-
 
 
 

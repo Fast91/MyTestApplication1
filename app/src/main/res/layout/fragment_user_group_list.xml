@@ -11,16 +11,73 @@
     >
 
 
-    <Button
-        android:id="@+id/b5_show_group_activity"
-        style="@style/textButton"
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="35sp"
-        android:layout_span="6"
+        android:layout_height="45sp"
+        android:id="@+id/tableLayoutGroupNavigation"
+        android:padding="2dp"
+        android:stretchColumns="*"
+        android:background="@android:color/white">
 
-        android:background="@drawable/buttonshape"
-        android:text="@string/b5_string_show_group_activity"
-        />
+
+    <TableRow
+        android:id="@+id/tableRowGroupNavigation"
+        android:layout_height="43sp"
+        android:layout_width="wrap_content"
+        >
+
+
+        <ImageButton
+            android:id="@+id/bEditGroup_GroupNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:padding="4sp"
+            android:layout_span="2"
+            android:src="@drawable/edit_group_600x600"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"/>
+
+        <ImageButton
+            android:id="@+id/bDeleteGroup_GroupNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:padding="4sp"
+            android:layout_span="2"
+            android:src="@drawable/groups_delete900x900"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"/>
+
+        <ImageButton
+            android:id="@+id/bAddUsers_GroupNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:padding="4sp"
+            android:layout_span="2"
+            android:src="@drawable/add_users_navigation626x626"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"/>
+
+        <ImageButton
+            android:id="@+id/bActivities_GroupNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:padding="4sp"
+            android:layout_span="2"
+            android:src="@drawable/groups_activity484x484"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/buttonshape"
+            android:layout_marginRight="1dp"/>
+    </TableRow>
+    </TableLayout>
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/user_group_list"

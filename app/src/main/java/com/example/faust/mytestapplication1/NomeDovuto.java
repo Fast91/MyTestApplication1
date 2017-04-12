@@ -8,8 +8,29 @@ public class NomeDovuto {
     public String Name;
     public Double Dovuto;
     private String Currency;
+    public String Name_Group;
+    public String Id_Group;
+
 
     public String Id;
+
+    public String getName_Group() {
+        return Name_Group;
+    }
+
+    public void setName_Group(String name_Group) {
+        Name_Group = name_Group;
+    }
+
+    public String getId_Group() {
+        return Id_Group;
+    }
+
+    public void setId_Group(String id_Group) {
+        Id_Group = id_Group;
+    }
+
+
 
     public NomeDovuto(String name) {
         this.Name = name;
