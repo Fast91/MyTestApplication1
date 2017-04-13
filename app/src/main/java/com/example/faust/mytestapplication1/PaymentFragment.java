@@ -439,15 +439,11 @@ public class PaymentFragment extends Fragment
         //andare su user su quel gruppo e prendere l'utente e cambiare il bilancio singolo
 
 
-
-
-
-
         /////////////
         //// DATABASE
         /////////////
 
-        DatabaseReference databaseReference, databaseReference2, databaseReference3 ,databaseReference4 , databaseReference5;
+        DatabaseReference databaseReference, databaseReference2, databaseReference3 ,databaseReference4 , databaseReference5, databaseReference6, databaseReference7;
 
 
 
@@ -571,7 +567,7 @@ public class PaymentFragment extends Fragment
 
                                     //devo levare
                                     Double tmp= bilancioGlobale+Total;
-                                    FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance").setValue(tmp);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("GlobalBalance").setValue(tmp);
 
                                     //databaseReference5.removeEventListener(this);
                                     Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
@@ -668,7 +664,7 @@ public class PaymentFragment extends Fragment
 
                 //devo levare
                 Double tmp= bilanciodelgruppo+Total;
-                FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
+                FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
 
                 //databaseReference5.removeEventListener(this);
                 Log.d("EXPENSE", "bilanciodelgruppo+Total2: " + (tmp));
