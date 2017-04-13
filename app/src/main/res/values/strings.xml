@@ -111,5 +111,6 @@
     <string name="expense_label_pagato">Paid by: </string>
     <string name="pay">PAY</string>
     <string name="payment_title">Payment</string>
+    <string name="payment0">Insert amount different from 0 </string>
 
 </resources>

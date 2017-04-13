@@ -74,7 +74,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         public UserHolder(View view) {
             super(view);
-            itemView.findViewById(R.id.fragment_user_group_item_button);//.setOnClickListener(this);
+            itemView.findViewById(R.id.fragment_user_group_item_button).setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_user_group);
             nameView = (TextView) view.findViewById(R.id.name_user_group);
             balanceView = (TextView) view.findViewById(R.id.money_user_group);
@@ -94,18 +94,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
                 balanceView.setTextColor(Color.parseColor("#08a008"));
             }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Intent i = PaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
-                    i.putExtra("ID_GROUP",mIdGroup);
-                    i.putExtra("DOVUTO",balanceView.getText().toString());
-                    i.putExtra("ID_USER",user.getId());
-                    imageView.getContext().startActivity(i);
-
-                }
-            });
 
         }
 

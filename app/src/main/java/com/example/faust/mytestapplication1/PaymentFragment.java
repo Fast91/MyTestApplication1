@@ -400,13 +400,18 @@ public class PaymentFragment extends Fragment
             public void onClick(View v) {
                 //TODO qui il DB deve fare la transazione
                 // ...
-                updateButtonsBackground();
-                swapCustomButtonToEditText(false);
-                saveAsNewActivity();
-                //ritornare al main
+                if(Double.parseDouble(mAmountValue)!=0) {
+                    updateButtonsBackground();
+                    swapCustomButtonToEditText(false);
+                    saveAsNewActivity();
+                    //ritornare al main
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(),R.string.payment0,Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -454,7 +459,7 @@ public class PaymentFragment extends Fragment
                 //genero nuovo id per l'attività
                 String key = databaseReference.push().getKey();
                 String Name = getString(R.string.payment_title);
-                final Double Total = Double.parseDouble(mDefaultAmount);
+                final Double Total = Double.parseDouble(mAmountValue);
                 String GroupId = mGroupId;
 
                 String Category=getString(R.string.payment_title);
@@ -567,7 +572,7 @@ public class PaymentFragment extends Fragment
 
                                     //devo levare
                                     Double tmp= bilancioGlobale+Total;
-                                    FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("GlobalBalance").setValue(tmp);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance").setValue(tmp);
 
                                     //databaseReference5.removeEventListener(this);
                                     Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
@@ -605,7 +610,7 @@ public class PaymentFragment extends Fragment
 
                              //devo levare
                              Double tmp= bilancioGlobale-Total;
-                             FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance").setValue(tmp);
+                             FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("GlobalBalance").setValue(tmp);
 
                              //databaseReference5.removeEventListener(this);
                              Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
@@ -664,7 +669,7 @@ public class PaymentFragment extends Fragment
 
                 //devo levare
                 Double tmp= bilanciodelgruppo+Total;
-                FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
+                FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
 
                 //databaseReference5.removeEventListener(this);
                 Log.d("EXPENSE", "bilanciodelgruppo+Total2: " + (tmp));
@@ -703,7 +708,7 @@ public class PaymentFragment extends Fragment
 
                 //devo levare
                 Double tmp= bilanciodelgruppo-Total;
-                FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
+                FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
 
                 //databaseReference5.removeEventListener(this);
                 Log.d("EXPENSE", "bilanciodelgruppo-Total2: " + (tmp));
