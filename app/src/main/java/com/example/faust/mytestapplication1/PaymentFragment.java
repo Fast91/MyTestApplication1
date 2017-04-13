@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.util.DebugUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PaymentFragment extends Fragment
 {
     private FirebaseAuth firebaseAuth;
@@ -43,6 +48,8 @@ public class PaymentFragment extends Fragment
     private String mDefaultAmountValue;
     private String mCustomAmountValue;
     private String mAmountValue;
+    private String sender_name , receiver_name;
+    private Double bilancioGlobale,bilanciodelgruppo,bilanciosingolo;
 
     private boolean mDefaultAmountOptionSelected;
     private boolean mCustomAmountEditTextOptionSelected;
@@ -105,12 +112,6 @@ public class PaymentFragment extends Fragment
         mCustomAmountValue = mDefaultAmount;
         mAmountValue = mDefaultAmount;
 
-
-
-
-        Log.d("TAKE", "CIAO");
-
-
     }
 
 
@@ -131,6 +132,14 @@ public class PaymentFragment extends Fragment
 
         return view;
     }
+
+
+
+
+
+
+
+
 
     private void wireUpWidgets(View view)
     {
@@ -167,6 +176,10 @@ public class PaymentFragment extends Fragment
 
     }
 
+
+
+
+
     private void retrieveDataFromDB(View view)
     {
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
@@ -187,6 +200,7 @@ public class PaymentFragment extends Fragment
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 mReceiver=(String) dataSnapshot.getValue(String.class);
+                sender_name = mReceiver;
 
                 ((TextView) myactivity.findViewById(R.id.sender_detail_payment_tv)).setText(mReceiver);
 
@@ -203,7 +217,6 @@ public class PaymentFragment extends Fragment
 
 
         //setto nella text view il RECEIVER
-        //todo non capisco perche prende roberto
 
         databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Name");
 
@@ -216,6 +229,7 @@ public class PaymentFragment extends Fragment
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String mx=(String) dataSnapshot.getValue(String.class);
+                receiver_name = mx;
 
                 ((TextView) myactivity.findViewById(R.id.receiver_detail_payment_tv)).setText(mx);
                 ((TextView) myactivity.findViewById(R.id.receiver_label_payment_tv)).setText(mx);
@@ -230,7 +244,6 @@ public class PaymentFragment extends Fragment
 
 
         //setto nella text view il RECEIVER
-        //todo non capisco perche prende roberto
 
         databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(mGroupId).child("Name");
 
@@ -253,78 +266,9 @@ public class PaymentFragment extends Fragment
             }
 
         });//funziona
-        
-        //// TODO: 11/04/2017 c'è il problema dei bundle per quando si clicca su pay. voglio avere l'id del ricevente e l'id del gruppo 
-
-/*
-        //inserisco il nome del gruppo nel tv
-
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(mBundlePaymentGroup).child("Name");
 
 
 
-        //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                mGroup=(String) dataSnapshot.getValue(String.class);
-
-                ((TextView) myactivity.findViewById(R.id.group_detail_payment_tv)).setText(mGroup);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        //fine nome gruppo
-
- //inserisco il nome del receiver nel tv
-
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(mBundlePaymentReceiver).child("Name");
-
-
-
-        //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                mReceiver=(String) dataSnapshot.getValue(String.class);
-
-                ((TextView) myactivity.findViewById(R.id.receiver_detail_payment_tv)).setText(mReceiver);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        //fine nome gruppo
-
-
-
-*/
-
-
-
-
-
-
-
-
-        //TODO qui acquisiamo le informazioni dal db per modificare i widget
     }
 
     private void initWidgets()
@@ -358,12 +302,7 @@ public class PaymentFragment extends Fragment
         refreshDetails();
     }
 
-    private void updateButtonsBackground()
-    {
-        mDefaultAmountButton.setBackground(mDefaultAmountOptionSelected?mSelectedButtonBackground:mDeselectedButtonBackground);
-        mCustomAmountButton.setBackground(!mDefaultAmountOptionSelected?mSelectedButtonBackground:mDeselectedButtonBackground);
-        // non devo modificare il background degli altri due bottoni
-    }
+
 
     private void swapCustomButtonToEditText(boolean toEditText)
     {
@@ -463,7 +402,429 @@ public class PaymentFragment extends Fragment
                 // ...
                 updateButtonsBackground();
                 swapCustomButtonToEditText(false);
+                saveAsNewActivity();
+                //ritornare al main
+
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
+
+    private void updateButtonsBackground()
+    {
+        mDefaultAmountButton.setBackground(mDefaultAmountOptionSelected?mSelectedButtonBackground:mDeselectedButtonBackground);
+        mCustomAmountButton.setBackground(!mDefaultAmountOptionSelected?mSelectedButtonBackground:mDeselectedButtonBackground);
+        // non devo modificare il background degli altri due bottoni
+    }
+
+
+
+
+    private void saveAsNewActivity(){
+
+        ///////////////////////////////////////////////////////
+        //creare qualcosa come nuova attivita e gestire i conti
+        ///////////////////////////////////////////////////////
+
+
+        //Registrarla come attivita
+
+        //andare su gruppi e inserirla li
+
+        //andare su user e cambiare il bilancio globale
+
+        //andare su user su quel gruppo e cambiare il bilancio del gruppo
+
+        //andare su user su quel gruppo e prendere l'utente e cambiare il bilancio singolo
+
+
+
+
+
+
+        /////////////
+        //// DATABASE
+        /////////////
+
+        DatabaseReference databaseReference, databaseReference2, databaseReference3 ,databaseReference4 , databaseReference5;
+
+
+
+
+                //ora ho gli utenti e l'id del gruppo
+
+                databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                //genero nuovo id per l'attività
+                String key = databaseReference.push().getKey();
+                String Name = getString(R.string.payment_title);
+                final Double Total = Double.parseDouble(mDefaultAmount);
+                String GroupId = mGroupId;
+
+                String Category=getString(R.string.payment_title);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date();
+                String Date=""+dateFormat.format(date);
+
+
+                databaseReference.child(key).child("Name").setValue(Name);
+                databaseReference.child(key).child("Total").setValue(Total);
+
+                databaseReference.child(key).child("GroupId").setValue(GroupId);
+
+                databaseReference.child(key).child("Category").setValue(Category);
+                databaseReference.child(key).child("Date").setValue(Date);
+
+
+                //todo
+
+                // prendere il vero owner
+                //in questo caso prendiamo il primo che capita dalla lista
+                String keyowner= firebaseAuth.getCurrentUser().getUid();
+
+                Name=sender_name;
+
+
+
+                //lo settiamo come owner
+                databaseReference.child(key).child("Owner").child(keyowner).child("Name").setValue(Name);
+                databaseReference.child(key).child("Owner").child(keyowner).child("Total").setValue(Total);
+                Log.d("EXPENSE", Name + " " + Total + " (DB)" );
+
+
+
+                        //setto al ricevente la spesa a 0
+                          Name=receiver_name;
+                        Double Total2= 0.0;
+                        //Setto la spesa a tutti gli utenti
+                        databaseReference.child(key).child("Users").child(mReceiverId).child("Name").setValue(Name);
+                        databaseReference.child(key).child("Users").child(mReceiverId).child("Total").setValue(Total2);
+
+
+
+                    //1 groups-ACTIVITIES
+                    //2 users- ACTIVITIES x te e x tutti
+                    //3 USERS - BILANCIO x te e x tutti
+                    // 4 USERS - GROUPS  x te e x tutti
+
+
+                    //1 groups-ACTIVITIES
+                    // key
+                    Name = getString(R.string.payment_title);;
+
+                    databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+                    databaseReference3.child(key).child("Total").setValue(Total);
+                    databaseReference3.child(key).child("Name").setValue(Name);
+
+
+
+                    //2 users- ACTIVITIES
+
+                    //users - id - activities - key- -----> Total -----> Name
+
+
+                    databaseReference4 = FirebaseDatabase.getInstance().getReference("Users");
+                    //da fare per tutti gli utenti
+
+
+
+
+
+                        databaseReference4.child(mSenderId).child("Activities").child(key).child("Name").setValue(Name);
+                        databaseReference4.child(mSenderId).child("Activities").child(key).child("Total").setValue(Total);
+
+                         databaseReference4.child(mReceiverId).child("Activities").child(key).child("Name").setValue(Name);
+                         databaseReference4.child(mReceiverId).child("Activities").child(key).child("Total").setValue(Total);
+
+
+
+
+
+
+                    //3 USERS - BILANCIO Globale x te e x tutti
+                    //per l'owner deve ricevere +
+                    //per gli altri devono dare -
+
+
+                    //First sarebbe in questo momento chi paga owner
+
+
+                        //Prendermi il bilancio
+                        ////////// SENDER + OWNER
+                        ///////////////
+                        databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance");
+
+                        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
+
+
+                                if (bilancioGlobale == null) {
+                                    bilancioGlobale = 0.0;
+                                }
+
+                                Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
+
+
+
+                                    //devo levare
+                                    Double tmp= bilancioGlobale+Total;
+                                    FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance").setValue(tmp);
+
+                                    //databaseReference5.removeEventListener(this);
+                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+
+                        });
+
+
+                      //Prendermi il bilancio
+                       ////////// RECEIVER -
+                          ///////////////
+                         databaseReference3 = FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("GlobalBalance");
+
+                         databaseReference3.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                         @Override
+                         public void onDataChange(DataSnapshot dataSnapshot) {
+                             bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
+
+
+                             if (bilancioGlobale == null) {
+                                 bilancioGlobale = 0.0;
+                             }
+
+                             Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
+
+
+
+                             //devo levare
+                             Double tmp= bilancioGlobale-Total;
+                             FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("GlobalBalance").setValue(tmp);
+
+                             //databaseReference5.removeEventListener(this);
+                             Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
+
+
+                         }
+
+                         @Override
+                         public void onCancelled(DatabaseError databaseError) {
+
+                                      }
+
+                            });
+
+
+                        ///////////// FINE BILANCIO GLOBALE
+
+
+
+                    ////////////////////////////////////////////
+                    ////////////////////////////////////////////
+                    // 4 USERS - GROUPS - per quel gruppo ID - Users   ---> Total ---> Name  ( x owner e x tutti )
+                    ////////////////////////////////////////////
+                    ////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //Prendermi il bilancio del gruppo
+        ////////// SENDER + OWNER
+        ///////////////
+        databaseReference4 = FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId);
+
+        databaseReference4.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //ABBIAMO AGGIORNATO IL BILANCIO DEL GRUPPO
+
+
+                bilanciodelgruppo= (Double) dataSnapshot.child("Total").getValue(Double.class);
+
+
+                if (bilanciodelgruppo == null) {
+                    bilanciodelgruppo = 0.0;
+                }
+                Log.d("EXPENSE", "bilancioGlobale: " + bilanciodelgruppo);
+
+
+
+                //devo levare
+                Double tmp= bilanciodelgruppo+Total;
+                FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
+
+                //databaseReference5.removeEventListener(this);
+                Log.d("EXPENSE", "bilanciodelgruppo+Total2: " + (tmp));
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+        ////////// RECEIVER -
+        ///////////////
+        databaseReference4 = FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Groups").child(mGroupId);
+
+        databaseReference4.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //ABBIAMO AGGIORNATO IL BILANCIO DEL GRUPPO
+
+
+                bilanciodelgruppo= (Double) dataSnapshot.child("Total").getValue(Double.class);
+
+
+                if (bilanciodelgruppo == null) {
+                    bilanciodelgruppo = 0.0;
+                }
+                Log.d("EXPENSE", "bilancioGlobale: " + bilanciodelgruppo);
+
+
+
+                //devo levare
+                Double tmp= bilanciodelgruppo-Total;
+                FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Total").setValue(tmp);
+
+                //databaseReference5.removeEventListener(this);
+                Log.d("EXPENSE", "bilanciodelgruppo-Total2: " + (tmp));
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
+                        ///////////// FINE BILANCIO del gruppo
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    ////// punto 5 aggiornare i singoli bilanci all'interno del gruppo
+                    // per quelle persone convolte
+
+
+
+                        //step 1 prendere il totale per quella persona
+
+
+
+                            //Read content i dati del singolo utente
+                            databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId).child("Users");
+
+                            databaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                    bilanciosingolo = (Double) dataSnapshot.child(mReceiverId).child("Total").getValue(Double.class);
+
+
+                                    if (bilanciosingolo == null) {
+                                        bilanciosingolo = 0.0;
+                                    }
+
+
+                                    Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
+
+                                    //step 2 aggiornalo
+                                    Double tmp = bilanciosingolo + Total;
+                                    FirebaseDatabase.getInstance().getReference("Users").child(mSenderId).child("Groups").child(mGroupId)
+                                            .child("Users").child(mReceiverId).child("Total").setValue(tmp);
+
+
+                                    Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
+
+
+                                    //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+
+                                    //DEVO FARE L'INVERSO
+                                    //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
+
+                                    tmp = -tmp;
+                                    FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Groups")
+                                            .child(mGroupId).child("Users").child(mSenderId).child("Total").setValue(tmp);
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+
+                            });
+
+
+                            ///////////// FINE BILANCIO singolo
+
+
+
+
+                    //////////
+                    ///////////
+                    //// FINE DB
+                    //////////
+                    //////////
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

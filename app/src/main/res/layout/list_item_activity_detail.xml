@@ -9,8 +9,8 @@
 
     <ImageView
     android:id="@+id/image_groups_group"
-    android:layout_width="30sp"
-    android:layout_height="30sp"
+    android:layout_width="40sp"
+    android:layout_height="40sp"
     android:textAppearance="?attr/textAppearanceListItem"
     android:src="@drawable/profilecircle"
     android:layout_marginLeft="@dimen/text_margin"

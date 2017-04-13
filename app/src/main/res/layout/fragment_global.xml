@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/image_user_global"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:src="@drawable/profilecircle"
 

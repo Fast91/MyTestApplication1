@@ -48,6 +48,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
+    private TextView mPagatoDaTextView;
 
     private FirebaseAuth firebaseAuth;
 
@@ -81,7 +82,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         mDateTextView = (TextView) myActivity.findViewById(R.id.Date_expense);
         mAmountTextView = (TextView) myActivity.findViewById(R.id.Total_expense);
         mCategoryTextView = (TextView) myActivity.findViewById(R.id.Category_expense);
-
+        mPagatoDaTextView = (TextView) myActivity.findViewById(R.id.pagatoda_name_expense);
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -95,6 +96,8 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
 
                 //prendere il titolo della spesa
                 mTitleTextView.setText( dataSnapshot.child("Name").getValue(String.class) );
+
+
 
 
                 //prendere l'id del gruppi
@@ -172,6 +175,10 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
                     NomeDovuto entry = new NomeDovuto(user.child("Name").getValue(String.class),user.child("Total").getValue(Double.class));
                     entry.setCurrency("€");
                     entry.setId(user.getKey());
+
+                    //prendere OWNER DA tESTARE
+                    //mPagatoDaTextView.setText(  dataSnapshot.child("Owner").child( dataSnapshot.child("Owner").getKey() ).child("Name").getValue(String.class));
+                    mPagatoDaTextView.setText(  entry.getName());
 
                     //Toast.makeText(getContext(),entry.getName(), Toast.LENGTH_SHORT).show();
 

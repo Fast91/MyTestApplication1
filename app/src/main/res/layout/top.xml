@@ -110,7 +110,8 @@
             android:paddingTop="5sp"
             android:text="@string/global_string"
             android:textAlignment="center"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/row1_text2"

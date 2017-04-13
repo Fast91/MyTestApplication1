@@ -86,13 +86,17 @@
     <string name="invitation_message">Entra nel mio gruppo. Inserisci questo PIN nella sezione inviti: </string>
     <string name="invitation_cta">Unisciti a noi!</string>
 
-    <string name="email_sent">Email inviata!</string>
-    <string name="email_notsent">Email non inviata</string>
+    <string name="email_sent">Messaggio inviato!</string>
+    <string name="email_notsent">Messaggio non inviato</string>
     <string name="invitationactivity_title">Invito</string>
     <string name="invitationactivity_message">Se sei stato invitato in un gruppo, per favore entra il tuo PIN qui per essere aggiunto:</string>
     <string name="enterpinplease">Inserisci il PIN </string>
     <string name="pinnotregistred">Il PIN non è associato a nessun gruppo</string>
     <string name="invitation_menu">Inviti</string>
+    <string name="expense_label_pagato">Pagato da:</string>
+    <string name="pay">PAGA</string>
+
+    <string name="payment_title">Pagamento</string>
 
 
 </resources>

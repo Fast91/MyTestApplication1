@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/image_activity_global"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:src="@drawable/profilecircle"
+        android:src="@drawable/giftboxred"
 
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"

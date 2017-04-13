@@ -77,7 +77,7 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
 
         public void bindData(final NomeDovuto u){
             group=u;
-            imageView.setImageResource(R.drawable.profilecircle);
+            //imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
 

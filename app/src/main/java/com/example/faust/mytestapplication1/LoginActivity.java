@@ -9,9 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +71,39 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //attaching click listener
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
+
+
+/*
+        RotateAnimation anim = new RotateAnimation(0f, 350f, 15f, 15f);
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(700);
+
+// Start animating the image
+        final ImageView splash = (ImageView) findViewById(R.id.login_imageapp);
+        splash.startAnimation(anim);
+*/
+// Later.. stop the animation
+       // splash.setAnimation(null);
+        final ImageView splash = (ImageView) findViewById(R.id.login_imageapp);
+        /*
+        TranslateAnimation animation = new TranslateAnimation(-200.0f, 200.0f,
+                0.0f, 0.0f);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+        animation.setDuration(5000);  // animation duration
+        animation.setRepeatCount(5);  // animation repeat count
+        animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
+//      animation.setFillAfter(true);
+
+        splash.startAnimation(animation);  // start animation
+        */
+
+        ScaleAnimation fade_in =  new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        fade_in.setDuration(1000);     // animation duration in milliseconds
+        fade_in.setFillAfter(true);    // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
+        splash.startAnimation(fade_in);
+
+
+
     }
 
 

@@ -100,13 +100,16 @@
     <string name="invitation_cta">Join us!</string>
 
 
-    <string name="email_sent">Email sent!</string>
-    <string name="email_notsent">Email NOT sent</string>
+    <string name="email_sent">Message sent!</string>
+    <string name="email_notsent">Message NOT sent</string>
     <string name="invitation_hintpin">PIN</string>
     <string name="invitationactivity_title">Invitation</string>
     <string name="invitationactivity_message">If you have been invited into one group, please put your PIN here to join into the group:</string>
     <string name="enterpinplease">Enter PIN please</string>
     <string name="pinnotregistred">This PIN is not associated with any group</string>
     <string name="invitation_menu">Invitations </string>
+    <string name="expense_label_pagato">Paid by: </string>
+    <string name="pay">PAY</string>
+    <string name="payment_title">Payment</string>
 
 </resources>

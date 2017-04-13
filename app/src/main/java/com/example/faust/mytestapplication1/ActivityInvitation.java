@@ -135,9 +135,10 @@ public class ActivityInvitation extends AppCompatActivity {
                                         String name_user = dataSnapshot.child("Name").getValue(String.class);
                                         name_nuovoutentedaaggiungere = name_user;
 
+                                        String s = new String(name_nuovoutentedaaggiungere );
                                         //setto il nome all'utente loggato
                                         FirebaseDatabase.getInstance().getReference("Groups").child(pin)
-                                                .child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Name").setValue(name_nuovoutentedaaggiungere);
+                                                .child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Name").setValue(s);
 
                                         addUserToGroup();
 
@@ -214,16 +215,20 @@ public class ActivityInvitation extends AppCompatActivity {
         // aggiunge al gruppo l'utente
         // groups - idgruppo - users - idutente - name
 
+        String s = new String(name_nuovoutentedaaggiungere );
+
         FirebaseDatabase.getInstance().getReference("Groups").child(pin)
-                .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
+                .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(s);
 
 
         //step 2
         // aggiungere l'utente al gruppo
         // users- id utente - groups - id group ---> namegroup + total 0
 
+        String s2 = new String(name_group );
+
         FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                .child("Groups").child(pin).child("Name").setValue(name_group);
+                .child("Groups").child(pin).child("Name").setValue(s2);
 
 
         //setto il bilancio del gruppo a 0

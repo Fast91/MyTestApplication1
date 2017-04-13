@@ -80,7 +80,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
         public void bindData(NomeDovuto u){
             activity=u;
-            imageView.setImageResource(R.drawable.profilecircle);
+           // imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
 

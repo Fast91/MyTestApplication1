@@ -83,7 +83,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
 
         public void bindData(final NomeDovuto u){
             user=u;
-            imageView.setImageResource(R.drawable.giftgreen);
+           // imageView.setImageResource(R.drawable.giftgreen);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
 
