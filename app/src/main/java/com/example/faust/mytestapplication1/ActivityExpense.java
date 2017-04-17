@@ -168,6 +168,7 @@ public class ActivityExpense extends AppCompatActivity {
                             String key = databaseReference.push().getKey();
                             String Name=mytitle;
                             Double Total=myamount;
+                            final Double Amount=myamount;
                             String GroupId=mygroup_selected.getId();
 
                             String Category=mycategory;
@@ -292,7 +293,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                                 if(!name_user.equals(keyowner)){
                                     //devo levare
-                                    Double tmp= bilancioGlobale-Total2;
+                                    Double tmp= bilancioGlobale-Total2; //todo sbagliato
                                   FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
                                     //databaseReference5.removeEventListener(this);
@@ -300,7 +301,7 @@ public class ActivityExpense extends AppCompatActivity {
                                 }
                                 else{
                                     //sono chi ha pagato l'owner devo aggiungere
-                                    Double tmp= bilancioGlobale+Total2;
+                                    Double tmp= bilancioGlobale+(Amount-Total2); //todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
                                     //databaseReference5.removeEventListener(this);
@@ -374,7 +375,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     //devo levare
 
                                     //aggiorno il bilancio del gruppo
-                                    Double tmp= bilanciodelgruppo-Total2;
+                                    Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
 
                                     //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
@@ -389,7 +390,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     //sono chi ha pagato l'owner devo aggiungere
 
                                     //aggiorno il bilancio del gruppo
-                                    Double tmp= bilanciodelgruppo-Total2+myamount;
+                                    Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
 
                                   //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
@@ -488,7 +489,7 @@ public class ActivityExpense extends AppCompatActivity {
                                                 Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
 
                                                 //step 2 aggiornalo
-                                                Double tmp = bilanciosingolo - Total2;
+                                                Double tmp = bilanciosingolo - Total2;//todo sbagliato
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
                                                         .child("Users").child(id_owner).child("Total").setValue(tmp);
 
@@ -501,7 +502,7 @@ public class ActivityExpense extends AppCompatActivity {
                                                 //DEVO FARE L'INVERSO
                                                 //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
 
-                                                tmp = -tmp;
+                                                tmp = -tmp; //todo sbagliato
                                                 FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
                                                         .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
 
