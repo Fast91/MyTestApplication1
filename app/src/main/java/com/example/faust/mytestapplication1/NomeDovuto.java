@@ -7,7 +7,7 @@ package com.example.faust.mytestapplication1;
 public class NomeDovuto {
     public String Name;
     public Double Dovuto;
-    private String Currency;
+    private String mCurrencySymbol;
     public String Name_Group;
     public String Id_Group;
     public String Category;
@@ -62,12 +62,12 @@ public class NomeDovuto {
         return Id;
     }
 
-    public String getCurrency() {
-        return Currency;
+    public String getCurrencySymbol() {
+        return mCurrencySymbol;
     }
 
-    public void setCurrency(String currency) {
-        Currency = currency;
+    public void setCurrencySymbol(String currency) {
+        mCurrencySymbol = currency;
     }
 
     public void setId(String id) {

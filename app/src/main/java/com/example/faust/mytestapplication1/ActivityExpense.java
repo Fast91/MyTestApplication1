@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class ActivityExpense extends AppCompatActivity {
     //private Date mydata;
@@ -47,6 +48,7 @@ public class ActivityExpense extends AppCompatActivity {
     private String mytitle;
     private Double myamount;
     private NomeDovuto mygroup_selected;
+    private String mycurrency_selected;
 
     private String mycategory;
     private String  keyowner;
@@ -55,9 +57,11 @@ public class ActivityExpense extends AppCompatActivity {
     private EditText date;
     int year=Calendar.YEAR,month=Calendar.MONTH,day=Calendar.DAY_OF_MONTH;
     private String id_group;
+    private String id_currency;
     Double  bilancioGlobale, bilanciodelgruppo, bilanciosingolo;
     String id_owner=null;
     ArrayList<NomeDovuto> items_nomi_gruppi =new ArrayList<>();
+    List<String> items_nomi_valute =new ArrayList<>();
 
     private FirebaseAuth firebaseAuth;
 
@@ -114,6 +118,8 @@ public class ActivityExpense extends AppCompatActivity {
                 Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
                 mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
+                Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
+                mycurrency_selected = (String) curr.getSelectedItem();
 
 
 
@@ -562,7 +568,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                     Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
                     startActivity(intent);
-
+                    finish();
 
 
                     return ;}
@@ -584,6 +590,8 @@ public class ActivityExpense extends AppCompatActivity {
         //Spinner
 
         Spinner dropdown = (Spinner)findViewById(R.id.Group_newexpense);
+
+        Spinner dropdownC = (Spinner)findViewById(R.id.new_expense_currency_spinner);
 
         int i=0;
 
@@ -641,8 +649,15 @@ public class ActivityExpense extends AppCompatActivity {
 
         items_nomi_gruppi.add(new NomeDovuto("0","Select Group"));
 
+        List<String> curry = CurrencyEditor.getCurrencySymbols();
+        for(String c : curry)
+        {
+            //TODO permettere solo certe valute
+            if(c.startsWith("U") || c.startsWith("E"))
+            items_nomi_valute.add(c);
+        }
 
-
+        //items_nomi_valute.add("Select Currency");
 
         //items_nomi_gruppi.add("Group1");
 
@@ -659,6 +674,28 @@ public class ActivityExpense extends AppCompatActivity {
                                        int position, long id) {
                 // On selecting a spinner item
                 id_group = adapter.getItemAtPosition(position).toString();
+                // Showing selected spinner item
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        ArrayAdapter<String> adapterC = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,items_nomi_valute);
+        adapterC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        dropdownC.setAdapter(adapterC);
+
+        //Listener
+
+        dropdownC.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterC, View v,
+                                       int position, long id) {
+                // On selecting a spinner item
+                id_currency = adapterC.getItemAtPosition(position).toString();
                 // Showing selected spinner item
 
             }
@@ -788,6 +825,7 @@ public class ActivityExpense extends AppCompatActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
                         ActivityExpense.this.startActivity(intent);
+                        finish();
 
                     }
                 }).create().show();
