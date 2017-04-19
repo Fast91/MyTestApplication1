@@ -10,9 +10,20 @@ public class NomeDovuto {
     private String Currency;
     public String Name_Group;
     public String Id_Group;
+    public String Category;
 
 
     public String Id;
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+
 
     public String getName_Group() {
         return Name_Group;

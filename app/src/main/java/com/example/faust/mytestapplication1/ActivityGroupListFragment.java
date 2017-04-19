@@ -103,10 +103,12 @@ public class ActivityGroupListFragment extends Fragment {
                     String id = (String) postSnapshot.getKey();
                     String nome = (String) postSnapshot.child("Name").getValue(String.class);
                     Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+                    String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
 
                         NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
                          iniziale.setId(id);
+                    iniziale.setCategory(category);
                         attivita_dovuto.put(id, iniziale);
 
 

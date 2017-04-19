@@ -233,7 +233,7 @@ public class ActivityExpense extends AppCompatActivity {
                     databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
                     databaseReference3.child(key).child("Total").setValue(Total);
                     databaseReference3.child(key).child("Name").setValue(Name);
-
+                    databaseReference3.child(key).child("Category").setValue(Category);
 
 
                     //2 users- ACTIVITIES
@@ -251,7 +251,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                         databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
-
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
 
                     }
 

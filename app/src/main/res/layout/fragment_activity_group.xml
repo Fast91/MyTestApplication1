@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/shape_fragment_activity"
+    android:padding="2dp"
+    android:layout_margin="2dp"
     >
 
     <ImageView
@@ -10,23 +13,42 @@
         android:layout_width="40sp"
         android:layout_height="40sp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:src="@drawable/group"
+        android:src="@drawable/giftgreen"
 
-        android:layout_marginLeft="@dimen/text_margin"
-        android:layout_marginRight="@dimen/text_margin"
-        android:layout_marginTop="@dimen/text_margin"
+        android:layout_weight="0.25"
         android:foregroundGravity="center"
+        android:layout_gravity="center"
         />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="0.75"
+        android:orientation="vertical"
+        >
 
     <TextView
         android:id="@+id/name_activity_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
         android:text="@string/name_user_global_string"
+        android:layout_margin="@dimen/fragment_global_image_margin"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_toRightOf="@+id/image_activity_group"
         android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/category_activity_global"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:text="@string/category_activity_string"
+            android:textSize="@dimen/fragment_global_text_amount_size"
+            android:layout_marginLeft="@dimen/fragment_global_image_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_centerHorizontal="true"/>
+        <!--android:layout_toRightOf="@+id/name_user_global"-->
+
+    </LinearLayout>
 
 
     <TextView
@@ -35,7 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="@string/total_user_global_string"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toRightOf="@+id/name_activity_group"
-        android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+        android:textSize="@dimen/fragment_global_text_name_size"
+        android:paddingRight="8dp"
+        android:gravity="right|center_vertical"
+        android:layout_gravity="center_vertical"/>
+
+
+
+</LinearLayout>

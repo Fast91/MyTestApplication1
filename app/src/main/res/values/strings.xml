@@ -112,5 +112,6 @@
     <string name="pay">PAY</string>
     <string name="payment_title">Payment</string>
     <string name="payment0">Insert amount different from 0 </string>
+    <string name="category_activity_string">Category</string>
 
 </resources>

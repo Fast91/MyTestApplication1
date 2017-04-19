@@ -5,6 +5,7 @@
     android:orientation="horizontal"
               android:gravity="center"
               android:weightSum="1"
+    android:background="@drawable/rectagle_white_background_with_border_bottom"
     >
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,8 +15,8 @@
         android:layout_weight="0.2">
         <ImageView
         android:id="@+id/image_user_group"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
+            android:layout_width="50dp"
+            android:layout_height="50sp"
         android:textAppearance="?attr/textAppearanceListItem"
         android:src="@drawable/profilecircle"
         android:layout_marginBottom="@dimen/text_margin"

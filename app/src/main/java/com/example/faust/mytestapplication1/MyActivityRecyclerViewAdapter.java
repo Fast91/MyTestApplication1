@@ -66,6 +66,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
+        public final TextView categoryView;
         private Context mContext;
 
         public ActivityHolder(View view) {
@@ -75,6 +76,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
             imageView = (ImageView) view.findViewById(R.id.image_activity_global);
             nameView = (TextView) view.findViewById(R.id.name_activity_global);
             balanceView = (TextView) view.findViewById(R.id.money_activity_global);
+            categoryView = (TextView) view.findViewById(R.id.category_activity_global);
 
         }
 
@@ -83,6 +85,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
            // imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+            categoryView.setText(u.getCategory());
 
 
 

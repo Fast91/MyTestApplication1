@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     android:orientation="horizontal"
+    android:background="@drawable/rectagle_white_background_with_border_bottom"
     >
+
 
     <ImageView
         android:id="@+id/image_user_global"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_width="50dp"
+        android:layout_height="50sp"
         android:src="@drawable/profilecircle"
-
-        android:layout_marginLeft="@dimen/text_margin"
-        android:layout_marginRight="@dimen/text_margin"
-        android:layout_marginTop="@dimen/text_margin"
-        android:foregroundGravity="center"
-        />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_margin="10dp"/>
 
     <TextView
-        android:id="@+id/name_user_global"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/name_user_global_string"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toRightOf="@+id/image_user_global"
-        android:layout_centerHorizontal="true"/>
+                        android:id="@+id/name_user_global"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/fragment_global_image_margin"
+                        android:text="@string/name_user_global_string"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:layout_gravity="center"
+                        android:paddingLeft="30dp"
+                        android:textSize="@dimen/fragment_global_text_name_size"
+                        android:textStyle="bold"/>
 
 
-    <TextView
-        android:id="@+id/money_user_global"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/total_user_global_string"
+                    <TextView
+                        android:id="@+id/money_user_global"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/total_user_global_string"
+                        android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:textSize="@dimen/fragment_global_text_name_size"
+                        android:paddingRight="8dp"
+                        android:gravity="right|center_vertical"
+                        android:layout_gravity="center_vertical"
 
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toRightOf="@+id/name_user_global"
-        android:layout_centerHorizontal="true"/>
-</RelativeLayout>
+                        />
+
+
+
+</LinearLayout>
+

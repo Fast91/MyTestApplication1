@@ -62,6 +62,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
+        public final TextView categoryView;
 
         public ActivityHolder(View view) {
             super(view);
@@ -71,6 +72,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
             imageView = (ImageView) view.findViewById(R.id.image_activity_group);
             nameView = (TextView) view.findViewById(R.id.name_activity_group);
             balanceView = (TextView) view.findViewById(R.id.money_activity_group);
+            categoryView = (TextView) view.findViewById(R.id.category_activity_global);
 
         }
 
@@ -79,6 +81,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
             //imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
             balanceView.setText(""+(u.getDovuto()));
+            categoryView.setText(u.getCategory());
         }
 
         @Override

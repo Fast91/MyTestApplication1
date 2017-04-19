@@ -147,6 +147,7 @@ public class ActivityListFragment extends  Fragment  {
                       String id = (String) postSnapshot.getKey();
                         String nome = (String) postSnapshot.child("Name").getValue(String.class);
                         Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+                        String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB users
 
 
                         //id per l'attività è univoco
@@ -155,6 +156,7 @@ public class ActivityListFragment extends  Fragment  {
                         //add
                         NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
                         iniziale.setId(id);
+                        iniziale.setCategory(category);
                         attività_dovuto.put(id, iniziale);
 
 
