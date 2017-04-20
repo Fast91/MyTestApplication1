@@ -23,33 +23,40 @@ import java.util.Set;
 
 public class CurrencyEditor
 {
+    private enum CurrencyEnum {
+        AED("AED"), AFN("AFN"), ALL("ALL"), AMD("AMD"), ANG("ANG"), AOA("AOA"), ARS("ARS"), AUD("AUD"), AWG("AWG"), AZN("AZN"), BAM("BAM"), BBD("BBD"),
+        BDT("BDT"), BGN("BGN"), BHD("BHD"), BIF("BIF"), BMD("BMD"), BND("BND"), BOB("BOB"), BOV("BOV"), BRL("BRL"), BSD("BSD"), BTN("BTN"), BWP("BWP"),
+        BYN("BYN"), BYR("BYR"), BZD("BZD"), CAD("CAD"), CDF("CDF"), CHE("CHE"), CHF("CHF"), CHW("CHW"), CLF("CLF"), CLP("CLP"), CNY("CNY"), COP("COP"),
+        COU("COU"), CRC("CRC"), CUC("CUC"), CUP("CUP"), CVE("CVE"), CZK("CZK"), DJF("DJF"), DKK("DKK"), DOP("DOP"), DZD("DZD"), EGP("EGP"), ERN("ERN"),
+        ETB("ETB"), EUR("EUR"), FJD("FJD"), FKP("FKP"), GBP("GBP"), GEL("GEL"), GHS("GHS"), GIP("GIP"), GMD("GMD"), GNF("GNF"), GTQ("GTQ"), GYD("GYD"),
+        HKD("HKD"), HNL("HNL"), HRK("HRK"), HTG("HTG"), HUF("HUF"), IDR("IDR"), ILS("ILS"), INR("INR"), IQD("IQD"), IRR("IRR"), ISK("ISK"), JMD("JMD"),
+        JOD("JOD"), JPY("JPY"), KES("KES"), KGS("KGS"), KHR("KHR"), KMF("KMF"), KPW("KPW"), KRW("KRW"), KWD("KWD"), KYD("KYD"), KZT("KZT"), LAK("LAK"),
+        LBP("LBP"), LKR("LKR"), LRD("LRD"), LSL("LSL"), LYD("LYD"), MAD("MAD"), MDL("MDL"), MGA("MGA"), MKD("MKD"), MMK("MMK"), MNT("MNT"), MOP("MOP"),
+        MRO("MRO"), MUR("MUR"), MVR("MVR"), MWK("MWK"), MXN("MXN"), MXV("MXV"), MYR("MYR"), MZN("MZN"), NAD("NAD"), NGN("NGN"), NIO("NIO"), NOK("NOK"),
+        NPR("NPR"), NZD("NZD"), OMR("OMR"), PAB("PAB"), PEN("PEN"), PGK("PGK"), PHP("PHP"), PKR("PKR"), PLN("PLN"), PYG("PYG"), QAR("QAR"), RON("RON"),
+        RSD("RSD"), RUB("RUB"), RWF("RWF"), SAR("SAR"), SBD("SBD"), SCR("SCR"), SDG("SDG"), SEK("SEK"), SGD("SGD"), SHP("SHP"), SLL("SLL"), SOS("SOS"),
+        SRD("SRD"), SSP("SSP"), STD("STD"), SYP("SYP"), SZL("SZL"), THB("THB"), TJS("TJS"), TMT("TMT"), TND("TND"), TOP("TOP"), TRY("TRY"), TTD("TTD"),
+        TWD("TWD"), TZS("TZS"), UAH("UAH"), UGX("UGX"), USD("USD"), USN("USN"), UYI("UYI"), UYU("UYU"), UZS("UZS"), VEF("VEF"), VND("VND"), VUV("VUV"),
+        WST("WST"), XAF("XAF"), XAG("XAG"), XAU("XAU"), XBA("XBA"), XBB("XBB"), XBC("XBC"), XBD("XBD"), XCD("XCD"), XDR("XDR"), XFU("XFU"), XOF("XOF"),
+        XPD("XPD"), XPF("XPF"), XPT("XPT"), XSU("XSU"), XTS("XTS"), XUA("XUA"), XXX("XXX"), YER("YER"), ZAR("ZAR"), ZMW("ZMW");
+        private String iso4217Code = "";
+
+        CurrencyEnum(String code) {
+            this.iso4217Code = code;
+        }
+
+        @Override
+        public String toString() {
+            return iso4217Code;
+        }
+    }
+
     /*
-    public enum Currency {
-    AED("AED"), AFN("AFN"), ALL("ALL"), AMD("AMD"), ANG("ANG"), AOA("AOA"), ARS("ARS"), AUD("AUD"), AWG("AWG"), AZN("AZN"), BAM("BAM"), BBD("BBD"),
-    BDT("BDT"), BGN("BGN"), BHD("BHD"), BIF("BIF"), BMD("BMD"), BND("BND"), BOB("BOB"), BOV("BOV"), BRL("BRL"), BSD("BSD"), BTN("BTN"), BWP("BWP"),
-    BYN("BYN"), BYR("BYR"), BZD("BZD"), CAD("CAD"), CDF("CDF"), CHE("CHE"), CHF("CHF"), CHW("CHW"), CLF("CLF"), CLP("CLP"), CNY("CNY"), COP("COP"),
-    COU("COU"), CRC("CRC"), CUC("CUC"), CUP("CUP"), CVE("CVE"), CZK("CZK"), DJF("DJF"), DKK("DKK"), DOP("DOP"), DZD("DZD"), EGP("EGP"), ERN("ERN"),
-    ETB("ETB"), EUR("EUR"), FJD("FJD"), FKP("FKP"), GBP("GBP"), GEL("GEL"), GHS("GHS"), GIP("GIP"), GMD("GMD"), GNF("GNF"), GTQ("GTQ"), GYD("GYD"),
-    HKD("HKD"), HNL("HNL"), HRK("HRK"), HTG("HTG"), HUF("HUF"), IDR("IDR"), ILS("ILS"), INR("INR"), IQD("IQD"), IRR("IRR"), ISK("ISK"), JMD("JMD"),
-    JOD("JOD"), JPY("JPY"), KES("KES"), KGS("KGS"), KHR("KHR"), KMF("KMF"), KPW("KPW"), KRW("KRW"), KWD("KWD"), KYD("KYD"), KZT("KZT"), LAK("LAK"),
-    LBP("LBP"), LKR("LKR"), LRD("LRD"), LSL("LSL"), LYD("LYD"), MAD("MAD"), MDL("MDL"), MGA("MGA"), MKD("MKD"), MMK("MMK"), MNT("MNT"), MOP("MOP"),
-    MRO("MRO"), MUR("MUR"), MVR("MVR"), MWK("MWK"), MXN("MXN"), MXV("MXV"), MYR("MYR"), MZN("MZN"), NAD("NAD"), NGN("NGN"), NIO("NIO"), NOK("NOK"),
-    NPR("NPR"), NZD("NZD"), OMR("OMR"), PAB("PAB"), PEN("PEN"), PGK("PGK"), PHP("PHP"), PKR("PKR"), PLN("PLN"), PYG("PYG"), QAR("QAR"), RON("RON"),
-    RSD("RSD"), RUB("RUB"), RWF("RWF"), SAR("SAR"), SBD("SBD"), SCR("SCR"), SDG("SDG"), SEK("SEK"), SGD("SGD"), SHP("SHP"), SLL("SLL"), SOS("SOS"),
-    SRD("SRD"), SSP("SSP"), STD("STD"), SYP("SYP"), SZL("SZL"), THB("THB"), TJS("TJS"), TMT("TMT"), TND("TND"), TOP("TOP"), TRY("TRY"), TTD("TTD"),
-    TWD("TWD"), TZS("TZS"), UAH("UAH"), UGX("UGX"), USD("USD"), USN("USN"), UYI("UYI"), UYU("UYU"), UZS("UZS"), VEF("VEF"), VND("VND"), VUV("VUV"),
-    WST("WST"), XAF("XAF"), XAG("XAG"), XAU("XAU"), XBA("XBA"), XBB("XBB"), XBC("XBC"), XBD("XBD"), XCD("XCD"), XDR("XDR"), XFU("XFU"), XOF("XOF"),
-    XPD("XPD"), XPF("XPF"), XPT("XPT"), XSU("XSU"), XTS("XTS"), XUA("XUA"), XXX("XXX"), YER("YER"), ZAR("ZAR"), ZMW("ZMW");
-
-     */
-
-
-    /**
      * Returns the default number of fraction digits that should be displayed for the default currency for given locale.
      * @param locale
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    /*@RequiresApi(api = Build.VERSION_CODES.N)
     private static int getLocalDefaultFractionDigits(ULocale locale){
         if (locale == null) {
             locale=ULocale.getDefault();
@@ -59,14 +66,14 @@ public class CurrencyEditor
             return currency.getDefaultFractionDigits();
         }
         return 2;
-    }
+    }*/
 
-    /**
+    /*
      * Returns the default number of fraction digits that should be displayed for the default currency for given locale.
      * @param locale
      * @return
      */
-    @Deprecated
+    /*@Deprecated
     private static int getLocalDefaultFractionDigits(Locale locale){
         if (locale == null) {
             locale=Locale.getDefault();
@@ -76,7 +83,7 @@ public class CurrencyEditor
             return currency.getDefaultFractionDigits();
         }
         return 2;
-    }
+    }*/
 
     public static String getShortSymbolFromSymbol(String symbol, String defaultSimbol)
     {
@@ -109,6 +116,7 @@ public class CurrencyEditor
         return shortSymbol;
     }
 
+    /*
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static String getLocalCurrencyShortSymbol(ULocale locale){
         android.icu.text.NumberFormat format=android.icu.text.NumberFormat.getCurrencyInstance(locale);
@@ -159,7 +167,7 @@ public class CurrencyEditor
             return symbol;
         }
         return "€";
-    }
+    }*/
 
     /*
      * Creates the currency converter from the source currency to the target currency.
@@ -252,6 +260,30 @@ public class CurrencyEditor
         //return java.util.Currency.getAvailableCurrencies();
     }
 
+
+    private static List<String> getCurrenciesEnums()
+    {
+        List<String> list = new ArrayList<>();
+        for (CurrencyEnum cEn : CurrencyEnum.values())
+        {
+            CurrencyDetail detail = new CurrencyDetail();
+            list.add(cEn.toString());
+        }
+        return list;
+    }
+
+    private static List<CurrencyDetail> createCurrencyDetails()
+    {
+        List<CurrencyDetail> detailList = new ArrayList<>();
+        List<String> stringList = getCurrenciesEnums();
+        for(String str : stringList)
+        {
+            detailList.add(new CurrencyDetail(str));
+        }
+        return detailList;
+    }
+
+
     @Nullable
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static android.icu.util.Currency getCurrencyBySymbol(String simbol)
@@ -282,7 +314,8 @@ public class CurrencyEditor
         return null;
     }
 
-    public static List<String> getCurrencyNames()
+
+    /*public static List<String> getCurrencyNames()
     {
         List<String> list = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -302,11 +335,11 @@ public class CurrencyEditor
             }
         }
         return list;
-    }
+    }*/
 
     public static List<String> getCurrencySymbols()
     {
-        List<String> list = new ArrayList<>();
+        /*List<String> list = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
             Set<android.icu.util.Currency> set = getCurrencies();
@@ -323,6 +356,12 @@ public class CurrencyEditor
                 list.add(curr.getSymbol());
             }
         }
-        return list;
+        return list;*/
+        return getCurrenciesEnums();
+    }
+
+    public static List<CurrencyDetail> getCurrencyDetails()
+    {
+        return createCurrencyDetails();
     }
 }

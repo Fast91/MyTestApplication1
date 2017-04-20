@@ -649,12 +649,13 @@ public class ActivityExpense extends AppCompatActivity {
 
         items_nomi_gruppi.add(new NomeDovuto("0","Select Group"));
 
-        List<String> curry = CurrencyEditor.getCurrencySymbols();
-        for(String c : curry)
+        //List<String> curry = CurrencyEditor.getCurrencySymbols();
+        List<CurrencyDetail> currDet = CurrencyEditor.getCurrencyDetails();
+        for(CurrencyDetail cD : currDet)
         {
             //TODO permettere solo certe valute
-            if(c.startsWith("U") || c.startsWith("E"))
-            items_nomi_valute.add(c);
+            if(cD.getSymbol().equals("EUR") || cD.getSymbol().equals("USD"))
+            items_nomi_valute.add(cD.getShortSymbol());
         }
 
         //items_nomi_valute.add("Select Currency");
