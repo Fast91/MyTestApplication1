@@ -262,7 +262,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         {
             mDetailEntry = detailEntry;
             mUserNameTextView.setText(mDetailEntry.getName());
-            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));// CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));
+            mAmountTextView.setText(String.format("%.2f",mDetailEntry.getDovuto()) + CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));// CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));
             try {
                 if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
                     mAmountTextView.setTextColor(Color.RED);//parseColor("#d02020"));

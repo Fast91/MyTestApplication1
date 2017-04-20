@@ -80,7 +80,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
             activity=u;
             //imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getDovuto()));
+            balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
             categoryView.setText(u.getCategory());
         }
 

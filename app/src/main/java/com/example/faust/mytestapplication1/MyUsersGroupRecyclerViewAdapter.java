@@ -85,7 +85,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
             user=u;
            // imageView.setImageResource(R.drawable.giftgreen);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getDovuto()));
+            balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
 
 
             if (u.getDovuto().toString().charAt(0) == '-') {

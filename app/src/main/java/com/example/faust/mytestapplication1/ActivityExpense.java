@@ -269,6 +269,8 @@ public class ActivityExpense extends AppCompatActivity {
                         databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(mygroup_selected.getName());
+
 
                     }
 
