@@ -68,7 +68,7 @@
     <string name="wrong_login">Email o password errate</string>
     <string name="backprofile_message">Vuoi uscire dalle informazioni del profilo?</string>
     <string name="backprofile_title">Vuoi tornare indietro?</string>
-    <string name="action_modify_profile">Modifica profilo</string>
+    <string name="action_modify_profile">Modifica immagine del profilo</string>
     <string name="activity_group_groupName">Nome del gruppo</string>
     <string name="activity_group_member_mail">Mail dell\'utente</string>
     <string name="activity_detail_category">Categoria</string>
@@ -101,6 +101,11 @@
     <string name="category_activity_string">Categoria</string>
     <string name="group_activity_global_string">Gruppo</string>
     <string name="prompt_password_reg">Password (min 6 caratteri)</string>
+    <string name="upload_ok">Foto Caricata</string>
+    <string name="dialog_image_profile">Caricamento..</string>
+    <string name="upload_no">Foto non caricata</string>
+    <string name="action_modify_profile_camera">Scatta Foto</string>
+    <string name="dialog_image_profile_loading">Caricamento</string>
 
 
 </resources>

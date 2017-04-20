@@ -60,15 +60,45 @@
 
         android:maxLines="1" />
 
-
-    <Button
-        android:id="@+id/edit_profile_button"
-        style="?android:textAppearanceSmall"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/action_modify_profile"
-        android:textStyle="bold" />
+        android:layout_height="30dp">
+
+
+
+        <ImageButton
+            android:id="@+id/edit_profile_button_camera"
+            android:layout_width="35dp"
+            android:layout_marginLeft="120dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/buttoncirculartransparent_noborder"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_camera128x128"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/edit_profile_button"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/buttoncirculartransparent_noborder"
+            android:scaleType="fitXY"
+            android:src="@drawable/picture_attachment256x256"
+            android:layout_gravity="end"/>
+
+
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/image_profile_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+
 
 
 

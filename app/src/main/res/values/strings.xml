@@ -76,7 +76,7 @@
     <string name="backprofile_message">Do you want to exit from profile?</string>
     <string name="backprofile_title">Come back?</string>
     <string name="title_activity_read_profile">ReadProfileActivity</string>
-    <string name="action_modify_profile">Modify profile</string>
+    <string name="action_modify_profile">Modify profile\'s image</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -116,5 +116,10 @@
     <string name="category_activity_string">Category</string>
     <string name="group_activity_global_string">Group</string>
     <string name="prompt_password_reg">Password (min 6 chars)</string>
+    <string name="upload_ok">Upload Done</string>
+    <string name="dialog_image_profile">Uploading image</string>
+    <string name="upload_no">Not done</string>
+    <string name="action_modify_profile_camera">Take Photo From Camera</string>
+    <string name="dialog_image_profile_loading">Loading</string>
 
 </resources>

@@ -4,12 +4,22 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,12 +35,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
     private int count_b=1;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private ImageView profile_image;
 
 
     @Override
@@ -38,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
+
+
+
         
 
        if (savedInstanceState != null) {
@@ -59,6 +82,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
+
+
+        //image profile
+        //getandSetImage();
+
+        profile_image = (ImageView) findViewById(R.id.row1_image1);
+        getandSetImage();
+        /*
+
+        Bitmap bip = BitmapFactory.decodeResource(MainActivity.this.getResources(), R.drawable.appname);
+
+         profile_image.setImageBitmap(getclip(bip));
+
+        */
+
+
+
+
         final ImageButton bGlobal = (ImageButton) findViewById(R.id.bGlobal);
         final ImageButton bGroups = (ImageButton) findViewById(R.id.bGroups);
         final ImageButton bActivities = (ImageButton) findViewById(R.id.bActivities);
@@ -73,35 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     DB.init();
                 }
 
-            /*
-                try {
 
-
-
-                    if(DBManager.getUsers().isEmpty()) {
-                        DBManager.init();
-
-                        // aggiungo un gruppo g3
-                        MyGroup g3 = new MyGroup("3", "G3 muore", R.drawable.profilecircle, 40);
-                        DBManager.addGroup(g3);
-                        // aggiungo un gruppo g4
-                        MyGroup g4 = new MyGroup("4", "G4 vive", R.drawable.profilecircle, 50);
-                        DBManager.addGroup(g4);
-                        // elimino il gruppo g3
-                        DBManager.removeGroup(g3);
-                        // modifico il gruppo g4 in locale e aggiorno il db
-                        g4.setName("G4");
-                        DBManager.updateGroup(g4);
-                        // ancora bisogna sistemare un po' di cose
-                        // io eviterei la modifica dei dati in locale ma direttamente sul db e poi
-                        // la copia dal db al locale.
-                        // in questo modo i miei dati saranno sempre sincronizzati col db online.
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                */
 
 
 
@@ -298,7 +311,83 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        @Override
+    private void getandSetImage() {
+
+        //getImage of user
+
+        String url ;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                final String image = dataSnapshot.getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            profile_image.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(MainActivity.this)
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(profile_image);
+
+
+
+
+                       // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                       // Bitmap imageCirle = getclip(imageBitmaptaken);
+                       // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+
+                }
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
+
+    @Override
         protected void onSaveInstanceState(Bundle savedInstanceState) {
             super.onSaveInstanceState(savedInstanceState);
             savedInstanceState.putInt("COUNT_B",count_b);
@@ -476,6 +565,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+    public static Bitmap getclip(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        //canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+          //      bitmap.getWidth() / 2, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,bitmap.getHeight() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
 
 
 }

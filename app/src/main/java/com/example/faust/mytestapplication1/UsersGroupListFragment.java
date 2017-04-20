@@ -2,6 +2,8 @@ package com.example.faust.mytestapplication1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View.OnKeyListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +49,7 @@ public class UsersGroupListFragment extends Fragment{
     private MyUsersGroupRecyclerViewAdapter adapter;
     private AppCompatActivity myactivity;
 
+    private ImageView profile_image;
     private int mColumnCount=1;
 
     String id_group, name_group;
@@ -88,7 +95,13 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
+
+
         final  AppCompatActivity activity = (android.support.v7.app.AppCompatActivity) view.getContext();
+
+        profile_image = (ImageView) activity.findViewById(R.id.row1_image1);
+        getandSetImage();
+
         DatabaseReference databaseReference;
 
 
@@ -344,6 +357,130 @@ public class UsersGroupListFragment extends Fragment{
 
         return view;
     }
+
+
+
+
+    private void getandSetImage() {
+
+        //getImage of user
+
+        String url ;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Groups").child(id_group).child("Image");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                final String image = dataSnapshot.getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            profile_image.setImageBitmap(imageBitmaptaken);
+
+
+                            profile_image.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getContext(), FullScreenImage.class);
+
+                                    profile_image.buildDrawingCache();
+                                    Bitmap image2= profile_image.getDrawingCache();
+
+                                    Bundle extras = new Bundle();
+                                    extras.putParcelable("imagebitmap", image2);
+                                    intent.putExtras(extras);
+                                    startActivity(intent);
+
+                                }
+                            });
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(getContext())
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(profile_image);
+
+                        profile_image.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getContext(), FullScreenImage.class);
+
+                                profile_image.buildDrawingCache();
+                                Bitmap image2= profile_image.getDrawingCache();
+
+                                Bundle extras = new Bundle();
+                                extras.putParcelable("imagebitmap", image2);
+                                intent.putExtras(extras);
+                                startActivity(intent);
+
+                            }
+                        });
+
+
+
+
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+
+
+
+
+
+
+
+                }
+                else{
+                    profile_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.group));
+                }
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
 
 
 

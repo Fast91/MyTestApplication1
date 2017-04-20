@@ -2,9 +2,15 @@ package com.example.faust.mytestapplication1;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,18 +30,26 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +58,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class ActivityExpense extends AppCompatActivity {
+public class ActivityExpense extends AppCompatActivity implements View.OnClickListener{
     //private Date mydata;
     private Date myDate;
     private String mytitle;
@@ -52,9 +67,17 @@ public class ActivityExpense extends AppCompatActivity {
     private String mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
+    ProgressDialog mProgressDialog ;
+    private Uri downloadUri;
+    private String key=null;
+
     private String mycategory;
     private String  keyowner;
+    private ImageButton buttonGallery, buttonCamera;
+    private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
+    private ImageView image_activity;
 
+    private StorageReference mStorage;
 
     private EditText date;
     int year=Calendar.YEAR,month=Calendar.MONTH,day=Calendar.DAY_OF_MONTH;
@@ -93,6 +116,17 @@ public class ActivityExpense extends AppCompatActivity {
         }
 
         ImageButton submitexpense = (ImageButton)  findViewById(R.id.buttonSubmitExpense);
+         buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto);
+        buttonCamera.setOnClickListener(this);
+         buttonGallery = (ImageButton)  findViewById(R.id.buttonGallery);
+        buttonGallery.setOnClickListener(this);
+
+        mStorage = FirebaseStorage.getInstance().getReference();
+
+        image_activity = (ImageView) findViewById(R.id.imagePicture);
+
+        mProgressDialog = new ProgressDialog(this);
+
 
 
 
@@ -177,7 +211,11 @@ public class ActivityExpense extends AppCompatActivity {
 
                             databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
                             //genero nuovo id per l'attività
-                            String key = databaseReference.push().getKey();
+
+                            if(key==null){
+                                key = databaseReference.push().getKey();
+                            }
+
                             String Name=mytitle;
                             Double Total=myamount;
                             final Double Amount=myamount;
@@ -843,6 +881,14 @@ public class ActivityExpense extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
+
+                        //Remove activity
+                        if(key!=null) {
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                            ref.child("Activities").child(key).removeValue();
+                        }
+
+
                         Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
                         ActivityExpense.this.startActivity(intent);
                         finish();
@@ -850,6 +896,194 @@ public class ActivityExpense extends AppCompatActivity {
                     }
                 }).create().show();
     }
+
+
+
+    @Override
+    public void onClick(View v) {
+
+        if(v == buttonGallery){
+
+
+            Intent intent = new Intent ( Intent.ACTION_PICK);
+            intent.setType("image/*");
+
+            startActivityForResult(intent,GALLERY_INTENT);
+
+
+
+        }
+
+
+        else if (v == buttonCamera){
+
+            Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+            startActivityForResult(intent,CAMERA_REQUEST_CODE);
+
+
+        }
+
+
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+
+
+            String msg = getString(R.string.dialog_image_profile);
+            mProgressDialog.setMessage(msg);
+            mProgressDialog.show();
+
+
+            Uri uri = data.getData();
+
+
+            StorageReference filepath  = mStorage.child("Photos").child(uri.getLastPathSegment());
+
+
+
+
+
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                @SuppressWarnings("VisibleForTests")
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    downloadUri = taskSnapshot.getDownloadUrl();
+
+                    if(key==null){
+                        databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                        key = databaseReference.push().getKey();
+                    }
+
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance()
+                            .getReference()
+                            .child("Activities")
+                            .child(key)
+                            .child("Image");
+                    ref.setValue(downloadUri.toString());
+
+
+
+                    // Picasso.with(ReadProfileActivity.this).load(downloadUri).fit().centerCrop().into(image_profile);
+
+                    Toast.makeText(ActivityExpense.this, R.string.upload_ok ,Toast.LENGTH_LONG).show();
+                    mProgressDialog.dismiss();
+
+
+
+                    if (!downloadUri.toString().contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(downloadUri.toString());
+                            image_activity.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        // This block of code should already exist, we're just moving it to the 'else' statement:
+                        Picasso.with(ActivityExpense.this)
+                                .load(downloadUri.toString())
+                                .fit()
+                                .centerCrop()
+                                .into(image_activity);
+                    }
+
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(ActivityExpense.this, R.string.upload_no ,Toast.LENGTH_LONG).show();
+                    mProgressDialog.dismiss();
+
+
+
+                }
+            });
+
+
+
+
+
+
+
+        }
+
+
+        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //image_profile.setImageBitmap(imageBitmap);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+
+            if(key==null){
+                databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                key = databaseReference.push().getKey();
+            }
+
+            DatabaseReference ref = FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("Activities")
+                    .child(key)
+                    .child("Image");
+            ref.setValue(imageEncoded);
+
+
+            if (!imageEncoded.contains("http")) {
+                try {
+                    Bitmap imageBitmaptaken = decodeFromFirebaseBase64(imageEncoded);
+                    image_activity.setImageBitmap(imageBitmaptaken);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // This block of code should already exist, we're just moving it to the 'else' statement:
+                Picasso.with(this)
+                        .load(imageEncoded)
+                        .fit()
+                        .centerCrop()
+                        .into(image_activity);
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+    }
+
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
 
 
 

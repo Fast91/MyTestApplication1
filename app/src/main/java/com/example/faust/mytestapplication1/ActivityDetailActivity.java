@@ -2,11 +2,14 @@ package com.example.faust.mytestapplication1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class ActivityDetailActivity extends AppCompatActivity
@@ -73,6 +78,10 @@ public class ActivityDetailActivity extends AppCompatActivity
                     .commit();
         }
 
+        mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.giftgreen));
+
+        getandSetImage();
+
 
         /////////////////////////
         //////
@@ -110,4 +119,113 @@ public class ActivityDetailActivity extends AppCompatActivity
 
 
     }
+
+
+
+
+
+
+
+
+
+    private void getandSetImage() {
+
+        //getImage of user
+
+        String url ;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Activities").child(mExpenseId).child("Image");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                final String image = dataSnapshot.getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            mImageView.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(ActivityDetailActivity.this)
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(mImageView);
+
+
+
+
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+                    mImageView.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(ActivityDetailActivity.this, FullScreenImage.class);
+
+                            mImageView.buildDrawingCache();
+                            Bitmap image2= mImageView.getDrawingCache();
+
+                            Bundle extras = new Bundle();
+                            extras.putParcelable("imagebitmap", image2);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+                }
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
+
+
+
+
+
+
+
+
 }

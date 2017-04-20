@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -43,13 +44,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ModifyProfileActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ActivityExpense"
             android:configChanges="screenSize|keyboardHidden">
             <intent-filter>
@@ -76,7 +70,8 @@
         </activity>
         <activity android:name=".ActivityAddGroup" />
         <activity android:name=".ActivityAddUserToGroup" />
-        <activity android:name=".ActivityInvitation"></activity>
+        <activity android:name=".ActivityInvitation" />
+        <activity android:name=".FullScreenImage"></activity>
     </application>
 
 </manifest>

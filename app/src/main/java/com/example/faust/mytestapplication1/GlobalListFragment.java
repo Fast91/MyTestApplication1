@@ -1,6 +1,9 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +41,7 @@ public class GlobalListFragment extends Fragment {
 
     private MyGlobalRecyclerViewAdapter adapter;
     private FirebaseAuth firebaseAuth;
+    private ImageView profile_image;
 
     private int mColumnCount=1;
 
@@ -83,6 +91,10 @@ public class GlobalListFragment extends Fragment {
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
         moneygroup.setText("100€");
+
+        profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
+        getandSetImage();
+
 
 
 
@@ -258,6 +270,114 @@ public class GlobalListFragment extends Fragment {
 
         return view;
     }
+
+
+
+
+
+
+    private void getandSetImage() {
+
+        //getImage of user
+
+        String url ;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                final String image = dataSnapshot.getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            profile_image.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(getContext())
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(profile_image);
+
+
+
+
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+                    ///////////
+
+                    profile_image.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getContext(), FullScreenImage.class);
+
+                            profile_image.buildDrawingCache();
+                            Bitmap image2= profile_image.getDrawingCache();
+
+                            Bundle extras = new Bundle();
+                            extras.putParcelable("imagebitmap", image2);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
+                    //
+
+
+
+
+                }
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+    public static Bitmap decodeFromFirebaseBase64(String image) throws IOException {
+
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
+
 
 
 }

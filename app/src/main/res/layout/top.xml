@@ -100,12 +100,16 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
+
         <ImageView
             android:id="@+id/row1_image1"
-            android:layout_width="match_parent"
+
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:layout_span="2"
-            android:src="@drawable/realphoto" />
+            android:src="@drawable/realphoto"
+           />
+
 
         <TextView
             android:id="@+id/row1_text1"
