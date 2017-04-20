@@ -122,7 +122,8 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
 
                 mDateTextView.setText(dataSnapshot.child("Date").getValue(String.class));
                 mAmountTextView.setText(dataSnapshot.child("Total").getValue(Double.class).toString());
-                mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
+                //mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
+                mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class),"€"));
                 mCategoryTextView.setText(dataSnapshot.child("Category").getValue(String.class));
 
 
@@ -176,7 +177,8 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
 
 
                     NomeDovuto entry = new NomeDovuto(user.child("Name").getValue(String.class),user.child("Total").getValue(Double.class));
-                    entry.setCurrencySymbol(CurrencyEditor.getShortSymbolFromSymbol(entry.getCurrencySymbol(), "€")); //€
+                    //entry.setCurrencySymbol(CurrencyEditor.getShortSymbolFromSymbol(entry.getCurrencySymbol(), "€")); //€
+                    entry.setCurrencySymbol(user.child("Currency").getValue(String.class));
                     entry.setId(user.getKey());
 
                     //prendere OWNER DA tESTARE
@@ -211,7 +213,8 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
 
 
                     NomeDovuto entry = new NomeDovuto(user.child("Name").getValue(String.class),user.child("Total").getValue(Double.class));
-                    entry.setCurrencySymbol(CurrencyEditor.getShortSymbolFromSymbol(entry.getCurrencySymbol(), "€")); //€
+                    //entry.setCurrencySymbol(CurrencyEditor.getShortSymbolFromSymbol(entry.getCurrencySymbol(), "€")); //€
+                    entry.setCurrencySymbol(user.child("Currency").getValue(String.class));
                     entry.setId(user.getKey());
 
                     //Toast.makeText(getContext(),entry.getName(), Toast.LENGTH_SHORT).show();
@@ -259,7 +262,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         {
             mDetailEntry = detailEntry;
             mUserNameTextView.setText(mDetailEntry.getName());
-            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));
+            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));// CurrencyEditor.getShortSymbolFromSymbol(mDetailEntry.getCurrencySymbol(),"€"));
             try {
                 if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
                     mAmountTextView.setTextColor(Color.RED);//parseColor("#d02020"));

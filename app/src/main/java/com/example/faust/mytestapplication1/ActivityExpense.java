@@ -384,6 +384,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
 
+
                                     //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
 
                                     //adesso devo modificare a chi devo i soldi
