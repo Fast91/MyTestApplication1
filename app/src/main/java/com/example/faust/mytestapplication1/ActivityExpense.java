@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,8 @@ public class ActivityExpense extends AppCompatActivity {
     private String mytitle;
     private Double myamount;
     private NomeDovuto mygroup_selected;
-    private String mycurrency_selected;
+    private String mycurrency_selected_from_spinner;
+    private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
     private String mycategory;
     private String  keyowner;
@@ -59,6 +61,7 @@ public class ActivityExpense extends AppCompatActivity {
     private String id_group;
     private String id_currency;
     Double  bilancioGlobale, bilanciodelgruppo, bilanciosingolo;
+    String currencyBilancioGlobale, currencyBilancioDelGruppo, currencyBilancioSingolo;
     String id_owner=null;
     ArrayList<NomeDovuto> items_nomi_gruppi =new ArrayList<>();
     List<String> items_nomi_valute =new ArrayList<>();
@@ -69,7 +72,6 @@ public class ActivityExpense extends AppCompatActivity {
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference3;
     private DatabaseReference databaseReference4, databaseReference5, databaseReference6, databaseReference7;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,11 +121,15 @@ public class ActivityExpense extends AppCompatActivity {
                 mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
                 Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
-                mycurrency_selected = (String) curr.getSelectedItem();
+                        mycurrency_selected_from_spinner = (String) curr.getSelectedItem();
+                        /*try {
+                            myamount = CurrencyEditor.convertCurrency(myamount, mycurrency_selected_from_spinner, "EUR");
+                        } catch (IOException e) {
+                            //e.printStackTrace();
+                            //lascio myamount così com'è
+                        }*/
 
-
-
-                //mydata =null;
+                        //mydata =null;
 
                 SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 myDate=null;
@@ -183,6 +189,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                             databaseReference.child(key).child("Name").setValue(Name);
                             databaseReference.child(key).child("Total").setValue(Total);
+                            databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
 
                             databaseReference.child(key).child("GroupId").setValue(GroupId);
 
@@ -203,6 +210,7 @@ public class ActivityExpense extends AppCompatActivity {
                             //lo settiamo come owner
                             databaseReference.child(key).child("Owner").child(keyowner).child("Name").setValue(Name);
                             databaseReference.child(key).child("Owner").child(keyowner).child("Total").setValue(Total);
+                            databaseReference.child(key).child("Owner").child(keyowner).child("Currency").setValue(mycurrency_selected);
                             Log.d("EXPENSE", Name + " " + Total + " (DB)" );
 
                             //preso tutti i nomi degli utenti
@@ -214,6 +222,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     //Setto la spesa a tutti gli utenti
                                     databaseReference.child(key).child("Users").child(in).child("Name").setValue(myusers.get(in));
                                     databaseReference.child(key).child("Users").child(in).child("Total").setValue(Total);
+                                    databaseReference.child(key).child("Users").child(in).child("Currency").setValue(mycurrency_selected);
 
 
 
@@ -238,6 +247,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                     databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
                     databaseReference3.child(key).child("Total").setValue(Total);
+                    databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
                     databaseReference3.child(key).child("Name").setValue(Name);
                     databaseReference3.child(key).child("Category").setValue(Category);
 
@@ -257,6 +267,7 @@ public class ActivityExpense extends AppCompatActivity {
 
                         databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(mygroup_selected.getName());
 
@@ -284,14 +295,13 @@ public class ActivityExpense extends AppCompatActivity {
                         databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance");
 
 
-
                         //Read content data
                         databaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                  bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
-
+                                currencyBilancioGlobale = (String) dataSnapshot.child("Currency").getValue(String.class);
 
                                 if (bilancioGlobale == null) {
                                     bilancioGlobale = 0.0;
@@ -371,6 +381,7 @@ public class ActivityExpense extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 bilanciodelgruppo= (Double) dataSnapshot.child("Total").getValue(Double.class);
+                                currencyBilancioDelGruppo = (String) dataSnapshot.child("Currency").getValue(String.class);
 
 
                                 if (bilanciodelgruppo == null) {
@@ -385,7 +396,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
-
+                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
                                     //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
 
@@ -401,6 +412,7 @@ public class ActivityExpense extends AppCompatActivity {
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
+                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
                                   //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
 
@@ -488,7 +500,7 @@ public class ActivityExpense extends AppCompatActivity {
 
 
                                                 bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
-
+                                                currencyBilancioSingolo = (String) dataSnapshot.child(id_owner).child("Currency").getValue(String.class);
 
                                                 if (bilanciosingolo == null) {
                                                     bilanciosingolo = 0.0;
@@ -501,6 +513,8 @@ public class ActivityExpense extends AppCompatActivity {
                                                 Double tmp = bilanciosingolo - Total2;//todo sbagliato
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
                                                         .child("Users").child(id_owner).child("Total").setValue(tmp);
+                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                        .child("Users").child(id_owner).child("Currency").setValue(mycurrency_selected);
 
 
                                                 Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
@@ -514,6 +528,8 @@ public class ActivityExpense extends AppCompatActivity {
                                                 tmp = -tmp; //todo sbagliato
                                                 FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
                                                         .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
+                                                FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
+                                                        .child(mygroup_selected.getId()).child("Users").child(name_user).child("Currency").setValue(mycurrency_selected);
 
 
                                             }
