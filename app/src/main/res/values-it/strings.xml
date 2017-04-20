@@ -51,7 +51,7 @@
     <string name="enter_password">Perfavore, inserire una password</string>
     <string name="progress_bar_register">Registrazione...</string>
     <string name="successful_registration">Registrazione completata</string>
-    <string name="unsuccessful_registration">Registrazione fallita, riprovare</string>
+    <string name="unsuccessful_registration">Registrazione fallita, password minimo 6 caratteri</string>
     <string name="already_registered">Già registrato? Accedi quì</string>
     <string name="titleregisteractivity">Registrazione</string>
     <string name="titleloginactivity">Accedi</string>
@@ -100,6 +100,7 @@
     <string name="payment0">Inserire un totale diverso da 0</string>
     <string name="category_activity_string">Categoria</string>
     <string name="group_activity_global_string">Gruppo</string>
+    <string name="prompt_password_reg">Password (min 6 caratteri)</string>
 
 
 </resources>

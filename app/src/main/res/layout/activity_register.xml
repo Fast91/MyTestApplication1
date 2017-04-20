@@ -75,7 +75,7 @@
         android:id="@+id/password_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_password"
+        android:hint="@string/prompt_password_reg"
         android:textColorHint="@android:color/darker_gray"
         android:textColor="#4caf50"
         android:imeActionId="@+id/login"

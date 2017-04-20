@@ -58,7 +58,7 @@
     <string name="enter_password">Please, insert password</string>
     <string name="progress_bar_register">Registering user...</string>
     <string name="successful_registration">Registered successful</string>
-    <string name="unsuccessful_registration">Register unsuccesfully, please try again</string>
+    <string name="unsuccessful_registration">Register unsuccesfully, password at least 6 chars </string>
     <string name="already_registered">Already registered? Sign here</string>
     <string name="titleregisteractivity">Registration</string>
     <string name="titleloginactivity">Log in</string>
@@ -115,5 +115,6 @@
     <string name="payment0">Insert amount different from 0 </string>
     <string name="category_activity_string">Category</string>
     <string name="group_activity_global_string">Group</string>
+    <string name="prompt_password_reg">Password (min 6 chars)</string>
 
 </resources>

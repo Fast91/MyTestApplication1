@@ -12,7 +12,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="100sp"
+        android:layout_height="70sp"
         android:src="@drawable/appname"
         android:id="@+id/login_imageapp"
 
