@@ -49,7 +49,7 @@ public class ActivityExpense extends AppCompatActivity {
     private String mytitle;
     private Double myamount;
     private NomeDovuto mygroup_selected;
-    private String mycurrency_selected_from_spinner;
+    private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
     private String mycategory;
@@ -64,7 +64,7 @@ public class ActivityExpense extends AppCompatActivity {
     String currencyBilancioGlobale, currencyBilancioDelGruppo, currencyBilancioSingolo;
     String id_owner=null;
     ArrayList<NomeDovuto> items_nomi_gruppi =new ArrayList<>();
-    List<String> items_nomi_valute =new ArrayList<>();
+    List<CurrencyDetail> items_nomi_valute =new ArrayList<>();
 
     private FirebaseAuth firebaseAuth;
 
@@ -121,13 +121,13 @@ public class ActivityExpense extends AppCompatActivity {
                 mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
                 Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
-                        mycurrency_selected_from_spinner = (String) curr.getSelectedItem();
-                        /*try {
-                            myamount = CurrencyEditor.convertCurrency(myamount, mycurrency_selected_from_spinner, "EUR");
+                        mycurrency_selected_from_spinner = (CurrencyDetail) curr.getSelectedItem();
+                        try {
+                            myamount = CurrencyEditor.convertCurrency(myamount, mycurrency_selected_from_spinner.getSymbol(), "EUR");
                         } catch (IOException e) {
                             //e.printStackTrace();
                             //lascio myamount così com'è
-                        }*/
+                        }
 
                         //mydata =null;
 
@@ -674,7 +674,7 @@ public class ActivityExpense extends AppCompatActivity {
         {
             //TODO permettere solo certe valute
             if(cD.getSymbol().equals("EUR") || cD.getSymbol().equals("USD"))
-            items_nomi_valute.add(cD.getShortSymbol());
+            items_nomi_valute.add(cD);
         }
 
         //items_nomi_valute.add("Select Currency");
@@ -703,7 +703,7 @@ public class ActivityExpense extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> adapterC = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,items_nomi_valute);
+        ArrayAdapter<CurrencyDetail> adapterC = new ArrayAdapter<CurrencyDetail>(this, android.R.layout.simple_spinner_item,items_nomi_valute);
         adapterC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         dropdownC.setAdapter(adapterC);
