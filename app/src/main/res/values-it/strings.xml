@@ -27,7 +27,7 @@
     <string name="newexpense_amount">Totale</string>
     <string name="newexpense_description">Descrizione</string>
     <string name="newexpense_data">Data</string>
-    <string name="newexpense_category">Categoria</string>
+    <string name="newexpense_category">Categoria:</string>
     <string name="backmain_title">Sicuro di uscire?</string>
     <string name="backmain_message">Vuoi veramente uscire?</string>
     <string name="yes">Si</string>
