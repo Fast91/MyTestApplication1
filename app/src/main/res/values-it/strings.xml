@@ -99,6 +99,7 @@
     <string name="payment_title">Pagamento</string>
     <string name="payment0">Inserire un totale diverso da 0</string>
     <string name="category_activity_string">Categoria</string>
+    <string name="group_activity_global_string">Gruppo</string>
 
 
 </resources>

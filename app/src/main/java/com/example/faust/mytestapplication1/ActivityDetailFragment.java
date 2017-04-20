@@ -256,7 +256,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         {
             mDetailEntry = detailEntry;
             mUserNameTextView.setText(mDetailEntry.getName());
-            mAmountTextView.setText(mDetailEntry.getDovuto().toString() + mDetailEntry.getCurrency());
+            mAmountTextView.setText(String.format("%.2f",mDetailEntry.getDovuto()) + mDetailEntry.getCurrency());
             try {
                 if (mDetailEntry.getDovuto().toString().charAt(0) == '-') {
                     mAmountTextView.setTextColor(Color.RED);//parseColor("#d02020"));

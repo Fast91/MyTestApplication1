@@ -105,7 +105,7 @@ public class ActivityListFragment extends  Fragment  {
                     }
 
                     //Bilancio
-                    ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(bilancioGlobale.toString()+"€");
+                    ((TextView) myactivity.findViewById(R.id.row1_text2)).setText((String.format("%.2f", bilancioGlobale)+"€"));
 
 
 
@@ -147,7 +147,8 @@ public class ActivityListFragment extends  Fragment  {
                       String id = (String) postSnapshot.getKey();
                         String nome = (String) postSnapshot.child("Name").getValue(String.class);
                         Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
-                        String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB users
+                        String category = (String) postSnapshot.child("Category").getValue(String.class);
+                        String name_group = (String) postSnapshot.child("Group").getValue(String.class);
 
 
                         //id per l'attività è univoco
@@ -157,6 +158,7 @@ public class ActivityListFragment extends  Fragment  {
                         NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
                         iniziale.setId(id);
                         iniziale.setCategory(category);
+                        iniziale.setName_Group(name_group);
                         attività_dovuto.put(id, iniziale);
 
 

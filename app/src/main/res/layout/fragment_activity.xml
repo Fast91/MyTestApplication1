@@ -26,6 +26,8 @@
                 android:orientation="vertical"
                 >
 
+
+
                     <TextView
                         android:id="@+id/name_activity_global"
                         android:layout_width="wrap_content"
@@ -38,6 +40,36 @@
                         />
 
 
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/group_activity_global"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+
+                        android:text="@string/group_activity_global_string"
+                        android:textSize="@dimen/fragment_global_text_amount_size"
+                        android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:text="-"
+                        android:textSize="@dimen/fragment_global_text_amount_size"
+                        android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                        android:textAppearance="?attr/textAppearanceListItem"
+                        android:layout_centerHorizontal="true"
+                        />
+
+
+
                     <TextView
                         android:id="@+id/category_activity_global"
                         android:layout_width="wrap_content"
@@ -48,6 +80,8 @@
                         android:textAppearance="?attr/textAppearanceListItem"
                         android:layout_centerHorizontal="true"/>
                     <!--android:layout_toRightOf="@+id/name_user_global"-->
+
+                </LinearLayout>
 
                 </LinearLayout>
 

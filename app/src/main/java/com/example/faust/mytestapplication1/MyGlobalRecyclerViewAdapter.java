@@ -79,7 +79,7 @@ public class MyGlobalRecyclerViewAdapter extends RecyclerView.Adapter<MyGlobalRe
             user=u;
             imageView.setImageResource(R.drawable.profilecircle);
             nameView.setText(u.getName());
-            balanceView.setText(""+(u.getDovuto()));
+            balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
 
             if (u.getDovuto().toString().charAt(0) == '-') {
                 balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
