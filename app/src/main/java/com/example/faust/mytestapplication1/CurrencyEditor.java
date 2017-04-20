@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import yahoofinance.YahooFinance;
+import yahoofinance.quotes.fx.FxQuote;
+
 /**
  * Created by faust on 16/04/2017.
  */
@@ -195,7 +198,7 @@ public class CurrencyEditor
     private static double getRate(String fromSymbol, String toSymbol) throws IOException
     {
         // symbols examples: EUR, USD...
-        URL url = new URL("http://quote.yahoo.com/d/quotes.csv?f=l1&s=" + fromSymbol + toSymbol + "=X");
+        /*URL url = new URL("http://finance.yahoo.com/d/quotes.csv?f=l1&s=" + fromSymbol + toSymbol + "=X");
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
         String line = reader.readLine();
         if(line.length() > 0)
@@ -206,7 +209,21 @@ public class CurrencyEditor
             return result;
         }
         reader.close();
-        return 0;
+        return 0;*/
+        // proviamo con quest'altro...
+        /*FxQuote usdgbp = YahooFinance.getFx(fromSymbol+toSymbol+"=X");
+        return usdgbp.getPrice().doubleValue();*/
+        // NON FUNZIONA STA MERDA
+        // fanculo uso const per ora...
+        if(fromSymbol.equals("USD") && toSymbol.equals("EUR"))
+        {
+            return 0.929749;
+        }
+        else if(fromSymbol.equals("EUR") && toSymbol.equals("USD"))
+        {
+            return 1.07554;
+        }
+        return 2;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
