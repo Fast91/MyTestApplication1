@@ -39,7 +39,7 @@
 
         <item name="colorPrimary">#4caf50</item>
         <item name="colorPrimaryDark">#81c784</item>
-        <item name="android:colorBackground">#5c0000</item>
+        <item name="android:colorBackground">#81c784</item>
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">false</item>
