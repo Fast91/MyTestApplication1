@@ -121,7 +121,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
                 );
 
                 mDateTextView.setText(dataSnapshot.child("Date").getValue(String.class));
-                mAmountTextView.setText(dataSnapshot.child("Total").getValue(Double.class).toString());
+                mAmountTextView.setText(String.format("%.2f",dataSnapshot.child("Total").getValue(Double.class)));
                 //mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
                 mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class),"€"));
                 mCategoryTextView.setText(dataSnapshot.child("Category").getValue(String.class));

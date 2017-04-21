@@ -57,6 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class ActivityExpense extends AppCompatActivity implements View.OnClickListener{
     //private Date mydata;
@@ -68,6 +69,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
     Spinner dropdownC;
+    Spinner category;
 
     ProgressDialog mProgressDialog ;
     private Uri downloadUri;
@@ -116,6 +118,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         if (savedInstanceState != null) {
 
         }
+
+
+        category= (Spinner) findViewById(R.id.Category_newexpense);
 
         ImageButton submitexpense = (ImageButton)  findViewById(R.id.buttonSubmitExpense);
          buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto);
@@ -178,8 +183,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     e.printStackTrace();
                 }
 
-                EditText category= (EditText) findViewById(R.id.Category_newexpense);
-                mycategory = category.getText().toString();
+
+                mycategory = (String ) category.getSelectedItem();
 
                 if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup_selected.getName().equals("Select Group"))&&(!mycategory.equals(""))){
                   //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
@@ -763,6 +768,55 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                 // Showing selected spinner item
                 //prova
                 dropdownC.setSelection(position);
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        //Spiinner Category
+
+
+        Categories cts = new Categories();
+        //AGGIUNGO LE CATEGORIE
+        String s = getString(R.string.category_generale);
+        cts.setItem(s);
+        s = getString(R.string.category_luce);
+        cts.setItem(s);
+        s = getString(R.string.category_gas);
+        cts.setItem(s);
+        s = getString(R.string.category_internet);
+        cts.setItem(s);
+
+        s = getString(R.string.category_cibo);
+        cts.setItem(s);
+        s = getString(R.string.category_regali);
+        cts.setItem(s);
+
+
+
+
+
+
+
+        ArrayAdapter<String> adapterCat = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,cts.getList());
+        adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        category.setAdapter(adapterCat);
+
+        //Listener
+
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterC, View v,
+                                       int position, long id) {
+                // On selecting a spinner item
+                //id_currency = adapterC.getItemAtPosition(position).toString();
+                // Showing selected spinner item
+                //prova
+                category.setSelection(position);
 
             }
             @Override

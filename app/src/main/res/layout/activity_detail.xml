@@ -123,7 +123,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Added on: "
+        android:text="@string/expense_addedOn"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/black"
         android:layout_margin="2dp"
@@ -217,7 +217,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:text="Amount: "
+            android:text="@string/expese_amount"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
             android:layout_margin="2dp"

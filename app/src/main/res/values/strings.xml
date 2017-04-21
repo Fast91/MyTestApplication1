@@ -122,4 +122,14 @@
     <string name="action_modify_profile_camera">Take Photo From Camera</string>
     <string name="dialog_image_profile_loading">Loading</string>
 
+
+    <string name="category_luce">Light</string>
+    <string name="category_gas">Gas</string>
+    <string name="category_internet">Internet</string>
+    <string name="category_generale">General</string>
+    <string name="category_cibo">Food</string>
+    <string name="category_regali">Gift</string>
+    <string name="expense_addedOn">Added on:</string>
+    <string name="expese_amount">Amount:</string>
+
 </resources>

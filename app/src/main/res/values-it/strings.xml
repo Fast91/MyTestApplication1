@@ -107,5 +107,15 @@
     <string name="action_modify_profile_camera">Scatta Foto</string>
     <string name="dialog_image_profile_loading">Caricamento</string>
 
+    <string name="category_luce">Luce</string>
+    <string name="category_gas">Gas</string>
+    <string name="category_internet">Internet</string>
+    <string name="category_generale">Generale</string>
+    <string name="category_cibo">Alimentari</string>
+    <string name="category_regali">Regalo</string>
+
+    <string name="expense_addedOn">Aggiunto il:</string>
+    <string name="expese_amount">Totale:</string>
+
 
 </resources>

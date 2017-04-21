@@ -223,7 +223,7 @@ public class CurrencyEditor
         {
             return 1.07554;
         }
-        return 2;
+        return 1; // ritornavi 2 non so perchè e non andava
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
