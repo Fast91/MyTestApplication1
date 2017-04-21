@@ -100,7 +100,7 @@
         android:textSize="30dp"
         />
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="0.1"
             android:id="@+id/new_expense_currency_spinner"

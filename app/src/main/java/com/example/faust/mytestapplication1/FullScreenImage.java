@@ -15,7 +15,19 @@ public class FullScreenImage extends AppCompatActivity {
         setContentView(R.layout.activity_full_screen_image);
 
         Bundle extras = getIntent().getExtras();
-        Bitmap bmp = (Bitmap) extras.getParcelable("imagebitmap");
+        Bitmap bmp ;
+        Bitmap bmp2 = (Bitmap) extras.getParcelable("imagebitmap2");
+
+
+        if(bmp2!=null) {
+            bmp = bmp2;
+        }
+
+        else{
+            bmp = (Bitmap) extras.getParcelable("imagebitmap");
+        }
+
+
 
         ImageView imgDisplay;
         Button btnClose;
@@ -31,8 +43,9 @@ public class FullScreenImage extends AppCompatActivity {
             }
         });
 
-
-        imgDisplay.setImageBitmap(bmp );
+    if(bmp!=null) {
+        imgDisplay.setImageBitmap(bmp);
+    }
 
 
 

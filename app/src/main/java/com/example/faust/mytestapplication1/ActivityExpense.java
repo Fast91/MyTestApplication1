@@ -67,6 +67,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
+    Spinner dropdownC;
+
     ProgressDialog mProgressDialog ;
     private Uri downloadUri;
     private String key=null;
@@ -648,7 +650,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         Spinner dropdown = (Spinner)findViewById(R.id.Group_newexpense);
 
-        Spinner dropdownC = (Spinner)findViewById(R.id.new_expense_currency_spinner);
+        dropdownC = (Spinner)findViewById(R.id.new_expense_currency_spinner);
 
         int i=0;
 
@@ -715,7 +717,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
             items_nomi_valute.add(cD);
         }
 
-        //items_nomi_valute.add("Select Currency");
+
+       // items_nomi_valute.add(new CurrencyDetail());
 
         //items_nomi_gruppi.add("Group1");
 
@@ -734,12 +737,15 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                 id_group = adapter.getItemAtPosition(position).toString();
                 // Showing selected spinner item
 
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
         });
+
+
 
         ArrayAdapter<CurrencyDetail> adapterC = new ArrayAdapter<CurrencyDetail>(this, android.R.layout.simple_spinner_item,items_nomi_valute);
         adapterC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -755,6 +761,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                 // On selecting a spinner item
                 id_currency = adapterC.getItemAtPosition(position).toString();
                 // Showing selected spinner item
+                //prova
+                dropdownC.setSelection(position);
 
             }
             @Override

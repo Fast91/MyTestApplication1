@@ -85,6 +85,15 @@ public class ActivityGroupListFragment extends Fragment {
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
         profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
+        profile_image.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
         getandSetImage();
 
 
@@ -286,7 +295,7 @@ public class ActivityGroupListFragment extends Fragment {
 
                     }
 
-
+        /*
                     profile_image.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -297,13 +306,13 @@ public class ActivityGroupListFragment extends Fragment {
                             Bitmap image2= profile_image.getDrawingCache();
 
                             Bundle extras = new Bundle();
-                            extras.putParcelable("imagebitmap", image2);
+                            extras.putParcelable("imagebitmap2", image2);
                             intent.putExtras(extras);
                             startActivity(intent);
 
                         }
                     });
-
+            */
 
 
 

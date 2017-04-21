@@ -80,6 +80,14 @@ public class ActivityDetailActivity extends AppCompatActivity
 
         mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.giftgreen));
 
+        mImageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         getandSetImage();
 
 

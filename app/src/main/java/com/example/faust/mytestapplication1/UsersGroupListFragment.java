@@ -100,6 +100,18 @@ public class UsersGroupListFragment extends Fragment{
         final  AppCompatActivity activity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
         profile_image = (ImageView) activity.findViewById(R.id.row1_image1);
+
+
+        profile_image.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
         getandSetImage();
 
         DatabaseReference databaseReference;
@@ -387,22 +399,7 @@ public class UsersGroupListFragment extends Fragment{
                             profile_image.setImageBitmap(imageBitmaptaken);
 
 
-                            profile_image.setOnClickListener(new View.OnClickListener() {
 
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(getContext(), FullScreenImage.class);
-
-                                    profile_image.buildDrawingCache();
-                                    Bitmap image2= profile_image.getDrawingCache();
-
-                                    Bundle extras = new Bundle();
-                                    extras.putParcelable("imagebitmap", image2);
-                                    intent.putExtras(extras);
-                                    startActivity(intent);
-
-                                }
-                            });
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -416,22 +413,7 @@ public class UsersGroupListFragment extends Fragment{
                                 .centerCrop()
                                 .into(profile_image);
 
-                        profile_image.setOnClickListener(new View.OnClickListener() {
 
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getContext(), FullScreenImage.class);
-
-                                profile_image.buildDrawingCache();
-                                Bitmap image2= profile_image.getDrawingCache();
-
-                                Bundle extras = new Bundle();
-                                extras.putParcelable("imagebitmap", image2);
-                                intent.putExtras(extras);
-                                startActivity(intent);
-
-                            }
-                        });
 
 
 
@@ -443,6 +425,24 @@ public class UsersGroupListFragment extends Fragment{
 
 
                     }
+/*
+                    profile_image.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getContext(), FullScreenImage.class);
+
+                            profile_image.buildDrawingCache();
+                            Bitmap image2= profile_image.getDrawingCache();
+
+                            Bundle extras = new Bundle();
+                            extras.putParcelable("imagebitmap2", image2);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+
+                        }
+                    });
+                    */
 
 
 

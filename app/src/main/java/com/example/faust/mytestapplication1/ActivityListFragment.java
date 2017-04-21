@@ -87,6 +87,14 @@ public class ActivityListFragment extends  Fragment  {
 
 
             profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
+            profile_image.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+
+                }
+            });
             getandSetImage();
 
 
