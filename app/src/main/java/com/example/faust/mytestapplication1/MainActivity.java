@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
 
-       setTheme(R.style.AppTheme);
+       //setTheme(R.style.AppTheme);
 
 
 
