@@ -117,5 +117,12 @@
     <string name="expense_addedOn">Aggiunto il:</string>
     <string name="expese_amount">Totale:</string>
 
+    <string name="text_pagatoda_expense_string">Pagato da:</string>
+    <string name="text_diviso_expense_string">Diviso:</string>
+    <string name="button_diviso_expense_string">Scegli</string>
+    <string name="clear_all_label">Resetta</string>
+    <string name="dismiss_label">Indietro</string>
+    <string name="no_amount">Inserire un totale maggiore di 0</string>
+
 
 </resources>

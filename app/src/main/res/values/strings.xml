@@ -131,5 +131,11 @@
     <string name="category_regali">Gift</string>
     <string name="expense_addedOn">Added on:</string>
     <string name="expese_amount">Amount:</string>
+    <string name="text_pagatoda_expense_string">Paid by:</string>
+    <string name="text_diviso_expense_string">Divided as:</string>
+    <string name="button_diviso_expense_string">Choose</string>
+    <string name="clear_all_label">Clear</string>
+    <string name="dismiss_label">Dismiss</string>
+    <string name="no_amount">Please insert amount grather than 0</string>
 
 </resources>

@@ -15,13 +15,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +43,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,6 +64,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     Spinner dropdownC;
     Spinner category;
 
+    Double my_amount=0.0;
+
     ProgressDialog mProgressDialog ;
     private Uri downloadUri;
     private String key=null;
@@ -68,12 +75,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private ImageButton buttonGallery, buttonCamera;
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
     private ImageView image_activity;
+    Integer utente_selezionato=-1;
 
     private StorageReference mStorage;
 
     private EditText date;
     int year=Calendar.YEAR,month=Calendar.MONTH,day=Calendar.DAY_OF_MONTH;
-    private String id_group;
+    private NomeDovuto id_group;
     private String id_currency;
     Double  bilancioGlobale, bilanciodelgruppo, bilanciosingolo;
     String currencyBilancioGlobale, currencyBilancioDelGruppo, currencyBilancioSingolo;
@@ -87,6 +95,20 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference3;
     private DatabaseReference databaseReference4, databaseReference5, databaseReference6, databaseReference7;
+
+    private   HashMap<String,NomeDovuto> utenti_gruppo =new HashMap<>();
+    private   HashMap<String,NomeDovuto> utenti_gruppo2 =new HashMap<>();
+
+
+    Button button_pagatoda;
+    Button button_divide;
+
+    private String[] listItems, list_id;
+    private boolean[] checkedItems;
+
+    private NomeDovuto utente_pagante;
+    private HashMap<String,NomeDovuto> utentiGruppo_conDovuto=new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +143,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         image_activity = (ImageView) findViewById(R.id.imagePicture);
 
         mProgressDialog = new ProgressDialog(this);
+
+
+        button_pagatoda = (Button) findViewById(R.id.button_pagatoda_expense);
+
+        button_divide = (Button) findViewById(R.id.button_diviso_expense);
 
 
 
@@ -727,8 +754,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
             public void onItemSelected(AdapterView<?> adapter, View v,
                                        int position, long id) {
                 // On selecting a spinner item
-                id_group = adapter.getItemAtPosition(position).toString();
+                id_group = (NomeDovuto) adapter.getItemAtPosition(position);
+
                 // Showing selected spinner item
+
+
+                //carica gli utenti e mette le cose per i nuovi bottoni
+
+                    cercareUtentiDelGruppo(id_group,position);
+
+
+                    chooseButton(id_group,position);
+
 
 
             }
@@ -880,6 +917,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
 
 
 
@@ -1135,6 +1173,370 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     }
 
 
+
+
+    private void cercareUtentiDelGruppo(NomeDovuto nm, int pos){
+
+        if(pos==0) {
+
+            button_pagatoda.setText("");
+
+
+            button_pagatoda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+
+            });
+        }
+        else {
+
+
+            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(nm.getId()).child("Users");
+
+            databaseReference10.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    utenti_gruppo.clear();
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+                        NomeDovuto nm = new NomeDovuto(postSnapshot.getKey(), postSnapshot.child("Name").getValue(String.class));
+
+                        utenti_gruppo.put(nm.getId(), nm);
+
+                    }
+
+
+                    //voglio mettere nel mio bottone il mio NOME
+                    button_pagatoda.setText(utenti_gruppo.get(firebaseAuth.getCurrentUser().getUid().toString()).getName());
+                    utente_pagante = utenti_gruppo.get(firebaseAuth.getCurrentUser().getUid().toString());
+
+                    //quando il bottone viene premuto
+                    // dobbiamo mostrare una lista di untenti e selezionare chi paga la spesa
+
+                    button_pagatoda.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            ///devo mostrare un dialogo con tutti gli utenti
+
+
+                            AlertDialog.Builder mBuilder = new AlertDialog.Builder(ActivityExpense.this);
+                            mBuilder.setTitle(R.string.text_pagatoda_expense_string);
+
+                            listItems = new String[utenti_gruppo.size()];
+                            list_id =new String[utenti_gruppo.size()];
+                            checkedItems = new boolean[utenti_gruppo.size()];
+
+                            int i = 0;
+                            for (NomeDovuto n : utenti_gruppo.values()) {
+
+                                listItems[i] = n.getName();
+                                list_id[i] = n.getId();
+                                checkedItems[i] = false;
+                                i++;
+                            }
+
+                            checkedItems[0] = true;
+
+                            utente_selezionato = 0;
+
+
+                            mBuilder.setSingleChoiceItems(listItems, 0, new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    // TODO Auto-generated method stub
+                                    utente_selezionato = arg1;
+                                }
+                            }).setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+
+                                    button_pagatoda.setText(listItems[utente_selezionato]);
+                                    utente_pagante = utenti_gruppo.get(list_id[utente_selezionato]);
+                                }
+                            }).setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            AlertDialog mDialog = mBuilder.create();
+                            mDialog.show();
+
+                        }
+
+
+
+
+                           /* mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+
+                                    if(isChecked){
+
+                                        for(int i=0;i<checkedItems.length;i++){
+                                            checkedItems[i]=false;
+                                        }
+                                        utente_selezionato = position;
+                                        checkedItems[position]=true;
+                                    }
+                                    else {
+                                        checkedItems[position]=false;
+                                    }
+                                }
+                            });
+
+
+                            mBuilder.setCancelable(false);
+                            mBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int which) {
+
+                                    button_pagatoda.setText(listItems[utente_selezionato]);
+                                }
+                            });
+
+
+                            mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+
+
+
+
+                            AlertDialog mDialog = mBuilder.create();
+                            mDialog.show();
+                        }
+                        */
+
+
+                    });
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+
+            });
+
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    private void chooseButton(NomeDovuto nm, int pos) {
+
+
+
+
+        if(pos==0 ) {
+
+            button_divide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+
+            });
+        }
+        else {
+
+            //selezionato un gruppo
+
+
+            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(nm.getId()).child("Users");
+
+            databaseReference10.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    utenti_gruppo2.clear();
+
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+
+                        NomeDovuto nm2 = new NomeDovuto(postSnapshot.getKey(), postSnapshot.child("Name").getValue(String.class));
+                        nm2.setDovuto(-1.00);
+
+                        utenti_gruppo2.put(nm2.getId(), nm2);
+
+                    }
+
+
+                    //quando il bottone viene premuto
+                    // dobbiamo mostrare una lista di untenti con l'edittext per ogni utente
+
+                    button_divide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            //prendere il totale
+                            EditText amount_text= (EditText) findViewById(R.id.Total_newexpense);
+                            String stringamount = amount_text.getText().toString();
+                            my_amount=0.0;
+                            if(!stringamount.equals("")) {
+                                my_amount = Double.parseDouble(stringamount);
+                            }
+
+                            if (my_amount <= 0.0) {
+                                Toast.makeText(ActivityExpense.this,R.string.no_amount , Toast.LENGTH_LONG).show();
+                            } else {
+
+                                ///devo mostrare un dialogo con tutti gli utenti
+
+                                Double total_amount = my_amount; // todo
+                                Double personal_amount = (Double) (total_amount / utenti_gruppo2.size());
+
+
+                                AlertDialog.Builder mBuilder = new AlertDialog.Builder(ActivityExpense.this);
+                                mBuilder.setTitle(R.string.text_diviso_expense_string);
+
+
+                                LinearLayout layout = new LinearLayout(ActivityExpense.this);
+                                layout.setOrientation(LinearLayout.VERTICAL);
+
+
+
+
+
+                               for(NomeDovuto utente_corrente : utenti_gruppo2.values()) {
+
+                                   ///inizio per ogni utente
+                                   utenti_gruppo2.remove(utente_corrente);
+                                   utente_corrente.setDovuto(personal_amount);
+                                   utenti_gruppo2.put(utente_corrente.getId(),utente_corrente);
+
+
+                                   LinearLayout layout2 = new LinearLayout(ActivityExpense.this);
+                                   layout2.setOrientation(LinearLayout.HORIZONTAL);
+                                   layout2.setGravity(Gravity.CENTER);
+
+
+                                   final TextView user_name_text = new TextView(ActivityExpense.this);
+                                   user_name_text.setText(utente_corrente.getName() + " : ");
+                                   user_name_text.setGravity(Gravity.RIGHT);
+                                   user_name_text.setPadding(5, 2, 10, 2);
+                                   user_name_text.setTextAppearance(ActivityExpense.this, android.R.style.TextAppearance_Holo_Medium);
+                                   layout2.addView(user_name_text);
+
+
+                                   final EditText amountBox = new EditText(ActivityExpense.this);
+                                   amountBox.setHint(String.format("%.2f",utente_corrente.getDovuto()));
+                                  // amountBox.setInputType(DecimalForm);
+                                   //amountBox.setPadding(5, 2, 2, 2);
+                                   layout2.addView(amountBox);
+
+
+                                   final TextView currency_text = new TextView(ActivityExpense.this);
+                                   currency_text.setText("€");
+                                   currency_text.setGravity(Gravity.LEFT);
+                                   currency_text.setPadding(1, 2, 0, 2);
+
+                                   currency_text.setTextAppearance(ActivityExpense.this, android.R.style.TextAppearance_Holo_Medium);
+                                   layout2.addView(currency_text);
+
+
+                                   layout.addView(layout2);
+
+
+                                   /// per ogni utente fine
+
+                               }
+
+
+
+
+
+
+
+
+
+                                final TextView final_text = new TextView(ActivityExpense.this);
+                                final_text.setText("Il totale deve essere : " + total_amount + "€");
+                                final_text.setTextAppearance(ActivityExpense.this, android.R.style.TextAppearance_Holo_Medium);
+                                final_text.setGravity(Gravity.CENTER);
+                                final_text.setPadding(1, 20, 0, 2);
+
+                                layout.addView(final_text);
+
+
+                                mBuilder.setView(layout);
+
+
+                                mBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int which) {
+
+                                        //button_pagatoda.setText(listItems[utente_selezionato]);
+                                        //utente_pagante = utenti_gruppo.get(list_id[utente_selezionato]);
+                                    }
+                                }).setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                });
+
+
+                                AlertDialog mDialog = mBuilder.create();
+                                mDialog.show();
+
+
+                            }
+
+                        }
+
+
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+
+            });
+
+        }
+
+
+
+
+
+
+
+
+
+    }
 
 
 

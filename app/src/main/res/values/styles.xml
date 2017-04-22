@@ -41,10 +41,6 @@
         <item name="colorPrimaryDark">#81c784</item>
         <item name="android:colorBackground">#81c784</item>
         <item name="android:windowBackground">@drawable/splash</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="splashscreen.NoActionBar">

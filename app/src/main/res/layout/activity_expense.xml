@@ -150,7 +150,7 @@
 
     <Spinner
         android:layout_width="260dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:id="@+id/Category_newexpense"
         android:hint="@string/newexpense_category"
@@ -170,6 +170,54 @@
 
  />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_pagatoda_expense"
+            android:text="@string/text_pagatoda_expense_string"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+        <Button
+            android:id="@+id/button_pagatoda_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/buttonshape"
+            android:padding="1dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/text_diviso_expense"
+            android:text="@string/text_diviso_expense_string"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+            />
+
+        <Button
+            android:id="@+id/button_diviso_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/buttonshape"
+            android:text="@string/button_diviso_expense_string"/>
+
+
+
+
+    </LinearLayout>
+
 
 
         <ImageView
@@ -187,8 +235,8 @@
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
         android:id="@+id/tableImage"
         android:layout_gravity="center"
         android:padding="2dp"
@@ -237,40 +285,21 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/delete480x385" />
 
+            <ImageButton
+                android:id="@+id/buttonSubmitExpense"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/buttoncirculartransparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tick_icon256x256" />
+
         </TableRow>
     </TableLayout>
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:id="@+id/tableLayout0"
-        android:layout_marginRight="10dp"
-        android:padding="2dp"
-        android:stretchColumns="*"
-        android:background="@android:color/white"
-        android:layout_marginTop="12dp">
 
-
-    <TableRow
-        android:id="@+id/tableRow0"
-        android:layout_height="40sp"
-        android:layout_width="wrap_content"
-        >
-
-        <ImageButton
-            android:id="@+id/buttonSubmitExpense"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|right"
-            android:adjustViewBounds="true"
-            android:background="@drawable/buttoncirculartransparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/tick_icon256x256" />
-
-    </TableRow>
-    </TableLayout>
 
 
 </LinearLayout>
