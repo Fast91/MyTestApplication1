@@ -82,6 +82,10 @@ public class PaymentFragment extends Fragment
 
         Bundle b = this.getArguments();
 
+
+
+        Log.d("CIAO","sto iniziadidiai");
+
        // mBundlePaymentGroup= b.getString("GROUP_ID");
         mBundlePaymentReceiver = getArguments().getString("expense_receiver", null);
         mBundlePaymentGroup = getArguments().getString("expense_group", null);
@@ -400,9 +404,19 @@ public class PaymentFragment extends Fragment
             public void onClick(View v) {
                 //TODO qui il DB deve fare la transazione
                 // ...
+                mAmountValue= mAmountValue.replace("€",""); //todo cazzoooo metti il simbolooo
+                mCustomAmountValue = mCustomAmountValue.replace("€","");
+
+                mAmountValue= mAmountValue.replace(",","."); //todo cazzoooo metti il simbolooo
+                mCustomAmountValue = mCustomAmountValue.replace(",",".");
+
+
+
                 if(Double.parseDouble(mAmountValue)!=0) {
+
                     updateButtonsBackground();
                     swapCustomButtonToEditText(false);
+
                     saveAsNewActivity();
                     //ritornare al main
 
@@ -415,6 +429,8 @@ public class PaymentFragment extends Fragment
             }
         });
     }
+
+
 
     private void updateButtonsBackground()
     {

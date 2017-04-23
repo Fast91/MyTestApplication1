@@ -44,12 +44,15 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 
 public class ActivityExpense extends AppCompatActivity implements View.OnClickListener{
@@ -61,8 +64,15 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
 
+    private Double Total2;
     Spinner dropdownC;
     Spinner category;
+    private String[] listato_id;
+
+    private boolean premuto_diviso=false;
+
+    private EditText[] amountBox2;
+    private Double[] amountBox3;
 
     Double my_amount=0.0;
 
@@ -207,6 +217,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                  //prendo id gruppo e prendo hashmap con chiave il nome(nickname dell'utente) e valore id utente
 
+                    divideOrSplit();
+
                     final HashMap<String,String> myusers=new HashMap<String, String>();
 
                     /////////////
@@ -261,10 +273,23 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             // prendere il vero owner
                             //in questo caso prendiamo il primo che capita dalla lista
-                             keyowner= firebaseAuth.getCurrentUser().getUid();
+                             //keyowner= firebaseAuth.getCurrentUser().getUid();
+                            keyowner = utente_pagante.getId();
 
                             Name=myusers.get(keyowner);
                             Total=myamount/count_users;
+
+                            //Ricerca di quanto ha pagato l'owner
+
+                            for(int i=0;i<listato_id.length;i++){
+
+                                if(listato_id[i].equals(keyowner)){
+
+                                    Total=(amountBox3[i]);
+                                }
+
+
+                            }
 
 
                             //lo settiamo come owner
@@ -277,6 +302,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             for(String in : myusers.keySet()){
 
                                 if(!in.equals(keyowner)){
+
+                                    //Ricerca di quanto ha pagato l'owner
+
+                                    for(int i=0;i<listato_id.length;i++){
+
+                                        if(listato_id[i].equals(in)){
+
+                                            Total=amountBox3[i];
+                                        }
+
+
+                                    }
 
                                     Name=in;
                                     //Setto la spesa a tutti gli utenti
@@ -340,7 +377,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     //per l'owner deve ricevere +
                     //per gli altri devono dare -
 
-                    final Double Total2= myamount/count_users; // per persona
+                     Total2= myamount/count_users; // per persona
                     //First sarebbe in questo momento chi paga owner
 
 
@@ -371,6 +408,20 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                 if(!name_user.equals(keyowner)){
                                     //devo levare
+                                    //Ricerca di quanto ha pagato l'owner
+
+                                    for(int i=0;i<listato_id.length;i++){
+
+                                        if(listato_id[i].equals(name_user)){
+
+                                            Total2=amountBox3[i];
+                                        }
+
+
+                                    }
+
+
+
                                     Double tmp= bilancioGlobale-Total2; //todo sbagliato
                                   FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
@@ -379,6 +430,20 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 }
                                 else{
                                     //sono chi ha pagato l'owner devo aggiungere
+
+                                    //Ricerca di quanto ha pagato l'owner
+
+                                    for(int i=0;i<listato_id.length;i++){
+
+                                        if(listato_id[i].equals(name_user)){
+
+                                            Total2=amountBox3[i];
+                                        }
+
+
+                                    }
+
+
                                     Double tmp= bilancioGlobale+(Amount-Total2); //todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
@@ -453,6 +518,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 if(!name_user.equals(keyowner)){
                                     //devo levare
 
+                                    //Ricerca di quanto ha pagato l'owner
+
+                                    for(int i=0;i<listato_id.length;i++){
+
+                                        if(listato_id[i].equals(name_user)){
+
+                                            Total2=amountBox3[i];
+                                        }
+
+
+                                    }
+
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
                                     FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
@@ -468,6 +545,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 }
                                 else{
                                     //sono chi ha pagato l'owner devo aggiungere
+
+                                    //Ricerca di quanto ha pagato l'owner
+
+                                    for(int i=0;i<listato_id.length;i++){
+
+                                        if(listato_id[i].equals(name_user)){
+
+                                            Total2=amountBox3[i];
+                                        }
+
+
+                                    }
 
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
@@ -564,6 +653,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 if (bilanciosingolo == null) {
                                                     bilanciosingolo = 0.0;
+                                                }
+
+                                                //Ricerca di quanto ha pagato l'owner
+
+                                                for(int i=0;i<listato_id.length;i++){
+
+                                                    if(listato_id[i].equals(name_user)){
+
+                                                        Total2=amountBox3[i];
+                                                    }
+
+
                                                 }
 
 
@@ -1260,6 +1361,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                     button_pagatoda.setText(listItems[utente_selezionato]);
                                     utente_pagante = utenti_gruppo.get(list_id[utente_selezionato]);
+
+
+                                   // Toast.makeText(ActivityExpense.this,utente_pagante.getName(),Toast.LENGTH_LONG).show();
+
+
                                 }
                             }).setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1383,7 +1489,16 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                         NomeDovuto nm2 = new NomeDovuto(postSnapshot.getKey(), postSnapshot.child("Name").getValue(String.class));
-                        nm2.setDovuto(-1.00);
+                        EditText amount_text= (EditText) findViewById(R.id.Total_newexpense);
+                        String stringamount = amount_text.getText().toString();
+                        my_amount=0.0;
+                        Double x =-1.0;
+                        if(!stringamount.equals("")) {
+                            my_amount = Double.parseDouble(stringamount);
+                            x= (Double) my_amount / dataSnapshot.getChildrenCount();
+                        }
+
+                        nm2.setDovuto(x);
 
                         utenti_gruppo2.put(nm2.getId(), nm2);
 
@@ -1423,15 +1538,22 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 layout.setOrientation(LinearLayout.VERTICAL);
 
 
+                                amountBox2 = new EditText[utenti_gruppo2.size()];
+                                listato_id = new String[utenti_gruppo2.size()];
 
 
+
+                                int i=0;
 
                                for(NomeDovuto utente_corrente : utenti_gruppo2.values()) {
+
+                                   listato_id[i]= utente_corrente.getId();
 
                                    ///inizio per ogni utente
                                    utenti_gruppo2.remove(utente_corrente);
                                    utente_corrente.setDovuto(personal_amount);
                                    utenti_gruppo2.put(utente_corrente.getId(),utente_corrente);
+
 
 
                                    LinearLayout layout2 = new LinearLayout(ActivityExpense.this);
@@ -1449,9 +1571,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                    final EditText amountBox = new EditText(ActivityExpense.this);
                                    amountBox.setHint(String.format("%.2f",utente_corrente.getDovuto()));
+                                   amountBox.setText(String.format("%.2f",utente_corrente.getDovuto()));
                                   // amountBox.setInputType(DecimalForm);
                                    //amountBox.setPadding(5, 2, 2, 2);
                                    layout2.addView(amountBox);
+                                   amountBox2[i] = amountBox;
 
 
                                    final TextView currency_text = new TextView(ActivityExpense.this);
@@ -1464,6 +1588,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                    layout.addView(layout2);
+                                   i++;
 
 
                                    /// per ogni utente fine
@@ -1494,12 +1619,41 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int which) {
 
-                                        //button_pagatoda.setText(listItems[utente_selezionato]);
-                                        //utente_pagante = utenti_gruppo.get(list_id[utente_selezionato]);
+                                     //  String s3= amountBox2[0].getText().toString();
+                                       // Toast.makeText(ActivityExpense.this,s3,Toast.LENGTH_LONG).show();
+
+                                        amountBox3 = new Double[amountBox2.length];
+
+                                        for(int i=0;i<amountBox2.length;i++)
+                                        {
+
+
+                                            /*
+                                            NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+                                            Number number = null;
+                                            try {
+                                                number = format.parse(amountBox2[i].getText().toString());
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Double d = number.doubleValue();
+
+                                            */
+
+                                          String s3= amountBox2[i].getText().toString(); //problema virgola
+                                            s3 = s3.replace(',', '.');
+                                           amountBox3[i] = Double.parseDouble(s3);
+
+                                        }
+
+
+                                        premuto_diviso=true;
+
                                     }
                                 }).setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                        premuto_diviso=false;
                                         dialogInterface.dismiss();
                                     }
                                 });
@@ -1526,6 +1680,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
             });
 
+
+
+
+
+
         }
 
 
@@ -1537,6 +1696,46 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
+
+    private void divideOrSplit() {
+
+
+        if(premuto_diviso!=true){
+
+            amountBox3 = new Double[utenti_gruppo2.size()];
+            listato_id = new String[utenti_gruppo2.size()];
+
+            EditText amount= (EditText) findViewById(R.id.Total_newexpense);
+            String stringamount = amount.getText().toString();
+            Double myamount2=0.0;
+            if(!stringamount.equals("")) {
+                myamount2 = Double.parseDouble(stringamount);
+            }
+
+
+
+
+            Double tmp = myamount2 / utenti_gruppo2.size();
+            int i=0;
+
+            for(NomeDovuto nm2: utenti_gruppo2.values()){
+
+                amountBox3[i]=tmp;
+                listato_id[i]=nm2.getId();
+
+                i++;
+            }
+
+
+
+        }
+
+
+
+    }
+
+
 
 
 
