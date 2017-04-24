@@ -1,109 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.ActivityExpense"
-    android:id="@+id/linearLayout_activityexpense"
-    android:padding="2dp"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:weightSum="1">
-
-
-    <EditText
-        android:id="@+id/Title_newexpense"
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:background="@drawable/edittextbackground"
-        android:ems="10"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:hint="@string/newexpense_title"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:paddingLeft="10dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp" />
-
-
-    <Spinner
-        android:id="@+id/Group_newexpense"
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:paddingLeft="10dp"
-        android:popupBackground="#fff"
-
-        android:prompt="@string/groupspinner_prompt"
-
-
-        android:textColor="@android:color/black"
-        android:textColorHint="#000"
-        android:textCursorDrawable="@android:color/black"
-
-        android:textSize="15dp"/>
-
+    tools:context="com.example.faust.mytestapplication1.ActivityExpense">
 
     <LinearLayout
-        android:layout_width="260dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:weightSum="1">
-    <EditText
-        android:id="@+id/Total_newexpense"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.9"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout_activityexpense"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:background="@drawable/edittextbackground"
-        android:digits="0123456789."
-        android:ems="10"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:hint="@string/newexpense_amount"
-        android:imeOptions="actionNext"
-        android:inputType="numberDecimal"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:paddingLeft="10dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="30dp"
-        />
+
+        <EditText
+            android:id="@+id/Title_newexpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:background="@drawable/sketched_white_rect_shape_rounded"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:hint="@string/newexpense_title"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/pass_reg"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textCursorDrawable="@android:color/black"
+            android:textSize="30sp" />
+
+
         <Spinner
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:id="@+id/new_expense_currency_spinner"
+            android:id="@+id/Group_newexpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="2dp"
             android:focusableInTouchMode="true"
@@ -112,118 +52,175 @@
             android:maxLength="50"
             android:maxLines="1"
             android:nextFocusDown="@+id/pass_reg"
+            android:popupBackground="#fff"
 
-            android:prompt="@string/currencyspinner_prompt"
-
+            android:prompt="@string/groupspinner_prompt"
+            android:backgroundTint="@color/BreakingMADDarkGreen"
+            android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textColorHint="#000"
             android:textCursorDrawable="@android:color/black"
 
-            android:textSize="15dp">
-        </Spinner>
-    </LinearLayout>
+            android:textSize="25sp"/>
 
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:inputType="date"
-        android:id="@+id/Data_newexpense"
-        android:hint="@string/newexpense_data"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edittextbackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"
-        android:paddingLeft="10dp"
-        android:nextFocusDown="@+id/pass_reg"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:maxLength="50"
-        android:focusableInTouchMode="true"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-    <Spinner
-        android:layout_width="260dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:id="@+id/Category_newexpense"
-        android:hint="@string/newexpense_category"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-
-        android:layout_weight="0.1"
-
-        android:layout_gravity="center"
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp"/>
 
 
- />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/text_pagatoda_expense"
-            android:text="@string/text_pagatoda_expense_string"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginRight="5dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+            android:layout_gravity="center"
+            android:weightSum="1">
+            <EditText
+                android:id="@+id/Total_newexpense"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
 
-        <Button
-            android:id="@+id/button_pagatoda_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/buttonshape"
-            android:padding="1dp"
-            android:layout_marginRight="10dp"/>
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@drawable/sketched_white_rect_shape_rounded"
+                android:digits="0123456789."
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/newexpense_amount"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textCursorDrawable="@android:color/black"
+                android:textSize="30sp"
+                />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:id="@+id/new_expense_currency_spinner"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:nextFocusDown="@+id/pass_reg"
+                android:prompt="@string/currencyspinner_prompt"
+                android:backgroundTint="@color/BreakingMADDarkGreen"
+                android:textAlignment="center"
 
-        <TextView
-            android:layout_marginLeft="5dp"
-            android:id="@+id/text_diviso_expense"
-            android:text="@string/text_diviso_expense_string"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@android:color/black"
+
+                android:textSize="30sp">
+            </Spinner>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:id="@+id/Data_newexpense"
+            android:hint="@string/newexpense_data"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:background="@drawable/sketched_white_rect_shape_rounded"
+            android:layout_margin="2dp"
+            android:textCursorDrawable="@android:color/black"
+            android:textSize="25sp"
+            android:nextFocusDown="@+id/pass_reg"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:maxLength="50"
+            android:focusableInTouchMode="true"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginRight="5dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
             />
 
-        <Button
-            android:id="@+id/button_diviso_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/buttonshape"
-            android:text="@string/button_diviso_expense_string"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Category_newexpense"
+            android:hint="@string/newexpense_category"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:imeOptions="actionNext"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/pass_reg"
+            android:backgroundTint="@color/BreakingMADDarkGreen"
+            android:layout_gravity="center"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_pagatoda_expense"
+                android:text="@string/text_pagatoda_expense_string"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:paddingEnd="5dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+            <Button
+                android:id="@+id/button_pagatoda_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/sketched_white_rect_shape_rounded"
+                android:padding="1dp"
+                android:paddingEnd="10dp"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:id="@+id/text_diviso_expense"
+                android:text="@string/text_diviso_expense_string"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:paddingEnd="5dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+                />
+
+            <Button
+                android:id="@+id/button_diviso_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/sketched_white_rect_shape_rounded"
+                android:text="@string/button_diviso_expense_string"/>
 
 
+        </LinearLayout>
 
 
-    </LinearLayout>
-
-
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
 
         <ImageView
             android:id="@+id/imagePicture"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="160dp"
             android:layout_gravity="center"
             android:src="@drawable/gallery314x250"
             android:padding="1dp"
@@ -232,74 +229,82 @@
             android:adjustViewBounds="true"
             android:background="@drawable/edittextimagebackground"/>
 
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
-        android:layout_height="140dp"
-        android:id="@+id/tableImage"
-        android:layout_gravity="center"
-        android:padding="2dp"
-        android:stretchColumns="*"
-        android:layout_marginTop="7dp">
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/tableImage"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="2dp"
+            android:stretchColumns="*"
+            android:layout_marginTop="0dp">
 
 
-        <TableRow
-            android:id="@+id/tableRowImage"
-            android:layout_height="140dp"
-            android:layout_width="wrap_content">
+            <TableRow
+                android:id="@+id/tableRowImage"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal|top"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-                    <ImageButton
-                        android:id="@+id/buttonPhoto"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="5dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/buttoncirculartransparent_noborder"
-                        android:scaleType="fitXY"
-                        android:padding="8dp"
-                        android:src="@drawable/icon_camera128x128" />
+                <ImageButton
+                    android:id="@+id/buttonPhoto"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/buttoncirculartransparent_noborder"
+                    android:scaleType="centerInside"
+                    android:padding="4dp"
+                    android:src="@drawable/icon_camera128x128" />
 
                 <ImageButton
                     android:id="@+id/buttonGallery"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
+                    android:layout_weight="1"
                     android:background="@drawable/buttoncirculartransparent_noborder"
-                    android:scaleType="fitXY"
-                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:padding="4dp"
                     android:src="@drawable/picture_attachment256x256" />
 
-                    <ImageButton
-                        android:id="@+id/buttonDeleteImage"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="right"
-                        android:layout_marginLeft="5dp"
-                        android:adjustViewBounds="true"
-                        android:padding="8dp"
-                        android:background="@drawable/buttoncirculartransparent_noborder"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/delete480x385" />
-
-            <ImageButton
-                android:id="@+id/buttonSubmitExpense"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/buttoncirculartransparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/tick_icon256x256" />
-
-        </TableRow>
-    </TableLayout>
+                <ImageButton
+                    android:id="@+id/buttonDeleteImage"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:background="@drawable/buttoncirculartransparent_noborder"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/delete480x385" />
 
 
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            </TableRow>
+        </TableLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/buttonSubmitExpense"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:background="@drawable/buttoncircularwhite"
+        android:scaleType="centerInside"
+        android:src="@drawable/tick_icon256x256" />
+
+</RelativeLayout>
