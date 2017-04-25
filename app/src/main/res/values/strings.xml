@@ -140,5 +140,13 @@
     <string name="no_delete_group">Impossible to eliminate , all users should have balance equals to 0</string>
     <string name="yes_delete_group">Elimate</string>
     <string name="message_deleteGroup">has been deleted.\nTake home to return to the main page</string>
+    <string name="delete">Delete</string>
+    <string name="impossible_to_delete">Impossible to delete, balance for this user is not 0</string>
+    <string name="impossible_to_come_back">It is impossible to come back, please press home</string>
+    <string name="progress_bar_db">Loading data...</string>
+    <string name="text_view_setting">Settings</string>
+    <string name="textview_contact">Contact us</string>
+    <string name="message_contact">Thank you for using this App.\nIf you have any problem please contact us on this email:\nroberto.spaz@virgilio.it</string>
+    <string name="language_setting">Language :</string>
 
 </resources>

@@ -28,7 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -129,10 +134,21 @@ public class ActivityGroupListFragment extends Fragment {
                     Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
                     String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
+                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date=null;
+                    try {
+                        String s =postSnapshot.child("Date").getValue(String.class);
+                        date =  format.parse(s);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-                        NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+
+
+                    NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
                          iniziale.setId(id);
                     iniziale.setCategory(category);
+                    iniziale.setDate(date);
                         attivita_dovuto.put(id, iniziale);
 
 
@@ -154,6 +170,9 @@ public class ActivityGroupListFragment extends Fragment {
                         recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
                     }
                     List list = new ArrayList(attivita_dovuto.values());
+                    //todo: ordinare la lista
+                    Collections.sort(list);
+
                     adapter = new MyActivityGroupRecyclerViewAdapter(list);
                     recyclerView.setAdapter(adapter);
                 }
@@ -162,6 +181,10 @@ public class ActivityGroupListFragment extends Fragment {
                     RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
                     recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
                     List list = new ArrayList(attivita_dovuto.values());
+                    //todo: ordinare la lista
+                    Collections.sort(list);
+
+
                     adapter = new MyActivityGroupRecyclerViewAdapter(list);
                     recyclerView2.setAdapter(adapter);
                 }

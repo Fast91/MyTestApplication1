@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.faust.mytestapplication1.ContactActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textview_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/textview_contact"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/message_contact"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/button_home_con"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOME"
+
+        android:adjustViewBounds="true"
+
+        android:background="@drawable/shape_login_register"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/activity_group_buttonpassaddmember"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:nextFocusDown="@+id/pass_reg"
+        android:paddingLeft="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/holo_green_dark"
+        android:textCursorDrawable="@android:color/black"
+        android:textSize="12dp"
+        android:shadowColor="@color/BreakingMADDarkGreen"
+        android:layout_gravity="center"
+
+        />
+
+</LinearLayout>

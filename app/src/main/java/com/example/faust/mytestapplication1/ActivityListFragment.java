@@ -33,7 +33,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,7 +88,7 @@ public class ActivityListFragment extends  Fragment  {
             namegroup.setText(name);
 
             final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
-            moneygroup.setText("100€");
+
 
 
             profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
@@ -168,6 +173,15 @@ public class ActivityListFragment extends  Fragment  {
                         String category = (String) postSnapshot.child("Category").getValue(String.class);
                         String name_group = (String) postSnapshot.child("Group").getValue(String.class);
 
+                        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                        Date date=null;
+                        try {
+                            String s =postSnapshot.child("Date").getValue(String.class);
+                            date =  format.parse(s);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
 
                         //id per l'attività è univoco
 
@@ -177,6 +191,7 @@ public class ActivityListFragment extends  Fragment  {
                         iniziale.setId(id);
                         iniziale.setCategory(category);
                         iniziale.setName_Group(name_group);
+                        iniziale.setDate(date);
                         attività_dovuto.put(id, iniziale);
 
 
@@ -184,6 +199,9 @@ public class ActivityListFragment extends  Fragment  {
 
 
                     List list = new ArrayList(attività_dovuto.values());
+                    //todo: ordinare la lista
+
+                    Collections.sort(list);
 
 
                     // Set the adapter

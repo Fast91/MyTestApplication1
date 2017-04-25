@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.faust.mytestapplication1.ManageGroupActivity">
+    tools:context="com.example.faust.mytestapplication1.ManageGroupActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/group_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GROUP NAME"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/BreakingMADDarkGreen"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+
+
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_group_list_manage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_user_group_modify"
+        android:layout_margin="10dp"/>
+
+
+
+
+
+
+
+    </LinearLayout>

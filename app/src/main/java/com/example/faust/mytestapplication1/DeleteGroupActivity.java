@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DeleteGroupActivity extends AppCompatActivity {
 
@@ -38,6 +39,9 @@ public class DeleteGroupActivity extends AppCompatActivity {
         });
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+        Toast.makeText(DeleteGroupActivity.this,R.string.impossible_to_come_back,Toast.LENGTH_LONG).show();
+    }
 }

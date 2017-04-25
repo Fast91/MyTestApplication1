@@ -73,7 +73,9 @@
         <activity android:name=".ActivityInvitation" />
         <activity android:name=".FullScreenImage" />
         <activity android:name=".ManageGroupActivity" />
-        <activity android:name=".DeleteGroupActivity"></activity>
+        <activity android:name=".DeleteGroupActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".ContactActivity"></activity>
     </application>
 
 </manifest>

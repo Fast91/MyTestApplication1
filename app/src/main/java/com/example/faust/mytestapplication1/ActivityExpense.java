@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -319,6 +320,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                     //Setto la spesa a tutti gli utenti
                                     databaseReference.child(key).child("Users").child(in).child("Name").setValue(myusers.get(in));
                                     databaseReference.child(key).child("Users").child(in).child("Total").setValue(Total);
+
                                     databaseReference.child(key).child("Users").child(in).child("Currency").setValue(mycurrency_selected);
 
 
@@ -346,6 +348,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     databaseReference3.child(key).child("Total").setValue(Total);
                     databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
                     databaseReference3.child(key).child("Name").setValue(Name);
+                    databaseReference3.child(key).child("Date").setValue(Date);
                     databaseReference3.child(key).child("Category").setValue(Category);
 
 
@@ -366,6 +369,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                         databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
+
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
                         databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(mygroup_selected.getName());
 
 
@@ -1572,6 +1577,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                    final EditText amountBox = new EditText(ActivityExpense.this);
                                    amountBox.setHint(String.format("%.2f",utente_corrente.getDovuto()));
                                    amountBox.setText(String.format("%.2f",utente_corrente.getDovuto()));
+                                   amountBox.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                   // amountBox.setInputType(DecimalForm);
                                    //amountBox.setPadding(5, 2, 2, 2);
                                    layout2.addView(amountBox);

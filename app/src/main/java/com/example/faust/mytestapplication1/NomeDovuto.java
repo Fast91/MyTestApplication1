@@ -1,19 +1,34 @@
 package com.example.faust.mytestapplication1;
 
+import android.support.annotation.NonNull;
+
+import java.util.Date;
+
 /**
  * Created by robertospaziani on 03/04/17.
  */
 
-public class NomeDovuto {
+public class NomeDovuto implements  Comparable{
     public String Name;
     public Double Dovuto;
     private String mCurrencySymbol;
     public String Name_Group;
     public String Id_Group;
     public String Category;
+    public Date date;
 
 
     public String Id;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+
 
     public String getCategory() {
         return Category;
@@ -94,4 +109,28 @@ public class NomeDovuto {
     public String toString(){
         return Name;
     }
+
+
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        //0 uguale
+        //1 o + grande
+
+        if(((NomeDovuto)o).getDate()!=null){
+
+            if (((NomeDovuto) o).getDate().compareTo(date) > 0) {
+                return 1;
+            }
+            if (((NomeDovuto) o).getDate().compareTo(date) < 0) {
+                return -1;
+            }
+
+        }
+
+        return 0;
+    }
+
+
+
 }

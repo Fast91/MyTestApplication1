@@ -126,5 +126,14 @@
     <string name="no_delete_group">Impossibile da elimnare, tutti gli utenti devo avere il bilancio uguale a 0</string>
     <string name="yes_delete_group">Eliminato</string>
     <string name="message_deleteGroup">è stato eliminato.\nPremi il buttone Home per ritornare nella pagina principale</string>
+    <string name="delete">Elimina</string>
+
+    <string name="impossible_to_delete">Impossibile da eliminare, il bilancio per questo utente è diverso da 0</string>
+    <string name="impossible_to_come_back">E\' impossible tornare indietro, per favore premi Home</string>
+    <string name="progress_bar_db">Caricamento dati...</string>
+    <string name="text_view_setting">Impostazioni</string>
+    <string name="textview_contact">Contattaci</string>
+    <string name="message_contact">Ti ringraziamo per usare questa App.\nSe dovessi riscontrare qualche problema, contattaci in questa e-mail:\nroberto.spaz@virgilio.it</string>
+    <string name="language_setting">Lingua :</string>
 
 </resources>

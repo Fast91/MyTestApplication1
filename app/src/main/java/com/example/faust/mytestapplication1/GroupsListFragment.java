@@ -107,7 +107,7 @@ public class GroupsListFragment extends Fragment {
         namegroup.setText(name);
 
         final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
-        moneygroup.setText("100€");
+
 
         profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
         profile_image.setOnClickListener(new View.OnClickListener() {

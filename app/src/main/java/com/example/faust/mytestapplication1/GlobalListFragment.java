@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,10 +43,11 @@ public class GlobalListFragment extends Fragment {
     private MyGlobalRecyclerViewAdapter adapter;
     private FirebaseAuth firebaseAuth;
     private ImageView profile_image;
+    private ProgressDialog pd;
 
     private int mColumnCount=1;
 
-    private List<User> users;
+
 
     public GlobalListFragment() {
     }
@@ -58,17 +60,6 @@ public class GlobalListFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        try
-        {
-            //users = DBManager.getUsers();
-            users= DB.getmUsers();
-        }
-        catch(Exception e) //sostituire con l'eccezione corretta
-        {
-            // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
-        }
-
-
 
 
     }
@@ -80,6 +71,11 @@ public class GlobalListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_global_list, container, false);
+
+         pd = new ProgressDialog(view.getContext());
+        String msg_xd = getString(R.string.progress_bar_db);
+        pd.setMessage(msg_xd);
+        pd.show();
 
 
 
@@ -260,7 +256,7 @@ public class GlobalListFragment extends Fragment {
 
 
 
-
+                pd.dismiss();
             }
 
             @Override

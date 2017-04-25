@@ -496,13 +496,17 @@ public class MainActivity extends AppCompatActivity {
         int res_id=item.getItemId();
         if(res_id==R.id.action_settings){
 
-            Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
+
+            startActivity(new Intent(this, SettingActivity.class));
 
         }
 
         if(res_id==R.id.action_contactus){
 
-            Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+
+            startActivity(new Intent(this, ContactActivity.class));
 
         }
         /*
