@@ -21,9 +21,8 @@
         android:src="@drawable/profilecircle"
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
-        android:layout_marginRight="0dp"
+        android:layout_marginRight="3dp"
         android:layout_marginTop="@dimen/text_margin"
-        android:layout_gravity="center"
 
         />
     </LinearLayout>
@@ -33,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/text_margin"
-        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="@dimen/text_margin"
         android:text="@string/name_user_global_string"

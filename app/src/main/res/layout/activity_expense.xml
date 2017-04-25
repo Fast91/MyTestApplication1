@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:padding="10dp"
-    android:gravity="center"
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/activity_expense_land"
+    android:layout_height="fill_parent"
     android:background="@android:color/white"
-    tools:context="com.example.faust.mytestapplication1.ActivityExpense">
+    android:orientation="vertical"
+    android:padding="2dp"
+
+    android:weightSum="1">
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,8 +109,9 @@
                 android:textSize="30sp"
                 />
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
+
                 android:layout_weight="0.1"
                 android:id="@+id/new_expense_currency_spinner"
                 android:layout_gravity="center"
@@ -240,10 +249,11 @@
             android:background="@drawable/edittextimagebackground"/>
 
         <TableLayout
+
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:id="@+id/tableImage"
             android:layout_gravity="center"
             android:gravity="center"
@@ -293,28 +303,33 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/delete480x385" />
 
+                <ImageButton
+                    android:id="@+id/buttonSubmitExpense"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/buttoncircularwhite"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tick_icon256x256"
+                    android:layout_gravity="end"
+                    />
 
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+
+
 
             </TableRow>
         </TableLayout>
 
 
+
+
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/buttonSubmitExpense"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:background="@drawable/buttoncircularwhite"
-        android:scaleType="centerInside"
-        android:src="@drawable/tick_icon256x256" />
 
-</RelativeLayout>
+
+
+
+    </ScrollView>

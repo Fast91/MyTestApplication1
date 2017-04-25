@@ -505,12 +505,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
 
         }
+        /*
 
         if(res_id==R.id.action_share){
 
             Toast.makeText(getApplicationContext(),R.string.toast_mess_share,Toast.LENGTH_LONG).show();
 
-        }
+        }*/
 
         if(res_id==R.id.action_myprofile){
             //logging out the user

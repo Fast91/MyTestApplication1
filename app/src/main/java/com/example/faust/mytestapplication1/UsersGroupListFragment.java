@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,6 +56,12 @@ public class UsersGroupListFragment extends Fragment{
     String id_group, name_group;
     private FirebaseAuth firebaseAuth;
     private HashMap<String,NomeDovuto> utenti_dovuto;
+    Boolean bilancio_0 = true;
+    int count_fatti=0;
+    private View view;
+    private  AppCompatActivity activity;
+
+
 
     public UsersGroupListFragment() {
     }
@@ -76,6 +83,8 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
+
+
     }
 
 
@@ -89,7 +98,7 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-      final  View view = inflater.inflate(R.layout.fragment_user_group_list, container, false);
+       view = inflater.inflate(R.layout.fragment_user_group_list, container, false);
 
 
 
@@ -97,12 +106,40 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-        final  AppCompatActivity activity = (android.support.v7.app.AppCompatActivity) view.getContext();
+       activity = (android.support.v7.app.AppCompatActivity) view.getContext();
+
+
+
+
+
+        ImageButton delete_group = (ImageButton) view.findViewById(R.id.bDeleteGroup_GroupNavigation);
+
+        delete_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonDeleteGroup();
+            }
+        });
+
+
+
+        ImageButton manage_group = (ImageButton) view.findViewById(R.id.bEditGroup_GroupNavigation);
+
+        manage_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonManageGroup();
+            }
+        });
+
+
+
+
+
 
         profile_image = (ImageView) activity.findViewById(R.id.row1_image1);
 
-
-        profile_image.setOnClickListener(new View.OnClickListener() {
+                profile_image.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -478,6 +515,196 @@ public class UsersGroupListFragment extends Fragment{
 
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+    }
+
+
+
+
+
+
+    private void buttonDeleteGroup(){
+
+        //per ogni utente controllare se tutti i bilanci sono 0
+        // se ne trovo uno diverso da 0 non posso cancellare altrimenti
+        // cancello il gruppo per ogni utente
+        //cancello il gruppo nei gruppi
+        //riporto nella global
+
+
+        //step1 prendere tutti gli utenti di quel gruppo
+        //user group
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                bilancio_0 = true;
+                final ArrayList<String> id_utenti = new ArrayList<String>();
+
+
+                for(DataSnapshot take: dataSnapshot.getChildren()){
+                    //utenti
+                    //
+                    id_utenti.add(take.getKey());
+                }
+
+
+                //dopo aver preso gli utenti controllare
+                //se per ogni di questo utente il bilancio di quel gruppo e' 0 cancello altrimenti TOAST
+
+                count_fatti=0;
+
+                for(String id : id_utenti){
+
+                    DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
+
+                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Double bilancio_singolo = dataSnapshot.getValue(Double.class);
+
+                            if(bilancio_singolo>0.0){
+                                bilancio_0=false;
+                            }
+
+                            count_fatti++;
+
+
+
+                            if(count_fatti==id_utenti.size()){
+
+                                if(bilancio_0==true){
+                                    //posso eliminare
+                                 //   Toast.makeText(getContext(),R.string.yes_delete_group,Toast.LENGTH_LONG).show();
+
+                                    //dovrei eliminarlo dal gruppo e da tutti gli utenti
+
+
+                    //Remove
+
+
+
+                                    String id_group2 = new String(id_group);
+
+
+
+
+
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        ref.child("Groups").child(id_group2).removeValue();
+
+
+
+                        //problema concorrenza se lo mando in una attivita che vuole usare questo listener sui gruppis
+                    for(String id : id_utenti) {
+
+                        String id2 = new String(id);
+                        ref.child("Users").child(id2).child("Groups").child(id_group2).removeValue();
+                    }
+
+
+
+
+
+
+
+
+
+                                    /*
+
+                                    Fragment myFragment = new GlobalListFragment();
+                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+
+
+                                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                                        activity.getSupportFragmentManager().popBackStackImmediate();
+                                    }
+
+                                    */
+
+
+
+                                    Intent intent=new Intent(getActivity(),DeleteGroupActivity.class);
+                                    intent.putExtra("ID_GROUP",id_group);
+                                    intent.putExtra("NAME_GROUP",name_group);
+                                    startActivity(intent);
+
+
+                                    return ;
+
+
+
+
+
+
+                                }
+                                else{
+                                    //qualcuno lo ha diverso da 0 mando il toast
+
+                                    Toast.makeText(getContext(),R.string.no_delete_group,Toast.LENGTH_LONG).show();
+
+                                }
+
+
+
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+
+
+    private void buttonManageGroup(){
+
+        //iniziare una nuova attività per cercare di eliminare un utente o modificare la foto
+        //del gruppo id_group
+
+
+
+        Intent intent=new Intent(getActivity(),ManageGroupActivity.class);
+        intent.putExtra("ID_GROUP",id_group);
+        intent.putExtra("NAME_GROUP",name_group);
+        startActivity(intent);
+
+
+
+
+
 
     }
 

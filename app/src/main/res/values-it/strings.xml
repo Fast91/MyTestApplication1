@@ -123,6 +123,8 @@
     <string name="clear_all_label">Resetta</string>
     <string name="dismiss_label">Indietro</string>
     <string name="no_amount">Inserire un totale maggiore di 0</string>
-
+    <string name="no_delete_group">Impossibile da elimnare, tutti gli utenti devo avere il bilancio uguale a 0</string>
+    <string name="yes_delete_group">Eliminato</string>
+    <string name="message_deleteGroup">è stato eliminato.\nPremi il buttone Home per ritornare nella pagina principale</string>
 
 </resources>

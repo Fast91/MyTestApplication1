@@ -137,5 +137,8 @@
     <string name="clear_all_label">Clear</string>
     <string name="dismiss_label">Dismiss</string>
     <string name="no_amount">Please insert amount grather than 0</string>
+    <string name="no_delete_group">Impossible to eliminate , all users should have balance equals to 0</string>
+    <string name="yes_delete_group">Elimate</string>
+    <string name="message_deleteGroup">has been deleted.\nTake home to return to the main page</string>
 
 </resources>

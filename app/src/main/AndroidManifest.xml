@@ -71,7 +71,9 @@
         <activity android:name=".ActivityAddGroup" />
         <activity android:name=".ActivityAddUserToGroup" />
         <activity android:name=".ActivityInvitation" />
-        <activity android:name=".FullScreenImage"></activity>
+        <activity android:name=".FullScreenImage" />
+        <activity android:name=".ManageGroupActivity" />
+        <activity android:name=".DeleteGroupActivity"></activity>
     </application>
 
 </manifest>
