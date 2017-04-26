@@ -148,5 +148,11 @@
     <string name="textview_contact">Contact us</string>
     <string name="message_contact">Thank you for using this App.\nIf you have any problem please contact us on this email:\nroberto.spaz@virgilio.it</string>
     <string name="language_setting">Language :</string>
+    <string name="deletegroup_title">Delete Group?</string>
+    <string name="deletegroup_message">Are you sure to delete this group?</string>
+
+
+    <string name="deleteuser_title">Delete User?</string>
+    <string name="deleteuser_message">Are you sure to delete this user?</string>
 
 </resources>

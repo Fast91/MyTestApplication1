@@ -1,10 +1,12 @@
 package com.example.faust.mytestapplication1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,111 +91,127 @@ class MyUsersGroupRecyclerViewModifyAdapter extends RecyclerView.Adapter<MyUsers
 
         @Override
         public void onClick(final View v) {
-           // Toast.makeText(v.getContext(), ""+user.getName()+" "+user.getId_Group()+" "+user.getId(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(v.getContext(), ""+user.getName()+" "+user.getId_Group()+" "+user.getId(), Toast.LENGTH_SHORT).show();
 
             ///Devo controllare per l'utente selezionato e per quel gruppo
             //se il bilancio e' 0 -- se 0 posso eliminarlo dal gruppo altrimenti TOAST
 
-           final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("Groups").child(user.getId_Group());
+            new AlertDialog.Builder(v.getContext())
+                    .setTitle(R.string.deleteuser_title)
+                    .setMessage(R.string.deleteuser_message)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("Groups").child(user.getId_Group());
 
-                    Double balance = dataSnapshot.child("Total").getValue(Double.class);
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if(balance!=0){
-                        Toast.makeText(v.getContext(), R.string.impossible_to_delete, Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                       // Toast.makeText(v.getContext(), "Eliminato", Toast.LENGTH_SHORT).show();
-                        //devo levare l'utente per quel gruppo
-                        //devo levare dall'utente quel gruppo
-                        //devo levare per gli altri utenti di quel gruppo questo user
-                        //se il gruppo non ha più utenti eliminarlo
+                                    Double balance = dataSnapshot.child("Total").getValue(Double.class);
 
-                        //step 0 prendo gli amici connessi con quella persona dentro quel gruppo
-                        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getId()).child("Groups").child(user.getId_Group()).child("Users");
+                                    if(balance!=0){
+                                        Toast.makeText(v.getContext(), R.string.impossible_to_delete, Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        // Toast.makeText(v.getContext(), "Eliminato", Toast.LENGTH_SHORT).show();
+                                        //devo levare l'utente per quel gruppo
+                                        //devo levare dall'utente quel gruppo
+                                        //devo levare per gli altri utenti di quel gruppo questo user
+                                        //se il gruppo non ha più utenti eliminarlo
 
-                        db.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                        //step 0 prendo gli amici connessi con quella persona dentro quel gruppo
+                                        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getId()).child("Groups").child(user.getId_Group()).child("Users");
 
-                                //prendo gli amici step 0
-                                int count=0;
-                                ArrayList<String> id_friend = new ArrayList<String>();
+                                        db.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                for(DataSnapshot friend : dataSnapshot.getChildren()){
+                                                //prendo gli amici step 0
+                                                int count=0;
+                                                ArrayList<String> id_friend = new ArrayList<String>();
+
+                                                for(DataSnapshot friend : dataSnapshot.getChildren()){
 
 
-                                    id_friend.add(friend.getKey());
-                                    count++;
+                                                    id_friend.add(friend.getKey());
+                                                    count++;
+
+                                                }
+
+
+
+
+                                                //devo levare l'utente per quel gruppo
+                                                FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).child("Users").child(user.getId()).removeValue();
+
+                                                //count= 0 nessun utente rimasto
+
+                                                if(count==0){
+                                                    //devo eliminare il gruppo
+                                                    FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).removeValue();
+
+                                                }
+
+                                                //per tutti gli amici connessi in quel gruppo devo levarlo
+                                                for(String id: id_friend){
+
+                                                    FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Groups").child(user.getId_Group())
+                                                            .child("Users").child(user.getId()).removeValue();
+
+                                                }
+
+                                                //devo levare dall'utente quel gruppo
+                                                FirebaseDatabase.getInstance().getReference().child("Users").child(user.getId()).child("Groups").child(user.getId_Group()).removeValue();
+
+
+
+
+
+
+                                                Intent intent=new Intent(v.getContext(),DeleteGroupActivity.class);
+                                                intent.putExtra("ID_GROUP","00");
+                                                intent.putExtra("NAME_GROUP",user.getName());
+                                                v.getContext().startActivity(intent);
+
+
+
+
+                                                return ;
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+
+                                    }
 
                                 }
 
-
-
-
-                                //devo levare l'utente per quel gruppo
-                                FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).child("Users").child(user.getId()).removeValue();
-
-                                //count= 0 nessun utente rimasto
-
-                                if(count==0){
-                                    //devo eliminare il gruppo
-                                    FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).removeValue();
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
                                 }
-
-                                //per tutti gli amici connessi in quel gruppo devo levarlo
-                                for(String id: id_friend){
-
-                                    FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Groups").child(user.getId_Group())
-                                            .child("Users").child(user.getId()).removeValue();
-
-                                }
-
-                                //devo levare dall'utente quel gruppo
-                                FirebaseDatabase.getInstance().getReference().child("Users").child(user.getId()).child("Groups").child(user.getId_Group()).removeValue();
+                            });
 
 
 
 
 
 
-                                Intent intent=new Intent(v.getContext(),DeleteGroupActivity.class);
-                                intent.putExtra("ID_GROUP","00");
-                                intent.putExtra("NAME_GROUP",user.getName());
-                                v.getContext().startActivity(intent);
-
-
-
-
-                                return ;
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
+                        }
+                    }).create().show();
 
         }
+
+
     }
 
     public static int calculateInSampleSize(

@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -118,7 +120,20 @@ public class UsersGroupListFragment extends Fragment{
         delete_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonDeleteGroup();
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.deletegroup_title)
+                        .setMessage(R.string.deletegroup_message)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                buttonDeleteGroup();
+
+                            }
+                        }).create().show();
+
+
             }
         });
 
@@ -540,6 +555,8 @@ public class UsersGroupListFragment extends Fragment{
 
         //step1 prendere tutti gli utenti di quel gruppo
         //user group
+
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
