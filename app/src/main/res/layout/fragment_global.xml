@@ -11,10 +11,10 @@
         android:id="@+id/image_user_global"
         android:layout_width="50dp"
         android:layout_height="50sp"
-        android:src="@drawable/profilecircle"
+
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_margin="10dp"/>
-
+    <!-- android:src="@drawable/profilecircle"-->
     <TextView
                         android:id="@+id/name_user_global"
                         android:layout_width="wrap_content"

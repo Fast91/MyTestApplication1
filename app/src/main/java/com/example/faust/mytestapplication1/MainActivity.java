@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -92,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
         profile_image = (ImageView) findViewById(R.id.row1_image1);
         getandSetImage();
+
+
+
         /*
 
         Bitmap bip = BitmapFactory.decodeResource(MainActivity.this.getResources(), R.drawable.appname);
@@ -335,15 +339,29 @@ public class MainActivity extends AppCompatActivity {
 
                     if (!image.contains("http")) {
                         try {
+
+
                             Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
                             //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            imageBitmaptaken.reconfigure(600,200, Bitmap.Config.ARGB_4444);
+
                             profile_image.setImageBitmap(imageBitmaptaken);
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     } else {
 
 
+
+                       /* Glide
+                                .with(getApplicationContext())
+                                .load(image)
+                                .override(600, 200)
+                                .fitCenter()
+                                .into(profile_image);
+*/
                         Picasso.with(MainActivity.this)
                                 .load(image)
                                 .fit()

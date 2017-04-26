@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -397,8 +398,13 @@ public class UsersGroupListFragment extends Fragment{
         final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);
         final ImageButton bActivities = (ImageButton) myactivity.findViewById(R.id.bActivities);
 
-        bGroups.setImageResource(R.drawable.groups900x900);
-
+  //      bGroups.setImageResource(R.drawable.groups900x900);
+        Glide
+                .with(getContext())
+                .load(R.drawable.groups900x900)
+                .override(600, 200)
+                .fitCenter()
+                .into(bGroups);
         bGlobal.setBackgroundResource(R.drawable.buttonshape);
         bGroups.setBackgroundResource(R.drawable.buttonshape);
         bActivities.setBackgroundResource(R.drawable.buttonshape);

@@ -13,7 +13,6 @@
         android:layout_width="40sp"
         android:layout_height="40sp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:src="@drawable/giftgreen"
 
         android:layout_weight="0.25"
         android:foregroundGravity="center"

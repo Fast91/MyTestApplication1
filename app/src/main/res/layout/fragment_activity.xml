@@ -14,7 +14,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40sp"
                 android:textAppearance="?attr/textAppearanceListItem"
-                android:src="@drawable/giftboxred"
                 android:layout_weight="0.25"
                 android:foregroundGravity="center"
                 android:layout_gravity="center"
