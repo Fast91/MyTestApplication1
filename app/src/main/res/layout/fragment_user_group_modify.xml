@@ -13,12 +13,12 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_weight="0.2">
+
         <ImageView
         android:id="@+id/image_user_group"
             android:layout_width="50dp"
             android:layout_height="50sp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:src="@drawable/profilecircle"
         android:layout_marginBottom="@dimen/text_margin"
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="3dp"

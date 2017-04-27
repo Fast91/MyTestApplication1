@@ -3,6 +3,7 @@ package com.example.faust.mytestapplication1;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -117,6 +118,9 @@ public class UsersGroupListFragment extends Fragment{
 
         ImageButton delete_group = (ImageButton) view.findViewById(R.id.bDeleteGroup_GroupNavigation);
 
+        delete_group.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.groups_delete900x900, 100, 100));
+
         delete_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +144,10 @@ public class UsersGroupListFragment extends Fragment{
 
 
         ImageButton manage_group = (ImageButton) view.findViewById(R.id.bEditGroup_GroupNavigation);
+        //edit_group_600x600
+
+        manage_group.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.edit_group_600x600, 100, 100));
 
         manage_group.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,6 +269,12 @@ public class UsersGroupListFragment extends Fragment{
                     recyclerView2.setAdapter(adapter);
 
                     ImageButton b5_showactivity = (ImageButton) view.findViewById(R.id.bActivities_GroupNavigation);
+                    //groups_activity484x484
+
+                    b5_showactivity.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.groups_activity484x484, 100, 100));
+
+
                     //Listener Button5 show group activity
                     b5_showactivity.setOnClickListener(new View.OnClickListener() {
 
@@ -292,6 +306,10 @@ public class UsersGroupListFragment extends Fragment{
                     });
 
                     ImageButton b5_adduser = (ImageButton) view.findViewById(R.id.bAddUsers_GroupNavigation);
+                    //add_users_navigation626x626
+
+                    b5_adduser.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.add_users_navigation626x626, 100, 100));
 
                     b5_adduser.setOnClickListener(new View.OnClickListener() {
 
@@ -730,6 +748,49 @@ public class UsersGroupListFragment extends Fragment{
 
 
     }
+
+
+
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
 
 
 

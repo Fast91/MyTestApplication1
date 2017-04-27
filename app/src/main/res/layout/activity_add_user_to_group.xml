@@ -14,12 +14,12 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:background="@drawable/activity_group_top_background">
+
     <ImageView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_span="2"
         android:id="@+id/groupImage_group_activity_members"
-        android:src="@drawable/groups900x900pressed"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:layout_weight="3"
@@ -79,7 +79,6 @@
         android:layout_height="60sp"
         android:layout_margin="10sp"
         android:layout_gravity="center"
-        android:src="@drawable/plus_add_green"
         android:background="#ffff"
         />
 
@@ -94,7 +93,6 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/buttoncirculartransparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/tick_icon256x256"
                 />
 
     <android.support.v7.widget.RecyclerView

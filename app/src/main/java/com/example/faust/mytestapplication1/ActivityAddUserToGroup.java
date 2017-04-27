@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.support.annotation.NonNull;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +85,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         TextView text_name =(TextView) findViewById(R.id.textGroup_activity_group_members);
         text_name.setText(name_group);
 
+        ImageView iv = (ImageView) findViewById(R.id.groupImage_group_activity_members);
+
+
+        iv.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.group, 100, 100));
+
+
 
 
 
@@ -91,6 +102,9 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
         //ButtonADD per aggiungere il gruppo
         ImageButton addGroupUser = (ImageButton)  findViewById(R.id.activity_group_members_addmember);
+
+        addGroupUser.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.plus_add_green, 100, 100));
 
         addGroupUser.setOnClickListener(new View.OnClickListener() {
 
@@ -403,6 +417,11 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         //ButtonSubmit per finire il gruppo ed andare alla main activity
         ImageButton submitGroupUser = (ImageButton)  findViewById(R.id.buttonSubmit_activity_group_member);
 
+
+        submitGroupUser.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.tick_icon256x256, 100, 100));
+
+
         submitGroupUser.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -657,12 +676,14 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     {
         private NomeDovuto mDetailEntry;
         private TextView mUserNameTextView;
+        private ImageView imagev;
 
 
         public ActivityDetailHolder(LayoutInflater inflater, ViewGroup parent)
         {
             super(inflater.inflate(R.layout.item_image_name, parent, false));
             mUserNameTextView = (TextView) itemView.findViewById(R.id.item_name);
+            imagev = (ImageView) itemView.findViewById(R.id.item_image);
 
         }
 
@@ -670,6 +691,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         {
             mDetailEntry = detailEntry;
             mUserNameTextView.setText(mDetailEntry.getName());
+
+
+            imagev.setImageBitmap(
+                    decodeSampledBitmapFromResource(getResources(), R.drawable.profilecircle, 100, 100));
 
 
         }
@@ -707,6 +732,50 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
             return mDetailEntries.size();
         }
     }
+
+
+
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+
 
 
 

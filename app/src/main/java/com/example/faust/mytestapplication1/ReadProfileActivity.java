@@ -372,10 +372,10 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
-                    mProgressDialog2.dismiss();
+
                 }
 
-
+                mProgressDialog2.dismiss();
             }
 
 
