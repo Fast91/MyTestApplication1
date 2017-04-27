@@ -3,6 +3,7 @@ package com.example.faust.mytestapplication1;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -83,7 +84,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
     private String mycategory;
     private String  keyowner;
-    private ImageButton buttonGallery, buttonCamera;
+    private ImageButton buttonGallery, buttonCamera, buttonDelete;
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
     private ImageView image_activity;
     Integer utente_selezionato=-1;
@@ -143,15 +144,36 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         category= (Spinner) findViewById(R.id.Category_newexpense);
 
+        buttonDelete= (ImageButton)  findViewById(R.id.buttonDeleteImage);
+
+        buttonDelete.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.delete480x385, 100, 100));
+
         ImageButton submitexpense = (ImageButton)  findViewById(R.id.buttonSubmitExpense);
+
+
+
+        submitexpense.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.tick_icon256x256, 100, 100));
+
          buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto);
+
+        buttonCamera.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.icon_camera128x128, 100, 100));
+
         buttonCamera.setOnClickListener(this);
          buttonGallery = (ImageButton)  findViewById(R.id.buttonGallery);
+        buttonGallery.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.picture_attachment256x256, 100, 100));
+
         buttonGallery.setOnClickListener(this);
 
         mStorage = FirebaseStorage.getInstance().getReference();
 
         image_activity = (ImageView) findViewById(R.id.imagePicture);
+        image_activity.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.gallery314x250, 100, 100));
+
 
         mProgressDialog = new ProgressDialog(this);
 
@@ -1742,6 +1764,43 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
 
 
 

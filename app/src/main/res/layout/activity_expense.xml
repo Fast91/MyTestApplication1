@@ -200,7 +200,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/sketched_white_rect_shape_rounded"
                 android:padding="1dp"
-                android:paddingEnd="10dp"/>
+                android:paddingEnd="10dp" />
 
             <TextView
                 android:layout_marginLeft="5dp"
@@ -234,7 +234,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_gravity="center"
-            android:src="@drawable/gallery314x250"
+
             android:padding="1dp"
             android:layout_margin="5dp"
             android:scaleType="fitCenter"
@@ -272,7 +272,7 @@
                     android:background="@drawable/buttoncirculartransparent_noborder"
                     android:scaleType="centerInside"
                     android:padding="4dp"
-                    android:src="@drawable/icon_camera128x128" />
+                    />
 
                 <ImageButton
                     android:id="@+id/buttonGallery"
@@ -283,7 +283,7 @@
                     android:background="@drawable/buttoncirculartransparent_noborder"
                     android:scaleType="centerInside"
                     android:padding="4dp"
-                    android:src="@drawable/picture_attachment256x256" />
+                   />
 
                 <ImageButton
                     android:id="@+id/buttonDeleteImage"
@@ -294,7 +294,7 @@
                     android:padding="4dp"
                     android:background="@drawable/buttoncirculartransparent_noborder"
                     android:scaleType="centerInside"
-                    android:src="@drawable/delete480x385" />
+                    />
 
                 <ImageButton
                     android:id="@+id/buttonSubmitExpense"
@@ -306,7 +306,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/buttoncircularwhite"
                     android:scaleType="centerInside"
-                    android:src="@drawable/tick_icon256x256"
+
                     android:layout_gravity="end"
                     />
 

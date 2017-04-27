@@ -58,7 +58,7 @@
             android:layout_height="60dp"
             android:layout_gravity="right"
             android:id="@+id/imageButtonInvitation"
-            android:src="@drawable/user512"
+
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:padding="2dp"

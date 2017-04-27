@@ -67,7 +67,7 @@
                 android:background="@drawable/buttoncirculartransparent_noborder"
                 android:scaleType="fitXY"
                 android:padding="8dp"
-                android:src="@drawable/icon_camera128x128" />
+                 />
 
             <ImageButton
                 android:id="@+id/buttonGallery_activity_group"
@@ -79,7 +79,7 @@
                 android:background="@drawable/buttoncirculartransparent_noborder"
                 android:scaleType="fitXY"
                 android:padding="8dp"
-                android:src="@drawable/picture_attachment256x256" />
+              />
 
             <ImageButton
                 android:id="@+id/buttonDeleteImage_activity_group"
@@ -91,7 +91,7 @@
                 android:padding="8dp"
                 android:background="@drawable/buttoncirculartransparent_noborder"
                 android:scaleType="fitXY"
-                android:src="@drawable/delete480x385" />
+                 />
 
         </TableRow>
     </TableLayout>
