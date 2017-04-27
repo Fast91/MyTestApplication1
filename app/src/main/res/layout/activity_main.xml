@@ -69,7 +69,6 @@
             android:layout_height="60dp"
             android:text="New Button"
             android:id="@+id/bAddNewExpense"
-            android:src="@drawable/addexpense593x593"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:padding="12dp"

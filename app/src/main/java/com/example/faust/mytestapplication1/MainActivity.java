@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -163,9 +164,16 @@ public class MainActivity extends AppCompatActivity {
                 bGroups.setBackgroundResource(R.drawable.buttonshape);
                 bActivities.setBackgroundResource(R.drawable.buttonshape);
 
-                bGlobal.setImageResource(R.drawable.home256x256pressed);
-                bActivities.setImageResource(R.drawable.activities256x256);
-                bGroups.setImageResource(R.drawable.groups900x900);
+                bGlobal.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256pressed, 100, 100));
+
+                bActivities.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
+
+                bGroups.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
+
+
 
                 bGlobal.setPadding(10,10,10,10);
                 bGroups.setPadding(10,10,10,10);
@@ -207,9 +215,17 @@ public class MainActivity extends AppCompatActivity {
                 bGroups.setBackgroundResource(R.drawable.button_pressed);
                 bActivities.setBackgroundResource(R.drawable.buttonshape);
 
-                bGlobal.setImageResource(R.drawable.home256x256);
-                bActivities.setImageResource(R.drawable.activities256x256);
-                bGroups.setImageResource(R.drawable.groups900x900pressed);
+
+
+                bGlobal.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256, 100, 100));
+
+                bActivities.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
+
+                bGroups.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900pressed, 100, 100));
+
 
                 bGlobal.setPadding(10,10,10,10);
                 bGroups.setPadding(10,10,10,10);
@@ -253,9 +269,16 @@ public class MainActivity extends AppCompatActivity {
                 bGroups.setBackgroundResource(R.drawable.buttonshape);
                 bActivities.setBackgroundResource(R.drawable.button_pressed);
 
-                bGlobal.setImageResource(R.drawable.home256x256);
-                bActivities.setImageResource(R.drawable.activities256x256pressed);
-                bGroups.setImageResource(R.drawable.groups900x900);
+
+
+                bGlobal.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256, 100, 100));
+
+                bActivities.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256pressed, 100, 100));
+
+                bGroups.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
 
                 bGlobal.setPadding(10,10,10,10);
                 bGroups.setPadding(10,10,10,10);
@@ -289,6 +312,12 @@ public class MainActivity extends AppCompatActivity {
         //ADD EXPENSE
 
         final ImageButton b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
+
+        b4add.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.addexpense593x593, 100, 100));
+
+
+
 
 
         b4add.setOnClickListener(new View.OnClickListener() {
@@ -610,6 +639,49 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
+
+
+
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
 
 
 }

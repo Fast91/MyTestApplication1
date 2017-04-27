@@ -14,7 +14,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="70sp"
-        android:src="@drawable/appname"
+      android:id="@+id/image_register_activity_logo"
 
         />
 
@@ -100,7 +100,6 @@
         android:layout_height="60dp"
         android:layout_gravity="right"
         android:id="@+id/imageButtonLogin"
-        android:src="@drawable/register256x256"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:padding="12dp"
