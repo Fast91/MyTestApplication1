@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,9 +106,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         splash.startAnimation(animation);  // start animation
         */
 
+      /*  LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) splash.getLayoutParams();
+        params.gravity = Gravity.CENTER;
+        splash.setLayoutParams(params);
+        */
 
         splash.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(),R.drawable.appname, 100, 100));
+
+
+
+
 
         ScaleAnimation fade_in =  new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         fade_in.setDuration(1000);     // animation duration in milliseconds
