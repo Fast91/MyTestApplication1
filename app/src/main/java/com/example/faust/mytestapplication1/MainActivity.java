@@ -112,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton bGroups = (ImageButton) findViewById(R.id.bGroups);
         final ImageButton bActivities = (ImageButton) findViewById(R.id.bActivities);
 
+        bGlobal.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256pressed, 100, 100));
+
+        bActivities.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
+
+        bGroups.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
+
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
             // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
