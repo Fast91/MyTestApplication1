@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
                             //Bitmap imageCirle = getclip(imageBitmaptaken);
-                            imageBitmaptaken.reconfigure(600,200, Bitmap.Config.ARGB_4444);
+                           // imageBitmaptaken.reconfigure(600,200, Bitmap.Config.ARGB_4444);
 
                             profile_image.setImageBitmap(imageBitmaptaken);
 
