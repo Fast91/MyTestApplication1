@@ -21,6 +21,7 @@ public class ContactActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(ContactActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
 
 
 

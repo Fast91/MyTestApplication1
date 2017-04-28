@@ -440,7 +440,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
                     Intent intent=new Intent(ActivityAddUserToGroup.this,MainActivity.class);
                     startActivity(intent);
-
+                    finish();
 
 
                     return ;

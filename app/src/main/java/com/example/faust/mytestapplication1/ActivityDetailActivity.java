@@ -199,6 +199,7 @@ public class ActivityDetailActivity extends AppCompatActivity
                             extras.putParcelable("imagebitmap", image2);
                             intent.putExtras(extras);
                             startActivity(intent);
+                            finish();
 
                         }
                     });

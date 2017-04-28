@@ -176,6 +176,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
                     intent.putExtra("ID_GROUP",id_group);
                     intent.putExtra("NAME_GROUP",name_group);
                     startActivity(intent);
+                    finish();
 
 
                     return;
@@ -276,137 +277,121 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
 
 
 
-        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
 
 
-            String msg = getString(R.string.dialog_image_profile);
-            mProgressDialog.setMessage(msg);
-            mProgressDialog.show();
+            if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
 
 
-            Uri uri = data.getData();
+                String msg = getString(R.string.dialog_image_profile);
+                mProgressDialog.setMessage(msg);
+                mProgressDialog.show();
 
 
-            StorageReference filepath  = mStorage.child("Photos").child(uri.getLastPathSegment());
+                Uri uri = data.getData();
 
 
+                StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
 
 
+                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @SuppressWarnings("VisibleForTests")
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                @SuppressWarnings("VisibleForTests")
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        downloadUri = taskSnapshot.getDownloadUrl();
 
-                    downloadUri = taskSnapshot.getDownloadUrl();
-
-                    if(id_group==null){
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
-                        id_group = databaseReference.push().getKey();
-                    }
-
-
-                    DatabaseReference ref = FirebaseDatabase.getInstance()
-                            .getReference()
-                            .child("Groups")
-                            .child(id_group)
-                            .child("Image");
-                    ref.setValue(downloadUri.toString());
-
-
-
-                    // Picasso.with(ReadProfileActivity.this).load(downloadUri).fit().centerCrop().into(image_profile);
-
-                    Toast.makeText(ActivityAddGroup.this, R.string.upload_ok ,Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
-
-
-
-                    if (!downloadUri.toString().contains("http")) {
-                        try {
-                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(downloadUri.toString());
-                            image_activity.setImageBitmap(imageBitmaptaken);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if (id_group == null) {
+                            databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
+                            id_group = databaseReference.push().getKey();
                         }
-                    } else {
-                        // This block of code should already exist, we're just moving it to the 'else' statement:
-                        Picasso.with(ActivityAddGroup.this)
-                                .load(downloadUri.toString())
-                                .fit()
-                                .centerCrop()
-                                .into(image_activity);
+
+
+                        DatabaseReference ref = FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child("Groups")
+                                .child(id_group)
+                                .child("Image");
+                        ref.setValue(downloadUri.toString());
+
+
+                        // Picasso.with(ReadProfileActivity.this).load(downloadUri).fit().centerCrop().into(image_profile);
+
+                        Toast.makeText(ActivityAddGroup.this, R.string.upload_ok, Toast.LENGTH_LONG).show();
+                        mProgressDialog.dismiss();
+
+
+                        if (!downloadUri.toString().contains("http")) {
+                            try {
+                                Bitmap imageBitmaptaken = decodeFromFirebaseBase64(downloadUri.toString());
+                                image_activity.setImageBitmap(imageBitmaptaken);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            // This block of code should already exist, we're just moving it to the 'else' statement:
+                            Picasso.with(ActivityAddGroup.this)
+                                    .load(downloadUri.toString())
+                                    .fit()
+                                    .centerCrop()
+                                    .into(image_activity);
+                        }
+
+
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(ActivityAddGroup.this, R.string.upload_no, Toast.LENGTH_LONG).show();
+                        mProgressDialog.dismiss();
 
 
+                    }
+                });
 
+
+            } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                //image_profile.setImageBitmap(imageBitmap);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+
+                if (id_group == null) {
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
+                    id_group = databaseReference.push().getKey();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(ActivityAddGroup.this, R.string.upload_no ,Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
+                DatabaseReference ref = FirebaseDatabase.getInstance()
+                        .getReference()
+                        .child("Groups")
+                        .child(id_group)
+                        .child("Image");
+                ref.setValue(imageEncoded);
 
 
-
+                if (!imageEncoded.contains("http")) {
+                    try {
+                        Bitmap imageBitmaptaken = decodeFromFirebaseBase64(imageEncoded);
+                        image_activity.setImageBitmap(imageBitmaptaken);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // This block of code should already exist, we're just moving it to the 'else' statement:
+                    Picasso.with(this)
+                            .load(imageEncoded)
+                            .fit()
+                            .centerCrop()
+                            .into(image_activity);
                 }
-            });
 
 
-
-
-
-
-
-        }
-
-
-        else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
-
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //image_profile.setImageBitmap(imageBitmap);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
-
-            if(id_group==null){
-                databaseReference = FirebaseDatabase.getInstance().getReference("Groups");
-                id_group = databaseReference.push().getKey();
             }
-
-            DatabaseReference ref = FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child("Groups")
-                    .child(id_group)
-                    .child("Image");
-            ref.setValue(imageEncoded);
-
-
-            if (!imageEncoded.contains("http")) {
-                try {
-                    Bitmap imageBitmaptaken = decodeFromFirebaseBase64(imageEncoded);
-                    image_activity.setImageBitmap(imageBitmaptaken);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                // This block of code should already exist, we're just moving it to the 'else' statement:
-                Picasso.with(this)
-                        .load(imageEncoded)
-                        .fit()
-                        .centerCrop()
-                        .into(image_activity);
-            }
-
-
-
-
-        }
-
 
 
 

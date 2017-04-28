@@ -32,6 +32,7 @@ public class DeleteGroupActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(DeleteGroupActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
 
 
 

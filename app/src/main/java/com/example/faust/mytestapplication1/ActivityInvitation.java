@@ -161,6 +161,7 @@ public class ActivityInvitation extends AppCompatActivity {
 
                                 Intent intent = new Intent(ActivityInvitation.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
 
 
 

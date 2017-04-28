@@ -93,7 +93,7 @@ public class SettingActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(SettingActivity.this,MainActivity.class);
                 startActivity(intent);
-
+                finish();
 
 
             }
