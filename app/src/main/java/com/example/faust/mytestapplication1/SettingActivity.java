@@ -91,7 +91,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(SettingActivity.this,MainActivity.class);
+                Intent intent=new Intent(SettingActivity.this,PrimaAttivitaGruppi.class);
 
                 startActivity(intent);
                 finish();

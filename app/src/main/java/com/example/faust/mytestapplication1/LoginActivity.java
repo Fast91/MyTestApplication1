@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //close this activity
             finish();
             //opening profile activity
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), PrimaAttivitaGruppi.class));
         }
 
         //initializing views

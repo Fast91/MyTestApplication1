@@ -122,10 +122,20 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private HashMap<String,NomeDovuto> utentiGruppo_conDovuto=new HashMap<>();
 
 
+    private String id_group_iniziale , name_group_iniziale;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+
+        Intent inte = getIntent();
+        id_group_iniziale = inte.getExtras().getString("GROUP_ID");
+        name_group_iniziale = inte.getExtras().getString("GROUP_NAME");
+
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -774,6 +784,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                     Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
+                    intent.putExtra("GROUP_ID",id_group_iniziale);
+                    intent.putExtra("GROUP_NAME",name_group_iniziale);
                     startActivity(intent);
                     finish();
 

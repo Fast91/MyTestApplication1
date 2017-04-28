@@ -75,7 +75,8 @@
         <activity android:name=".ManageGroupActivity" />
         <activity android:name=".DeleteGroupActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".PrimaAttivitaGruppi" />
     </application>
 
 </manifest>

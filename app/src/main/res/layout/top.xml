@@ -10,12 +10,9 @@
         android:id="@+id/tableLayout0"
 
          android:paddingBottom="5dp"
-            android:paddingTop="2dp"
-        android:paddingRight="2dp"
-    android:paddingLeft="2dp"
+
         android:stretchColumns="*"
 
-        android:background="@drawable/rectagle_white_background_with_bordergreen_bottom"
             >
     <!-- android:background="@android:color/white" -->
 
@@ -36,7 +33,7 @@
                 android:layout_marginRight="1dp"
 
                 />-->
-            <ImageButton
+            <Button
             android:id="@+id/bGlobal"
             android:layout_width="match_parent"
             android:layout_height="40sp"
@@ -44,8 +41,10 @@
             android:layout_span="2"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:background="@drawable/buttonshape"
-            android:layout_marginRight="1dp"/>
+                android:background="#4caf50"
+                android:text="@string/button_user_group"
+                android:textColor="#000"
+                android:textAlignment="center"/>
 
             <!--<Button
                 android:id="@+id/b2"
@@ -59,16 +58,7 @@
                 android:layout_marginRight="1dp"
                 />
 -->
-            <ImageButton
-                android:id="@+id/bGroups"
-                android:layout_width="match_parent"
-                android:layout_height="40sp"
-                android:padding="4sp"
-                android:layout_span="2"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:background="@drawable/buttonshape"
-                android:layout_marginRight="1dp"/>
+
    <!--         <Button
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
@@ -79,7 +69,7 @@
                 style="@style/textButton"
                 android:background="@drawable/buttonshape"/>
 -->
-            <ImageButton
+            <Button
                 android:id="@+id/bActivities"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
@@ -87,8 +77,24 @@
                 android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:background="@drawable/buttonshape"
-                android:layout_marginRight="1dp"/>
+                android:background="#4caf50"
+                android:text="@string/button_attivita_group"
+                android:textAlignment="center"
+                android:textColor="#000"/>
+
+
+            <Button
+                android:id="@+id/bGroups"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:padding="4sp"
+                android:layout_span="2"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="#4caf50"
+                android:text="@string/button_grafico_group"
+                android:textColor="#000"
+                android:textAlignment="center"/>
         </TableRow>
 
     <TableRow

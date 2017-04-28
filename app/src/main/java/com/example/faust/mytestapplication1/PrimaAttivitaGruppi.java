@@ -1,36 +1,31 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
 
-import android.support.v4.app.FragmentTransaction;
-
-
-import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,37 +39,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+public class PrimaAttivitaGruppi extends AppCompatActivity {
 
-public class GroupsListFragment extends Fragment {
-
-
-    private MyGroupsRecyclerViewAdapter adapter;
+   private MyGroupsRecyclerViewAdapter adapter;
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private GroupsListFragment.OnListFragmentInteractionListener mListener;
     private MainActivity mainActivity;
     private FirebaseAuth firebaseAuth;
     /*private String[] names = {"G1", "G2"};
     private int[] images = {R.drawable.profilecircle, R.drawable.profilecircle};
     private double[] balances = {70.00, -7.00};*/
     //private ArrayList<MyGroup> groups;
-    private List<MyGroup>groups;
+    private List<MyGroup> groups;
     private HashMap<String,String> id_gruppo;
     private ImageView profile_image;
-
-
-    public GroupsListFragment() {
-    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_prima_attivita_gruppi);
+
+
+        getSupportActionBar().setElevation(0);
 
         id_gruppo=new HashMap<>();
 
         try
         {
-           // groups = DBManager.getGroups();
+            // groups = DBManager.getGroups();
             groups = DB.getmGroups();
         }
         catch(Exception e) //sostituire con l'eccezione corretta
@@ -87,32 +80,16 @@ public class GroupsListFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-
-
-
-
-    }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
-
         //Set Name of the group
 
-        final  AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
-        final TextView namegroup = (TextView) myactivity.findViewById(R.id.row1_text1);
+        final TextView namegroup = (TextView) findViewById(R.id.row1_text1);
         String name= getString(R.string.global_string);
         namegroup.setText(name);
 
-        final TextView moneygroup = (TextView) myactivity.findViewById(R.id.row1_text2);
+        final TextView moneygroup = (TextView) findViewById(R.id.row1_text2);
 
 
-        profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
-        profile_image.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.realphoto, 100, 100));
+        profile_image = (ImageView) findViewById(R.id.row1_image1);
         profile_image.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -144,13 +121,13 @@ public class GroupsListFragment extends Fragment {
                 }
 
                 //Bilancio
-                ((TextView) myactivity.findViewById(R.id.row1_text2)).setText(String.format("%.2f", bilancioGlobale)+"€");
+                ((TextView) findViewById(R.id.row1_text2)).setText(String.format("%.2f", bilancioGlobale)+"€");
 
                 if (bilancioGlobale<0) {
-                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    TextView tv= (TextView) findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.RED);
                 } else {
-                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    TextView tv= (TextView) findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.parseColor("#08a008"));
                 }
 
@@ -188,7 +165,7 @@ public class GroupsListFragment extends Fragment {
                 //Prendo tutti i gruppi
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                    id_gruppo.put(postSnapshot.getKey(),postSnapshot.child("Name").getValue(String.class));
+                    id_gruppo.put(postSnapshot.child("Name").getValue(String.class),postSnapshot.getKey());
 
                     String id = (String) postSnapshot.getKey();
 
@@ -200,7 +177,6 @@ public class GroupsListFragment extends Fragment {
                     //in teoria utente contiene solo una entry per un determinato gruppo
 
                     NomeDovuto iniziale = new NomeDovuto(gruppo, dovuto);
-                    iniziale.setId(postSnapshot.getKey());
                     gruppi_dovuto.put(id, iniziale);
 
 
@@ -209,6 +185,7 @@ public class GroupsListFragment extends Fragment {
                 List list = new ArrayList(gruppi_dovuto.values());
 
 
+                /*
                 // Set the adapter forse il primo if non utile
                 if (view instanceof RecyclerView) {
                     Context context = view.getContext();
@@ -221,7 +198,7 @@ public class GroupsListFragment extends Fragment {
                         recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
                     }
 
-                    adapter = new MyGroupsRecyclerViewAdapter(list, new OnListFragmentInteractionListener() {//cambiato qui
+                    adapter = new MyGroupsRecyclerViewAdapter(list, new GroupsListFragment.OnListFragmentInteractionListener() {//cambiato qui
                         @Override
                         public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
                             //TODO LISTENER IMPLEMENTARE
@@ -236,11 +213,11 @@ public class GroupsListFragment extends Fragment {
 
 
 
-                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getId())); //Non gestito il fatto che il gruppo può avere nomi uguali
+                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName())); //Non gestito il fatto che il gruppo può avere nomi uguali
                             myFragment.setArguments(mBundle);
 
                             //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment)/*.addToBackStack(null)*/.commit();
+                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
 
 
                             for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
@@ -252,41 +229,46 @@ public class GroupsListFragment extends Fragment {
                     });
                     recyclerView.setAdapter(adapter);
 
-                } else {
+                } else {*/
 
-                    RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.groups_list);
+                    RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.groups_list);
                     //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
-                    recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    adapter = new MyGroupsRecyclerViewAdapter(list, new OnListFragmentInteractionListener() {//cambiato qui
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(PrimaAttivitaGruppi.this));
+                    adapter = new MyGroupsRecyclerViewAdapter(list, new GroupsListFragment.OnListFragmentInteractionListener() {//cambiato qui
                         @Override
                         public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
                             //TODO LISTENER IMPLEMENTARE
-                            Toast.makeText(getContext(), "Cliccato Gruppo: " + item.getName(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(PrimaAttivitaGruppi.this, "Cliccato Gruppo: " + item.getName(), Toast.LENGTH_LONG).show();
 
 
                             //You can change the fragment, something like this, not tested, please correct for your desired output:
-                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                            /*
+
                             Fragment myFragment = new UsersGroupListFragment();
                             //Create a bundle to pass data, add data, set the bundle to your fragment and:
                             Bundle mBundle;
                             mBundle = new Bundle();
-                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getId()));
+                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName()));
 
-                            //set name
-                    /*
-                    final TextView namegroup = (TextView) view.findViewById(R.id.row1_text1);
-                    String name= item.getName();
-                    namegroup.setText(name);*/
+
 
                             myFragment.setArguments(mBundle);
 
                             //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
 
-                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
+                            PrimaAttivitaGruppi.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
 
-                            for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                                activity.getSupportFragmentManager().popBackStackImmediate();
-                            }
+                            for (int i = 0; i < PrimaAttivitaGruppi.this.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
+                                PrimaAttivitaGruppi.this.getSupportFragmentManager().popBackStackImmediate();
+                            }*/
+
+
+                            Intent intent = new Intent(PrimaAttivitaGruppi.this, MainActivity.class);
+                            intent.putExtra("GROUP_ID", id_gruppo.get(item.getName()));
+                            intent.putExtra("GROUP_NAME",item.getName());
+                            startActivity(intent);
+                            //finish();
+
 
                         }
                     });
@@ -295,7 +277,7 @@ public class GroupsListFragment extends Fragment {
                 }
 
 
-            }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -313,7 +295,13 @@ public class GroupsListFragment extends Fragment {
 
 
 
-        Button addgroup = (Button) view.findViewById(R.id.b5_addgroup);
+        ImageButton addgroup = (ImageButton) findViewById(R.id.b5_addgroup);
+
+
+        addgroup.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.group, 100, 100));
+
+
 
 
         addgroup.setOnClickListener(new View.OnClickListener() {
@@ -323,7 +311,7 @@ public class GroupsListFragment extends Fragment {
                 //Add GROUP
 
 
-                Intent intent=new Intent(getActivity(),ActivityAddGroup.class);
+                Intent intent=new Intent(PrimaAttivitaGruppi.this,ActivityAddGroup.class);
                 startActivity(intent);
 
 
@@ -335,13 +323,6 @@ public class GroupsListFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-        return view;
     }
 
 
@@ -385,7 +366,7 @@ public class GroupsListFragment extends Fragment {
                     } else {
 
 
-                        Picasso.with(getContext())
+                        Picasso.with(PrimaAttivitaGruppi.this)
                                 .load(image)
                                 .fit()
                                 .centerCrop()
@@ -407,7 +388,7 @@ public class GroupsListFragment extends Fragment {
 
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getContext(), FullScreenImage.class);
+                            Intent intent = new Intent(PrimaAttivitaGruppi.this, FullScreenImage.class);
 
                             profile_image.buildDrawingCache();
                             Bitmap image2= profile_image.getDrawingCache();
@@ -487,6 +468,92 @@ public class GroupsListFragment extends Fragment {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.backmain_title)
+                .setMessage(R.string.backmain_message)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        //intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }).create().show();
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    //-- azioni per il menù della tool_bar--
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int res_id=item.getItemId();
+        if(res_id==R.id.action_settings){
+
+            //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
+
+            startActivity(new Intent(this, SettingActivity.class));
+
+        }
+
+        if(res_id==R.id.action_contactus){
+
+            //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+
+            startActivity(new Intent(this, ContactActivity.class));
+
+        }
+        /*
+
+        if(res_id==R.id.action_share){
+
+            Toast.makeText(getApplicationContext(),R.string.toast_mess_share,Toast.LENGTH_LONG).show();
+
+        }*/
+
+        if(res_id==R.id.action_myprofile){
+            //logging out the user
+            //starting login activity
+            startActivity(new Intent(this, ReadProfileActivity.class));
+        }
+
+        if(res_id==R.id.action_invitation){
+            //logging out the user
+            //starting login activity
+            startActivity(new Intent(this, ActivityInvitation.class));
+        }
+
+        if(res_id==R.id.action_logout){
+            //logging out the user
+            firebaseAuth.signOut();
+            //closing activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
+        return true;
+    }
+
+
 
 
 }

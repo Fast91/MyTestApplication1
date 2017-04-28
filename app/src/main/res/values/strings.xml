@@ -154,5 +154,8 @@
 
     <string name="deleteuser_title">Delete User?</string>
     <string name="deleteuser_message">Are you sure to delete this user?</string>
+    <string name="button_user_group">USERS</string>
+    <string name="button_attivita_group">ACTIVITIES</string>
+    <string name="button_grafico_group">STATISTICS</string>
 
 </resources>

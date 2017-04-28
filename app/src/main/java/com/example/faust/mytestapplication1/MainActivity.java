@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     //firebase auth object
     private FirebaseAuth firebaseAuth;
     private ImageView profile_image;
+    String id_group, name_group;
 
 
     @Override
@@ -62,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
         //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        id_group= intent.getExtras().getString("GROUP_ID");
+        name_group= intent.getExtras().getString("GROUP_NAME");
+
+        getSupportActionBar().setElevation(0);
+
+
+
+
        //setTheme(R.style.AppTheme);
 
 
@@ -69,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         
 
        if (savedInstanceState != null) {
+           id_group= savedInstanceState.getString("GROUP_ID");
+           name_group= savedInstanceState.getString("GROUP_NAME");
            count_b=savedInstanceState.getInt("COUNT_B");
                 updateFragAndButton();
         }
@@ -108,9 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        final ImageButton bGlobal = (ImageButton) findViewById(R.id.bGlobal);
-        final ImageButton bGroups = (ImageButton) findViewById(R.id.bGroups);
-        final ImageButton bActivities = (ImageButton) findViewById(R.id.bActivities);
+        final Button bGlobal = (Button) findViewById(R.id.bGlobal);
+        final Button bGroups = (Button) findViewById(R.id.bGroups);
+        final Button bActivities = (Button) findViewById(R.id.bActivities);
+        /*
 
         bGlobal.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256pressed, 100, 100));
@@ -120,36 +133,26 @@ public class MainActivity extends AppCompatActivity {
 
         bGroups.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
+                */
 
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
             // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
 
-            // PROVO A FARE OPERAZIONI SUL DB
-
-                if(DB.getmUsers().isEmpty()) {
-                    DB.init();
-                }
-
-
-
-
 
 
             //b1.setPressed(true);
-            bGlobal.setBackgroundResource(R.drawable.button_pressed);
-            bGroups.setBackgroundResource(R.drawable.buttonshape);
-            bActivities.setBackgroundResource(R.drawable.buttonshape);
-
-            bGlobal.setPadding(10,10,10,10);
-            bGroups.setPadding(10,10,10,10);
-            bActivities.setPadding(10,10,10,10);
 
             FragmentManager fm = getSupportFragmentManager();
            Fragment fragment = fm.findFragmentById(R.id.fragment1);
            // Fragment fragment= new GlobalListFragment();
             if (fragment == null) {
-                fragment = new GlobalListFragment();
+                fragment = new UsersGroupListFragment();
+                Bundle mBundle;
+                mBundle = new Bundle();
+                mBundle.putString("GROUP_ID",id_group);
+                // mBundle.putInt("GROUP_ID",item.getIdgroup());
+                fragment.setArguments(mBundle);
 
                 fm.beginTransaction()
                         .add(R.id.fragment1, fragment)
@@ -164,33 +167,16 @@ public class MainActivity extends AppCompatActivity {
 
 //commento
 
-                /*b2.setPressed(false);
-                b3.setPressed(false);
-
-                b1.setPressed(true);*/
-
-                bGlobal.setBackgroundResource(R.drawable.button_pressed);
-                bGroups.setBackgroundResource(R.drawable.buttonshape);
-                bActivities.setBackgroundResource(R.drawable.buttonshape);
-
-                bGlobal.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256pressed, 100, 100));
-
-                bActivities.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
-
-                bGroups.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
-
-
-
-                bGlobal.setPadding(10,10,10,10);
-                bGroups.setPadding(10,10,10,10);
-                bActivities.setPadding(10,10,10,10);
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new GlobalListFragment();
+                Fragment f= new UsersGroupListFragment();
+                Bundle mBundle;
+                mBundle = new Bundle();
+                mBundle.putString("GROUP_ID",id_group);
+                // mBundle.putInt("GROUP_ID",item.getIdgroup());
+                f.setArguments(mBundle);
+
                 if(count_b==1){
                      ft.replace(R.id.fragment1, f);}
                 if(count_b==2){
@@ -216,53 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                /*b1.setPressed(false);
-                b3.setPressed(false);
-                b2.setPressed(true);*/
 
-                bGlobal.setBackgroundResource(R.drawable.buttonshape);
-                bGroups.setBackgroundResource(R.drawable.button_pressed);
-                bActivities.setBackgroundResource(R.drawable.buttonshape);
-
-
-
-                bGlobal.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256, 100, 100));
-
-                bActivities.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
-
-                bGroups.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900pressed, 100, 100));
-
-
-                bGlobal.setPadding(10,10,10,10);
-                bGroups.setPadding(10,10,10,10);
-                bActivities.setPadding(10,10,10,10);
-
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                GroupsListFragment f= new GroupsListFragment();
-
-
-                if(count_b==1){
-                    ft.replace(R.id.fragment1, f);
-
-                    }
-                if(count_b==2){
-                    ft.replace(R.id.fragment1, f);}
-                if(count_b==3){
-                   // ft.replace(R.id.fragment3_activity, f);} TODO: capire come implementare lo stack dei frammenti
-                    ft.replace(R.id.fragment1, f);}
-              //  ft.addToBackStack(null);
-                ft.commit();
-
-                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-                    fm.popBackStackImmediate();
-                }
-
-                count_b=2;
-                return;
             }
         });
 
@@ -270,33 +210,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                /*b3.setPressed(true);
-                b1.setPressed(false);
-                b2.setPressed(false);*/
-
-                bGlobal.setBackgroundResource(R.drawable.buttonshape);
-                bGroups.setBackgroundResource(R.drawable.buttonshape);
-                bActivities.setBackgroundResource(R.drawable.button_pressed);
-
-
-
-                bGlobal.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256, 100, 100));
-
-                bActivities.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256pressed, 100, 100));
-
-                bGroups.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
-
-                bGlobal.setPadding(10,10,10,10);
-                bGroups.setPadding(10,10,10,10);
-                bActivities.setPadding(10,10,10,10);
 
                 FragmentManager fm = getSupportFragmentManager();
 
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new ActivityListFragment();
+                Fragment f= new ActivityGroupListFragment();
+                Bundle mBundle;
+                mBundle = new Bundle();
+                mBundle.putString("GROUP_ID",id_group);
+                // mBundle.putInt("GROUP_ID",item.getIdgroup());
+                f.setArguments(mBundle);
 
                 if(count_b==1){
                     ft.replace(R.id.fragment1, f);}
@@ -336,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
                 //Add expense
 
                 Intent intent=new Intent(MainActivity.this,ActivityExpense.class);
+                intent.putExtra("GROUP_ID",id_group);
+                intent.putExtra("GROUP_NAME",name_group);
                 startActivity(intent);
 
 
@@ -486,22 +411,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void updateFragAndButton(){
-            final ImageButton b1 = (ImageButton) findViewById(R.id.bGlobal);
-            final ImageButton b3 = (ImageButton) findViewById(R.id.bActivities);
-            final ImageButton b2 = (ImageButton) findViewById(R.id.bGroups);
+            final Button b1 = (Button) findViewById(R.id.bGlobal);
+            final Button b3 = (Button) findViewById(R.id.bActivities);
+            final Button b2 = (Button) findViewById(R.id.bGroups);
 
-            b1.setBackgroundResource(R.drawable.buttonshape);
-            b2.setBackgroundResource(R.drawable.buttonshape);
-            b3.setBackgroundResource(R.drawable.buttonshape);
-
-            b1.setPadding(10,10,10,10);
-            b2.setPadding(10,10,10,10);
-            b3.setPadding(10,10,10,10);
 
             //      count_b = savedInstanceState.getInt("COUNT_B");
 
             if(count_b==1) {
-                b1.setBackgroundResource(R.drawable.button_pressed);
+
                 //count_b=1;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -510,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
             else if (count_b==2){
-                b2.setBackgroundResource(R.drawable.button_pressed);
+
                 //count_b = 2;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -519,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
             else  if (count_b==3){
-                b3.setBackgroundResource(R.drawable.button_pressed);
+
                 //count_b=3;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -604,26 +522,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.backmain_title)
-                .setMessage(R.string.backmain_message)
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        //intent.putExtra("ID_USER",firebaseAuth.getCurrentUser().getUid());
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                       finish();
-
-                    }
-                }).create().show();
-    }
-
 
 
 
@@ -689,6 +587,16 @@ public class MainActivity extends AppCompatActivity {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+                        startActivity(new Intent(MainActivity.this,PrimaAttivitaGruppi.class));
+                        finish();
+
     }
 
 

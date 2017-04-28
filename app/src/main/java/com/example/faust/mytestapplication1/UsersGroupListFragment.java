@@ -202,6 +202,8 @@ public class UsersGroupListFragment extends Fragment{
                         //prendo gli amici
                         DataSnapshot friends = dataSnapshot.child("Users");
 
+                utenti_dovuto.clear();
+
 
                         //prendo un amico
                         for (DataSnapshot friend : friends.getChildren()) {
@@ -334,6 +336,7 @@ public class UsersGroupListFragment extends Fragment{
                             startActivity(intent);
 
 
+
                             return ;
                         }
                     });
@@ -346,6 +349,39 @@ public class UsersGroupListFragment extends Fragment{
 
                 }
                  /////// END ADAPTER
+
+                TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
+                namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
+                TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
+
+                moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class))+"€");
+
+
+
+
+                ///sta cosa da problemiiii
+/*
+                if (dataSnapshot.child("Total").getValue(Double.class)<0) {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.RED);
+                } else {
+                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
+                    tv.setTextColor(Color.parseColor("#08a008"));
+                }*/
+
+
+                Double value = dataSnapshot.child("Total").getValue(Double.class);
+                if(value!=null) {
+
+                    if (value < 0) {
+                        TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
+                        tv.setTextColor(Color.RED);
+                    } else {
+                        TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
+                        tv.setTextColor(Color.parseColor("#08a008"));
+                    }
+
+                }
 
 
 
@@ -380,7 +416,7 @@ public class UsersGroupListFragment extends Fragment{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
+                /*
                 TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
                 namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
                 TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
@@ -390,26 +426,20 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-                ///sta cosa da problemiiii
-/*
-                if (dataSnapshot.child("Total").getValue(Double.class)<0) {
-                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
-                    tv.setTextColor(Color.RED);
-                } else {
-                    TextView tv= (TextView) myactivity.findViewById(R.id.row1_text2);
-                    tv.setTextColor(Color.parseColor("#08a008"));
-                }*/
-
 
                 Double value = dataSnapshot.child("Total").getValue(Double.class);
+                if(value!=null) {
 
-                if (value<0) {
-                    TextView tv= (TextView) activity.findViewById(R.id.row1_text2);
-                    tv.setTextColor(Color.RED);
-                } else {
-                    TextView tv= (TextView) activity.findViewById(R.id.row1_text2);
-                    tv.setTextColor(Color.parseColor("#08a008"));
+                    if (value < 0) {
+                        TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
+                        tv.setTextColor(Color.RED);
+                    } else {
+                        TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
+                        tv.setTextColor(Color.parseColor("#08a008"));
+                    }
+
                 }
+                */
 
 
             }
@@ -427,20 +457,11 @@ public class UsersGroupListFragment extends Fragment{
 
 
         final  AppCompatActivity myactivity = (AppCompatActivity) view.getContext();
-        final ImageButton bGlobal = (ImageButton) myactivity.findViewById(R.id.bGlobal);
-        final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);
-        final ImageButton bActivities = (ImageButton) myactivity.findViewById(R.id.bActivities);
+        final Button bGlobal = (Button) myactivity.findViewById(R.id.bGlobal);
+        final Button bGroups = (Button) myactivity.findViewById(R.id.bGroups);
+        final Button bActivities = (Button) myactivity.findViewById(R.id.bActivities);
 
-  //      bGroups.setImageResource(R.drawable.groups900x900);
-        Glide
-                .with(getContext())
-                .load(R.drawable.groups900x900)
-                .override(600, 200)
-                .fitCenter()
-                .into(bGroups);
-        bGlobal.setBackgroundResource(R.drawable.buttonshape);
-        bGroups.setBackgroundResource(R.drawable.buttonshape);
-        bActivities.setBackgroundResource(R.drawable.buttonshape);
+
 
 
         return view;
@@ -578,7 +599,7 @@ public class UsersGroupListFragment extends Fragment{
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -603,11 +624,13 @@ public class UsersGroupListFragment extends Fragment{
 
                     DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
 
-                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference2.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             Double bilancio_singolo = dataSnapshot.getValue(Double.class);
+
+
 
                             if(bilancio_singolo>0.0){
                                 bilancio_0=false;
@@ -633,7 +656,7 @@ public class UsersGroupListFragment extends Fragment{
                                     String id_group2 = new String(id_group);
 
 
-
+                                    activity.finish();
 
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

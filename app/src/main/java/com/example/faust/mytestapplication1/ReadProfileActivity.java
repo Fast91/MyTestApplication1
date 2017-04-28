@@ -312,7 +312,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
+/*
     @Override
     public void onBackPressed() {
 
@@ -322,7 +322,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
-    }
+    }*/
 
 
 

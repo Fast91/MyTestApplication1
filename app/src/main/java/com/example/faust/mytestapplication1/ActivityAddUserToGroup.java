@@ -439,6 +439,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
                     Intent intent=new Intent(ActivityAddUserToGroup.this,MainActivity.class);
+                    intent.putExtra("GROUP_ID",id_group);
+                intent.putExtra("GROUP_NAME",name_group);
                     startActivity(intent);
                     finish();
 

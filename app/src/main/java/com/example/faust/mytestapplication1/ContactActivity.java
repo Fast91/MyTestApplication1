@@ -19,7 +19,7 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(ContactActivity.this,MainActivity.class);
+                Intent intent=new Intent(ContactActivity.this,PrimaAttivitaGruppi.class);
                 startActivity(intent);
                 finish();
 

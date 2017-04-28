@@ -258,12 +258,10 @@ public class ActivityGroupListFragment extends Fragment {
 
 
 
-        final ImageButton bGlobal = (ImageButton) myactivity.findViewById(R.id.bGlobal);
-        final ImageButton bGroups = (ImageButton) myactivity.findViewById(R.id.bGroups);
-        final ImageButton bActivities = (ImageButton) myactivity.findViewById(R.id.bActivities);
-        bGlobal.setBackgroundResource(R.drawable.buttonshape);
-        bGroups.setBackgroundResource(R.drawable.buttonshape);
-        bActivities.setBackgroundResource(R.drawable.buttonshape);
+        final Button bGlobal = (Button) myactivity.findViewById(R.id.bGlobal);
+        final Button bGroups = (Button) myactivity.findViewById(R.id.bGroups);
+        final Button bActivities = (Button) myactivity.findViewById(R.id.bActivities);
+
 
 
         return view;

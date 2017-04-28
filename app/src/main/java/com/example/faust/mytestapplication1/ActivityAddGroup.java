@@ -227,7 +227,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
 
 
 
-                        Intent intent=new Intent(ActivityAddGroup.this,MainActivity.class);
+                        Intent intent=new Intent(ActivityAddGroup.this,PrimaAttivitaGruppi.class);
                         ActivityAddGroup.this.startActivity(intent);
 
                         finish();

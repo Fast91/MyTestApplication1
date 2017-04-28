@@ -53,7 +53,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //close this activity
             finish();
             //opening profile activity
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), PrimaAttivitaGruppi.class));
         }
 
 

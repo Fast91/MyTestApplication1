@@ -50,6 +50,7 @@ public class PaymentFragment extends Fragment
     private String mAmountValue;
     private String sender_name , receiver_name;
     private Double bilancioGlobale,bilanciodelgruppo,bilanciosingolo;
+    private String group_name;
 
     private boolean mDefaultAmountOptionSelected;
     private boolean mCustomAmountEditTextOptionSelected;
@@ -260,6 +261,7 @@ public class PaymentFragment extends Fragment
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String mx=(String) dataSnapshot.getValue(String.class);
+                group_name = mx;
 
                 ((TextView) myactivity.findViewById(R.id.group_detail_payment_tv)).setText(mx);
             }
@@ -421,6 +423,9 @@ public class PaymentFragment extends Fragment
                     //ritornare al main
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("GROUP_ID",mGroupId);
+                    intent.putExtra("GROUP_NAME",group_name);
+
                     startActivity(intent);
                 }
                 else{
@@ -532,6 +537,8 @@ public class PaymentFragment extends Fragment
                     databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
                     databaseReference3.child(key).child("Total").setValue(Total);
                     databaseReference3.child(key).child("Name").setValue(Name);
+                      databaseReference3.child(key).child("Date").setValue(Date);
+        databaseReference3.child(key).child("Category").setValue(Category);
 
 
 
@@ -549,9 +556,13 @@ public class PaymentFragment extends Fragment
 
                         databaseReference4.child(mSenderId).child("Activities").child(key).child("Name").setValue(Name);
                         databaseReference4.child(mSenderId).child("Activities").child(key).child("Total").setValue(Total);
+                      databaseReference4.child(mSenderId).child("Activities").child(key).child("Date").setValue(Date);
+        databaseReference4.child(mSenderId).child("Activities").child(key).child("Category").setValue(Category);
 
                          databaseReference4.child(mReceiverId).child("Activities").child(key).child("Name").setValue(Name);
                          databaseReference4.child(mReceiverId).child("Activities").child(key).child("Total").setValue(Total);
+        databaseReference4.child(mReceiverId).child("Activities").child(key).child("Date").setValue(Date);
+        databaseReference4.child(mReceiverId).child("Activities").child(key).child("Category").setValue(Category);
 
 
 

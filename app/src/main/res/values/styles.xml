@@ -10,6 +10,7 @@
 
         <item name="colorPrimary">#4caf50</item>
         <item name="colorPrimaryDark">#81c784</item>
+        <item name="android:windowContentOverlay">@null</item>
 
         <!-- Customize your theme here. -->
 
