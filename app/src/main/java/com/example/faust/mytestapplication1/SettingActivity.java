@@ -92,6 +92,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(SettingActivity.this,MainActivity.class);
+
                 startActivity(intent);
                 finish();
 
