@@ -150,4 +150,10 @@
     <string name="open_drawer">OPEN</string>
     <string name="close_drawer">CLOSE</string>
 
+    <string name="textview_addUserToGroup">Aggiungi Utente</string>
+    <string name="textview_modifyGroup">Modifica Gruppo</string>
+    <string name="textview_payment">Pagamento</string>
+    <string name="textview_addGroup">Aggiungi Gruppo</string>
+    <string name="textview_addExpense">Aggiungi Spesa</string>
+
 </resources>

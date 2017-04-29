@@ -8,12 +8,31 @@
     android:orientation="vertical">
 
 
+
+    <TextView
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:text="@string/textview_addUserToGroup"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_margin="10sp"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@drawable/activity_group_top_background">
+        android:background="@drawable/activity_group_top_background"
+        android:layout_marginTop="20dp">
 
     <ImageView
         android:layout_width="0dp"

@@ -8,17 +8,22 @@
     android:orientation="vertical">
 
 
+
+
     <TextView
-        android:id="@+id/textview_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
         android:text="@string/textview_contact"
-        android:textSize="30sp"
+        android:paddingLeft="10dp"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textAlignment="center"/>
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
 
 
     <TextView
@@ -30,7 +35,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:layout_marginTop="10dp"

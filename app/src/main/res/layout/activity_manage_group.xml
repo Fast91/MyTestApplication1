@@ -9,6 +9,22 @@
     android:orientation="vertical">
 
 
+    <TextView
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:text="@string/textview_modifyGroup"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
+
+
 
         <TextView
             android:id="@+id/group_name_text"
@@ -19,7 +35,7 @@
             android:textStyle="bold"
             android:textColor="@color/BreakingMADDarkGreen"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             />
 
 

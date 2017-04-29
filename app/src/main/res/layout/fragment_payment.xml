@@ -14,21 +14,23 @@
     android:gravity="center_horizontal"
     android:weightSum="1">
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"/>
 
     <TextView
-        android:background="@drawable/title_expense_background"
-        android:textAlignment="center"
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="25sp"
-        android:textColor="@android:color/black"
-        android:textAllCaps="true"
-        android:paddingBottom="8dp"
-        android:text="Payment"/>
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:text="@string/textview_payment"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"

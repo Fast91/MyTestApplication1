@@ -170,5 +170,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="textview_addUserToGroup">Add User To Group</string>
+    <string name="textview_modifyGroup">Modify Group</string>
+    <string name="textview_payment">Payment</string>
+    <string name="textview_addGroup">Add Group</string>
+    <string name="textview_addExpense">Add Expense</string>
 
 </resources>

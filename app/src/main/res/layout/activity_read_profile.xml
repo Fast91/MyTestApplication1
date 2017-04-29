@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5sp"
-
     tools:context="com.example.faust.mytestapplication1.ReadProfileActivity">
-
 
 
     <TextView
 
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:text="@string/profile_title_string"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
        />
 
 

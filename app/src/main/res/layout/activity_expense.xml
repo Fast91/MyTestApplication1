@@ -16,6 +16,22 @@
     android:weightSum="1">
 
 
+    <TextView
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:text="@string/textview_addExpense"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
+
+
 
 
     <LinearLayout
