@@ -31,17 +31,37 @@
         android:paddingLeft="30dp"/>
 
 
-    <TextView
-        android:id="@+id/money_groups_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/total_user_global_string"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toRightOf="@+id/name_groups_group"
-        android:textSize="@dimen/fragment_global_text_name_size"
-        android:paddingRight="8dp"
-        android:gravity="right|center_vertical"
-        android:layout_gravity="center_vertical"
-        />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.60"
+        android:orientation="vertical"
+
+        >
+
+        <TextView
+            android:id="@+id/todo_groups_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:paddingTop="20dp"
+            android:layout_toRightOf="@+id/image_activity_group"
+            android:text="@string/name_user_global_string"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/fragment_global_text_amount_size" />
+
+        <TextView
+            android:id="@+id/money_groups_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+
+            android:layout_marginLeft="@dimen/fragment_global_image_margin"
+            android:text="@string/total_user_global_string"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+
+    </LinearLayout>
 </LinearLayout>

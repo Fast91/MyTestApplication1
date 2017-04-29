@@ -135,19 +135,18 @@
         <!--android:src="@drawable/realphoto"-->
 
 
-
         <TextView
             android:id="@+id/row1_text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_span="2"
+            android:layout_weight="1"
+            android:gravity="center"
             android:paddingTop="5sp"
             android:text="@string/global_string"
             android:textAlignment="center"
-            android:textSize="28sp"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/row1_text2"

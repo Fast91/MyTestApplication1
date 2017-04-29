@@ -74,6 +74,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
+        public final TextView todoView;
         public final Resources myr;
 
         public UserHolder(View view) {
@@ -82,7 +83,9 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
             imageView = (ImageView) view.findViewById(R.id.image_user_group);
             nameView = (TextView) view.findViewById(R.id.name_user_group);
             balanceView = (TextView) view.findViewById(R.id.money_user_group);
-myr=view.getResources();
+            todoView=(TextView)view.findViewById(R.id.todo_user_group);
+
+            myr=view.getResources();
         }
 
         public void bindData(final NomeDovuto u){
@@ -100,6 +103,17 @@ myr=view.getResources();
                 balanceView.setTextColor(Color.parseColor("#08a008"));
             }
 
+            if(u.getDovuto().toString().charAt(0) == '-'){
+                todoView.setText(R.string.devi);
+                todoView.setTextColor(Color.RED);
+
+            }
+            else{
+
+                todoView.setText(R.string.tideve);
+                todoView.setTextColor(Color.parseColor("#08a008"));
+
+            }
 
 
         }
