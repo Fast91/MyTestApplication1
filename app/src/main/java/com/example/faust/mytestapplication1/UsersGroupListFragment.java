@@ -229,7 +229,7 @@ public class UsersGroupListFragment extends Fragment{
                 TextView namegroup = (TextView) activity.findViewById(R.id.row1_text1);
                 namegroup.setText(dataSnapshot.child("Name").getValue(String.class));
                 TextView moneygroup = (TextView) activity.findViewById(R.id.row1_text2);
-
+                TextView todogroup=(TextView)activity.findViewById(R.id.row1_todo);
                 moneygroup.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class))+"€");
 
 
@@ -252,9 +252,20 @@ public class UsersGroupListFragment extends Fragment{
                     if (value < 0) {
                         TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
                         tv.setTextColor(Color.RED);
+                        TextView tv2= (TextView) activity.findViewById(R.id.row1_todo);
+                        tv2.setText(R.string.devi);
+                        tv2.setTextColor(Color.RED);
+
                     } else {
                         TextView tv = (TextView) activity.findViewById(R.id.row1_text2);
                         tv.setTextColor(Color.parseColor("#08a008"));
+
+                        TextView tv2= (TextView) activity.findViewById(R.id.row1_todo);
+                        tv2.setText(R.string.tideve);
+
+                        tv2.setTextColor(Color.parseColor("#08a008"));
+
+
                     }
 
                 }

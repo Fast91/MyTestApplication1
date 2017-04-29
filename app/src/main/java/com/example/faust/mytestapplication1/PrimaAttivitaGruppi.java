@@ -108,7 +108,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         namegroup.setText(name);
 
         final TextView moneygroup = (TextView) findViewById(R.id.row1_text2);
-
+         final TextView todogroup=(TextView)findViewById(R.id.row1_todo);
 
         profile_image = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.row1_image1);
         profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -149,9 +149,19 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                 if (bilancioGlobale<0) {
                     TextView tv= (TextView) findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.RED);
+                    TextView tv2= (TextView) findViewById(R.id.row1_todo);
+                    tv2.setText(R.string.devi);
+                    tv2.setTextColor(Color.RED);
+
+
                 } else {
                     TextView tv= (TextView) findViewById(R.id.row1_text2);
                     tv.setTextColor(Color.parseColor("#08a008"));
+
+                    TextView tv2= (TextView) findViewById(R.id.row1_todo);
+                    tv2.setText(R.string.tideve);
+
+                    tv2.setTextColor(Color.parseColor("#08a008"));
                 }
 
 
