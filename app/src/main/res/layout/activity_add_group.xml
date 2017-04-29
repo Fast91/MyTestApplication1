@@ -21,6 +21,7 @@
         android:textStyle="bold"
 
         android:background="@color/BreakingMADLightGreen"
+        android:layout_marginBottom="20dp"
 
         />
 
