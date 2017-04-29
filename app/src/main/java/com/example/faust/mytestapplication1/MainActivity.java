@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -139,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
             // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
 
+          //  bGlobal.setBackgroundColor(getResources().getColor(R.color.BreakingMADLightGreen));
+            bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+
 
 
             //b1.setPressed(true);
@@ -158,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
                         .add(R.id.fragment1, fragment)
                         .commit();
             }
+
+
         }
 
         bGlobal.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //commento
+                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
 
                 FragmentManager fm = getSupportFragmentManager();
@@ -200,8 +209,14 @@ public class MainActivity extends AppCompatActivity {
 
         bGroups.setOnClickListener(new View.OnClickListener() {
 
+
+
             @Override
             public void onClick(View v) {
+
+                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
             }
         });
@@ -210,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
+                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
 
                 FragmentManager fm = getSupportFragmentManager();
 

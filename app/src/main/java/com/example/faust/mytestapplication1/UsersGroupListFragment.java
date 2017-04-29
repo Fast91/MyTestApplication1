@@ -631,9 +631,10 @@ public class UsersGroupListFragment extends Fragment{
                             Double bilancio_singolo = dataSnapshot.getValue(Double.class);
 
 
-
-                            if(bilancio_singolo>0.0){
-                                bilancio_0=false;
+                            if(bilancio_singolo!=null) {
+                                if (bilancio_singolo > 0.0) {
+                                    bilancio_0 = false;
+                                }
                             }
 
                             count_fatti++;
@@ -674,35 +675,11 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-
-
-
-
-
-                                    /*
-
-                                    Fragment myFragment = new GlobalListFragment();
-                                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
-
-
-                                    for(int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                                        activity.getSupportFragmentManager().popBackStackImmediate();
-                                    }
-
-                                    */
-
-
-
                                     Intent intent=new Intent(getActivity(),DeleteGroupActivity.class);
                                     intent.putExtra("ID_GROUP",id_group);
                                     intent.putExtra("NAME_GROUP",name_group);
                                     startActivity(intent);
-
-
-                                    return ;
-
-
-
+                                   // activity.finish(); //todoprovo
 
 
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.*;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -52,7 +54,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     //private ArrayList<MyGroup> groups;
     private List<MyGroup> groups;
     private HashMap<String,String> id_gruppo;
-    private ImageView profile_image;
+    private com.makeramen.roundedimageview.RoundedImageView profile_image;
 
 
     @Override
@@ -89,7 +91,8 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         final TextView moneygroup = (TextView) findViewById(R.id.row1_text2);
 
 
-        profile_image = (ImageView) findViewById(R.id.row1_image1);
+        profile_image = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.row1_image1);
+        profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         profile_image.setOnClickListener(new View.OnClickListener() {
 
             @Override

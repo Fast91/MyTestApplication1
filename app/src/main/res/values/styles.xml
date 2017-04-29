@@ -8,8 +8,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
 
 
-        <item name="colorPrimary">#4caf50</item>
-        <item name="colorPrimaryDark">#81c784</item>
+        <item name="colorPrimary">#81c784</item>
+        <item name="colorPrimaryDark">#4caf50</item>
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- Customize your theme here. -->
