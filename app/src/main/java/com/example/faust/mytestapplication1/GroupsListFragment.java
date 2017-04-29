@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -60,6 +61,7 @@ public class GroupsListFragment extends Fragment {
     private List<MyGroup>groups;
     private HashMap<String,String> id_gruppo;
     private ImageView profile_image;
+    private ProgressDialog pd;
 
 
     public GroupsListFragment() {
@@ -69,6 +71,8 @@ public class GroupsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         id_gruppo=new HashMap<>();
 
@@ -99,6 +103,11 @@ public class GroupsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_groups_list, container, false);
+
+        pd = new ProgressDialog(view.getContext());
+        String msg_xd = getString(R.string.progress_bar_db);
+        pd.setMessage(msg_xd);
+        pd.show();
 
         //Set Name of the group
 
@@ -293,6 +302,9 @@ public class GroupsListFragment extends Fragment {
                     recyclerView2.setAdapter(adapter);
 
                 }
+
+
+                pd.dismiss();
 
 
             }

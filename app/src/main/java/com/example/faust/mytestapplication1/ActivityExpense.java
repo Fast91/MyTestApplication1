@@ -1118,6 +1118,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                         Intent intent=new Intent(ActivityExpense.this,MainActivity.class);
+                        intent.putExtra("GROUP_ID",id_group_iniziale);
+                        intent.putExtra("GROUP_NAME",name_group_iniziale);
                         ActivityExpense.this.startActivity(intent);
                         finish();
 
