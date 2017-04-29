@@ -322,7 +322,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
         addgroup.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.groupplus, 100, 100));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.grouplus, 100, 100));
 
 
 

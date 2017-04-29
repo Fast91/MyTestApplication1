@@ -154,17 +154,12 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         category= (Spinner) findViewById(R.id.Category_newexpense);
 
-        buttonDelete= (ImageButton)  findViewById(R.id.buttonDeleteImage);
 
-        buttonDelete.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.delete480x385, 100, 100));
 
-        ImageButton submitexpense = (ImageButton)  findViewById(R.id.buttonSubmitExpense);
+        Button submitexpense = (Button)  findViewById(R.id.buttonSubmitExpense);
 
 
 
-        submitexpense.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.tick_icon256x256, 100, 100));
 
          buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto);
 
@@ -181,8 +176,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         mStorage = FirebaseStorage.getInstance().getReference();
 
         image_activity = (ImageView) findViewById(R.id.imagePicture);
-        image_activity.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.gallery314x250, 100, 100));
+        //image_activity.setImageBitmap(
+         //       decodeSampledBitmapFromResource(getResources(), R.drawable.gallery314x250, 100, 100));
 
 
         mProgressDialog = new ProgressDialog(this);
@@ -192,10 +187,27 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         button_divide = (Button) findViewById(R.id.button_diviso_expense);
 
+        TextView group= (TextView) findViewById(R.id.Group_newexpense);
+        group.setText(name_group_iniziale);
+
+
+        // Showing selected spinner item
+
+
+        //carica gli utenti e mette le cose per i nuovi bottoni
+
+        cercareUtentiDelGruppo();
+
+
+        chooseButton();
 
 
 
-                submitexpense.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        submitexpense.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -216,8 +228,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-                Spinner group= (Spinner) findViewById(R.id.Group_newexpense);
-                mygroup_selected = (NomeDovuto) group.getSelectedItem();
+
+                //mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
                 Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
                         mycurrency_selected_from_spinner = (CurrencyDetail) curr.getSelectedItem();
@@ -244,7 +256,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                 mycategory = (String ) category.getSelectedItem();
 
-                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mygroup_selected.getName().equals("Select Group"))&&(!mycategory.equals(""))){
+                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mycategory.equals(""))){
                   //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
@@ -259,7 +271,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     /////////////
 
 
-                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(mygroup_selected.getId()).child("Users");
+                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale).child("Users");
 
                     databaseReference2.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -286,7 +298,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             String Name=mytitle;
                             Double Total=myamount;
                             final Double Amount=myamount;
-                            String GroupId=mygroup_selected.getId();
+                            String GroupId=id_group_iniziale;
 
                             String Category=mycategory;
                             String Date=""+myDate.getDate()+"/"+myDate.getMonth()+"/"+(myDate.getYear()+1900);
@@ -311,7 +323,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             Name=myusers.get(keyowner);
                             Total=myamount/count_users;
-                            Total = Double.parseDouble(String.format("%.2f",Total));
+                            String s = String.format("%.2f",Total);
+                            s=s.replace(",",".");
+                            Total = Double.parseDouble(s);
 
                             //Ricerca di quanto ha pagato l'owner
 
@@ -404,7 +418,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                         databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
 
                         databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
-                        databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(mygroup_selected.getName());
+                        databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);
 
 
                     }
@@ -416,7 +430,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     //per gli altri devono dare -
 
                      Total2= myamount/count_users; // per persona
-                                Total2 = Double.parseDouble(String.format("%.2f",Total2));
+                                String s3 = String.format("%.2f",Total2);
+                                s3=s3.replace(",",".");
+                                Total2 = Double.parseDouble(s3);
                     //First sarebbe in questo momento chi paga owner
 
 
@@ -523,7 +539,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     ////////////////////////////////////////////
 
                     Total= myamount/count_users; // per persona
-                                Total = Double.parseDouble(String.format("%.2f",Total));
+                                String s2 = String.format("%.2f",Total);
+                                s2=s2.replace(",",".");
+                                Total = Double.parseDouble(s2);
                     //First sarebbe in questo momento chi paga owner
 
 
@@ -533,7 +551,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     for(final String name_user : myusers.keySet()){
 
                         databaseReference6 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                                .child(mygroup_selected.getId());
+                                                .child(id_group_iniziale);
 
 
 
@@ -572,7 +590,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
-                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
                                     // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
                                     //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
@@ -600,7 +618,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                     //aggiorno il bilancio del gruppo
                                     Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
-                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId()).child("Total").setValue(tmp);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
                                     // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
                                   //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
@@ -671,7 +689,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                         Log.d("SINGOLO"," io sono : "+ name_user+" "+" quindi non sono owner "+id_owner);
                                         //Read content i dati del singolo utente
                                         databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                                .child(mygroup_selected.getId()).child("Users");
+                                                .child(id_group_iniziale).child("Users");
                                         databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
 
                                             @Override
@@ -712,9 +730,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 //step 2 aggiornalo
                                                 Double tmp = bilanciosingolo - Total2;//todo sbagliato
-                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
                                                         .child("Users").child(id_owner).child("Total").setValue(tmp);
-                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(mygroup_selected.getId())
+                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
                                                         .child("Users").child(id_owner).child("Currency").setValue(mycurrency_selected);
 
 
@@ -728,9 +746,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 tmp = -tmp; //todo sbagliato
                                                 FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                        .child(mygroup_selected.getId()).child("Users").child(name_user).child("Total").setValue(tmp);
+                                                        .child(id_group_iniziale).child("Users").child(name_user).child("Total").setValue(tmp);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                        .child(mygroup_selected.getId()).child("Users").child(name_user).child("Currency").setValue(mycurrency_selected);
+                                                        .child(id_group_iniziale).child("Users").child(name_user).child("Currency").setValue(mycurrency_selected);
 
 
                                             }
@@ -811,7 +829,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         //Spinner
         //Spinner
 
-        Spinner dropdown = (Spinner)findViewById(R.id.Group_newexpense);
+
 
         dropdownC = (Spinner)findViewById(R.id.new_expense_currency_spinner);
 
@@ -888,35 +906,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         ArrayAdapter<NomeDovuto> adapter = new ArrayAdapter<NomeDovuto>(this, android.R.layout.simple_spinner_item,items_nomi_gruppi);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        dropdown.setAdapter(adapter);
-
-        //Listener
-
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v,
-                                       int position, long id) {
-                // On selecting a spinner item
-                id_group = (NomeDovuto) adapter.getItemAtPosition(position);
-
-                // Showing selected spinner item
-
-
-                //carica gli utenti e mette le cose per i nuovi bottoni
-
-                    cercareUtentiDelGruppo(id_group,position);
-
-
-                    chooseButton(id_group,position);
-
-
-
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
 
 
 
@@ -1320,26 +1309,12 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-    private void cercareUtentiDelGruppo(NomeDovuto nm, int pos){
-
-        if(pos==0) {
-
-            button_pagatoda.setText("");
+    private void cercareUtentiDelGruppo(){
 
 
-            button_pagatoda.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
 
-                }
-
-            });
-        }
-        else {
-
-
-            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(nm.getId()).child("Users");
+            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale).child("Users");
 
             databaseReference10.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -1490,7 +1465,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-    }
 
 
 
@@ -1500,28 +1474,14 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-    private void chooseButton(NomeDovuto nm, int pos) {
 
+    private void chooseButton() {
 
-
-
-        if(pos==0 ) {
-
-            button_divide.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                }
-
-            });
-        }
-        else {
 
             //selezionato un gruppo
 
 
-            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(nm.getId()).child("Users");
+            DatabaseReference databaseReference10 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale).child("Users");
 
             databaseReference10.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -1572,7 +1532,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                 Double total_amount = my_amount; // todo
                                 Double personal_amount = (Double) (total_amount / utenti_gruppo2.size());
-                                personal_amount = Double.parseDouble(String.format("%.2f",personal_amount));
+                                String s = String.format("%.2f",personal_amount);
+                                s=s.replace(",",".");
+                                personal_amount = Double.parseDouble(s);
 
 
 
@@ -1742,7 +1704,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-    }
+
 
 
     private void divideOrSplit() {
@@ -1764,7 +1726,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
             Double tmp = myamount2 / utenti_gruppo2.size();
-            tmp = Double.parseDouble(String.format("%.2f",tmp));
+            String s = String.format("%.2f",tmp);
+            s=s.replace(",",".");
+            tmp = Double.parseDouble(s);
             int i=0;
 
             for(NomeDovuto nm2: utenti_gruppo2.values()){

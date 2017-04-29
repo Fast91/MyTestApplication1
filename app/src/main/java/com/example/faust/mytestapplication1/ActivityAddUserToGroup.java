@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -415,11 +416,9 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
         //ButtonSubmit per finire il gruppo ed andare alla main activity
-        ImageButton submitGroupUser = (ImageButton)  findViewById(R.id.buttonSubmit_activity_group_member);
+        Button submitGroupUser = (Button)  findViewById(R.id.buttonSubmit_activity_group_member);
 
 
-        submitGroupUser.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.tick_icon256x256, 100, 100));
 
 
         submitGroupUser.setOnClickListener(new View.OnClickListener() {

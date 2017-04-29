@@ -59,10 +59,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        buttonDelete= (ImageButton)  findViewById(R.id.buttonDeleteImage_activity_group);
 
-        buttonDelete.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.delete480x385, 100, 100));
 
 
         buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto_activity_group);

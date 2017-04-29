@@ -175,5 +175,6 @@
     <string name="textview_payment">Payment</string>
     <string name="textview_addGroup">Add Group</string>
     <string name="textview_addExpense">Add Expense</string>
+    <string name="save_string">SAVE</string>
 
 </resources>

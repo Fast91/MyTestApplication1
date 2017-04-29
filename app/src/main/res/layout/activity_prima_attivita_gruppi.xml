@@ -132,7 +132,7 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
 
-        android:background="@drawable/buttoncircular"
+        android:background="@drawable/buttoncirculartransparent_image"
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp"
 

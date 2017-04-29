@@ -9,20 +9,45 @@
 
 
 
-    <TextView
 
-        android:textAppearance="?android:attr/textAppearanceLarge"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:textAlignment="textStart"
-        android:gravity="start|center_vertical"
-        android:text="@string/textview_addUserToGroup"
-        android:paddingLeft="10dp"
-        android:textStyle="bold"
+        android:orientation="horizontal">
 
-        android:background="@color/BreakingMADLightGreen"
 
-        />
+        <TextView
+
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:textAlignment="textStart"
+            android:gravity="start|center_vertical"
+            android:text="@string/textview_addUserToGroup"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:background="@color/BreakingMADLightGreen"
+            android:layout_weight="1"
+
+            />
+
+
+        <Button
+            android:id="@+id/buttonSubmit_activity_group_member"
+            android:layout_width="200sp"
+            android:layout_height="match_parent"
+            android:background="@color/BreakingMADLightGreen"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/save_string"
+            android:layout_weight="1"
+            />
+
+
+
+
+    </LinearLayout>
+
 
 
 
@@ -54,65 +79,69 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:paddingTop="5sp"
-        android:layout_weight="8"/>
+        android:layout_weight="8"
+        android:gravity="center"/>
 
     </LinearLayout>
 
 
-    <!--android:layout_width="260dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/edittextbackground"
-        android:ems="10"-->
 
-    <EditText
-        android:id="@+id/memberMail_activity_group_members"
 
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="20dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/edittextbackground"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:hint="@string/activity_group_member_mail"
-        android:imeOptions="actionNext"
-        android:inputType="text"
-        android:maxLength="50"
-        android:maxLines="1"
-        android:nextFocusDown="@+id/pass_reg"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@android:color/black"
-        android:textSize="15dp"/>
-
-    <ImageButton
-        android:id="@+id/activity_group_members_addmember"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
+        android:layout_height="100sp"
+        android:orientation="horizontal"
         android:layout_margin="10sp"
-        android:layout_gravity="center"
-        android:background="#ffff"
-        />
+        android:layout_gravity="center">
+
+
+        <EditText
+            android:id="@+id/memberMail_activity_group_members"
+            android:hint="@string/activity_group_member_mail"
+            android:background="@drawable/edittextbackground"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:inputType="text"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:layout_height="50sp"
+            android:textAlignment="textStart"
+            android:gravity="start|center_vertical"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textCursorDrawable="@android:color/black"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+
+            />
+
+
+        <ImageButton
+            android:id="@+id/activity_group_members_addmember"
+            android:layout_width="200sp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/save_string"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:layout_margin="5sp"
+            android:padding="2sp"
+            />
 
 
 
-            <ImageButton
-                android:id="@+id/buttonSubmit_activity_group_member"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="20sp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/buttoncirculartransparent"
-                android:scaleType="fitXY"
-                />
+
+    </LinearLayout>
+
+
+
+
+
+
 
     <android.support.v7.widget.RecyclerView
         xmlns:tools="http://schemas.android.com/tools"
