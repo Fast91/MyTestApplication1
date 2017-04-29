@@ -102,7 +102,7 @@ myr=view.getResources();
             }
             else{
 
-                todoView.setText(R.string.tideve);
+                todoView.setText(R.string.tideve2);
                 todoView.setTextColor(Color.parseColor("#08a008"));
 
             }

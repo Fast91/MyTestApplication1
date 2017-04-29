@@ -146,7 +146,7 @@
     <string name="addUserToGroup_menu">Aggiungi Utente</string>
     <string name="modifyGroup_menu">Modifica Gruppo</string>
     <string name="deleteGroup_menu">Elimina Gruppo</string>
-    <string name="primaAttivita_group">GRUPPI</string>
+    <string name="primaAttivita_group">I TUOI GRUPPI</string>
     <string name="open_drawer">OPEN</string>
     <string name="close_drawer">CLOSE</string>
 
@@ -157,6 +157,8 @@
     <string name="textview_addExpense">Aggiungi Spesa</string>
     <string name="save_string">SALVA</string>
     <string name="tideve">Ti deve</string>
+    <string name="tideve2">Devi Ricevere</string>
     <string name="devi">Devi</string>
+    <string name="textview_detail_Expense">Dettaglio Spesa</string>
 
 </resources>

@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.*;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class UsersGroupListFragment extends Fragment{
     private MyUsersGroupRecyclerViewAdapter adapter;
     private AppCompatActivity myactivity;
 
-    private ImageView profile_image;
+    private com.makeramen.roundedimageview.RoundedImageView profile_image;
     private int mColumnCount=1;
 
     String id_group, name_group;
@@ -111,7 +112,9 @@ public class UsersGroupListFragment extends Fragment{
 
 
 
-        profile_image = (ImageView) activity.findViewById(R.id.row1_image1);
+        profile_image = (com.makeramen.roundedimageview.RoundedImageView) activity.findViewById(R.id.row1_image1);
+
+        profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                 profile_image.setOnClickListener(new View.OnClickListener() {
 
@@ -261,7 +264,7 @@ public class UsersGroupListFragment extends Fragment{
                         tv.setTextColor(Color.parseColor("#08a008"));
 
                         TextView tv2= (TextView) activity.findViewById(R.id.row1_todo);
-                        tv2.setText(R.string.tideve);
+                        tv2.setText(R.string.tideve2);
 
                         tv2.setTextColor(Color.parseColor("#08a008"));
 

@@ -89,7 +89,10 @@ public class ActivityGroupListFragment extends Fragment {
 
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
-        profile_image = (ImageView) myactivity.findViewById(R.id.row1_image1);
+
+        profile_image = (com.makeramen.roundedimageview.RoundedImageView) myactivity.findViewById(R.id.row1_image1);
+
+        profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         profile_image.setOnClickListener(new View.OnClickListener() {
 
             @Override

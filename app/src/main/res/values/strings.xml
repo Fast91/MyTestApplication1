@@ -161,7 +161,7 @@
     <string name="addUserToGroup_menu">Add User To Group</string>
     <string name="modifyGroup_menu">Modify Group</string>
     <string name="deleteGroup_menu">Delete Group</string>
-    <string name="primaAttivita_group">GROUPS</string>
+    <string name="primaAttivita_group">YOUR GROUPS</string>
     <string name="open_drawer">OPEN</string>
     <string name="close_drawer">CLOSE</string>
     <string name="title_activity_ddddddddd">dddddddddActivity</string>
@@ -176,7 +176,10 @@
     <string name="textview_addGroup">Add Group</string>
     <string name="textview_addExpense">Add Expense</string>
     <string name="tideve">Owes you</string>
+    <string name="tideve2">Owes you</string>
     <string name="devi">You borrowed</string>
     <string name="save_string">SAVE</string>
+
+    <string name="textview_detail_Expense">Detail Expense</string>
 
 </resources>

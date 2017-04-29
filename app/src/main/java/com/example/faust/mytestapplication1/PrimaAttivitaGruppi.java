@@ -159,7 +159,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                     tv.setTextColor(Color.parseColor("#08a008"));
 
                     TextView tv2= (TextView) findViewById(R.id.row1_todo);
-                    tv2.setText(R.string.tideve);
+                    tv2.setText(R.string.tideve2);
 
                     tv2.setTextColor(Color.parseColor("#08a008"));
                 }
@@ -332,7 +332,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
         addgroup.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.grouplus, 100, 100));
+               decodeSampledBitmapFromResource(getResources(), R.drawable.grouplus, 100, 100));
 
 
 
