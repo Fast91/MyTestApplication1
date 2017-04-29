@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="bottom"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
-    android:background="#f0f0f0"
-    android:orientation="vertical">
+    android:layout_height="120dp"
+    android:background="@drawable/menuprof"
+    android:padding="8dp" >
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/realphoto"/>
 
-    <TextView
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_height="80dp"
+        android:layout_width="80dp"
+        android:id="@+id/menu_profile_image"
+        android:scaleType="fitCenter"
+        app:riv_border_width="2dip"
+        app:riv_border_color="#333333"
+        app:riv_oval="true"
+        app:riv_mutate_background="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center_vertical"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="La mia APP"
-        android:textSize="14sp"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:paddingBottom="4dp"
-        android:id="@+id/miaapp" />
+        android:layout_height="42dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/menu_profile_image"
+        android:orientation="vertical" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:id="@+id/menu_profile_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_gravity="start"
+            android:layout_marginTop="5sp"
+            android:layout_marginLeft="10sp"/>
+
+
+    </LinearLayout>
 </RelativeLayout>

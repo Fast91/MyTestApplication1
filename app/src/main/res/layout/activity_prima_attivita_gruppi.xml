@@ -131,7 +131,7 @@
         android:id="@+id/b5_addgroup"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:padding="12dp"
+
         android:background="@drawable/buttoncircular"
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp"

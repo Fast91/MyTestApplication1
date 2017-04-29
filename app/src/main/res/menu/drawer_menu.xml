@@ -2,19 +2,48 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/inbox"
-            android:checked="false"
-            android:title="Nuove Richieste"/>
 
         <item
-            android:id="@+id/preferiti"
-            android:checked="false"
-            android:title="Preferiti" />
+            android:id="@+id/action_myprofile"
+            android:title="@string/profile_menu"
+
+
+
+            />
 
         <item
-            android:id="@+id/sent_mail"
-            android:checked="false"
-            android:title="Richieste Inviate" />
+            android:id="@+id/action_invitation"
+            android:title="@string/invitation_menu"
+
+
+
+            />
+      
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/setting_menu"
+
+            />
+
+
+
+        <item
+            android:id="@+id/action_contactus"
+            android:title="@string/contact_menu"
+
+
+
+            />
+
+
+
+        <item
+            android:id="@+id/action_logout"
+            android:title="@string/logout_menu"
+
+
+
+            />
+
     </group>
 </menu>

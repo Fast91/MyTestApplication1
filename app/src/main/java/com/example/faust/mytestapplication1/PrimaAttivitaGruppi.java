@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.support.design.internal.NavigationMenuItemView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,12 +22,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,12 +44,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.*;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 public class PrimaAttivitaGruppi extends AppCompatActivity {
 
@@ -63,6 +69,9 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     private com.makeramen.roundedimageview.RoundedImageView profile_image;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private RoundedImageView imageprofile;
+    private TextView nameprofile;
+    private boolean isInSideClicked=false;
 
 
     @Override
@@ -111,8 +120,9 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
             }
         });
-        getandSetImage();
 
+        getandSetImage();
+        getandSetImage2();
 
 
         DatabaseReference databaseReference;
@@ -532,6 +542,9 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                drawerLayout.closeDrawers();
+
 
 
 
@@ -539,44 +552,52 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                 if (menuItem.isChecked()) menuItem.setChecked(false);
                 else menuItem.setChecked(true);
 
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
+
+
+                int res_id = menuItem.getItemId();
+
 
                 //Check to see which item was clicked and perform the appropriate action.
-                switch (menuItem.getItemId()) {
-                    /*
+                if(res_id==R.id.action_settings){
 
-                    case R.id.posts:
-                        PostListFragmentWebView postListFragment = new PostListFragmentWebView();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frame, postListFragment)
-                                .commit();
-                        return true;
+                    //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
 
-                    case R.id.pages:
-                        PageListFragmentWebView pagetListFragment = new PageListFragmentWebView();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frame, pagetListFragment)
-                                .commit();
-                        return true;
-
-                    case R.id.blog:
-                        BlogInfoFragmentWebView blogInfoFragment = new BlogInfoFragmentWebView();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frame, blogInfoFragment)
-                                .commit();
-                        return true;
-
-                    default:
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.drawer_error), Toast.LENGTH_SHORT).show();
-                        return true;
-                        */
-
-                    default:
-                        Toast.makeText(PrimaAttivitaGruppi.this, "ooko", Toast.LENGTH_SHORT).show();
-                        return true;
+                    startActivity(new Intent(PrimaAttivitaGruppi.this, SettingActivity.class));
 
                 }
+
+                if(res_id==R.id.action_contactus){
+
+                    //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(PrimaAttivitaGruppi.this, ContactActivity.class));
+
+                }
+
+
+                if(res_id==R.id.action_myprofile){
+                    //logging out the user
+                    //starting login activity
+                    startActivity(new Intent(PrimaAttivitaGruppi.this, ReadProfileActivity.class));
+                }
+
+                if(res_id==R.id.action_invitation){
+                    //logging out the user
+                    //starting login activity
+                    startActivity(new Intent(PrimaAttivitaGruppi.this, ActivityInvitation.class));
+                }
+
+                if(res_id==R.id.action_logout){
+                    //logging out the user
+                    firebaseAuth.signOut();
+                    //closing activity
+                    finish();
+                    //starting login activity
+                    startActivity(new Intent(PrimaAttivitaGruppi.this, LoginActivity.class));
+                }
+
+                return true;
+
 
             }
         });
@@ -623,12 +644,11 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
             mDrawerToggle.setDrawerIndicatorEnabled(false);
 
 
+
         }
         else{
 
             mDrawerToggle.setDrawerIndicatorEnabled(true);
-
-
 
             drawerLayout.closeDrawers();
 
@@ -647,6 +667,102 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     }
 
 
+    private void getandSetImage2() {
+
+        //getImage of user
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.menulaterale);
+        View headerView = navigationView.inflateHeaderView(R.layout.drawer_top);
+
+
+
+        imageprofile = (RoundedImageView) headerView.findViewById(R.id.menu_profile_image);
+        imageprofile.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        nameprofile = (TextView) headerView.findViewById(R.id.menu_profile_name);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                nameprofile.setText(dataSnapshot.child("Name").getValue(String.class));
+                final String image = dataSnapshot.child("Image").getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            imageprofile.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(PrimaAttivitaGruppi.this)
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(imageprofile);
+
+
+
+
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+
+                    imageprofile.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(PrimaAttivitaGruppi.this, FullScreenImage.class);
+
+                            imageprofile.buildDrawingCache();
+                            Bitmap image2= imageprofile.getDrawingCache();
+
+                            Bundle extras = new Bundle();
+                            extras.putParcelable("imagebitmap", image2);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
+                }
+
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
 
 
 

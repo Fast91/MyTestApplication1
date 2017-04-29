@@ -18,8 +18,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -46,6 +49,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.*;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -61,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
     String id_group, name_group;
     private boolean bilancio_0;
     private int count_fatti;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private RoundedImageView imageprofile;
+    private TextView nameprofile;
+    private boolean isInSideClicked=false;
 
 
     @Override
@@ -95,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
         //FIREBASE
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+        provoMenu();
+
 
         //if the user is not logged in
         //that means current user will return null
@@ -111,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
         //getandSetImage();
 
         profile_image = (ImageView) findViewById(R.id.row1_image1);
+
         getandSetImage();
+        getandSetImage2();
 
 
 
@@ -531,6 +545,26 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+
+
+            return super.onOptionsItemSelected(item);
+        }
+        else{
+
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+
+            drawerLayout.closeDrawers();
+
+
+
+        }
+
+        // Handle your other action bar items...
+
+
+
         return true;
     }
 
@@ -752,6 +786,239 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
+
+
+    private void provoMenu(){
+
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+        // update the actionbar to show the up carat/affordance
+
+
+
+
+        //  getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back
+
+        //Initializing NavigationView
+        NavigationView navigationView = (NavigationView) findViewById(R.id.menulaterale);
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+                drawerLayout.closeDrawers();
+
+
+
+
+                //Checking if the item is in checked state or not, if not set it to checked state.
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+
+
+                int res_id = menuItem.getItemId();
+
+
+                //Check to see which item was clicked and perform the appropriate action.
+                if(res_id==R.id.action_settings){
+
+                    //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+
+                }
+
+                if(res_id==R.id.action_contactus){
+
+                    //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(MainActivity.this, ContactActivity.class));
+
+                }
+
+
+                if(res_id==R.id.action_myprofile){
+                    //logging out the user
+                    //starting login activity
+                    startActivity(new Intent(MainActivity.this, ReadProfileActivity.class));
+                }
+
+                if(res_id==R.id.action_invitation){
+                    //logging out the user
+                    //starting login activity
+                    startActivity(new Intent(MainActivity.this, ActivityInvitation.class));
+                }
+
+                if(res_id==R.id.action_logout){
+                    //logging out the user
+                    firebaseAuth.signOut();
+                    //closing activity
+                    finish();
+                    //starting login activity
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+
+                return true;
+
+
+            }
+        });
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+
+
+                invalidateOptionsMenu();
+            }
+        };
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        //mDrawerToggle.syncState();
+
+
+
+    }
+
+
+
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+
+    private void getandSetImage2() {
+
+        //getImage of user
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.menulaterale);
+        View headerView = navigationView.inflateHeaderView(R.layout.drawer_top);
+
+
+
+        imageprofile = (com.makeramen.roundedimageview.RoundedImageView) headerView.findViewById(R.id.menu_profile_image);
+        imageprofile.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        nameprofile = (TextView) headerView.findViewById(R.id.menu_profile_name);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid());
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //if != null SET
+
+                nameprofile.setText(dataSnapshot.child("Name").getValue(String.class));
+                final String image = dataSnapshot.child("Image").getValue(String.class);
+
+                if (image != null) {
+
+                    if (!image.contains("http")) {
+                        try {
+                            Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
+                            //Bitmap imageCirle = getclip(imageBitmaptaken);
+                            imageprofile.setImageBitmap(imageBitmaptaken);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+
+
+                        Picasso.with(MainActivity.this)
+                                .load(image)
+                                .fit()
+                                .centerCrop()
+                                .into(imageprofile);
+
+
+
+
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
+
+
+
+                    }
+
+
+                    imageprofile.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
+
+                            imageprofile.buildDrawingCache();
+                            Bitmap image2= imageprofile.getDrawingCache();
+
+                            Bundle extras = new Bundle();
+                            extras.putParcelable("imagebitmap", image2);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
+                }
+
+
+
+            }
+
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
+
+
+
+
 
 
 }

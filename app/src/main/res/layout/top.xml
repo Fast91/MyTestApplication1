@@ -3,7 +3,7 @@
  <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="120sp"
+        android:layout_height="140sp"
         android:id="@+id/tableLayout0"
 
          android:paddingBottom="5dp"
@@ -118,20 +118,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="100sp"
         android:orientation="horizontal"
         android:background="#F5F5F5">
 
         <ImageView
             android:id="@+id/row1_image1"
 
-            android:layout_height="70sp"
             android:layout_width="match_parent"
-            android:layout_span="2"
-            android:layout_marginTop="2dp"
+            android:layout_height="70sp"
             android:layout_marginBottom="2dp"
-            android:layout_weight="1"/>
-           <!--android:src="@drawable/realphoto"-->
+            android:layout_marginTop="2dp"
+            android:layout_span="2"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+        <!--android:src="@drawable/realphoto"-->
 
 
 

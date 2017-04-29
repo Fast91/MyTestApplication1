@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name=".ActivityExpense"
-            android:configChanges="screenSize|keyboardHidden">
+            android:configChanges="screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -56,26 +57,29 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"
+                    />
             </intent-filter>
         </activity>
         <activity
             android:name=".PaymentActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityAddGroup" />
-        <activity android:name=".ActivityAddUserToGroup" />
+        <activity android:name=".ActivityAddGroup" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ActivityAddUserToGroup" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ActivityInvitation" />
         <activity android:name=".FullScreenImage" />
-        <activity android:name=".ManageGroupActivity" />
+        <activity android:name=".ManageGroupActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DeleteGroupActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ContactActivity" />
+        <activity android:name=".SettingActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ContactActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PrimaAttivitaGruppi" />
     </application>
 
