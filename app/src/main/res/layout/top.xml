@@ -1,117 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
-    <TableLayout
+ <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="120sp"
         android:id="@+id/tableLayout0"
 
          android:paddingBottom="5dp"
 
-        android:stretchColumns="*"
+            android:orientation="vertical"
 
             >
-    <!-- android:background="@android:color/white" -->
 
-        <TableRow
-            android:id="@+id/tableRow0"
-            android:layout_height="40sp"
-            android:layout_width="wrap_content"
-            >
 
-            <!--<Button
-                android:id="@+id/b1"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:orientation="horizontal">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="35sp"
-                android:layout_span="2"
-                android:text="@string/b1_string"
-                style="@style/textButton"
-                android:background="@drawable/buttonshape"
-                android:layout_marginRight="1dp"
+                android:layout_height="40sp"
+                android:layout_weight="1">
 
-                />-->
-            <Button
-            android:id="@+id/bGlobal"
-            android:layout_width="match_parent"
-            android:layout_height="40sp"
-            android:padding="4sp"
-            android:layout_span="2"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-                android:background="#81c784"
+                <Button
+                    android:id="@+id/bGlobal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40sp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:background="#81c784"
+                    android:padding="4sp"
+                android:scaleType="fitCenter"
                 android:text="@string/button_user_group"
-                android:textColor="#000"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textColor="#000" />
 
-            <!--<Button
-                android:id="@+id/b2"
-                android:layout_width="match_parent"
-                android:layout_height="35sp"
-                android:layout_span="2"
-                android:text="@string/b2_string"
-                android:background="@drawable/buttonshape"
-
-                style="@style/textButton"
-                android:layout_marginRight="1dp"
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linear1"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#4caf50"
+                android:layout_alignParentBottom="true"
                 />
--->
 
-   <!--         <Button
-                android:layout_width="match_parent"
-                android:layout_height="35sp"
-                android:layout_span="2"
-                android:id="@+id/b3"
-                android:text="@string/b3_string"
 
-                style="@style/textButton"
-                android:background="@drawable/buttonshape"/>
--->
-            <Button
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_weight="1">
+
+
+                <Button
                 android:id="@+id/bActivities"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
-                android:padding="4sp"
                 android:layout_span="2"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:background="#81c784"
+                android:padding="4sp"
+                android:scaleType="fitCenter"
                 android:text="@string/button_attivita_group"
                 android:textAlignment="center"
-                android:textColor="#000"/>
+                android:textColor="#000" />
+
+                <LinearLayout
+
+                    android:id="@+id/linear2"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="4dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#000"></LinearLayout>
 
 
-            <Button
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_weight="1">
+
+                <Button
                 android:id="@+id/bGroups"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
-                android:padding="4sp"
                 android:layout_span="2"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
                 android:background="#81c784"
+                android:padding="4sp"
+                android:scaleType="fitCenter"
                 android:text="@string/button_grafico_group"
-                android:textColor="#000"
-                android:textAlignment="center"/>
-        </TableRow>
+                android:textAlignment="center"
+                android:textColor="#000" />
 
-    <TableRow
-        android:id="@+id/tableRow1"
+                <LinearLayout
+
+                    android:id="@+id/linear3"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="#4caf50"
+                    android:layout_alignParentBottom="true"></LinearLayout>
+
+
+            </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
+        android:layout_height="80sp"
+        android:orientation="horizontal"
+        android:background="#F5F5F5">
 
         <ImageView
             android:id="@+id/row1_image1"
 
-            android:layout_height="match_parent"
+            android:layout_height="70sp"
             android:layout_width="match_parent"
             android:layout_span="2"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"  />
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"/>
            <!--android:src="@drawable/realphoto"-->
 
 
@@ -126,7 +145,8 @@
             android:text="@string/global_string"
             android:textAlignment="center"
             android:textSize="28sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/row1_text2"
@@ -137,8 +157,10 @@
             android:paddingTop="5sp"
             android:text="@string/balance_string"
             android:textStyle="bold"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:layout_weight="1"/>
 
-    </TableRow>
+</LinearLayout>
 
-</TableLayout>
+
+   </LinearLayout>

@@ -14,6 +14,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ImageView profile_image;
     String id_group, name_group;
+    private boolean bilancio_0;
+    private int count_fatti;
 
 
     @Override
@@ -138,10 +143,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
-            // QUA INIZIALIZZO IL FINTO DB CON I DATI CHE AVEVA SCRITTO ROBERTO
 
-          //  bGlobal.setBackgroundColor(getResources().getColor(R.color.BreakingMADLightGreen));
+
+           // ((LinearLayout) findViewById(R.id.linear1)).setVisibility(LinearLayout.VISIBLE);
+           // ((LinearLayout) findViewById(R.id.linear2)).setVisibility(LinearLayout.INVISIBLE);
+           // ((LinearLayout) findViewById(R.id.linear3)).setVisibility(LinearLayout.INVISIBLE);
+
             bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+            bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+            bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+
 
 
 
@@ -469,10 +480,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -484,66 +491,48 @@ public class MainActivity extends AppCompatActivity {
 
     //-- azioni per il menù della tool_bar--
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int res_id=item.getItemId();
-        if(res_id==R.id.action_settings){
+        if(res_id==R.id.action_addUserToGroup){
 
-            //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
+            Intent intent=new Intent(MainActivity.this,ActivityAddUserToGroup.class);
+            intent.putExtra("ID_GROUP",id_group);
+            intent.putExtra("NAME_GROUP",name_group);
+            startActivity(intent);
 
-            startActivity(new Intent(this, SettingActivity.class));
+        }
+
+        if(res_id==R.id.action_modifyGroup){
+
+            Intent intent=new Intent(MainActivity.this,ManageGroupActivity.class);
+            intent.putExtra("ID_GROUP",id_group);
+            intent.putExtra("NAME_GROUP",name_group);
+            startActivity(intent);
+
+
 
         }
 
-        if(res_id==R.id.action_contactus){
+        if(res_id==R.id.action_deleteGroup){
 
-            //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.deletegroup_title)
+                    .setMessage(R.string.deletegroup_message)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            buttonDeleteGroup();
 
-            startActivity(new Intent(this, ContactActivity.class));
+                        }
+                    }).create().show();
 
-        }
-        /*
-
-        if(res_id==R.id.action_share){
-
-            Toast.makeText(getApplicationContext(),R.string.toast_mess_share,Toast.LENGTH_LONG).show();
-
-        }*/
-
-        if(res_id==R.id.action_myprofile){
-            //logging out the user
-            //starting login activity
-            startActivity(new Intent(this, ReadProfileActivity.class));
-        }
-
-        if(res_id==R.id.action_invitation){
-            //logging out the user
-            //starting login activity
-            startActivity(new Intent(this, ActivityInvitation.class));
-        }
-
-        if(res_id==R.id.action_logout){
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
         }
 
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -618,6 +607,151 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void buttonDeleteGroup(){
+
+        //per ogni utente controllare se tutti i bilanci sono 0
+        // se ne trovo uno diverso da 0 non posso cancellare altrimenti
+        // cancello il gruppo per ogni utente
+        //cancello il gruppo nei gruppi
+        //riporto nella global
+
+
+        //step1 prendere tutti gli utenti di quel gruppo
+        //user group
+
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                bilancio_0 = true;
+                final ArrayList<String> id_utenti = new ArrayList<String>();
+
+
+                for(DataSnapshot take: dataSnapshot.getChildren()){
+                    //utenti
+                    //
+                    id_utenti.add(take.getKey());
+                }
+
+
+                //dopo aver preso gli utenti controllare
+                //se per ogni di questo utente il bilancio di quel gruppo e' 0 cancello altrimenti TOAST
+
+                count_fatti=0;
+
+                for(String id : id_utenti){
+
+                    DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
+
+                    databaseReference2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Double bilancio_singolo = dataSnapshot.getValue(Double.class);
+
+
+                            if(bilancio_singolo!=null) {
+                                if (bilancio_singolo > 0.0) {
+                                    bilancio_0 = false;
+                                }
+                            }
+
+                            count_fatti++;
+
+
+
+                            if(count_fatti==id_utenti.size()){
+
+                                if(bilancio_0==true){
+                                    //posso eliminare
+                                    //   Toast.makeText(getContext(),R.string.yes_delete_group,Toast.LENGTH_LONG).show();
+
+                                    //dovrei eliminarlo dal gruppo e da tutti gli utenti
+
+
+                                    //Remove
+
+
+
+                                    String id_group2 = new String(id_group);
+
+
+                                    finish();
+
+
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                    ref.child("Groups").child(id_group2).removeValue();
+
+
+
+                                    //problema concorrenza se lo mando in una attivita che vuole usare questo listener sui gruppis
+                                    for(String id : id_utenti) {
+
+                                        String id2 = new String(id);
+                                        ref.child("Users").child(id2).child("Groups").child(id_group2).removeValue();
+                                    }
+
+
+
+
+                                    Intent intent=new Intent(MainActivity.this,DeleteGroupActivity.class);
+                                    intent.putExtra("ID_GROUP",id_group);
+                                    intent.putExtra("NAME_GROUP",name_group);
+                                    startActivity(intent);
+                                    // activity.finish(); //todoprovo
+
+
+
+                                }
+                                else{
+                                    //qualcuno lo ha diverso da 0 mando il toast
+
+                                    Toast.makeText(MainActivity.this,R.string.no_delete_group,Toast.LENGTH_LONG).show();
+
+                                }
+
+
+
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
 
 
 }

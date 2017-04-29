@@ -4,51 +4,31 @@
    >
 
     <item
-        android:id="@+id/action_myprofile"
-        android:title="@string/profile_menu"
+        android:id="@+id/action_addUserToGroup"
+        android:title="@string/addUserToGroup_menu"
 
 
 
         />
 
     <item
-        android:id="@+id/action_invitation"
-        android:title="@string/invitation_menu"
+        android:id="@+id/action_modifyGroup"
+        android:title="@string/modifyGroup_menu"
 
 
 
         />
-<!--
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/share_menu"
-
-
-        />-->
-    <item
-    android:id="@+id/action_settings"
-        android:title="@string/setting_menu"
-
-    />
-
-
 
     <item
-    android:id="@+id/action_contactus"
-    android:title="@string/contact_menu"
-
-
-
-    />
-
-
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="@string/logout_menu"
+        android:id="@+id/action_deleteGroup"
+        android:title="@string/deleteGroup_menu"
 
 
 
         />
+
+
+
+
 
 </menu>

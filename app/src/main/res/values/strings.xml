@@ -158,4 +158,11 @@
     <string name="button_attivita_group">ACTIVITIES</string>
     <string name="button_grafico_group">STATISTICS</string>
 
+    <string name="addUserToGroup_menu">Add User To Group</string>
+    <string name="modifyGroup_menu">Modify Group</string>
+    <string name="deleteGroup_menu">Delete Group</string>
+    <string name="primaAttivita_group">GROUPS</string>
+    <string name="open_drawer">OPEN</string>
+    <string name="close_drawer">CLOSE</string>
+
 </resources>

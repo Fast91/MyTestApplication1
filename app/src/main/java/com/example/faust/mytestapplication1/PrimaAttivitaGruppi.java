@@ -7,14 +7,19 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.design.internal.NavigationMenuItemView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +61,8 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     private List<MyGroup> groups;
     private HashMap<String,String> id_gruppo;
     private com.makeramen.roundedimageview.RoundedImageView profile_image;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
 
     @Override
@@ -64,6 +72,8 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
         getSupportActionBar().setElevation(0);
+
+        provoMenu();
 
         id_gruppo=new HashMap<>();
 
@@ -494,6 +504,147 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                 }).create().show();
     }
 
+
+
+
+
+
+
+    private void provoMenu(){
+
+
+       drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+        // update the actionbar to show the up carat/affordance
+
+
+
+
+        //  getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back
+
+        //Initializing NavigationView
+        NavigationView navigationView = (NavigationView) findViewById(R.id.menulaterale);
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+
+
+
+                //Checking if the item is in checked state or not, if not set it to checked state.
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                //Closing drawer on item click
+                drawerLayout.closeDrawers();
+
+                //Check to see which item was clicked and perform the appropriate action.
+                switch (menuItem.getItemId()) {
+                    /*
+
+                    case R.id.posts:
+                        PostListFragmentWebView postListFragment = new PostListFragmentWebView();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame, postListFragment)
+                                .commit();
+                        return true;
+
+                    case R.id.pages:
+                        PageListFragmentWebView pagetListFragment = new PageListFragmentWebView();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame, pagetListFragment)
+                                .commit();
+                        return true;
+
+                    case R.id.blog:
+                        BlogInfoFragmentWebView blogInfoFragment = new BlogInfoFragmentWebView();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame, blogInfoFragment)
+                                .commit();
+                        return true;
+
+                    default:
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.drawer_error), Toast.LENGTH_SHORT).show();
+                        return true;
+                        */
+
+                    default:
+                        Toast.makeText(PrimaAttivitaGruppi.this, "ooko", Toast.LENGTH_SHORT).show();
+                        return true;
+
+                }
+
+            }
+        });
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+
+
+                invalidateOptionsMenu();
+            }
+        };
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        //mDrawerToggle.syncState();
+
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle
+        // If it returns true, then it has handled
+        // the nav drawer indicator touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+
+
+        }
+        else{
+
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+
+
+
+            drawerLayout.closeDrawers();
+
+
+        }
+
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 
 
 
