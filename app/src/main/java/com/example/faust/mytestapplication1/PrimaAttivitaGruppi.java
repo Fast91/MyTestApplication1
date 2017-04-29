@@ -496,65 +496,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
 
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
-    }
-
-    //-- azioni per il menù della tool_bar--
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int res_id=item.getItemId();
-        if(res_id==R.id.action_settings){
-
-            //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
-
-            startActivity(new Intent(this, SettingActivity.class));
-
-        }
-
-        if(res_id==R.id.action_contactus){
-
-            //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
-
-            startActivity(new Intent(this, ContactActivity.class));
-
-        }
-        /*
-
-        if(res_id==R.id.action_share){
-
-            Toast.makeText(getApplicationContext(),R.string.toast_mess_share,Toast.LENGTH_LONG).show();
-
-        }*/
-
-        if(res_id==R.id.action_myprofile){
-            //logging out the user
-            //starting login activity
-            startActivity(new Intent(this, ReadProfileActivity.class));
-        }
-
-        if(res_id==R.id.action_invitation){
-            //logging out the user
-            //starting login activity
-            startActivity(new Intent(this, ActivityInvitation.class));
-        }
-
-        if(res_id==R.id.action_logout){
-            //logging out the user
-            firebaseAuth.signOut();
-            //closing activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-
-        return true;
-    }
 
 
 

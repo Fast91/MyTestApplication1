@@ -311,6 +311,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             Name=myusers.get(keyowner);
                             Total=myamount/count_users;
+                            Total = Double.parseDouble(String.format("%.2f",Total));
 
                             //Ricerca di quanto ha pagato l'owner
 
@@ -415,6 +416,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     //per gli altri devono dare -
 
                      Total2= myamount/count_users; // per persona
+                                Total2 = Double.parseDouble(String.format("%.2f",Total2));
                     //First sarebbe in questo momento chi paga owner
 
 
@@ -521,6 +523,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     ////////////////////////////////////////////
 
                     Total= myamount/count_users; // per persona
+                                Total = Double.parseDouble(String.format("%.2f",Total));
                     //First sarebbe in questo momento chi paga owner
 
 
@@ -1569,6 +1572,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                 Double total_amount = my_amount; // todo
                                 Double personal_amount = (Double) (total_amount / utenti_gruppo2.size());
+                                personal_amount = Double.parseDouble(String.format("%.2f",personal_amount));
+
 
 
                                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(ActivityExpense.this);
@@ -1759,6 +1764,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
             Double tmp = myamount2 / utenti_gruppo2.size();
+            tmp = Double.parseDouble(String.format("%.2f",tmp));
             int i=0;
 
             for(NomeDovuto nm2: utenti_gruppo2.values()){
