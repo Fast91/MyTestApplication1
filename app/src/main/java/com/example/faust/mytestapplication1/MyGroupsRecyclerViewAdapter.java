@@ -67,6 +67,7 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
         public final ImageView imageView;
         public final TextView nameView;
         public final TextView balanceView;
+        public final TextView todoView;
         public final View itemView;
         public final Resources myr;
 
@@ -76,6 +77,7 @@ public class MyGroupsRecyclerViewAdapter extends RecyclerView.Adapter<MyGroupsRe
             imageView = (ImageView) view.findViewById(R.id.image_groups_group);
             nameView = (TextView) view.findViewById(R.id.name_groups_group);
             balanceView = (TextView) view.findViewById(R.id.money_groups_group);
+            todoView=(TextView)view.findViewById(R.id.todo_groups_group);
 myr=view.getResources();
         }
 
@@ -91,6 +93,18 @@ myr=view.getResources();
                 balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
             } else {
                 balanceView.setTextColor(Color.parseColor("#08a008"));
+            }
+
+            if(u.getDovuto().toString().charAt(0) == '-'){
+                todoView.setText(R.string.devi);
+                todoView.setTextColor(Color.RED);
+
+            }
+            else{
+
+                todoView.setText(R.string.tideve);
+                todoView.setTextColor(Color.parseColor("#08a008"));
+
             }
 
 

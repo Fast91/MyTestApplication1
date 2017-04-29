@@ -156,5 +156,7 @@
     <string name="textview_addGroup">Aggiungi Gruppo</string>
     <string name="textview_addExpense">Aggiungi Spesa</string>
     <string name="save_string">SALVA</string>
+    <string name="tideve">Ti deve</string>
+    <string name="devi">Devi</string>
 
 </resources>

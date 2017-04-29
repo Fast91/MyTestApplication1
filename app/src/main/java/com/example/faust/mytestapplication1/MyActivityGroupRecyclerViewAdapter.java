@@ -87,6 +87,8 @@ myr=view.getResources();
                     decodeSampledBitmapFromResource(myr, R.drawable.giftboxred, 100, 100));
             nameView.setText(u.getName());
             balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
+
+
             categoryView.setText(u.getCategory());
         }
 
