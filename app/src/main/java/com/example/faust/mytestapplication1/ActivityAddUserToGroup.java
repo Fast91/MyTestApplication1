@@ -116,13 +116,13 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
                 EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
                  userMail = editTextUserMail.getText().toString();
-
+                userMail=userMail.trim();
                 if(!userMail.equals("")){
 
 
 
 
-
+                    userMail=userMail.toLowerCase();
                     //////////////////
                     /////
                     ///// DB cercare l'utente e controllare se esiste
