@@ -299,6 +299,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             String Name=mytitle;
                             Double Total=myamount;
+                            String sx = String.format("%.2f",myamount);
+                            sx=sx.replace(",",".");
+                            myamount = Double.parseDouble(sx);
                             final Double Amount=myamount;
                             String GroupId=id_group_iniziale;
 
@@ -336,6 +339,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 if(listato_id[i].equals(keyowner)){
 
                                     Total=(amountBox3[i]);
+                                    s = String.format("%.2f",Total);
+                                    s=s.replace(",",".");
+                                    Total = Double.parseDouble(s);
                                 }
 
 
@@ -360,6 +366,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                         if(listato_id[i].equals(in)){
 
                                             Total=amountBox3[i];
+                                            s = String.format("%.2f",Total);
+                                            s=s.replace(",",".");
+                                            Total = Double.parseDouble(s);
                                         }
 
 
@@ -392,6 +401,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     // key
                     Name = mytitle;
                     Total=myamount;
+                               s = String.format("%.2f",myamount);
+                                s=s.replace(",",".");
+                                Total = Double.parseDouble(s);
 
                     databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
                     databaseReference3.child(key).child("Total").setValue(Total);
@@ -407,6 +419,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                     Name = mytitle;
                     Total=myamount;
+                                s = String.format("%.2f",myamount);
+                                s=s.replace(",",".");
+                                Total = Double.parseDouble(s);
                     databaseReference4 = FirebaseDatabase.getInstance().getReference("Users");
                     //da fare per tutti gli utenti
 
@@ -1715,9 +1730,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
             EditText amount= (EditText) findViewById(R.id.Total_newexpense);
             String stringamount = amount.getText().toString();
+            stringamount=stringamount.replace(",",".");
             Double myamount2=0.0;
             if(!stringamount.equals("")) {
                 myamount2 = Double.parseDouble(stringamount);
+                String sx = String.format("%.2f",myamount2);
+                sx=sx.replace(",",".");
+                myamount2 = Double.parseDouble(sx);
             }
 
 
