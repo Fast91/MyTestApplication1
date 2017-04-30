@@ -484,7 +484,7 @@ public class PaymentFragment extends Fragment
                 String GroupId = mGroupId;
 
                 String Category=getString(R.string.payment_title);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 String Date=""+dateFormat.format(date);
 
