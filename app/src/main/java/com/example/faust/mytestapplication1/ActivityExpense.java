@@ -37,6 +37,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -55,6 +57,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class ActivityExpense extends AppCompatActivity implements View.OnClickListener{
@@ -65,6 +68,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private NomeDovuto mygroup_selected;
     private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
+
+
 
     private Double Total2;
     Spinner dropdownC;
@@ -462,68 +467,91 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                         //Prendermi il bilancio
                         ////////// INIZIO
                         ///////////////
-                        databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance");
+                        databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(name_user);//.child("GlobalBalance");
 
-
-                        //Read content data
-                        databaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
+                        ValueEventListener dbR5valueEventListener = new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                 bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
-                                currencyBilancioGlobale = (String) dataSnapshot.child("Currency").getValue(String.class);
 
-                                if (bilancioGlobale == null) {
-                                    bilancioGlobale = 0.0;
-                                }
-                                Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
-                                Log.d("EXPENSE", "Id: " + name_user);
-
-                                if(!name_user.equals(keyowner)){
-                                    //devo levare
-                                    //Ricerca di quanto ha pagato l'owner
-
-                                    for(int i=0;i<listato_id.length;i++){
-
-                                        if(listato_id[i].equals(name_user)){
-
-                                            Total2=amountBox3[i];
+                                databaseReference5.runTransaction(new Transaction.Handler()
+                                {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData)
+                                    {
+                                        //return null;
+                                        if(mutableData.getValue(String.class) == null)
+                                        {
+                                            return Transaction.success(mutableData);
                                         }
 
+                                        bilancioGlobale = (Double) mutableData.child("GlobalBalance").getValue(Double.class);
+                                        currencyBilancioGlobale = (String) mutableData.child("GlobalBalanceCurrency").getValue(String.class);
 
-                                    }
-
-
-
-                                    Double tmp= bilancioGlobale-Total2; //todo sbagliato
-                                  FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
-
-                                    //databaseReference5.removeEventListener(this);
-                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
-                                }
-                                else{
-                                    //sono chi ha pagato l'owner devo aggiungere
-
-                                    //Ricerca di quanto ha pagato l'owner
-
-                                    for(int i=0;i<listato_id.length;i++){
-
-                                        if(listato_id[i].equals(name_user)){
-
-                                            Total2=amountBox3[i];
+                                        if (bilancioGlobale == null) {
+                                            bilancioGlobale = 0.0;
                                         }
+                                        Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
+                                        Log.d("EXPENSE", "Id: " + name_user);
+
+                                        if(!name_user.equals(keyowner)){
+                                            //devo levare
+                                            //Ricerca di quanto ha pagato l'owner
+
+                                            for(int i=0;i<listato_id.length;i++){
+
+                                                if(listato_id[i].equals(name_user)){
+
+                                                    Total2=amountBox3[i];
+                                                }
 
 
+                                            }
+
+
+
+                                            Double tmp= bilancioGlobale-Total2; //todo sbagliato
+                                            /*FirebaseDatabase.getInstance().getReference("Users").child(name_user)*/mutableData.child("GlobalBalance").setValue(tmp);
+                                            //todo gestire currency se si permette di memorizzare altre valute oltre all'euro
+
+                                            //databaseReference5.removeEventListener(this);
+                                            Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
+                                        }
+                                        else{
+                                            //sono chi ha pagato l'owner devo aggiungere
+
+                                            //Ricerca di quanto ha pagato l'owner
+
+                                            for(int i=0;i<listato_id.length;i++){
+
+                                                if(listato_id[i].equals(name_user)){
+
+                                                    Total2=amountBox3[i];
+                                                }
+
+
+                                            }
+
+
+                                            Double tmp= bilancioGlobale+(Amount-Total2); //todo sbagliato
+                                            /*FirebaseDatabase.getInstance().getReference("Users").child(name_user)*/mutableData.child("GlobalBalance").setValue(tmp);
+                                            //todo gestire currency se si permette di memorizzare altre valute oltre all'euro
+
+                                            //databaseReference5.removeEventListener(this);
+                                            Log.d("EXPENSE", "bilancioGlobale+Total2: " + (tmp));
+                                        }
+                                        //databaseReference5.removeEventListener(this);
+                                        return Transaction.success(mutableData);
                                     }
 
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+                                    {
 
-                                    Double tmp= bilancioGlobale+(Amount-Total2); //todo sbagliato
-                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
+                                    }
+                                });
 
-                                    //databaseReference5.removeEventListener(this);
-                                    Log.d("EXPENSE", "bilancioGlobale+Total2: " + (tmp));
-                                }
-                                databaseReference5.removeEventListener(this);
+
 
                             }
 
@@ -532,16 +560,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             }
 
-                        });
+                        };
+
+                        //Read content data
+                        databaseReference5.addListenerForSingleValueEvent(dbR5valueEventListener);
 
 
                           ///////////// FINE BILANCIO GLOBALE
-
-
-
-
-
-
 
 
 
@@ -581,80 +606,108 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                bilanciodelgruppo= (Double) dataSnapshot.child("Total").getValue(Double.class);
-                                currencyBilancioDelGruppo = (String) dataSnapshot.child("Currency").getValue(String.class);
-
-
-                                if (bilanciodelgruppo == null) {
-                                    bilanciodelgruppo = 0.0;
-                                }
-
-
-
-                                if(!name_user.equals(keyowner)){
-                                    //devo levare
-
-                                    //Ricerca di quanto ha pagato l'owner
-
-                                    for(int i=0;i<listato_id.length;i++){
-
-                                        if(listato_id[i].equals(name_user)){
-
-                                            Total2=amountBox3[i];
+                                databaseReference6.runTransaction(new Transaction.Handler()
+                                {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData)
+                                    {
+                                        //return null;
+                                        if(mutableData.getValue() == null)
+                                        {
+                                            return Transaction.success(mutableData);
                                         }
 
 
-                                    }
 
-                                    //aggiorno il bilancio del gruppo
-                                    Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
-                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
-                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
-
-                                    //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
-
-                                    //adesso devo modificare a chi devo i soldi
+                                        bilanciodelgruppo= (Double) mutableData.child("Total").getValue(Double.class);
+                                        currencyBilancioDelGruppo = (String) mutableData.child("Currency").getValue(String.class);
 
 
-
-
-                                }
-                                else{
-                                    //sono chi ha pagato l'owner devo aggiungere
-
-                                    //Ricerca di quanto ha pagato l'owner
-
-                                    for(int i=0;i<listato_id.length;i++){
-
-                                        if(listato_id[i].equals(name_user)){
-
-                                            Total2=amountBox3[i];
+                                        if (bilanciodelgruppo == null) {
+                                            bilanciodelgruppo = 0.0;
                                         }
 
 
+
+                                        if(!name_user.equals(keyowner)){
+                                            //devo levare
+
+                                            //Ricerca di quanto ha pagato l'owner
+
+                                            for(int i=0;i<listato_id.length;i++){
+
+                                                if(listato_id[i].equals(name_user)){
+
+                                                    Total2=amountBox3[i];
+                                                }
+
+
+                                            }
+
+                                            //aggiorno il bilancio del gruppo
+                                            Double tmp= bilanciodelgruppo-Total2;//todo sbagliato
+                                            /*FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)*/mutableData.child("Total").setValue(tmp);
+                                            // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
+
+                                            //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
+
+                                            //adesso devo modificare a chi devo i soldi
+
+
+
+
+                                        }
+                                        else{
+                                            //sono chi ha pagato l'owner devo aggiungere
+
+                                            //Ricerca di quanto ha pagato l'owner
+
+                                            for(int i=0;i<listato_id.length;i++){
+
+                                                if(listato_id[i].equals(name_user)){
+
+                                                    Total2=amountBox3[i];
+                                                }
+
+
+                                            }
+
+                                            //aggiorno il bilancio del gruppo
+                                            Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
+                                            /*FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)*/mutableData.child("Total").setValue(tmp);
+                                            // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
+
+                                            //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
+
+
+                                            //adesso devo modificare da chi devo ricevere i soldi
+
+
+                                            //per tutti gli utenti a cui ho prestato soldi
+
+
+                                            //step 1 prendere il totale per quella persona
+
+
+                                            //step 2 aggiornalo
+
+
+                                        }
+
+                                        return Transaction.success(mutableData);
                                     }
 
-                                    //aggiorno il bilancio del gruppo
-                                    Double tmp= bilanciodelgruppo-Total2+myamount;//todo sbagliato
-                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
-                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+                                    {
 
-                                  //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
-
-
-                                    //adesso devo modificare da chi devo ricevere i soldi
+                                    }
+                                });
 
 
-                                    //per tutti gli utenti a cui ho prestato soldi
 
 
-                                    //step 1 prendere il totale per quella persona
-
-
-                                    //step 2 aggiornalo
-
-
-                                }
+                                // qui prima c'era la roba che ora sta nell'handler
 
 
 
@@ -695,6 +748,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
+
                                 id_owner=keyowner;
                                 for(final String name_user : myusers.keySet()) {
 
@@ -713,61 +767,112 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                                databaseReference7.runTransaction(new Transaction.Handler()
+                                                {
+                                                    @Override
+                                                    public Transaction.Result doTransaction(MutableData mutableData)
+                                                    {
+                                                        //return null;
+                                                        if(mutableData.getValue()==null)
+                                                        {
+                                                            // al momento niente...
+                                                        }
 
-                                                for (DataSnapshot persone : dataSnapshot.getChildren()) {
 
-                                                    Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : " + persone.getKey());
+                                                        for (MutableData persone : mutableData.getChildren()) {
 
-                                                }
+                                                            Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : " + persone.getKey());
 
-
-                                                Log.d("SINGOLO", " Provo a prendere il bilancio per quella persona: ");
+                                                        }
 
 
-                                                bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
-                                                currencyBilancioSingolo = (String) dataSnapshot.child(id_owner).child("Currency").getValue(String.class);
+                                                        Log.d("SINGOLO", " Provo a prendere il bilancio per quella persona: ");
 
-                                                if (bilanciosingolo == null) {
-                                                    bilanciosingolo = 0.0;
-                                                }
 
-                                                //Ricerca di quanto ha pagato l'owner
+                                                        bilanciosingolo = (Double) mutableData.child(id_owner).child("Total").getValue(Double.class);
+                                                        currencyBilancioSingolo = (String) mutableData.child(id_owner).child("Currency").getValue(String.class);
 
-                                                for(int i=0;i<listato_id.length;i++){
+                                                        if (bilanciosingolo == null) {
+                                                            bilanciosingolo = 0.0;
+                                                        }
 
-                                                    if(listato_id[i].equals(name_user)){
+                                                        //Ricerca di quanto ha pagato l'owner
 
-                                                        Total2=amountBox3[i];
+                                                        for(int i=0;i<listato_id.length;i++){
+
+                                                            if(listato_id[i].equals(name_user)){
+
+                                                                Total2=amountBox3[i];
+                                                            }
+
+
+                                                        }
+
+
+                                                        Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
+
+                                                        //step 2 aggiornalo
+                                                        Double tmp = bilanciosingolo - Total2;//todo sbagliato
+                                                        /*FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
+                                                                .child("Users")*/mutableData.child(id_owner).child("Total").setValue(tmp);
+                                                        /*FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
+                                                                .child("Users")*/mutableData.child(id_owner).child("Currency").setValue(mycurrency_selected);
+
+
+                                                        Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
+
+
+                                                        //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
+
+                                                        //DEVO FARE L'INVERSO
+                                                        //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
+
+                                                        tmp = -tmp; //todo sbagliato
+
+
+                                                        DatabaseReference dbRefOwner =  FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
+                                                                .child(id_group_iniziale).child("Users").child(name_user);
+
+                                                        dbRefOwner.runTransaction(new Transaction.Handler()
+                                                        {
+                                                            @Override
+                                                            public Transaction.Result doTransaction(MutableData mutableData)
+                                                            {
+                                                                if(mutableData.getValue() == null)
+                                                                {
+                                                                    //al momento niente...
+                                                                }
+
+                                                                //return null;
+                                                                Double tmp = bilanciosingolo - Total2;
+                                                                tmp = -tmp;
+                                                                mutableData.child("Total").setValue(tmp);
+                                                                mutableData.child("Currency").setValue(mycurrency_selected);
+
+                                                                return Transaction.success(mutableData);
+                                                            }
+
+                                                            @Override
+                                                            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+                                                            {
+
+                                                            }
+                                                        });
+
+                                                        // QUA C'ERA LA ROBA CHE ORA STA DENTRO L'HANDLER QUA SOPRA
+
+                                                        return Transaction.success(mutableData);
+
                                                     }
 
+                                                    @Override
+                                                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+                                                    {
 
-                                                }
+                                                    }
+                                                });
 
-
-                                                Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
-
-                                                //step 2 aggiornalo
-                                                Double tmp = bilanciosingolo - Total2;//todo sbagliato
-                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
-                                                        .child("Users").child(id_owner).child("Total").setValue(tmp);
-                                                FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
-                                                        .child("Users").child(id_owner).child("Currency").setValue(mycurrency_selected);
-
-
-                                                Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
-
-
-                                                //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
-
-                                                //DEVO FARE L'INVERSO
-                                                //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
-
-                                                tmp = -tmp; //todo sbagliato
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                        .child(id_group_iniziale).child("Users").child(name_user).child("Total").setValue(tmp);
-                                                FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                        .child(id_group_iniziale).child("Users").child(name_user).child("Currency").setValue(mycurrency_selected);
-
+                                                // QUI C'ERA LA ROBA DENTRO L'HANDLER
 
                                             }
 

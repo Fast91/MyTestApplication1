@@ -36,6 +36,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -471,99 +473,128 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         // aggiunge al gruppo l'utente
         // groups - idgruppo - users - idutente - name
 
-       FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
-                      .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);
+       DatabaseReference usrRef =  FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
+                .child("Users").child(id_nuovoutentedaaggiungere);
+        usrRef.runTransaction(new Transaction.Handler()
+        {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData)
+            {
+                //return null;
 
-
-
-
-
-        //step 2
-        // aggiungere l'utente al gruppo
-        // users- id utente - groups - id group ---> namegroup + total 0
-
-        FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                .child("Groups").child(id_group).child("Name").setValue(name_group);
-
-
-
-
-        Double tmp=0.0;
-        FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                .child("Groups").child(id_group).child("Total").setValue(tmp);
-
-
-
-
-        // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
-
-        for(String id_user : key_nameuser.keySet()){
-
-            String Name = key_nameuser.get(id_user);
-           tmp=0.0;
-
-            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                    .child("Groups").child(id_group).child("Users").child(id_user)
-                    .child("Name").setValue(Name);
-
-            FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
-                    .child("Groups").child(id_group).child("Users").child(id_user)
-                    .child("Total").setValue(tmp);
-
-        }
-
-
-
-        //step 3
-        // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
-
-        for(String id_user : key_nameuser.keySet()){
-
-
-
-
-
-
-            if(!id_user.equals(id_nuovoutentedaaggiungere)) {
-
-
-
-
-
-
-
-                DatabaseReference dbref=  FirebaseDatabase.getInstance().getReference("Users").child(id_user)
-                        .child("Groups");
-
-
-
-                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                        .child("Total").setValue(tmp);
-
-                String nuovastringanome =new String(name_nuovoutentedaaggiungere);
-
-                dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
-                        .child("Name").setValue(nuovastringanome);
-
-
-
+                if(mutableData.getValue() == null)
+                {
+                    mutableData.child("Name").setValue(name_nuovoutentedaaggiungere);
+                }
+                else
+                {
+                    // l'utente era già stato inserito. non fare niente
+                    return Transaction.abort(); // non so se sta cosa ha senso... bo... proviamo...
+                }
+                return Transaction.success(mutableData);
             }
 
-
-        }
-
-
-
-
-
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+            {
+                /*FirebaseDatabase.getInstance().getReference("Groups").child(id_group)
+                      .child("Users").child(id_nuovoutentedaaggiungere).child("Name").setValue(name_nuovoutentedaaggiungere);*/
 
 
-        //aggiornare mappa hash map
 
-        Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
-        key_nameuser.remove(id_nuovoutentedaaggiungere);
-        key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
-        Log.d("EXISTS", "LEVATO");
+
+
+                //step 2
+                // aggiungere l'utente al gruppo
+                // users- id utente - groups - id group ---> namegroup + total 0
+
+                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                        .child("Groups").child(id_group).child("Name").setValue(name_group);
+
+
+
+
+                Double tmp=0.0;
+                FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                        .child("Groups").child(id_group).child("Total").setValue(tmp);
+
+
+
+
+                // users- id utente - groups - id group ---> users settare tutti gli utente già inseriti e tutto a 0 + name
+
+                for(String id_user : key_nameuser.keySet()){
+
+                    String Name = key_nameuser.get(id_user);
+                    tmp=0.0;
+
+                    FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                            .child("Groups").child(id_group).child("Users").child(id_user)
+                            .child("Name").setValue(Name);
+
+                    FirebaseDatabase.getInstance().getReference("Users").child(id_nuovoutentedaaggiungere)
+                            .child("Groups").child(id_group).child("Users").child(id_user)
+                            .child("Total").setValue(tmp);
+
+                }
+
+
+
+                //step 3
+                // aggiungere agli utenti già inseriti questo nuovo utente --> name + con total 0
+
+                for(String id_user : key_nameuser.keySet()){
+
+
+
+
+
+
+                    if(!id_user.equals(id_nuovoutentedaaggiungere)) {
+
+
+
+
+
+
+
+                        DatabaseReference dbref=  FirebaseDatabase.getInstance().getReference("Users").child(id_user)
+                                .child("Groups");
+
+
+
+                        dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                                .child("Total").setValue(tmp);
+
+                        String nuovastringanome =new String(name_nuovoutentedaaggiungere);
+
+                        dbref.child(id_group).child("Users").child(id_nuovoutentedaaggiungere)
+                                .child("Name").setValue(nuovastringanome);
+
+
+
+                    }
+
+
+                }
+
+
+
+
+
+
+
+                //aggiornare mappa hash map
+
+                Log.d("EXISTS", "Tutte cose aggiunte  PROVO A LEVARE");
+                key_nameuser.remove(id_nuovoutentedaaggiungere);
+                key_nameuser.put(id_nuovoutentedaaggiungere,name_nuovoutentedaaggiungere);
+                Log.d("EXISTS", "LEVATO");
+            }
+        });
+
+
+        // prima tutta la roba dentro oncomplete era qua fuori
 
 
     }

@@ -26,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -143,6 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     Toast.makeText(RegisterActivity.this,R.string.successful_registration,Toast.LENGTH_SHORT).show();
                     FirebaseUser fireuser = firebaseauth.getCurrentUser();
+
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     databaseReference.child("Users").child(fireuser.getUid()).child("Email").setValue(email);
 
