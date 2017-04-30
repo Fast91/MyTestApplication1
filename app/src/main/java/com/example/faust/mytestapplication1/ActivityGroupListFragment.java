@@ -120,7 +120,7 @@ public class ActivityGroupListFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
 
         //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -236,7 +236,7 @@ public class ActivityGroupListFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
 
         //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
