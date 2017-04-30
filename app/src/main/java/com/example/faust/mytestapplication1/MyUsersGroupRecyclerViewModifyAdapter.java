@@ -144,16 +144,7 @@ class MyUsersGroupRecyclerViewModifyAdapter extends RecyclerView.Adapter<MyUsers
 
 
 
-                                                //devo levare l'utente per quel gruppo
-                                                FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).child("Users").child(user.getId()).removeValue();
 
-                                                //count= 0 nessun utente rimasto
-
-                                                if(count==0){
-                                                    //devo eliminare il gruppo
-                                                    FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).removeValue();
-
-                                                }
 
                                                 //per tutti gli amici connessi in quel gruppo devo levarlo
                                                 for(String id: id_friend){
@@ -167,7 +158,16 @@ class MyUsersGroupRecyclerViewModifyAdapter extends RecyclerView.Adapter<MyUsers
                                                 FirebaseDatabase.getInstance().getReference().child("Users").child(user.getId()).child("Groups").child(user.getId_Group()).removeValue();
 
 
+                                                //devo levare l'utente per quel gruppo
+                                                FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).child("Users").child(user.getId()).removeValue();
 
+                                                //count= 0 nessun utente rimasto
+
+                                                if(count==0){
+                                                    //devo eliminare il gruppo
+                                                    FirebaseDatabase.getInstance().getReference().child("Groups").child(user.getId_Group()).removeValue();
+
+                                                }
 
 
 

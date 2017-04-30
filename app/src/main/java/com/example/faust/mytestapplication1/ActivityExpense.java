@@ -229,6 +229,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
+
                 //mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
 
@@ -275,7 +276,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                     databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale).child("Users");
 
-                    databaseReference2.addValueEventListener(new ValueEventListener() {
+                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
