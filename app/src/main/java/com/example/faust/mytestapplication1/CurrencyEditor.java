@@ -215,13 +215,38 @@ public class CurrencyEditor
         return usdgbp.getPrice().doubleValue();*/
         // NON FUNZIONA STA MERDA
         // fanculo uso const per ora...
-        if(fromSymbol.equals("USD") && toSymbol.equals("EUR"))
+        if(fromSymbol.equals("USD"))
         {
-            return 0.929749;
+            if(toSymbol.equals("EUR"))
+            {
+                return 0.917861;
+            }
+            else if(toSymbol.equals("GBP"))
+            {
+                return 0.772232;
+            }
         }
-        else if(fromSymbol.equals("EUR") && toSymbol.equals("USD"))
+        else if(fromSymbol.equals("EUR"))
         {
-            return 1.07554;
+            if(toSymbol.equals("USD"))
+            {
+                return 1.08949;
+            }
+            else if(toSymbol.equals("GBP"))
+            {
+                return 0.841365;
+            }
+        }
+        else if(fromSymbol.equals("GBP"))
+        {
+            if(toSymbol.equals("EUR"))
+            {
+                return 1.18855;
+            }
+            else if(toSymbol.equals("USD"))
+            {
+                return 1.29495;
+            }
         }
         return 1; // ritornavi 2 non so perchè e non andava
     }

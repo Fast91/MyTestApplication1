@@ -911,7 +911,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         for(CurrencyDetail cD : currDet)
         {
             //TODO permettere solo certe valute
-            if(cD.getSymbol().equals("EUR") || cD.getSymbol().equals("USD"))
+            if(cD.getSymbol().equals("EUR") || cD.getSymbol().equals("USD") || cD.getSymbol().equals("GBP"))
             items_nomi_valute.add(cD);
         }
 
