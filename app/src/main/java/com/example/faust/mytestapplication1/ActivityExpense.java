@@ -1615,53 +1615,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         amountBox3 = new Double[utenti_gruppo2.size()];
         listato_id = new String[utenti_gruppo2.size()];
 
-        EditText amount = (EditText) findViewById(R.id.Total_newexpense);
-        String stringamount = amount.getText().toString();
-        stringamount = stringamount.replace(",", ".");
-        Double myamount2 = 0.0;
-        if (!stringamount.equals("")) {
-            myamount2 = Double.parseDouble(stringamount);
-            String sx = String.format("%.2f", myamount2);
-            sx = sx.replace(",", ".");
-            myamount2 = Double.parseDouble(sx);
-        }
-
-
-        Double tmp = myamount2 / utenti_gruppo2.size();
-        String s = String.format("%.2f", tmp);
-        s = s.replace(",", ".");
-        tmp = Double.parseDouble(s);
-        int i = 0;
-        somma_totale = 0.0;
+       int i=0;
 
         for (NomeDovuto nm2 : utenti_gruppo2.values()) {
 
             amountBox3[i] = nm2.getDovuto();
             listato_id[i] = nm2.getId();
-            somma_totale += tmp;
+
 
             i++;
         }
 
 
-            /*
-            if(somma_totale != myamount){
-
-                if(somma_totale>myamount){
-                    amountBox3[0]=amountBox3[0]-(somma_totale-myamount);
-
-                }
-                else{
-                    amountBox3[0]=amountBox3[0]+(myamount-somma_totale);
-
-                }
-
-
-
-            }*/
-
-
-        //}
 
 
     }
@@ -1768,7 +1733,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-            if (somma_totale2 != my_amount) {
+            if (!somma_totale2.equals(my_amount)) {
 
                 for (NomeDovuto utente_corrente : utenti_gruppo2.values()) {
 
