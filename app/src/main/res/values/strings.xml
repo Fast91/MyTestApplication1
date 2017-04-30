@@ -183,5 +183,6 @@
     <string name="textview_detail_Expense">Detail Expense</string>
     <string name="deve">owes</string>
     <string name="to">to</string>
+    <string name="toast_notequal">Division must be equal to the total</string>
 
 </resources>

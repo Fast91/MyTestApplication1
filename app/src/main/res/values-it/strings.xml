@@ -162,5 +162,6 @@
     <string name="textview_detail_Expense">Dettaglio Spesa</string>
     <string name="deve">deve</string>
     <string name="to">a</string>
+    <string name="toast_notequal">La division deve essere uguale alla somma</string>
 
 </resources>
