@@ -76,6 +76,14 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_plot"
+            android:name="com.example.faust.mytestapplication1.PlotFragment">
+
+        </FrameLayout>
+
 
         <ImageButton style="@style/AppTheme"
             android:layout_width="60dp"

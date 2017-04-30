@@ -143,17 +143,7 @@ public class MainActivity extends AppCompatActivity {
         final Button bGlobal = (Button) findViewById(R.id.bGlobal);
         final Button bGroups = (Button) findViewById(R.id.bGroups);
         final Button bActivities = (Button) findViewById(R.id.bActivities);
-        /*
 
-        bGlobal.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.home256x256pressed, 100, 100));
-
-        bActivities.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.activities256x256, 100, 100));
-
-        bGroups.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.groups900x900, 100, 100));
-                */
 
         if (savedInstanceState == null) {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
@@ -242,6 +232,34 @@ public class MainActivity extends AppCompatActivity {
                 bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
                 bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
                 bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+
+
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment f= new PlotFragment();
+                Bundle mBundle;
+                mBundle = new Bundle();
+                mBundle.putString("GROUP_ID",id_group);
+                // mBundle.putInt("GROUP_ID",item.getIdgroup());
+                f.setArguments(mBundle);
+
+                if(count_b==1){
+                    ft.replace(R.id.fragment1, f);}
+                if(count_b==2){
+                    ft.replace(R.id.fragment1, f);}
+                if(count_b==3){
+                    ft.replace(R.id.fragment1, f);}
+                //   ft.addToBackStack(null);
+                ft.commit();
+
+                //
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStackImmediate();
+                }
+
+
+                count_b=2;
+                return;
 
             }
         });
@@ -476,7 +494,7 @@ public class MainActivity extends AppCompatActivity {
                 //count_b = 2;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment2_groups));
+                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment_plot));
               //  ft.addToBackStack(null);
                 ft.commit();
             }
