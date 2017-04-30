@@ -231,14 +231,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                 //mygroup_selected = (NomeDovuto) group.getSelectedItem();
 
-                Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
-                        mycurrency_selected_from_spinner = (CurrencyDetail) curr.getSelectedItem();
-                        try {
-                            myamount = CurrencyEditor.convertCurrency(myamount, mycurrency_selected_from_spinner.getSymbol(), "EUR");
-                        } catch (IOException e) {
-                            //e.printStackTrace();
-                            //lascio myamount così com'è
-                        }
+
 
                         //mydata =null;
 
@@ -256,11 +249,20 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                 mycategory = (String ) category.getSelectedItem();
 
-                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mycategory.equals(""))){
+                if((!mytitle.equals(""))&&(!stringamount.equals(""))&&(!mycategory.equals(""))&&(myDate!=null)){
                   //  MyActivity myactivity=new MyActivity(mytitle,R.drawable.giftboxred,myamount,  mydata , mycategory);
 
 
                  //prendo id gruppo e prendo hashmap con chiave il nome(nickname dell'utente) e valore id utente
+
+                    Spinner curr= (Spinner) findViewById(R.id.new_expense_currency_spinner);
+                    mycurrency_selected_from_spinner = (CurrencyDetail) curr.getSelectedItem();
+                    try {
+                        myamount = CurrencyEditor.convertCurrency(myamount, mycurrency_selected_from_spinner.getSymbol(), "EUR");
+                    } catch (IOException e) {
+                        //e.printStackTrace();
+                        //lascio myamount così com'è
+                    }
 
                     divideOrSplit();
 
@@ -887,7 +889,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-        items_nomi_gruppi.add(new NomeDovuto("0","Select Group"));
 
         //List<String> curry = CurrencyEditor.getCurrencySymbols();
         List<CurrencyDetail> currDet = CurrencyEditor.getCurrencyDetails();
@@ -902,9 +903,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
        // items_nomi_valute.add(new CurrencyDetail());
 
         //items_nomi_gruppi.add("Group1");
-
-        ArrayAdapter<NomeDovuto> adapter = new ArrayAdapter<NomeDovuto>(this, android.R.layout.simple_spinner_item,items_nomi_gruppi);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
 
