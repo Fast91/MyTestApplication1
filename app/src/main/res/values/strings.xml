@@ -184,5 +184,13 @@
     <string name="deve">owes</string>
     <string name="to">to</string>
     <string name="toast_notequal">Division must be equal to the total</string>
+    <string name="tv_init_payment">Pay what you want.</string>
+    <string name="custom">Custom Amount</string>
+    <string name="payment_detail">Payment detail:</string>
+    <string name="sender">Sender:</string>
+    <string name="receiver">Receiver:</string>
+    <string name="group">Group:</string>
+    <string name="amount">Amount:</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

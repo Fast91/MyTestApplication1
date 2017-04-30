@@ -110,6 +110,7 @@
 
 
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/button_pagatoda_expense"
         android:layout_width="200dp"
         android:layout_height="50dp"

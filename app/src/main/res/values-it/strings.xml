@@ -164,4 +164,13 @@
     <string name="to">a</string>
     <string name="toast_notequal">La division deve essere uguale alla somma</string>
 
+    <string name="tv_init_payment">Paga quel che vuoi.</string>
+    <string name="custom">Personalizza Totale</string>
+    <string name="payment_detail">Dettaglio pagamento:</string>
+    <string name="sender">Mittente:</string>
+    <string name="receiver">Destinatario:</string>
+    <string name="group">Gruppo:</string>
+    <string name="amount">Totale:</string>
+    <string name="confirm">Conferma</string>
+
 </resources>

@@ -44,7 +44,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pay what you want."
+        android:text="@string/tv_init_payment"
         android:textSize="15sp"
         android:textColor="@android:color/black"
         android:paddingBottom="8dp"/>
@@ -87,7 +87,7 @@
                 android:background="@drawable/buttonshape_faust"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"
-                android:text="Custom Amount"/>
+                android:text="@string/custom"/>
             <EditText
                 android:enabled="false"
                 android:visibility="invisible"
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="2dp"
-                android:text="Payment detail:"
+                android:text="@string/payment_detail"
                 android:textAlignment="textStart"
                 android:textColor="@color/BreakingMADDarkGreen"
                 android:textColorHint="@color/BreakingMADDarkGreen"
@@ -143,7 +143,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sender: "
+                    android:text="@string/sender"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
@@ -168,7 +168,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Receiver: "
+                    android:text="@string/receiver"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
@@ -193,7 +193,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Group: "
+                    android:text="@string/group"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
@@ -218,7 +218,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount: "
+                    android:text="@string/amount"
                     android:textAlignment="textStart"
                     android:textColor="#000000"
                     android:textColorHint="#000000"
@@ -244,16 +244,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.16"/>
+
     <Button
         android:id="@+id/confirm_button_payment_tv"
-        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/buttonshape_faust"
+        android:enabled="false"
+        android:text="@string/confirm"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:text="Confirm"/>
+        android:textSize="20sp" />
 </LinearLayout>
     <!--RelativeLayout
         android:id="@+id/layout_fragment_payment"
