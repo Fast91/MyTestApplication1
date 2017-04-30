@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(task.isSuccessful()){
                             //start the profile activity
                             finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), PrimaAttivitaGruppi.class));
                         }
                         else{
                             Toast.makeText(LoginActivity.this,R.string.wrong_login,Toast.LENGTH_LONG).show();
