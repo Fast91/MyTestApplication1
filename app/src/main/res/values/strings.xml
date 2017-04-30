@@ -110,7 +110,7 @@
     <string name="pinnotregistred">This PIN is not associated with any group</string>
     <string name="invitation_menu">Invitations </string>
     <string name="expense_label_pagato">Paid by: </string>
-    <string name="pay">PAY</string>
+    <string name="pay">SETTLE UP</string>
     <string name="payment_title">Payment</string>
     <string name="payment0">Insert amount different from 0 </string>
     <string name="category_activity_string">Category</string>
@@ -181,5 +181,7 @@
     <string name="save_string">SAVE</string>
 
     <string name="textview_detail_Expense">Detail Expense</string>
+    <string name="deve">owes</string>
+    <string name="to">to</string>
 
 </resources>

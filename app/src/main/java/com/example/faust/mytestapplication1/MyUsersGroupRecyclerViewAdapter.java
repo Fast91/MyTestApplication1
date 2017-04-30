@@ -122,7 +122,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
         public void onClick(View v) {
             //Toast.makeText(imageView.getContext(), "Hai cliccato \"Paga\"", Toast.LENGTH_SHORT).show();
 
-            Intent i = PaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
+            Intent i = PartPaymentActivity.newIntent(imageView.getContext(), nameView.getText().toString(), mIdGroup);
             i.putExtra("ID_GROUP",mIdGroup);
             i.putExtra("DOVUTO",balanceView.getText().toString());
             i.putExtra("ID_USER",user.getId());

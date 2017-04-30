@@ -94,7 +94,7 @@
     <string name="pinnotregistred">Il PIN non è associato a nessun gruppo</string>
     <string name="invitation_menu">Inviti</string>
     <string name="expense_label_pagato">Pagato da:</string>
-    <string name="pay">PAGA</string>
+    <string name="pay">PAREGGIA</string>
 
     <string name="payment_title">Pagamento</string>
     <string name="payment0">Inserire un totale diverso da 0</string>
@@ -160,5 +160,7 @@
     <string name="tideve2">Devi Ricevere</string>
     <string name="devi">Devi</string>
     <string name="textview_detail_Expense">Dettaglio Spesa</string>
+    <string name="deve">deve</string>
+    <string name="to">a</string>
 
 </resources>

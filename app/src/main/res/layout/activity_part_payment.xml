@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.faust.mytestapplication1.PartPaymentActivity"
+    >
+
+
+    <TextView
+
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:textAlignment="textStart"
+        android:gravity="start|center_vertical"
+        android:text="@string/textview_payment"
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+
+        android:background="@color/BreakingMADLightGreen"
+
+        />
+
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_margin="20dp"
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:id="@+id/image_payment_user"
+        android:scaleType="fitCenter"
+        app:riv_border_width="2dip"
+        app:riv_border_color="#333333"
+        app:riv_oval="true"
+        app:riv_mutate_background="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center"
+        android:padding="2dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_name_sender"
+            android:text="@string/name_user_global_string"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+        <TextView
+            android:id="@+id/tideve"
+            android:text="@string/deve"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+
+
+        <TextView
+            android:id="@+id/amount_deve"
+            android:text="@string/balance_string"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+
+        <TextView
+            android:text="@string/to"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+
+
+
+        <TextView
+            android:id="@+id/text_name_receiver"
+            android:text="@string/name_user_global_string"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/button_pagatoda_expense"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@drawable/sketched_white_rect_shape_rounded"
+        android:padding="1dp"
+        android:paddingEnd="10dp"
+        android:text="@string/pay"
+        android:layout_gravity="center"/>
+
+
+
+
+
+</LinearLayout>

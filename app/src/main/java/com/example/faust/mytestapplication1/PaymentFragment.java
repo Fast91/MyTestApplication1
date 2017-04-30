@@ -77,6 +77,8 @@ public class PaymentFragment extends Fragment
     private Drawable mDeselectedButtonBackground;
     private Drawable mSelectedButtonBackground;
 
+    private String name_sender,name_receiver;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,35 +89,35 @@ public class PaymentFragment extends Fragment
 
         Log.d("CIAO","sto iniziadidiai");
 
-       // mBundlePaymentGroup= b.getString("GROUP_ID");
-        mBundlePaymentReceiver = getArguments().getString("expense_receiver", null);
-        mBundlePaymentGroup = getArguments().getString("expense_group", null);
-        mDefaultAmountOptionSelected = true;
-        mCustomAmountEditTextOptionSelected = false;
+        mGroupId= getActivity().getIntent().getExtras().getString("ID_GROUP");
+        mDefaultAmountValue=getActivity().getIntent().getExtras().getString("DOVUTO");
+        mReceiver= getActivity().getIntent().getExtras().getString("ID_USER_RECEIVER");
+        mSenderId= getActivity().getIntent().getExtras().getString("ID_USER_SENDER");
+        name_receiver= getActivity().getIntent().getExtras().getString("NAME_USER_RECEIVER");
+        name_sender=getActivity().getIntent().getExtras().getString("NAME_USER_SENDER");
+
+        mReceiverId = mReceiver;
+
+        sender_name=name_sender;
+        receiver_name=name_receiver;
+
 
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         // TODO DB etc etc
-        mReceiver = mBundlePaymentReceiver;
-        mGroup = mBundlePaymentGroup;
-        mDefaultAmountValue = "50€"; // da importare dal db
         mCustomAmountValue=mDefaultAmountValue;
         mAmountValue=mDefaultAmountValue;
-
-
 
         ////PROVO A PRENDERLI
 
 
-        mSenderId = (String) firebaseAuth.getCurrentUser().getUid(); // ok
-        mGroupId = (String) getArguments().getString("ID_GROUP"); // ok
-        mDefaultAmount =(String) getArguments().getString("DOVUTO"); // ok
-        mReceiverId = (String) getArguments().getString("ID_USER");
+        mCustomAmountValue = mDefaultAmountValue;
+        mAmountValue = mDefaultAmountValue;
 
-        mDefaultAmountValue = mDefaultAmount;
-        mCustomAmountValue = mDefaultAmount;
-        mAmountValue = mDefaultAmount;
+
+
+
 
     }
 
@@ -131,7 +133,7 @@ public class PaymentFragment extends Fragment
         //View view = super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         wireUpWidgets(view);
-        retrieveDataFromDB(view);
+       retrieveDataFromDB(view);
         initWidgets();
         setListeners();
 
@@ -150,8 +152,7 @@ public class PaymentFragment extends Fragment
     {
         //mLayout = (RelativeLayout) view.findViewById(R.id.layout_fragment_payment);
 
-        mAmountLabelTextView = (TextView) view.findViewById(R.id.amount_label_payment_tv);
-        mReceiverLabelTextView = (TextView) view.findViewById(R.id.receiver_label_payment_tv);
+
 
         mSenderDetailTextView = (TextView) view.findViewById(R.id.sender_detail_payment_tv);
         mReceiverDetailTextView = (TextView) view.findViewById(R.id.receiver_detail_payment_tv);
@@ -167,17 +168,7 @@ public class PaymentFragment extends Fragment
 
         mDeselectedButtonBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.buttonshape_faust, null);
         mSelectedButtonBackground = ResourcesCompat.getDrawable(getResources(), R.drawable.button_pressed_faust, null);
-        /*mDeselectedButtonBackground = ContextCompat.getDrawable(getContext(), R.drawable.buttonshape_faust);
-        mSelectedButtonBackground = ContextCompat.getDrawable(getContext(), R.drawable.button_pressed_faust);*/
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mDeselectedButtonBackground = view.getResources().getDrawable(R.drawable.buttonshape_faust, getContext().getTheme());
-            mSelectedButtonBackground = view.getResources().getDrawable(R.drawable.button_pressed_faust, getContext().getTheme());
-        }
-        else
-        {
-            mDeselectedButtonBackground = view.getResources().getDrawable(R.drawable.buttonshape_faust);
-            mSelectedButtonBackground = view.getResources().getDrawable(R.drawable.button_pressed_faust);
-        }*/
+
 
     }
 
@@ -189,63 +180,17 @@ public class PaymentFragment extends Fragment
     {
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
+        TextView tv =      ((TextView) view.findViewById(R.id.sender_detail_payment_tv));
+
+        tv.setText(name_sender);
+        ((TextView) view.findViewById(R.id.receiver_detail_payment_tv)).setText(name_receiver);
+
 
         DatabaseReference databaseReference,databaseReference2,databaseReference3;
 
 
-        //setto nella text view il sender
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Name");
 
 
-
-        //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                mReceiver=(String) dataSnapshot.getValue(String.class);
-                sender_name = mReceiver;
-
-                ((TextView) myactivity.findViewById(R.id.sender_detail_payment_tv)).setText(mReceiver);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });//fin qui tutto bene
-
-
-
-
-        //setto nella text view il RECEIVER
-
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(mReceiverId).child("Name");
-
-
-
-        //Read content data
-        databaseReference2.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String mx=(String) dataSnapshot.getValue(String.class);
-                receiver_name = mx;
-
-                ((TextView) myactivity.findViewById(R.id.receiver_detail_payment_tv)).setText(mx);
-                ((TextView) myactivity.findViewById(R.id.receiver_label_payment_tv)).setText(mx);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });//funziona
 
 
         //setto nella text view il RECEIVER
@@ -283,11 +228,9 @@ public class PaymentFragment extends Fragment
         // CHE TUTTI I BOTTONI SIANO VISIBILI E CHE L'EDITTEXT DEL CUSTOM AMOUNT SIA
         // INVISIBILE E DISABILITATO.
 
-        mAmountLabelTextView.setText(mDefaultAmountValue);
         mDefaultAmountButton.setText(mDefaultAmountValue);
         mCustomAmountEditText.setText(mDefaultAmountValue);
-        mReceiverLabelTextView.setText(mReceiver);
-        mReceiverDetailTextView.setText(mReceiver);
+        mReceiverDetailTextView.setText(name_receiver);
         mGroupDetailTextView.setText(mGroup);
 
         mDefaultAmountButton.setEnabled(true);
@@ -502,7 +445,7 @@ public class PaymentFragment extends Fragment
 
                 // prendere il vero owner
                 //in questo caso prendiamo il primo che capita dalla lista
-                String keyowner= firebaseAuth.getCurrentUser().getUid();
+                String keyowner= mSenderId;
 
                 Name=sender_name;
 
