@@ -1610,21 +1610,23 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private void divideOrSplit() {
 
 
-        //  if(premuto_diviso!=true){
+         if(premuto_diviso!=true) {
 
-        amountBox3 = new Double[utenti_gruppo2.size()];
-        listato_id = new String[utenti_gruppo2.size()];
+             amountBox3 = new Double[utenti_gruppo2.size()];
+             listato_id = new String[utenti_gruppo2.size()];
 
-       int i=0;
+             int i = 0;
 
-        for (NomeDovuto nm2 : utenti_gruppo2.values()) {
+             for (NomeDovuto nm2 : utenti_gruppo2.values()) {
 
-            amountBox3[i] = nm2.getDovuto();
-            listato_id[i] = nm2.getId();
+                 amountBox3[i] = nm2.getDovuto();
+                 listato_id[i] = nm2.getId();
 
 
-            i++;
-        }
+                 i++;
+             }
+
+         }
 
 
 
@@ -1636,10 +1638,22 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
         Double tmp = 0.0;
+        int i=0;
+        if(premuto_diviso==false){
+            return true;
+        }
+
+        if(amountBox3==null){ //maroooo
+            return true;
+        }
+
+
+
         for (NomeDovuto utente_corrente : utenti_gruppo2.values()) {
             ///inizio per ogni utente
 
-            tmp += utente_corrente.getDovuto();
+            tmp += amountBox3[i];
+            i++;
         }
 
         if (tmp.equals(x)) {
