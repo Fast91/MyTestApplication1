@@ -207,6 +207,7 @@
                     android:layout_margin="2dp"
                     android:layout_weight="0.9"
                     android:digits="0123456789."
+
                     android:background="@drawable/sketched_white_rect_shape_rounded"
                     android:gravity="center"
                     android:hint="@string/newexpense_amount"

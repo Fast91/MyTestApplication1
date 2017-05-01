@@ -26,8 +26,6 @@
     android:name="com.example.faust.mytestapplication1.GroupsListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.example.faust.mytestapplication1.GroupsListFragment"
     tools:listitem="@layout/fragment_groups" />

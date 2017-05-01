@@ -24,6 +24,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -119,8 +121,26 @@ public class ActivityGroupListFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
 
+
+        /*
+        databaseReference.runTransaction(new Transaction.Handler() {
+        @Override
+        public Transaction.Result doTransaction(MutableData mutableData) {
+
+            return Transaction.success(mutableData);
+        }
+
+        @Override
+        public void onComplete(DatabaseError databaseError, boolean b,
+                               DataSnapshot dataSnapshot) {
+            // Transaction completed
+            //Log.d(TAG, "postTransaction:onComplete:" + databaseError);
+        }
+    });*/
+
+
         //Read content data
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

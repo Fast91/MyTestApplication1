@@ -10,6 +10,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.DebugUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -163,6 +164,7 @@ public class PaymentFragment extends Fragment
         mCustomAmountButton = (Button) view.findViewById(R.id.custom_amount_button_payment_tv);
 
         mCustomAmountEditText = (EditText) view.findViewById(R.id.custom_amount_edittext_payent_tv);
+        mCustomAmountEditText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(12,2)});
 
         mConfirmButton = (Button) view.findViewById(R.id.confirm_button_payment_tv);
 
@@ -432,13 +434,14 @@ public class PaymentFragment extends Fragment
                 String Date=""+dateFormat.format(date);
 
 
+                databaseReference.child(key).child("Date").setValue(Date);
                 databaseReference.child(key).child("Name").setValue(Name);
                 databaseReference.child(key).child("Total").setValue(Total);
 
                 databaseReference.child(key).child("GroupId").setValue(GroupId);
 
                 databaseReference.child(key).child("Category").setValue(Category);
-                databaseReference.child(key).child("Date").setValue(Date);
+
 
 
                 //todo
@@ -477,10 +480,12 @@ public class PaymentFragment extends Fragment
                     // key
                     Name = getString(R.string.payment_title);;
 
+
                     databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+                    databaseReference3.child(key).child("Date").setValue(Date);
                     databaseReference3.child(key).child("Total").setValue(Total);
                     databaseReference3.child(key).child("Name").setValue(Name);
-                      databaseReference3.child(key).child("Date").setValue(Date);
+
         databaseReference3.child(key).child("Category").setValue(Category);
 
 
@@ -496,15 +501,16 @@ public class PaymentFragment extends Fragment
 
 
 
-
+        databaseReference4.child(mSenderId).child("Activities").child(key).child("Date").setValue(Date);
                         databaseReference4.child(mSenderId).child("Activities").child(key).child("Name").setValue(Name);
                         databaseReference4.child(mSenderId).child("Activities").child(key).child("Total").setValue(Total);
-                      databaseReference4.child(mSenderId).child("Activities").child(key).child("Date").setValue(Date);
+
         databaseReference4.child(mSenderId).child("Activities").child(key).child("Category").setValue(Category);
 
+        databaseReference4.child(mReceiverId).child("Activities").child(key).child("Date").setValue(Date);
                          databaseReference4.child(mReceiverId).child("Activities").child(key).child("Name").setValue(Name);
                          databaseReference4.child(mReceiverId).child("Activities").child(key).child("Total").setValue(Total);
-        databaseReference4.child(mReceiverId).child("Activities").child(key).child("Date").setValue(Date);
+
         databaseReference4.child(mReceiverId).child("Activities").child(key).child("Category").setValue(Category);
 
 

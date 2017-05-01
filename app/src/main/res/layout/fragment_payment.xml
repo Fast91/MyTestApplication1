@@ -100,6 +100,8 @@
                 android:textSize="15sp"
                 android:hint="Custom Amount"
                 android:text="Custom Amount"
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
                 android:background="@drawable/sketched_white_rect_shape_rounded"/>
         </RelativeLayout>
     </LinearLayout>

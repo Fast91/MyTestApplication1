@@ -58,10 +58,11 @@
 
 
         <LinearLayout
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.60"
             android:orientation="vertical"
+            android:gravity="center"
 
             >
         <com.makeramen.roundedimageview.RoundedImageView
@@ -83,36 +84,38 @@
 </LinearLayout>
 
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.60"
             android:orientation="vertical"
+            android:gravity="center"
 
             >
 
         <TextView
             android:id="@+id/row1_text1"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
+            android:maxLines="4"
             android:layout_span="2"
             android:paddingTop="5sp"
             android:text="@string/global_string"
             android:textAlignment="center"
-            android:textSize="28sp"
+            android:textSize="23sp"
             android:gravity="center"/>
             </LinearLayout>
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.60"
             android:orientation="vertical"
+            android:gravity="center"
 
             >
 
             <TextView
                 android:id="@+id/row1_todo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_span="2"
@@ -120,20 +123,20 @@
 
                 android:text="@string/devi"
                 android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:layout_weight="1"/>
 
 
             <TextView
                 android:id="@+id/row1_text2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_span="2"
                 android:paddingBottom="20dp"
                 android:text="@string/balance_string"
                 android:textStyle="bold"
-                android:textSize="28sp"
+                android:textSize="25sp"
                 android:layout_weight="1"/>
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="60sp"
     android:orientation="horizontal"
     android:layout_gravity="center_horizontal"
     >
@@ -27,8 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="@string/name_user_global_string"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textAppearance="?attr/textAppearanceListItem"
+        android:gravity="center"
+
         android:layout_toRightOf="@+id/item_image"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_vertical"/>

@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -154,6 +155,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         }
 
+
+
+        EditText amount2 = (EditText) findViewById(R.id.Total_newexpense);
+        amount2.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(12,2)});
 
         category = (Spinner) findViewById(R.id.Category_newexpense);
 
@@ -319,6 +324,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             String Date = "" + myDate.getDate() + "/" + myDate.getMonth() + "/" + (myDate.getYear() + 1900);
 
 
+                            databaseReference.child(key).child("Date").setValue(Date);
                             databaseReference.child(key).child("Name").setValue(Name);
                             databaseReference.child(key).child("Total").setValue(Total);
                             databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
@@ -326,7 +332,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             databaseReference.child(key).child("GroupId").setValue(GroupId);
 
                             databaseReference.child(key).child("Category").setValue(Category);
-                            databaseReference.child(key).child("Date").setValue(Date);
+
 
                             int count_users = myusers.size();
                             //todo
@@ -410,10 +416,12 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 Total = Double.parseDouble(s);
 
                                 databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+
+                                databaseReference3.child(key).child("Date").setValue(Date);
+
+                                databaseReference3.child(key).child("Name").setValue(Name);
                                 databaseReference3.child(key).child("Total").setValue(Total);
                                 databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
-                                databaseReference3.child(key).child("Name").setValue(Name);
-                                databaseReference3.child(key).child("Date").setValue(Date);
                                 databaseReference3.child(key).child("Category").setValue(Category);
 
 
@@ -433,12 +441,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 for (String id_user : myusers.keySet()) {
 
 
+                                    databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
 
-                                    databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
+
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);
 
 

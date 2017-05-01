@@ -34,6 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.squareup.picasso.Picasso;
@@ -65,6 +67,14 @@ public class PlotFragment  extends Fragment {
     String id_group;
     private FirebaseAuth firebaseAuth;
     private XYPlot plot;
+    private GraphView graph;
+    Double gen_val=0.0,feb_val=0.0,marz_val=0.0,apr_val=0.0,
+            mag_val=0.0,giu_val=0.0,lug_val=0.0,ago_val=0.0,
+            set_val=0.0,ott_val=0.0,nov_val=0.0,dic_val=0.0;
+
+    Double mymax=50.0;
+    Date date = null;
+    int mycount,totcount;
 
     private HashMap<String,NomeDovuto> attivita_dovuto;
 
@@ -98,6 +108,7 @@ public class PlotFragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_plot, container, false);
+        graph = (GraphView) view.findViewById(R.id.graph);
 
         initData();
 
@@ -126,15 +137,6 @@ public class PlotFragment  extends Fragment {
         final Button bGlobal = (Button) myactivity.findViewById(R.id.bGlobal);
         final Button bGroups = (Button) myactivity.findViewById(R.id.bGroups);
         final Button bActivities = (Button) myactivity.findViewById(R.id.bActivities);
-
-        GraphView graph = (GraphView) view.findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3)
-        });
-        graph.addSeries(series);
-
 
 
         return view;
@@ -215,6 +217,8 @@ public class PlotFragment  extends Fragment {
 
         DatabaseReference databaseReference;
 
+        mycount=0;
+        totcount=0;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
 
@@ -224,34 +228,129 @@ public class PlotFragment  extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                totcount= (int) dataSnapshot.getChildrenCount();
 
                 //Per ogni attivita
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 
-                    String id = (String) postSnapshot.getKey();
-                    String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                    Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
-                    String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
-
-                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                    Date date = null;
-                    try {
-                        String s = postSnapshot.child("Date").getValue(String.class);
-                        date = format.parse(s);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    final String id = (String) postSnapshot.getKey();
+                    final String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                    final String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
 
-                    NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
-                    iniziale.setId(id);
-                    iniziale.setCategory(category);
-                    iniziale.setDate(date);
-                    attivita_dovuto.put(id, iniziale);
+
+
+                    FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    mycount++;
+
+                                    Double total=null;
+
+
+                                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                    date = null;
+                                    try {
+                                        String s = dataSnapshot.child("Date").getValue(String.class);
+                                        date = format.parse(s);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
+
+
+
+                                    if(total==null){
+
+                                        total= dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
+
+
+                                    }
+
+                                    if(total==null){
+                                        total=0.0;
+                                    }
+
+                                    NomeDovuto iniziale = new NomeDovuto(nome, total);
+                                    iniziale.setId(id);
+                                    iniziale.setCategory(category);
+                                    iniziale.setDate(date);
+                                    attivita_dovuto.put(id, iniziale);
+
+
+
+                                    if(mycount==totcount) {
+
+                                        ///Now I have to set the graph
+                                        clearValue();
+                                        setValue();
+
+
+                                        graph.getViewport().setXAxisBoundsManual(true);
+                                        graph.getViewport().setMinX(0);
+                                        graph.getViewport().setMaxX(13);
+
+                                        // set manual Y bounds
+                                        graph.getViewport().setYAxisBoundsManual(true);
+                                        graph.getViewport().setMinY(0);
+                                        graph.getViewport().setMaxY(mymax);
+
+
+                                        // graph.getLegendRenderer().setVisible(true);
+
+
+                                        //adesso posso lavorare con il grafico
+                                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+
+                                                new DataPoint(1, gen_val),
+                                                new DataPoint(2, feb_val),
+                                                new DataPoint(3, marz_val),
+                                                new DataPoint(4, apr_val),
+                                                new DataPoint(5, mag_val),
+                                                new DataPoint(6, giu_val),
+                                                new DataPoint(7, lug_val),
+                                                new DataPoint(8, ago_val),
+                                                new DataPoint(9, set_val),
+                                                new DataPoint(10, ott_val),
+                                                new DataPoint(11, nov_val),
+                                                new DataPoint(12, dic_val)
+                                        });
+
+                                        series.setSpacing(20);
+                                        // draw values on top
+                                        //series.setDrawValuesOnTop(true);
+                                        //series.setValuesOnTopColor(Color.RED);
+
+                                        graph.addSeries(series);
+
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+
+
+
+
+
+
 
 
                 }
+
+
 
 
             }
@@ -267,12 +366,146 @@ public class PlotFragment  extends Fragment {
 
     }
 
+    private void clearValue() {
+
+        mymax=50.00;
+        gen_val=0.0;
+        feb_val=0.0;
+                marz_val=0.0;
+                apr_val=0.0;
+
+                mag_val=0.0;
+                giu_val=0.0;
+                lug_val=0.0;
+                ago_val=0.0;
+                set_val=0.0;
+                ott_val=0.0;
+                nov_val=0.0;
+                dic_val=0.0;
+    }
+
+    private void setValue() {
+
+        //usare i double e attivita_dovuto
+
+        Date date = new Date();
+        int year = date.getYear();
+
+
+        for(NomeDovuto nm : attivita_dovuto.values()){
+
+
+            if(year==nm.getDate().getYear()){
+                //se la spesa e' relativa a quest'anno
+
+                switch (nm.getDate().getMonth()){
+
+                    case 0:
+                        gen_val+=nm.getDovuto();
+                        if(mymax<gen_val){
+                            mymax=gen_val+10;
+                        }
+                        break;
+
+                    case 1:
+                        feb_val+=nm.getDovuto();
+                        if(mymax<feb_val){
+                            mymax=feb_val+10;
+                        }
+                        break;
+
+                    case 2:
+                        marz_val+=nm.getDovuto();
+                        if(mymax<marz_val){
+                            mymax=marz_val+10;
+                        }
+                        break;
+
+                    case 3:
+                        apr_val+=nm.getDovuto();
+                        if(mymax<apr_val){
+                            mymax=apr_val+10;
+                        }
+                        break;
+
+                    case 4:
+                        mag_val+=nm.getDovuto();
+                        if(mymax<mag_val){
+                            mymax=mag_val+10;
+                        }
+                        break;
+
+                    case 5:
+                        giu_val+=nm.getDovuto();
+                        if(mymax<giu_val){
+                            mymax=giu_val+10;
+                        }
+                        break;
+
+                    case 6:
+                        lug_val+=nm.getDovuto();
+                        if(mymax<lug_val){
+                            mymax=lug_val+10;
+                        }
+                        break;
+
+                    case 7:
+                        ago_val+=nm.getDovuto();
+                        if(mymax<ago_val){
+                            mymax=ago_val+10;
+                        }
+                        break;
+
+                    case 8:
+                        set_val+=nm.getDovuto();
+                        if(mymax<set_val){
+                            mymax=set_val+10;
+                        }
+                        break;
+
+                    case 9:
+                        ott_val+=nm.getDovuto();
+                        if(mymax<ott_val){
+                            mymax=ott_val+10;
+                        }
+                        break;
+
+
+                    case 10:
+                        nov_val+=nm.getDovuto();
+                        if(mymax<nov_val){
+                            mymax=nov_val+10;
+                        }
+                        break;
+
+                    case 11:
+                        dic_val+=nm.getDovuto();
+                        if(mymax<dic_val){
+                            mymax=dic_val+10;
+                        }
+                        break;
+
+
+
+                }
 
 
 
 
 
-        private void plot(){
+            }
+
+
+        }
+
+
+
+
+
+    }
+
+
+    private void plot(){
 
         // create a couple arrays of y-values to plot:
         final Number[] domainLabels = {1, 2, 3, 6, 7, 8, 9, 10, 13, 14};
