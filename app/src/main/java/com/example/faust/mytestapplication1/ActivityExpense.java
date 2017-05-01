@@ -478,6 +478,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                             Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
                                             Log.d("EXPENSE", "Id: " + name_user);
 
+                                            String s3x = String.format("%.2f", bilancioGlobale);
+                                            s3x = s3x.replace(",", ".");
+                                            bilancioGlobale = Double.parseDouble(s3x);
+
                                             if (!name_user.equals(keyowner)) {
                                                 //devo levare
                                                 //Ricerca di quanto ha pagato l'owner
@@ -487,6 +491,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                     if (listato_id[i].equals(name_user)) {
 
                                                         Total2 = amountBox3[i];
+                                                        String s3 = String.format("%.2f", Total2);
+                                                        s3 = s3.replace(",", ".");
+                                                        Total2 = Double.parseDouble(s3);
                                                     }
 
 
@@ -494,6 +501,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                                 Double tmp = bilancioGlobale - Total2; //todo sbagliato
+                                                s3x = String.format("%.2f", tmp);
+                                                s3x = s3x.replace(",", ".");
+                                                tmp = Double.parseDouble(s3x);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
                                                 //databaseReference5.removeEventListener(this);
@@ -508,6 +518,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                     if (listato_id[i].equals(name_user)) {
 
                                                         Total2 = amountBox3[i];
+                                                        String s3 = String.format("%.2f", Total2);
+                                                        s3 = s3.replace(",", ".");
+                                                        Total2 = Double.parseDouble(s3);
                                                     }
 
 
@@ -515,6 +528,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                                 Double tmp = bilancioGlobale + (Amount - Total2); //todo sbagliato
+                                                s3x = String.format("%.2f", tmp);
+                                                s3x = s3x.replace(",", ".");
+                                                tmp = Double.parseDouble(s3x);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
 
                                                 //databaseReference5.removeEventListener(this);
@@ -569,9 +585,15 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                             currencyBilancioDelGruppo = (String) dataSnapshot.child("Currency").getValue(String.class);
 
 
+
+
                                             if (bilanciodelgruppo == null) {
                                                 bilanciodelgruppo = 0.0;
                                             }
+
+                                            String s3x = String.format("%.2f", bilanciodelgruppo);
+                                            s3x = s3x.replace(",", ".");
+                                            bilanciodelgruppo = Double.parseDouble(s3x);
 
 
                                             if (!name_user.equals(keyowner)) {
@@ -584,6 +606,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                     if (listato_id[i].equals(name_user)) {
 
                                                         Total2 = amountBox3[i];
+                                                        String s3 = String.format("%.2f", Total2);
+                                                        s3 = s3.replace(",", ".");
+                                                        Total2 = Double.parseDouble(s3);
                                                     }
 
 
@@ -591,6 +616,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 //aggiorno il bilancio del gruppo
                                                 Double tmp = bilanciodelgruppo - Total2;//todo sbagliato
+                                                s3x = String.format("%.2f", tmp);
+                                                s3x = s3x.replace(",", ".");
+                                                tmp = Double.parseDouble(s3x);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
                                                 // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
@@ -609,6 +637,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                     if (listato_id[i].equals(name_user)) {
 
                                                         Total2 = amountBox3[i];
+
+                                                        String s3 = String.format("%.2f", Total2);
+                                                        s3 = s3.replace(",", ".");
+                                                        Total2 = Double.parseDouble(s3);
                                                     }
 
 
@@ -616,6 +648,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 //aggiorno il bilancio del gruppo
                                                 Double tmp = bilanciodelgruppo - Total2 + myamount;//todo sbagliato
+                                                s3x = String.format("%.2f", tmp);
+                                                s3x = s3x.replace(",", ".");
+                                                tmp = Double.parseDouble(s3x);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
                                                 // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
 
@@ -689,6 +724,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                 bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
                                                 currencyBilancioSingolo = (String) dataSnapshot.child(id_owner).child("Currency").getValue(String.class);
 
+
+                                                String s3x = String.format("%.2f", bilanciosingolo);
+                                                s3x = s3x.replace(",", ".");
+                                                bilanciosingolo = Double.parseDouble(s3x);
+
                                                 if (bilanciosingolo == null) {
                                                     bilanciosingolo = 0.0;
                                                 }
@@ -700,6 +740,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                                     if (listato_id[i].equals(name_user)) {
 
                                                         Total2 = amountBox3[i];
+
+                                                        String s3 = String.format("%.2f", Total2);
+                                                        s3 = s3.replace(",", ".");
+                                                        Total2 = Double.parseDouble(s3);
                                                     }
 
 
@@ -710,6 +754,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                                 //step 2 aggiornalo
                                                 Double tmp = bilanciosingolo - Total2;//todo sbagliato
+                                                s3x = String.format("%.2f", tmp);
+                                                s3x = s3x.replace(",", ".");
+                                                tmp = Double.parseDouble(s3x);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
                                                         .child("Users").child(id_owner).child("Total").setValue(tmp);
                                                 FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
