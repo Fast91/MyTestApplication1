@@ -172,5 +172,7 @@
     <string name="group">Gruppo:</string>
     <string name="amount">Totale:</string>
     <string name="confirm">Conferma</string>
+    <string name="title_graph">Grafico - anno :</string>
+    <string name="months">Mesi</string>
 
 </resources>

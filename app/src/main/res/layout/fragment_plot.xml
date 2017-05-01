@@ -23,15 +23,103 @@
         ap:lineLabels="left|bottom"
         ap:lineLabelRotationBottom="-45"/> -->
 
-    <com.jjoe64.graphview.GraphView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/title_graph"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            />
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/year"
+            android:textSize="20sp"
+            android:text=" 2017"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+
+        android:textSize="10sp"
+        android:text=" Euro "
+
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="start"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/relative"
+        android:weightSum="1">
+
+
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/graph"
+            android:paddingTop="10dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"/>
+
+
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/graph"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
+        android:layout_height="30dp">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+
+            android:textSize="10sp"
+            android:text="@string/months"
+            android:gravity="end|top"
+            android:layout_gravity="end|top"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="5dp"
+
+
+            android:textStyle="bold"
+
+
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
 
 </LinearLayout>

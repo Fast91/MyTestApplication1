@@ -123,7 +123,7 @@
         android:orientation="horizontal"
         android:background="#F5F5F5">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
@@ -141,7 +141,6 @@
                 app:riv_mutate_background="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
                 android:padding="2dp"/>
 

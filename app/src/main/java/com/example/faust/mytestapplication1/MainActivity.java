@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private RoundedImageView imageprofile;
     private TextView nameprofile;
     private boolean isInSideClicked=false;
+    private ImageButton b4add;
 
 
     @Override
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         name_group= intent.getExtras().getString("GROUP_NAME");
 
         getSupportActionBar().setElevation(0);
+
+        b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
 
 
 
@@ -191,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
                 bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
                 bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
+                b4add.setVisibility(View.VISIBLE);
+
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -232,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
                 bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
                 bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+
+                b4add.setVisibility(View.GONE);
 
 
                 FragmentManager fm = getSupportFragmentManager();
@@ -275,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
 
+                b4add.setVisibility(View.VISIBLE);
+
                 FragmentTransaction ft = fm.beginTransaction();
                 Fragment f= new ActivityGroupListFragment();
                 Bundle mBundle;
@@ -305,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
         //ADD EXPENSE
 
-        final ImageButton b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
+
 
         b4add.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.addexpense593x593, 100, 100));
@@ -482,6 +491,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(count_b==1) {
 
+                b4add.setVisibility(View.VISIBLE);
+
                 //count_b=1;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -491,6 +502,8 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (count_b==2){
 
+                b4add.setVisibility(View.GONE);
+
                 //count_b = 2;
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
@@ -499,6 +512,8 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
             else  if (count_b==3){
+
+                b4add.setVisibility(View.VISIBLE);
 
                 //count_b=3;
                 FragmentManager fm = getSupportFragmentManager();

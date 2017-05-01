@@ -58,7 +58,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_weight="0.60"
             android:orientation="vertical"
@@ -76,7 +76,6 @@
             app:riv_mutate_background="true"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
             android:layout_gravity="center"/>
 
         <!--android:src="@drawable/realphoto"-->
@@ -161,8 +160,6 @@
         android:name="com.example.faust.mytestapplication1.GroupsListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.example.faust.mytestapplication1.GroupsListFragment"
         tools:listitem="@layout/fragment_groups" />
