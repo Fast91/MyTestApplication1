@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -109,6 +110,14 @@ public class PlotFragment  extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_plot, container, false);
         graph = (GraphView) view.findViewById(R.id.graph);
+
+
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"","gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic",""});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(14);
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
+
 
         initData();
 
@@ -323,10 +332,11 @@ public class PlotFragment  extends Fragment {
 
                                         series.setSpacing(20);
                                         // draw values on top
-                                        //series.setDrawValuesOnTop(true);
-                                        //series.setValuesOnTopColor(Color.RED);
+                                        series.setDrawValuesOnTop(true);
+                                        series.setValuesOnTopColor(Color.DKGRAY);
 
                                         graph.addSeries(series);
+
 
                                     }
 

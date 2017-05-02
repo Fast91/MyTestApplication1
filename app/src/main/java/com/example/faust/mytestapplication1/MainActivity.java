@@ -156,9 +156,12 @@ public class MainActivity extends AppCompatActivity {
            // ((LinearLayout) findViewById(R.id.linear2)).setVisibility(LinearLayout.INVISIBLE);
            // ((LinearLayout) findViewById(R.id.linear3)).setVisibility(LinearLayout.INVISIBLE);
 
-            bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
-            bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
-            bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+            bGlobal.setBackground(getResources().getDrawable(R.drawable.shape_toolbar_selected));
+            bGroups.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+            bActivities.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+            //bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+            //bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+            //bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
 
 
@@ -190,9 +193,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 //commento
-                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
-                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
-                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bGlobal.setBackground(getResources().getDrawable(R.drawable.shape_toolbar_selected));
+                bGroups.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                bActivities.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                //bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                //bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                //bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
                 b4add.setVisibility(View.VISIBLE);
 
@@ -234,9 +240,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
-                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
-                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                bGlobal.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                bGroups.setBackground(getResources().getDrawable(R.drawable.shape_toolbar_selected));
+                bActivities.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                //bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                //bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                //bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
                 b4add.setVisibility(View.GONE);
 
@@ -276,9 +285,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
-                bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
-                bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                //bGlobal.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                //bGroups.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
+                //bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADDarkGreen));
+                bGlobal.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                bGroups.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
+                bActivities.setBackground(getResources().getDrawable(R.drawable.shape_toolbar_selected));
 
                 FragmentManager fm = getSupportFragmentManager();
 

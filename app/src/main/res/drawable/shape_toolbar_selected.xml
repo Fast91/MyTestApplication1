@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item android:top="10dp">
+                <shape>
+                    <padding
+                        android:bottom="1.5dp"/>
+                    <solid android:color= "@color/BreakingMADDarkGreen" />
+                </shape>
+            </item>
+            <item android:bottom="1.5dp">
+                <shape>
+                    <solid android:color="@color/BreakingMADLightGreen"></solid>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>
