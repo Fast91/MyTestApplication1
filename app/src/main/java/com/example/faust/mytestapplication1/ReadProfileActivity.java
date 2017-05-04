@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.*;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -58,7 +59,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
 
     ProgressDialog mProgressDialog, mProgressDialog2 ;
-    ImageView image_profile;
+     private com.makeramen.roundedimageview.RoundedImageView image_profile;
 
 
 
@@ -74,7 +75,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog2 = new ProgressDialog(this);
-        image_profile = (ImageView) findViewById(R.id.image_profile_show);
+        image_profile = (com.makeramen.roundedimageview.RoundedImageView ) findViewById(R.id.image_profile_show);
+        image_profile.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
         String msg = getString(R.string.dialog_image_profile_loading);

@@ -79,6 +79,14 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prima_attivita_gruppi);
 
+        findViewById(R.id.drawer_layout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+
 
         getSupportActionBar().setElevation(0);
 

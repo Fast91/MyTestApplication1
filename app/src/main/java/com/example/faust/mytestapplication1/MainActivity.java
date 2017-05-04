@@ -80,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
         //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.drawer_layout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         Intent intent = getIntent();
         id_group= intent.getExtras().getString("GROUP_ID");
         name_group= intent.getExtras().getString("GROUP_NAME");
