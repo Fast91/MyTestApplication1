@@ -63,6 +63,7 @@
     <string name="profile_title_string">Il mio profilo</string>
     <string name="prompt_name_profile">Nome</string>
     <string name="prompt_surname_profile">Cognome</string>
+    <string name="prompt_email_profile">Email</string>
     <string name="action_save_profile">Salva Informazioni</string>
     <string name="toast_mess_save_infouser">Salvo le informazioni..</string>
     <string name="wrong_login">Email o password errate</string>
