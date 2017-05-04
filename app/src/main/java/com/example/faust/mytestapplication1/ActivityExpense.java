@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -64,8 +66,8 @@ import java.util.concurrent.Callable;
 public class ActivityExpense extends AppCompatActivity implements View.OnClickListener {
     //private Date mydata;
     private Date myDate;
-    private String mytitle;
-    private Double myamount;
+    private String mytitle;    private Double myamount;
+
     private NomeDovuto mygroup_selected;
     private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
@@ -76,7 +78,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     Spinner category;
     private String[] listato_id;
     Double somma_totale;
-
+    Integer mDay,mYear,mMonth;
     private boolean premuto_diviso = false;
 
     private EditText[] amountBox2;
@@ -91,6 +93,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private String mycategory;
     private String keyowner;
     private ImageButton buttonGallery, buttonCamera, buttonDelete;
+    private ImageButton setdate;
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
     private ImageView image_activity;
     Integer utente_selezionato = -1;
@@ -164,7 +167,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
         Button submitexpense = (Button) findViewById(R.id.buttonSubmitExpense);
-
+        setdate = (ImageButton) findViewById(R.id.set_date);
+        setdate.setOnClickListener(this);
 
         buttonCamera = (ImageButton) findViewById(R.id.buttonPhoto);
 
@@ -1138,9 +1142,55 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
         }
+        else if(v==setdate){
+
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-    }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+
+                            Log.d("DATE","giorno "+ dayOfMonth + " mese " + monthOfYear + " anno "+ year);
+                            if(dayOfMonth<10){
+
+                                if(monthOfYear<9){
+                                    date.setText("0"+dayOfMonth + "/" + "0"+(monthOfYear + 1) + "/" + year);
+
+
+                                }
+                                else{
+                                    date.setText("0"+dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
+
+                                }
+
+                            }
+                            else{
+                                if(monthOfYear<9){
+                                    date.setText(+dayOfMonth + "/" + "0"+(monthOfYear + 1) + "/" + year);
+
+                                }
+                                else{
+                                    date.setText(+dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
+
+                                }
+                            }
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();}
+
+        }
+
+
+
 
 
     @Override
@@ -1833,7 +1883,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
 
 
 
