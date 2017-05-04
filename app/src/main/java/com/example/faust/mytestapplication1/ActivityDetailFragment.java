@@ -124,7 +124,30 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
                 mAmountTextView.setText(String.format("%.2f",dataSnapshot.child("Total").getValue(Double.class)));
                 //mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
                 mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class),"€"));
-                mCategoryTextView.setText(dataSnapshot.child("Category").getValue(String.class));
+
+                String category = dataSnapshot.child("Category").getValue(String.class);
+
+                if(category.equals("Generale") || category.equals("General")) {
+                    category = getString(R.string.category_generale);
+                }
+
+                if(category.equals("Luce") || category.equals("Light")) {
+                    category = getString(R.string.category_luce);
+                }
+
+
+                if(category.equals("Payment") || category.equals("Pagamento")) {
+                    category = getString(R.string.payment_title);
+                }
+
+                if(category.equals("Cibo") || category.equals("Food")) {
+                    category = getString(R.string.category_cibo);
+                }
+
+                if(category.equals("Gift") || category.equals("Regalo")) {
+                    category = getString(R.string.category_generale);
+                }
+                mCategoryTextView.setText(category);
 
 
 
