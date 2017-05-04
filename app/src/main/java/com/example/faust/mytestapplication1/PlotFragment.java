@@ -16,8 +16,11 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.androidplot.util.PixelUtils;
@@ -76,6 +79,9 @@ public class PlotFragment  extends Fragment {
     Double mymax=50.0;
     Date date = null;
     int mycount,totcount;
+    Spinner scategory;
+    String category_selected;
+    String category;
 
     private HashMap<String,NomeDovuto> attivita_dovuto;
 
@@ -119,10 +125,109 @@ public class PlotFragment  extends Fragment {
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(135);
 
 
-        initData();
+      //  initData();
 
        // plot = (XYPlot) view.findViewById(R.id.plot);
        // plot();
+
+
+        /////////////
+        //adapter
+
+        scategory = (Spinner) view.findViewById(R.id.Category_newexpense);
+
+
+        //Spiinner Category
+
+
+        Categories cts = new Categories();
+        //AGGIUNGO LE CATEGORIE
+        String s = getString(R.string.category_all);
+        cts.setItem(s);
+        s = getString(R.string.category_generale);
+        cts.setItem(s);
+        s = getString(R.string.category_luce);
+        cts.setItem(s);
+        s = getString(R.string.category_gas);
+        cts.setItem(s);
+        s = getString(R.string.category_internet);
+        cts.setItem(s);
+
+        s = getString(R.string.category_cibo);
+        cts.setItem(s);
+        s = getString(R.string.category_regali);
+        cts.setItem(s);
+
+
+        ArrayAdapter<String> adapterCat = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, cts.getList());
+        adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        scategory.setAdapter(adapterCat);
+
+        //Listener
+
+        scategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterC, View v,
+                                       int position, long id) {
+                // On selecting a spinner item
+                //id_currency = adapterC.getItemAtPosition(position).toString();
+                // Showing selected spinner item
+                //prova
+                scategory.setSelection(position);
+
+                graph.removeAllSeries();
+                category_selected = (String) scategory.getSelectedItem();
+
+                if(category_selected.equals("Generale") || category_selected.equals("General")) {
+                    category_selected = "Generale";
+                }
+
+                if(category_selected.equals("Luce") || category_selected.equals("Light")) {
+                    category_selected = "Luce";
+                }
+
+                if(category_selected.equals("Cibo") || category_selected.equals("Food")) {
+                    category_selected = "Cibo";
+                }
+
+                if(category_selected.equals("Gift") || category_selected.equals("Regalo")) {
+                    category_selected = "Regalo";
+                }
+
+                initData();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
+        category_selected = (String) scategory.getSelectedItem();
+
+        if(category_selected.equals("Generale") || category_selected.equals("General")) {
+            category_selected = "Generale";
+        }
+
+        if(category_selected.equals("Luce") || category_selected.equals("Light")) {
+            category_selected = "Luce";
+        }
+
+        if(category_selected.equals("Cibo") || category_selected.equals("Food")) {
+            category_selected = "Cibo";
+        }
+
+        if(category_selected.equals("Gift") || category_selected.equals("Regalo")) {
+            category_selected = "Regalo";
+        }
+
+        //////////////////////////////
+
+
+
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
@@ -139,6 +244,8 @@ public class PlotFragment  extends Fragment {
         });
 
         getandSetImage();
+
+
 
 
 
@@ -223,6 +330,8 @@ public class PlotFragment  extends Fragment {
 
     private void initData() {
 
+        attivita_dovuto.clear();
+
 
         DatabaseReference databaseReference;
 
@@ -237,7 +346,7 @@ public class PlotFragment  extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                totcount= (int) dataSnapshot.getChildrenCount();
+
 
                 //Per ogni attivita
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -245,116 +354,264 @@ public class PlotFragment  extends Fragment {
 
                     final String id = (String) postSnapshot.getKey();
                     final String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                    final String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+                   category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+
+                    if(category.equals("Generale") || category.equals("General")) {
+                        category = "Generale";
+                    }
+
+                    if(category.equals("Luce") || category.equals("Light")) {
+                        category = "Luce";
+                    }
+
+
+                    if(category.equals("Payment") || category.equals("Pagamento")) {
+                        category = "Pagamento";
+                    }
+
+                    if(category.equals("Cibo") || category.equals("Food")) {
+                        category = "Cibo";
+                    }
+
+                    if(category.equals("Gift") || category.equals("Regalo")) {
+                        category = "Regalo";
+                    }
+
+
+
+                if(category.equals("Pagamento")==false && category.equals("Payment")==false) {
+
+                    if(category_selected.equals("All")==true || category_selected.equals("Tutte")) {
+
+                        totcount++;
+
+
+                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        mycount++;
+
+                                        Double total = null;
+
+
+                                        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                        date = null;
+                                        try {
+                                            String s = dataSnapshot.child("Date").getValue(String.class);
+                                            date = format.parse(s);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
+
+
+                                        if (total == null) {
+
+                                            total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
+
+
+                                        }
+
+                                        if (total == null) {
+                                            total = 0.0;
+                                        }
+
+                                        NomeDovuto iniziale = new NomeDovuto(nome, total);
+                                        iniziale.setId(id);
+                                        iniziale.setCategory(category);
+                                        iniziale.setDate(date);
+                                        attivita_dovuto.put(id, iniziale);
+
+
+                                        if (mycount == totcount) {
+
+                                            ///Now I have to set the graph
+                                            clearValue();
+                                            setValue();
+
+
+                                            graph.getViewport().setXAxisBoundsManual(true);
+                                            graph.getViewport().setMinX(0);
+                                            graph.getViewport().setMaxX(13);
+
+                                            // set manual Y bounds
+                                            graph.getViewport().setYAxisBoundsManual(true);
+                                            graph.getViewport().setMinY(0);
+                                            graph.getViewport().setMaxY(mymax);
+
+
+                                            // graph.getLegendRenderer().setVisible(true);
+
+
+                                            //adesso posso lavorare con il grafico
+                                            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+
+                                                    new DataPoint(1, gen_val),
+                                                    new DataPoint(2, feb_val),
+                                                    new DataPoint(3, marz_val),
+                                                    new DataPoint(4, apr_val),
+                                                    new DataPoint(5, mag_val),
+                                                    new DataPoint(6, giu_val),
+                                                    new DataPoint(7, lug_val),
+                                                    new DataPoint(8, ago_val),
+                                                    new DataPoint(9, set_val),
+                                                    new DataPoint(10, ott_val),
+                                                    new DataPoint(11, nov_val),
+                                                    new DataPoint(12, dic_val)
+                                            });
+
+                                            series.setSpacing(20);
+                                            // draw values on top
+                                            series.setDrawValuesOnTop(true);
+                                            series.setValuesOnTopColor(Color.DKGRAY);
+
+                                            graph.addSeries(series);
 
 
 
 
-                    FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                        }
 
 
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    mycount++;
-
-                                    Double total=null;
-
-
-                                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                                    date = null;
-                                    try {
-                                        String s = dataSnapshot.child("Date").getValue(String.class);
-                                        date = format.parse(s);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
                                     }
 
-                                    total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
-
-
-
-                                    if(total==null){
-
-                                        total= dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
-
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
                                     }
-
-                                    if(total==null){
-                                        total=0.0;
-                                    }
-
-                                    NomeDovuto iniziale = new NomeDovuto(nome, total);
-                                    iniziale.setId(id);
-                                    iniziale.setCategory(category);
-                                    iniziale.setDate(date);
-                                    attivita_dovuto.put(id, iniziale);
+                                });
 
 
+                    }//all
 
-                                    if(mycount==totcount) {
+                    else{
 
-                                        ///Now I have to set the graph
-                                        clearValue();
-                                        setValue();
+                        //Non è all
 
+                        if(category_selected.equals(category)){
 
-                                        graph.getViewport().setXAxisBoundsManual(true);
-                                        graph.getViewport().setMinX(0);
-                                        graph.getViewport().setMaxX(13);
-
-                                        // set manual Y bounds
-                                        graph.getViewport().setYAxisBoundsManual(true);
-                                        graph.getViewport().setMinY(0);
-                                        graph.getViewport().setMaxY(mymax);
+                            totcount++;
 
 
-                                        // graph.getLegendRenderer().setVisible(true);
+                            FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
 
 
-                                        //adesso posso lavorare con il grafico
-                                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            mycount++;
 
-                                                new DataPoint(1, gen_val),
-                                                new DataPoint(2, feb_val),
-                                                new DataPoint(3, marz_val),
-                                                new DataPoint(4, apr_val),
-                                                new DataPoint(5, mag_val),
-                                                new DataPoint(6, giu_val),
-                                                new DataPoint(7, lug_val),
-                                                new DataPoint(8, ago_val),
-                                                new DataPoint(9, set_val),
-                                                new DataPoint(10, ott_val),
-                                                new DataPoint(11, nov_val),
-                                                new DataPoint(12, dic_val)
-                                        });
-
-                                        series.setSpacing(20);
-                                        // draw values on top
-                                        series.setDrawValuesOnTop(true);
-                                        series.setValuesOnTopColor(Color.DKGRAY);
-
-                                        graph.addSeries(series);
+                                            Double total = null;
 
 
-                                    }
+                                            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                            date = null;
+                                            try {
+                                                String s = dataSnapshot.child("Date").getValue(String.class);
+                                                date = format.parse(s);
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
 
-                                }
+                                            if (total == null) {
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
+                                                total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
 
+                                            }
+
+                                            if (total == null) {
+                                                total = 0.0;
+                                            }
+
+                                            NomeDovuto iniziale = new NomeDovuto(nome, total);
+                                            iniziale.setId(id);
+                                            iniziale.setCategory(category);
+                                            iniziale.setDate(date);
+                                            attivita_dovuto.put(id, iniziale);
+
+
+                                            if (mycount == totcount) {
+
+                                                ///Now I have to set the graph
+                                                clearValue();
+                                                setValue();
+
+
+                                                graph.getViewport().setXAxisBoundsManual(true);
+                                                graph.getViewport().setMinX(0);
+                                                graph.getViewport().setMaxX(13);
+
+                                                // set manual Y bounds
+                                                graph.getViewport().setYAxisBoundsManual(true);
+                                                graph.getViewport().setMinY(0);
+                                                graph.getViewport().setMaxY(mymax);
+
+
+                                                // graph.getLegendRenderer().setVisible(true);
+
+
+                                                //adesso posso lavorare con il grafico
+                                                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+
+                                                        new DataPoint(1, gen_val),
+                                                        new DataPoint(2, feb_val),
+                                                        new DataPoint(3, marz_val),
+                                                        new DataPoint(4, apr_val),
+                                                        new DataPoint(5, mag_val),
+                                                        new DataPoint(6, giu_val),
+                                                        new DataPoint(7, lug_val),
+                                                        new DataPoint(8, ago_val),
+                                                        new DataPoint(9, set_val),
+                                                        new DataPoint(10, ott_val),
+                                                        new DataPoint(11, nov_val),
+                                                        new DataPoint(12, dic_val)
+                                                });
+
+                                                series.setSpacing(20);
+                                                // draw values on top
+                                                series.setDrawValuesOnTop(true);
+                                                series.setValuesOnTopColor(Color.DKGRAY);
+
+                                                graph.addSeries(series);
 
 
 
 
 
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+
+
+
+                        }
+
+
+
+
+
+
+                    }
+
+                       }//category
 
 
 
