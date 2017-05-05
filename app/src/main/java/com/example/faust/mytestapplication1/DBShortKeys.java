@@ -19,74 +19,16 @@ public class DBShortKeys
 {
 
     private Double global_balance,group_balance;
-    private int mycount,totcount;
-
-    private Double mGBtotal = 0.0;
-
-    public void updateUserGlobalBalance(final String userID)
-    {
-        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        // OTTENGO TUTTE LE ATTIVITA' LEGATE A QUELL'UTENTE
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener()
-        {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                //Double total1 = 0.0;
-                if(dataSnapshot.child("Activities").exists())
-                {
-                    for(DataSnapshot activity : dataSnapshot.child("Activities").getChildren())
-                    {
-                        // PRENDO I DETTAGLI DELLA SINGOLA ATTIVITA'
-                        final DatabaseReference dbRef2 = FirebaseDatabase.getInstance().getReference("Activities").child(activity.getValue(String.class));
-                        dbRef2.addListenerForSingleValueEvent(new ValueEventListener()
-                        {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot)
-                            {
-                                if(dataSnapshot.child("Owner").child(userID).exists())
-                                {
-                                    // sono l'owner
-                                    mGBtotal += dataSnapshot.child("Owner").child(userID).child("Total").getValue(Double.class);
-
-                                }
-                                else if(dataSnapshot.child("Users").child(userID).exists())
-                                {
-                                    // sono un utente
-                                    mGBtotal -= dataSnapshot.child("Users").child(userID).child("Total").getValue(Double.class);
-                                }
-
-                                dbRef.child("GlobalBalance").setValue(mGBtotal);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError)
-                            {
-
-                            }
-                        });
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
-            }
-        });
-    }
-
-
-
-
-
-
+    private int group_mycount,group_totcount,global_mycount,global_totcount;
+    private Double personal_balance;
+    private int personal_mycount, personal_totcount;
 
 
     private void AggiornaBilancioGlobale(final String id_user) {
 
         global_balance = 0.0;
-        mycount=0;
-        totcount=0;
+        global_mycount=0;
+        global_totcount=0;
 
 
 
@@ -107,7 +49,7 @@ public class DBShortKeys
                 } else {
 
 
-                    totcount = (int) dataSnapshot.getChildrenCount();
+                    global_totcount = (int) dataSnapshot.getChildrenCount();
 
 
                     for (DataSnapshot databaseSnapshot1 : dataSnapshot.getChildren()) {
@@ -120,7 +62,7 @@ public class DBShortKeys
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        mycount++;
+                                        global_mycount++;
 
 
                                         Double total = null;
@@ -133,24 +75,17 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
-                                            group_balance = global_balance  - total;
+                                            global_balance = global_balance  - total;
 
                                         }
                                         else{
-                                            group_balance = global_balance  + total;
+                                            global_balance = global_balance  + total;
                                         }
 
 
 
-                                        if (total == null) {
 
-
-                                            total = 0.0;
-                                        }
-
-
-
-                                        if (mycount == totcount) {
+                                        if (global_mycount == global_totcount) {
                                             //ho finito
 
                                             FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("GlobalBalance").setValue(global_balance);
@@ -185,22 +120,17 @@ public class DBShortKeys
         });
 
 
-
-
-
-
-
     }
 
 
 
 
 
-    private void AggiornaBilancioGruppo(final String id_user, String id_group) {
-
+    private void AggiornaBilancioGruppo(final String id_user, final String id_group)
+    {
         group_balance = 0.0;
-        mycount=0;
-        totcount=0;
+        group_mycount=0;
+        group_totcount=0;
 
         final DatabaseReference databaseReference;
 
@@ -219,14 +149,11 @@ public class DBShortKeys
                 } else {
 
 
-                    totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+                    group_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
 
 
                     //Per ogni attivita
                     for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
-
-
-                        mycount++;
 
 
                         final String id = (String) postSnapshot.getKey();
@@ -243,6 +170,7 @@ public class DBShortKeys
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                                        group_mycount++;
 
                                         Double total = null;
 
@@ -254,25 +182,19 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
-                                            group_balance = global_balance  - total;
+                                            group_balance = group_balance  - total;
 
                                         }
                                         else{
-                                            group_balance = global_balance  + total;
-                                        }
-                                        if (total == null) {
-                                            total = 0.0;
+                                            group_balance = group_balance  + total;
                                         }
 
 
-
-
-                                        if (mycount == totcount) {
+                                        if (group_mycount == group_totcount) {
 
                                             //ho finito
 
-                                            databaseReference.child("Users").child(id_user).child("Total").setValue(group_balance);
-
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Total").setValue(group_balance);
                                         }
 
 
@@ -299,17 +221,124 @@ public class DBShortKeys
 
             }
 
-
              });
-
-
     }
 
 
 
 
+    private void AggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    {
+        personal_balance = 0.0;
+        personal_mycount=0;
+        personal_totcount=0;
+
+        final DatabaseReference databaseReference;
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
+
+        //Read content data
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() == null) {
+
+
+                } else {
+
+
+                    personal_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+
+                    //Per ogni attivita
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
+
+
+                        final String id = (String) postSnapshot.getKey();
+                        final String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                        //category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
 
 
 
+                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        personal_mycount++;
+
+                                        Double total = null;
+
+
+                                        total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+
+                                        if (total == null) {
+
+                                            // io sono utente
+                                            total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+
+
+                                            //////////
+                                            if(dataSnapshot.child("Owner").getKey().equals(id_other))
+                                            {
+                                                personal_balance = personal_balance  - total;
+                                            }
+                                            //////////
+                                        }
+                                        else{
+
+                                            // io sono owner
+
+                                            /////////
+                                            //if(dataSnapshot.child("User").getKey().equals(id_other))
+                                            //{
+                                            total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
+                                                personal_balance = personal_balance  + total;
+                                            //}
+                                            ////////
+
+                                        }
+
+
+                                        if (personal_mycount == personal_totcount) {
+
+                                            //ho finito
+
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Users").child(id_other).child("Total").setValue(personal_balance);
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_other).child("Groups").child(id_group).child("Users").child(id_user).child("Total").setValue(-personal_balance);
+                                        }
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+
+
+                                });
+
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+    }
 }
