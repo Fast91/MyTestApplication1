@@ -124,6 +124,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
     private String id_group_iniziale, name_group_iniziale;
+    private DBShortKeys dbShortKeys;
 
 
     @Override
@@ -135,6 +136,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         id_group_iniziale = inte.getExtras().getString("GROUP_ID");
         name_group_iniziale = inte.getExtras().getString("GROUP_NAME");
 
+        dbShortKeys = new DBShortKeys();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -474,6 +476,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                 for (final String name_user : myusers.keySet()) {
+
+                                  //  (new DBShortKeys()).AggiornaBilancioGlobale(name_user);
+                                  //  dbShortKeys.AggiornaBilancioGlobale(name_user);
+
+
 
                                     //Prendermi il bilancio
                                     ////////// INIZIO
@@ -836,11 +843,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-                            Intent intent = new Intent(ActivityExpense.this, MainActivity.class);
-                            intent.putExtra("GROUP_ID", id_group_iniziale);
-                            intent.putExtra("GROUP_NAME", name_group_iniziale);
-                            startActivity(intent);
-                            finish();
 
                         }
                     });

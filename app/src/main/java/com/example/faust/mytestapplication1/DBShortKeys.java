@@ -19,7 +19,7 @@ public class DBShortKeys
     private int personal_mycount, personal_totcount;
 
 
-    private void AggiornaBilancioGlobale(final String id_user) {
+    public void AggiornaBilancioGlobale(final String id_user) {
 
         global_balance = 0.0;
         global_mycount=0;
@@ -62,19 +62,33 @@ public class DBShortKeys
 
                                         Double total = null;
 
+                                        Double amount = dataSnapshot.child("Total").getValue(Double.class);
+                                        String s3x = String.format("%.2f", amount);
+                                        s3x = s3x.replace(",", ".");
+                                        amount = Double.parseDouble(s3x);
+
 
                                         total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
 
 
                                         if (total == null) {
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
 
                                             global_balance = global_balance  - total;
 
                                         }
                                         else{
-                                            global_balance = global_balance  + total;
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
+                                            global_balance = global_balance  + (amount-total);
+
+
                                         }
 
 
@@ -82,6 +96,10 @@ public class DBShortKeys
 
                                         if (global_mycount == global_totcount) {
                                             //ho finito
+
+                                            s3x = String.format("%.2f", global_balance);
+                                            s3x = s3x.replace(",", ".");
+                                            global_balance = Double.parseDouble(s3x);
 
                                             FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("GlobalBalance").setValue(global_balance);
 
@@ -121,7 +139,7 @@ public class DBShortKeys
 
 
 
-    private void AggiornaBilancioGruppo(final String id_user, final String id_group)
+    public void AggiornaBilancioGruppo(final String id_user, final String id_group)
     {
         group_balance = 0.0;
         group_mycount=0;
@@ -189,6 +207,10 @@ public class DBShortKeys
 
                                             //ho finito
 
+                                            String s3x = String.format("%.2f", group_balance);
+                                            s3x = s3x.replace(",", ".");
+                                            group_balance = Double.parseDouble(s3x);
+
                                             FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Total").setValue(group_balance);
                                         }
 
@@ -222,7 +244,7 @@ public class DBShortKeys
 
 
 
-    private void AggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    public void AggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
     {
         personal_balance = 0.0;
         personal_mycount=0;
@@ -305,6 +327,11 @@ public class DBShortKeys
                                         if (personal_mycount == personal_totcount) {
 
                                             //ho finito
+
+
+                                            String s3x = String.format("%.2f", personal_balance);
+                                            s3x = s3x.replace(",", ".");
+                                            personal_balance = Double.parseDouble(s3x);
 
                                             FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Users").child(id_other).child("Total").setValue(personal_balance);
                                             FirebaseDatabase.getInstance().getReference().child("Users").child(id_other).child("Groups").child(id_group).child("Users").child(id_user).child("Total").setValue(-personal_balance);

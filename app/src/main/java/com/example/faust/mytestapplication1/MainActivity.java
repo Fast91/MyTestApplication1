@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton b4add;
 
 
+
+    private DBShortKeys dbShortKeys;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +102,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
         b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
+
+
+
+       //dbShortKeys = new DBShortKeys();
+        //dbShortKeys.AggiornaBilancioGlobale("k0fWwgOMSmN77HBveT0QVnYpt802");
+
+
+        /*
+        dbShortKeys.AggiornaBilancioGlobale("hJqLTxmbV3YNRAM8VPy3HZki5ky2");
+        dbShortKeys.AggiornaBilancioGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
+        dbShortKeys.AggiornaBilanciFraUtentiGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","k0fWwgOMSmN77HBveT0QVnYpt802","2");
+*/
 
 
         //setTheme(R.style.AppTheme);

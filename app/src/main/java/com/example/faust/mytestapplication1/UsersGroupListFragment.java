@@ -300,9 +300,7 @@ public class UsersGroupListFragment extends Fragment{
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Intent i = new Intent(view.getContext(), PrimaAttivitaGruppi.class);
 
-                startActivity(i);
 
             }
 
