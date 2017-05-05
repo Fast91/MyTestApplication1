@@ -153,29 +153,34 @@ public class ActivityGroupListFragment extends Fragment {
 
 
                     String id = (String) postSnapshot.getKey();
+                    String category = (String) postSnapshot.child("Category").getValue(String.class);
                     String nome = (String) postSnapshot.child("Name").getValue(String.class);
                     Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
-                    String category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+                    //todo inserire categoria nel DB groups
 
-                    if(category.equals("Generale") || category.equals("General")) {
-                        category = getString(R.string.category_generale);
-                    }
+                    if(category!=null) {
 
-                    if(category.equals("Luce") || category.equals("Light")) {
-                        category = getString(R.string.category_luce);
-                    }
+                        if (category.equals("Generale") || category.equals("General")) {
+                            category = getString(R.string.category_generale);
+                        }
+
+                        if (category.equals("Luce") || category.equals("Light")) {
+                            category = getString(R.string.category_luce);
+                        }
 
 
-                    if(category.equals("Payment") || category.equals("Pagamento")) {
-                        category = getString(R.string.payment_title);
-                    }
+                        if (category.equals("Payment") || category.equals("Pagamento")) {
+                            category = getString(R.string.payment_title);
+                        }
 
-                    if(category.equals("Cibo") || category.equals("Food")) {
-                        category = getString(R.string.category_cibo);
-                    }
+                        if (category.equals("Cibo") || category.equals("Food")) {
+                            category = getString(R.string.category_cibo);
+                        }
 
-                    if(category.equals("Gift") || category.equals("Regalo")) {
-                        category = getString(R.string.category_generale);
+                        if (category.equals("Gift") || category.equals("Regalo")) {
+                            category = getString(R.string.category_generale);
+                        }
+
                     }
 
                     DateFormat format = new SimpleDateFormat("dd/MM/yyyy");

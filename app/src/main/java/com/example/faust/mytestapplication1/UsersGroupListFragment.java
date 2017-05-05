@@ -149,7 +149,17 @@ public class UsersGroupListFragment extends Fragment{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //aggiunto non testato
+
+
+                if(dataSnapshot.getValue()==null){
+
+                    Intent i = new Intent(view.getContext(), PrimaAttivitaGruppi.class);
+
+                    startActivity(i);
+                }
+
+
+                //aggiunto non testato
                         name_group = dataSnapshot.child("Name").getValue(String.class);
 
                         //prendo gli amici
@@ -288,6 +298,10 @@ public class UsersGroupListFragment extends Fragment{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+                Intent i = new Intent(view.getContext(), PrimaAttivitaGruppi.class);
+
+                startActivity(i);
 
             }
 

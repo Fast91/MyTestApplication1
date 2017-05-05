@@ -321,13 +321,16 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                             databaseReference.child(key).child("Date").setValue(Date);
+                            databaseReference.child(key).child("Category").setValue(Category);
+
+
                             databaseReference.child(key).child("Name").setValue(Name);
                             databaseReference.child(key).child("Total").setValue(Total);
                             databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
 
                             databaseReference.child(key).child("GroupId").setValue(GroupId);
 
-                            databaseReference.child(key).child("Category").setValue(Category);
+
 
 
                             int count_users = myusers.size();
@@ -414,11 +417,12 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
 
                                 databaseReference3.child(key).child("Date").setValue(Date);
+                                databaseReference3.child(key).child("Category").setValue(Category);
 
                                 databaseReference3.child(key).child("Name").setValue(Name);
                                 databaseReference3.child(key).child("Total").setValue(Total);
                                 databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
-                                databaseReference3.child(key).child("Category").setValue(Category);
+
 
 
                                 //2 users- ACTIVITIES
@@ -438,10 +442,11 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
+                                    databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
-                                    databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
+
 
 
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);
@@ -807,6 +812,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 //////////
                                 //////////
 
+                                Intent intent = new Intent(ActivityExpense.this, MainActivity.class);
+                                intent.putExtra("GROUP_ID", id_group_iniziale);
+                                intent.putExtra("GROUP_NAME", name_group_iniziale);
+                                startActivity(intent);
+                                finish();
+
+
 
                             }
 
@@ -815,15 +827,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
+
+
+                            Intent intent = new Intent(ActivityExpense.this, MainActivity.class);
+                            intent.putExtra("GROUP_ID", id_group_iniziale);
+                            intent.putExtra("GROUP_NAME", name_group_iniziale);
+                            startActivity(intent);
+                            finish();
+
                         }
                     });
 
 
-                    Intent intent = new Intent(ActivityExpense.this, MainActivity.class);
-                    intent.putExtra("GROUP_ID", id_group_iniziale);
-                    intent.putExtra("GROUP_NAME", name_group_iniziale);
-                    startActivity(intent);
-                    finish();
 
 
                     return;

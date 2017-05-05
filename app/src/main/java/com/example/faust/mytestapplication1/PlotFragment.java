@@ -687,7 +687,7 @@ public class PlotFragment  extends Fragment {
                 }
 
 
-
+                mProgressDialog.dismiss();
 
             }
 
@@ -724,14 +724,15 @@ public class PlotFragment  extends Fragment {
 
         //usare i double e attivita_dovuto
 
-        Date date = new Date();
-        int year = date.getYear();
+
+
+        int year = new Integer(mYearSelected);
 
 
         for(NomeDovuto nm : attivita_dovuto.values()){
 
 
-            if(year==nm.getDate().getYear()){
+            if(year==(nm.getDate().getYear()+1900)){
                 //se la spesa e' relativa a quest'anno
 
                 switch (nm.getDate().getMonth()){
