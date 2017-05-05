@@ -156,11 +156,41 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         amount2.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(12,2)});
 
         category = (Spinner) findViewById(R.id.Category_newexpense);
-
+        date = (EditText) findViewById(R.id.Data_newexpense);
 
         Button submitexpense = (Button) findViewById(R.id.buttonSubmitExpense);
         setdate = (ImageButton) findViewById(R.id.set_date);
         setdate.setOnClickListener(this);
+
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        if(mDay<10){
+
+            if(mMonth<9){
+                date.setText("0"+mDay + "/" + "0"+(mMonth + 1) + "/" + mYear);
+
+
+            }
+            else{
+                date.setText("0"+mDay + "/" + (mMonth +1) + "/" + mYear);
+
+            }
+
+        }
+        else{
+            if(mMonth<9){
+                date.setText(+mDay + "/" + "0"+(mMonth + 1) + "/" + mYear);
+
+            }
+            else{
+                date.setText(+mDay + "/" + (mMonth +1) + "/" + mYear);
+
+            }
+        }
+
 
         buttonCamera = (ImageButton) findViewById(R.id.buttonPhoto);
 
@@ -1005,7 +1035,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         //Date
 
 
-        date = (EditText) findViewById(R.id.Data_newexpense);
+
         TextWatcher tw = new TextWatcher() {
             private String current = "";
             private String ddmmyyyy = "DDMMYYYY";
