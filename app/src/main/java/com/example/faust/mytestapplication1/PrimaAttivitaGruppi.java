@@ -596,7 +596,9 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                 if(res_id==R.id.action_myprofile){
                     //logging out the user
                     //starting login activity
-                    startActivity(new Intent(PrimaAttivitaGruppi.this, ReadProfileActivity.class));
+                    Intent i = new Intent(PrimaAttivitaGruppi.this, ReadProfileActivity.class);
+                    i.putExtra("MY_PROFILE","YES");
+                    startActivity(i);
                 }
 
                 if(res_id==R.id.action_invitation){

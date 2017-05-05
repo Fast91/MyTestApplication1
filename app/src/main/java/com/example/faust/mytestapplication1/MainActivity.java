@@ -904,7 +904,10 @@ public class MainActivity extends AppCompatActivity {
                 if(res_id==R.id.action_myprofile){
                     //logging out the user
                     //starting login activity
-                    startActivity(new Intent(MainActivity.this, ReadProfileActivity.class));
+                    Intent i = new Intent(MainActivity.this, ReadProfileActivity.class);
+                    i.putExtra("MY_PROFILE","YES");
+                    startActivity(i);
+
                 }
 
                 if(res_id==R.id.action_invitation){

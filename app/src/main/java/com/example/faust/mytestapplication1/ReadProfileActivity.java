@@ -100,8 +100,14 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
             id=firebaseAuth.getCurrentUser().getUid();
         }
 
+        String id_profile=null;
         Intent intent = getIntent();
-        String id_profile = intent.getExtras().getString("PROFILE_ID");
+
+        if( intent.getExtras().getString("MY_PROFILE").equals("NO") ){
+             id_profile = intent.getExtras().getString("PROFILE_ID");
+
+
+        }
 
         if(id_profile!=null){
             id=id_profile;
@@ -122,16 +128,21 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         textSurname = (TextView) findViewById(R.id.surname_real_profile);
         textEmail = (TextView) findViewById(R.id.email_real_profile);
 
+        if(id_profile==null) {
         buttonModify = (ImageButton) findViewById(R.id.edit_profile_button);
         buttonModify.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.picture_attachment256x256, 100, 100));
-        buttonModify.setOnClickListener(this);
 
+            buttonModify.setOnClickListener(this);
+        }
+
+        if(id_profile==null) {
         buttonCamera = (ImageButton) findViewById(R.id.edit_profile_button_camera);
         buttonCamera.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.icon_camera128x128, 100, 100));
-        buttonCamera.setOnClickListener(this);
 
+            buttonCamera.setOnClickListener(this);
+        }
 
 
         //Read content data

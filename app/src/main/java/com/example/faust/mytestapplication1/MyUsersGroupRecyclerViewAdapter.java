@@ -90,6 +90,7 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
                 public void onClick(View v) {
 
                     Intent i = new Intent(v.getContext(),ReadProfileActivity.class);
+                    i.putExtra("MY_PROFILE","NO");
                     i.putExtra("PROFILE_ID",user.getId());
                     v.getContext().startActivity(i);
 
