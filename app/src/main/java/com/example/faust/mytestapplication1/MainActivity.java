@@ -48,6 +48,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.*;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -710,7 +712,8 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        //databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -735,7 +738,8 @@ public class MainActivity extends AppCompatActivity {
 
                     DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
 
-                    databaseReference2.addValueEventListener(new ValueEventListener() {
+                    //databaseReference2.addValueEventListener(new ValueEventListener() {
+                    databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -838,6 +842,149 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    /*private void buttonDeleteGroup(){
+
+        //per ogni utente controllare se tutti i bilanci sono 0
+        // se ne trovo uno diverso da 0 non posso cancellare altrimenti
+        // cancello il gruppo per ogni utente
+        //cancello il gruppo nei gruppi
+        //riporto nella global
+
+
+        //step1 prendere tutti gli utenti di quel gruppo
+        //user group
+
+
+
+        //DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
+        DatabaseReference databaseReferenceT1 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
+        databaseReferenceT1.runTransaction(new Transaction.Handler()
+        {
+            @Override
+            public Transaction.Result doTransaction(final MutableData mutableData)
+            {
+                if(mutableData.getValue()==null) // significa che ho cancellato il gruppo (questo if probabilmente verrà eseguito come ultimo step del loop, dopo che avrò eliminato il gruppo)
+                {
+                    return Transaction.success(mutableData); // probabilmente dopo questa chiamata uscirò dal loop
+                }
+
+                // il gruppo ancora esiste
+
+                bilancio_0 = true;
+                final ArrayList<String> id_utenti = new ArrayList<String>();
+
+                for(MutableData take: mutableData.child("Users").getChildren()){
+                    //utenti
+                    //
+                    id_utenti.add(take.getKey());
+                }
+
+                //dopo aver preso gli utenti controllare
+                //se per ogni di questo utente il bilancio di quel gruppo e' 0 cancello altrimenti TOAST
+
+                count_fatti=0;
+
+                for(String id : id_utenti){
+
+                    count_fatti++;
+
+                    //DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
+                    DatabaseReference databaseReferenceT2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group);
+
+                    databaseReferenceT2.runTransaction(new Transaction.Handler()
+                    {
+                        @Override
+                        public Transaction.Result doTransaction(MutableData mutableData)
+                        {
+                            if(mutableData.getValue()==null)
+                            {
+                                return Transaction.success(mutableData); // fine della seconda transazione
+                            }
+
+                            Double bilancio_singolo = mutableData.child("Total").getValue(Double.class);
+
+                            if (bilancio_singolo != null)
+                            {
+                                if (bilancio_singolo > 0.0)
+                                {
+                                    bilancio_0 = false;
+                                }
+                            }
+
+                            if (count_fatti == id_utenti.size())
+                            {
+
+                                if (bilancio_0 == true)
+                                {
+                                    //posso eliminare
+                                    //   Toast.makeText(getContext(),R.string.yes_delete_group,Toast.LENGTH_LONG).show();
+
+                                    //dovrei eliminarlo dal gruppo e da tutti gli utenti
+
+                                    //Remove
+                                    String id_group2 = new String(id_group);
+
+                                    //problema concorrenza se lo mando in una attivita che vuole usare questo listener sui gruppis
+                                    for (String id : id_utenti)
+                                    {
+
+                                        String id2 = new String(id);
+                                        ref.child("Users").child(id2).child("Groups").child(id_group2).removeValue();
+                                    }
+
+                                    Intent intent = new Intent(MainActivity.this, DeleteGroupActivity.class);
+                                    intent.putExtra("ID_GROUP", id_group);
+                                    intent.putExtra("NAME_GROUP", name_group);
+                                    startActivity(intent);
+                                    // activity.finish(); //todoprovo
+
+
+                                } else
+                                {
+                                    //qualcuno lo ha diverso da 0 mando il toast
+
+                                    Toast.makeText(MainActivity.this, R.string.no_delete_group, Toast.LENGTH_LONG).show();
+
+                                }
+
+
+                            }
+
+
+
+
+                        }
+
+                        @Override
+                        public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+                        {
+                            String id_group2 = new String(id_group);
+
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                            ref.child("Groups").child(id_group2).removeValue();
+                        }
+                    });
+
+
+
+
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot)
+            {
+                finish();
+            }
+        });
+
+    }*/
 
 
 

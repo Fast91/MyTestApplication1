@@ -177,4 +177,6 @@
     <string name="months">Mesi</string>
     <string name="category_all">Tutte</string>
 
+    <string name="date_picker_title">Data della spesa:</string>
+
 </resources>

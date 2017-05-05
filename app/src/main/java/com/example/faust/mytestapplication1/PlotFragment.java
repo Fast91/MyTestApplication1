@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -80,8 +82,12 @@ public class PlotFragment  extends Fragment {
     Date date = null;
     int mycount,totcount;
     Spinner scategory;
+    Spinner mYearSpinner;
     String category_selected;
+    String mYearSelected;
+    List<String> mYearsList;
     String category;
+    String mYearFromDB;
 
     private HashMap<String,NomeDovuto> attivita_dovuto;
 
@@ -135,10 +141,20 @@ public class PlotFragment  extends Fragment {
         //adapter
 
         scategory = (Spinner) view.findViewById(R.id.Category_newexpense);
-
+        mYearSpinner = (Spinner) view.findViewById(R.id.graph_year_spinner);
 
         //Spiinner Category
 
+        //Log.d("FAST", Integer.toString(Calendar.getInstance().getTime().getYear())); //117 (=> 1900 + 117 = 2017)
+
+        mYearsList = new ArrayList<>();
+        for(int i = Calendar.getInstance().getTime().getYear()+1900; i>=1900; i--)
+        {
+            mYearsList.add(Integer.toString(i));
+            //Log.d("FAST", Integer.toString(i));
+        }
+
+        //mYearsList.add("Choose a year");
 
         Categories cts = new Categories();
         //AGGIUNGO LE CATEGORIE
@@ -162,7 +178,11 @@ public class PlotFragment  extends Fragment {
         ArrayAdapter<String> adapterCat = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, cts.getList());
         adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        ArrayAdapter<String> adapterYear = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_spinner_item, mYearsList);
+        adapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         scategory.setAdapter(adapterCat);
+        mYearSpinner.setAdapter(adapterYear);
 
         //Listener
 
@@ -205,6 +225,28 @@ public class PlotFragment  extends Fragment {
             }
         });
 
+        mYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterC, View v,
+                                       int position, long id) {
+                // On selecting a spinner item
+                //id_currency = adapterC.getItemAtPosition(position).toString();
+                // Showing selected spinner item
+                //prova
+                mYearSpinner.setSelection(position);
+
+                graph.removeAllSeries();
+                mYearSelected = (String) mYearSpinner.getSelectedItem();
+
+                initData();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         category_selected = (String) scategory.getSelectedItem();
 
@@ -226,8 +268,10 @@ public class PlotFragment  extends Fragment {
 
         //////////////////////////////
 
+        mYearSelected = (String) mYearSpinner.getSelectedItem();
 
 
+        /////////////////////////////
 
         final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
@@ -356,6 +400,15 @@ public class PlotFragment  extends Fragment {
                     final String nome = (String) postSnapshot.child("Name").getValue(String.class);
                    category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
+                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    String s = postSnapshot.child("Date").getValue(String.class);
+                    try {
+                        mYearFromDB = Integer.toString((format.parse(s)).getYear()+1900);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("FAST", "mYearFromDB: " + mYearFromDB);
+
                     if(category.equals("Generale") || category.equals("General")) {
                         category = "Generale";
                     }
@@ -379,7 +432,8 @@ public class PlotFragment  extends Fragment {
 
 
 
-                if(category.equals("Pagamento")==false && category.equals("Payment")==false) {
+                if(category.equals("Pagamento")==false && category.equals("Payment")==false
+                        && mYearFromDB.equals(mYearSelected)) {
 
                     if(category_selected.equals("All")==true || category_selected.equals("Tutte")) {
 

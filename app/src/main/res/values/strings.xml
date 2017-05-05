@@ -197,4 +197,6 @@
     <string name="months">Months</string>
     <string name="category_all">All</string>
 
+    <string name="date_picker_title">Date of expense:</string>
+
 </resources>
