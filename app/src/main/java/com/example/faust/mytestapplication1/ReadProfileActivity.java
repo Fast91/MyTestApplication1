@@ -60,7 +60,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
     private String id ;
 
-    ProgressDialog mProgressDialog, mProgressDialog2 ;
+    ProgressDialog mProgressDialog, mProgressDialog2 ,mProgressDialog3;
      private com.makeramen.roundedimageview.RoundedImageView image_profile;
 
 
@@ -77,6 +77,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog2 = new ProgressDialog(this);
+        mProgressDialog3 = new ProgressDialog(this);
         image_profile = (com.makeramen.roundedimageview.RoundedImageView ) findViewById(R.id.image_profile_show);
         image_profile.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -84,6 +85,9 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         String msg = getString(R.string.dialog_image_profile_loading);
         mProgressDialog2.setMessage(msg);
         mProgressDialog2.show();
+
+        mProgressDialog3.setMessage(msg);
+
 
 
 
@@ -365,6 +369,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
         //getImage of user
 
+        mProgressDialog3.show();
+
         String url ;
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Image");
@@ -400,6 +406,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+
                         // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
                         // Bitmap imageCirle = getclip(imageBitmaptaken);
                         // profile_image.setImageBitmap(imageCirle);
@@ -409,7 +417,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                     }
 
 
-
+                    mProgressDialog3.dismiss();
 
                 }
 

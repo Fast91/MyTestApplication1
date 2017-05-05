@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -72,12 +73,20 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     private RoundedImageView imageprofile;
     private TextView nameprofile;
     private boolean isInSideClicked=false;
+    private ProgressDialog mProgressDialog;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prima_attivita_gruppi);
+
+
+        mProgressDialog = new ProgressDialog(this);
+
+        String msg = getString(R.string.dialog_image_profile_loading);
+        mProgressDialog.setMessage(msg);
+        mProgressDialog.show();
 
         findViewById(R.id.drawer_layout).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -314,6 +323,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                         }
                     });
                     recyclerView2.setAdapter(adapter);
+                mProgressDialog.dismiss();
 
                 }
 
