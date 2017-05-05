@@ -52,16 +52,23 @@ public class DBShortKeys
 
 
 
+
+
+
+
+
     private void AggiornaBilancioGlobale(final String id_user) {
 
-        group_balance = 0.0;
+        global_balance = 0.0;
         mycount=0;
         totcount=0;
+
+
 
         final DatabaseReference databaseReference;
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id_user).child("Activities");
 
         //Read content data
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -75,29 +82,20 @@ public class DBShortKeys
                 } else {
 
 
-                    totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+                    totcount = (int) dataSnapshot.getChildrenCount();
 
 
-                    //Per ogni attivita
-                    for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
+                    for (DataSnapshot databaseSnapshot1 : dataSnapshot.getChildren()) {
 
 
-                        mycount++;
-
-
-                        final String id = (String) postSnapshot.getKey();
-                        final String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                        //category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
-
-
-
-
-                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                        FirebaseDatabase.getInstance().getReference("Activities").child(databaseSnapshot1.getKey())
                                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
 
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        mycount++;
 
 
                                         Double total = null;
@@ -114,6 +112,8 @@ public class DBShortKeys
                                         }
 
                                         if (total == null) {
+
+
                                             total = 0.0;
                                         }
 
@@ -121,13 +121,12 @@ public class DBShortKeys
 
 
                                         if (mycount == totcount) {
-
                                             //ho finito
 
-                                            databaseReference.child("Users").child(id_user).child("Balance").setValue(group_balance);
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Balance").setValue(global_balance);
+
 
                                         }
-
 
 
                                     }
@@ -140,8 +139,8 @@ public class DBShortKeys
 
                                 });
 
-
                     }
+
 
                 }
 
@@ -156,9 +155,12 @@ public class DBShortKeys
         });
 
 
+
+
+
+
+
     }
-
-
 
 
 
