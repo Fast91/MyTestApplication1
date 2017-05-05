@@ -58,6 +58,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
 
+    private String id ;
+
     ProgressDialog mProgressDialog, mProgressDialog2 ;
      private com.makeramen.roundedimageview.RoundedImageView image_profile;
 
@@ -83,7 +85,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         mProgressDialog2.setMessage(msg);
         mProgressDialog2.show();
 
-        getandSetImage();
+
 
         //if the user is not logged in
         //that means current user will return null
@@ -94,10 +96,25 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+        else{
+            id=firebaseAuth.getCurrentUser().getUid();
+        }
+
+        Intent intent = getIntent();
+        String id_profile = intent.getExtras().getString("PROFILE_ID");
+
+        if(id_profile!=null){
+            id=id_profile;
+        }
 
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
+
+        getandSetImage();
+
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
 
 
@@ -127,6 +144,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+
                 if(userInformation==null) {
                     textName.setText(R.string.prompt_name_profile);
                     textSurname.setText(R.string.prompt_surname_profile);
@@ -135,7 +154,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                 else{
                     textName.setText(userInformation.Name);
                     textSurname.setText(userInformation.Surname);
-                    textEmail.setText(userInformation.Surname + " " +userInformation.Name);
+                    textEmail.setText(dataSnapshot.child("Email").getValue(String.class));
                 }
             }
 
@@ -337,7 +356,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
         String url ;
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Image");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
