@@ -23,7 +23,6 @@ public class DBShortKeys
     public void updateUserGlobalBalance(final String userID)
     {
         final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-
         // OTTENGO TUTTE LE ATTIVITA' LEGATE A QUELL'UTENTE
         dbRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -35,7 +34,6 @@ public class DBShortKeys
                 {
                     for(DataSnapshot activity : dataSnapshot.child("Activities").getChildren())
                     {
-
                         // PRENDO I DETTAGLI DELLA SINGOLA ATTIVITA'
                         final DatabaseReference dbRef2 = FirebaseDatabase.getInstance().getReference("Activities").child(activity.getValue(String.class));
                         dbRef2.addListenerForSingleValueEvent(new ValueEventListener()
@@ -55,7 +53,7 @@ public class DBShortKeys
                                     mGBtotal -= dataSnapshot.child("Users").child(userID).child("Total").getValue(Double.class);
                                 }
 
-                                dbRef.child("Total").setValue(mGBtotal);
+                                dbRef.child("GlobalBalance").setValue(mGBtotal);
                             }
 
                             @Override
@@ -64,18 +62,12 @@ public class DBShortKeys
 
                             }
                         });
-
                     }
                 }
-
-
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
-
             }
         });
     }
