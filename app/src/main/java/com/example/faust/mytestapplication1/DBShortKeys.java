@@ -8,9 +8,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by faust on 05/05/2017.
  */
@@ -21,25 +18,58 @@ public class DBShortKeys
     private Double global_balance,group_balance;
     private int mycount,totcount;
 
+    private Double mGBtotal = 0.0;
 
-
-    public static void updateUserBalance(String userID)
+    public void updateUserGlobalBalance(final String userID)
     {
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        Map<String, Object> activitiesMap = new HashMap<>();
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
 
+        // OTTENGO TUTTE LE ATTIVITA' LEGATE A QUELL'UTENTE
         dbRef.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
+                //Double total1 = 0.0;
                 if(dataSnapshot.child("Activities").exists())
                 {
-                    for(DataSnapshot activity : dataSnapshot.getChildren())
+                    for(DataSnapshot activity : dataSnapshot.child("Activities").getChildren())
                     {
+
+                        // PRENDO I DETTAGLI DELLA SINGOLA ATTIVITA'
+                        final DatabaseReference dbRef2 = FirebaseDatabase.getInstance().getReference("Activities").child(activity.getValue(String.class));
+                        dbRef2.addListenerForSingleValueEvent(new ValueEventListener()
+                        {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot)
+                            {
+                                if(dataSnapshot.child("Owner").child(userID).exists())
+                                {
+                                    // sono l'owner
+                                    mGBtotal += dataSnapshot.child("Owner").child(userID).child("Total").getValue(Double.class);
+
+                                }
+                                else if(dataSnapshot.child("Users").child(userID).exists())
+                                {
+                                    // sono un utente
+                                    mGBtotal -= dataSnapshot.child("Users").child(userID).child("Total").getValue(Double.class);
+                                }
+
+                                dbRef.child("Total").setValue(mGBtotal);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError)
+                            {
+
+                            }
+                        });
 
                     }
                 }
+
+
+
             }
 
             @Override
