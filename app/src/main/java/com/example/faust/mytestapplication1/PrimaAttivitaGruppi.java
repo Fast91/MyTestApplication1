@@ -103,7 +103,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
         id_gruppo=new HashMap<>();
 
-        try
+        /*try
         {
             // groups = DBManager.getGroups();
             groups = DB.getmGroups();
@@ -111,7 +111,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         catch(Exception e) //sostituire con l'eccezione corretta
         {
             // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
-        }
+        }*/
 
         //FIREBASE
         //initializing firebase authentication object
@@ -390,7 +390,10 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
                 }
-
+                else
+                {
+                    profile_image.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
+                }
 
 
             }
@@ -399,6 +402,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                profile_image.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
 
             }
         });
@@ -486,7 +490,6 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
 
         // update the actionbar to show the up carat/affordance
 
@@ -708,6 +711,10 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
 
                 }
+                else
+                {
+                    imageprofile.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
+                }
 
 
 
@@ -717,6 +724,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                imageprofile.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
 
             }
         });

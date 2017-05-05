@@ -417,17 +417,23 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                     }
 
 
-                    mProgressDialog3.dismiss();
 
                 }
+                else
+                {
+                    image_profile.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
+                }
+
 
                 mProgressDialog2.dismiss();
+                mProgressDialog3.dismiss();
             }
 
 
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                image_profile.setImageBitmap(decodeSampledBitmapFromResource(getResources(),R.drawable.realphoto,100,100));
 
             }
         });

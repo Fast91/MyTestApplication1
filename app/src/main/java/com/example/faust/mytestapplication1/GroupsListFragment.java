@@ -76,7 +76,7 @@ public class GroupsListFragment extends Fragment {
 
         id_gruppo=new HashMap<>();
 
-        try
+        /*try
         {
            // groups = DBManager.getGroups();
             groups = DB.getmGroups();
@@ -84,7 +84,7 @@ public class GroupsListFragment extends Fragment {
         catch(Exception e) //sostituire con l'eccezione corretta
         {
             // dobbiamo gestire questa eccezione (lista vuota oppure problema col server)
-        }
+        }*/
 
         //FIREBASE
         //initializing firebase authentication object
