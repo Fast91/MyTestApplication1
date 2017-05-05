@@ -70,6 +70,7 @@
     <string name="profile_title_string">My profile</string>
     <string name="prompt_name_profile">Name</string>
     <string name="prompt_surname_profile">Surname</string>
+    <string name="prompt_email_profile">Email</string>
     <string name="action_save_profile">Save Information</string>
     <string name="toast_mess_save_infouser">Saving information..</string>
     <string name="wrong_login">Email or password incorrect</string>

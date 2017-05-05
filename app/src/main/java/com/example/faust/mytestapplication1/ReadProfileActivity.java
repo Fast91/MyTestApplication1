@@ -53,7 +53,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
     private StorageReference mStorage;
 
-    private TextView textName , textSurname;
+    private TextView textName , textSurname, textEmail;
     private ImageButton buttonModify, buttonCamera;
 
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
@@ -103,7 +103,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
         textName = (TextView) findViewById(R.id.name_real_profile);
         textSurname = (TextView) findViewById(R.id.surname_real_profile);
-
+        textEmail = (TextView) findViewById(R.id.email_real_profile);
 
         buttonModify = (ImageButton) findViewById(R.id.edit_profile_button);
         buttonModify.setImageBitmap(
@@ -130,10 +130,12 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                 if(userInformation==null) {
                     textName.setText(R.string.prompt_name_profile);
                     textSurname.setText(R.string.prompt_surname_profile);
+                    textEmail.setText("Email");
                 }
                 else{
                     textName.setText(userInformation.Name);
                     textSurname.setText(userInformation.Surname);
+                    textEmail.setText(userInformation.Surname + " " +userInformation.Name);
                 }
             }
 

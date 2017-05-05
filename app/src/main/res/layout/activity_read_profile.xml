@@ -21,98 +21,186 @@
 
         android:background="@color/BreakingMADLightGreen"
 
-       />
+        />
 
-
-
-    <TextView
-        android:id="@+id/name_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_name_profile"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-
-        android:maxLines="1" />
-
-
-
-    <TextView
-        android:id="@+id/name_real_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_name_profile"
-
-
-        android:maxLines="1" />
-
-    <TextView
-        android:id="@+id/surname_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_surname_profile"
-        android:maxLines="2"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-
-    <TextView
-        android:id="@+id/surname_real_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_name_profile"
-
-
-        android:maxLines="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-
-
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image_profile_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            app:riv_border_width="2dip"
+            app:riv_border_color="#333333"
+            app:riv_oval="true"
+            app:riv_mutate_background="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:padding="2dp"/>
 
         <ImageButton
             android:id="@+id/edit_profile_button_camera"
-            android:layout_width="35dp"
-            android:layout_marginLeft="120dp"
-            android:layout_height="match_parent"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/buttoncirculartransparent_noborder"
             android:scaleType="fitXY"
-
-            android:layout_gravity="center"/>
+            android:layout_alignBottom="@id/image_profile_show"
+            android:layout_alignParentLeft="true"
+            />
 
         <ImageButton
             android:id="@+id/edit_profile_button"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/buttoncirculartransparent_noborder"
             android:scaleType="fitXY"
+            android:layout_alignBottom="@id/image_profile_show"
+            android:layout_alignParentRight="true"
+            />
 
-            android:layout_gravity="end"/>
+    </RelativeLayout>
 
-
-    </LinearLayout>
-
-
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/image_profile_show"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        app:riv_border_width="2dip"
-        app:riv_border_color="#333333"
-        app:riv_oval="true"
-        app:riv_mutate_background="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_gravity="center"
-        android:padding="2dp"/>
+        android:layout_height="110dp"
+        android:layout_margin="3dp"
+        android:id="@+id/relativeLayout_nameSurname_Profile"
+        android:background="@drawable/rectangle_white_gray_border_shadow">
+
+        <ImageView
+            android:id="@+id/image_view_user_profile"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/user678x678"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_toRightOf="@id/image_view_user_profile"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/layout_name_profile"
+            android:background="@drawable/rectagle_white_background_with_border_bottom">
+
+            <TextView
+                android:id="@+id/name_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:hint="@string/prompt_name_profile"
+                android:maxLines="1"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
 
 
+            <TextView
+                android:id="@+id/name_real_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_name_profile"
+                android:layout_below="@id/name_profile"
+                android:layout_marginTop="2dp"
+
+                android:maxLines="1" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_toRightOf="@id/image_view_user_profile"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@id/layout_name_profile"
+            android:id="@+id/layout_surname_profile"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ap_white">
+
+            <TextView
+                android:id="@+id/surname_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_surname_profile"
+                android:maxLines="2"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
+            <TextView
+                android:id="@+id/surname_real_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_surname_profile"
+                android:layout_below="@id/surname_profile"
+                android:layout_marginTop="2dp"
+
+                android:maxLines="1" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_margin="3dp"
+        android:id="@+id/relativeLayout_mail_Profile"
+        android:background="@drawable/rectangle_white_gray_border_shadow">
+
+        <ImageView
+            android:id="@+id/image_view_mail_profile"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/mail425x425"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_toRightOf="@id/image_view_mail_profile"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ap_white">
+
+            <TextView
+                android:id="@+id/mail_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email_profile"
+                android:maxLines="2"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
+            <TextView
+                android:id="@+id/email_real_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email_profile"
+                android:maxLines="1"
+                android:layout_below="@id/mail_profile"
+                android:layout_marginTop="2dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>
