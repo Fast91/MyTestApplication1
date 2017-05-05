@@ -117,7 +117,6 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         //Set Name of the group
 
         final TextView namegroup = (TextView) findViewById(R.id.row1_text1);

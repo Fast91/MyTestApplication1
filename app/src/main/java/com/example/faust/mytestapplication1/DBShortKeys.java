@@ -12,14 +12,28 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DBShortKeys
 {
-
     private Double global_balance,group_balance;
     private int group_mycount,group_totcount,global_mycount,global_totcount;
     private Double personal_balance;
     private int personal_mycount, personal_totcount;
 
+    public static void aggiornaBilancioGlobale(final String id_user)
+    {
+        new DBShortKeys().AggiornaBilancioGlobale(id_user);
+    }
 
-    public void AggiornaBilancioGlobale(final String id_user) {
+    public static void aggiornaBilancioGruppo(final String id_user, final String id_group)
+    {
+        new DBShortKeys().AggiornaBilancioGruppo(id_user, id_group);
+    }
+
+    public static void aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    {
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo(id_user, id_other, id_group);
+    }
+
+
+    private void AggiornaBilancioGlobale(final String id_user) {
 
         global_balance = 0.0;
         global_mycount=0;
@@ -136,10 +150,7 @@ public class DBShortKeys
     }
 
 
-
-
-
-    public void AggiornaBilancioGruppo(final String id_user, final String id_group)
+    private void AggiornaBilancioGruppo(final String id_user, final String id_group)
     {
         group_balance = 0.0;
         group_mycount=0;
@@ -255,9 +266,7 @@ public class DBShortKeys
     }
 
 
-
-
-    public void AggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    private void AggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
     {
         personal_balance = 0.0;
         personal_mycount=0;
