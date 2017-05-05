@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -89,6 +90,8 @@ public class PlotFragment  extends Fragment {
     String category;
     String mYearFromDB;
 
+    ProgressDialog mProgressDialog;
+
     private HashMap<String,NomeDovuto> attivita_dovuto;
 
 
@@ -122,6 +125,12 @@ public class PlotFragment  extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_plot, container, false);
         graph = (GraphView) view.findViewById(R.id.graph);
+
+        mProgressDialog = new ProgressDialog(view.getContext());
+
+        String msg = getString(R.string.dialog_image_profile_loading);
+        mProgressDialog.setMessage(msg);
+        mProgressDialog.show();
 
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
@@ -195,6 +204,8 @@ public class PlotFragment  extends Fragment {
                 // Showing selected spinner item
                 //prova
                 scategory.setSelection(position);
+
+                mProgressDialog.show();
 
                 graph.removeAllSeries();
                 category_selected = (String) scategory.getSelectedItem();
@@ -525,6 +536,8 @@ public class PlotFragment  extends Fragment {
 
                                             graph.addSeries(series);
 
+                                            mProgressDialog.dismiss();
+
 
 
 
@@ -636,6 +649,8 @@ public class PlotFragment  extends Fragment {
                                                 series.setValuesOnTopColor(Color.DKGRAY);
 
                                                 graph.addSeries(series);
+
+                                                mProgressDialog.dismiss();
 
 
 

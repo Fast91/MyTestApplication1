@@ -58,7 +58,9 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
 
-    ProgressDialog mProgressDialog, mProgressDialog2 ;
+    private String id ;
+
+    ProgressDialog mProgressDialog, mProgressDialog2 ,mProgressDialog3;
      private com.makeramen.roundedimageview.RoundedImageView image_profile;
 
 
@@ -75,6 +77,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog2 = new ProgressDialog(this);
+        mProgressDialog3 = new ProgressDialog(this);
         image_profile = (com.makeramen.roundedimageview.RoundedImageView ) findViewById(R.id.image_profile_show);
         image_profile.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -83,7 +86,10 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         mProgressDialog2.setMessage(msg);
         mProgressDialog2.show();
 
-        getandSetImage();
+        mProgressDialog3.setMessage(msg);
+
+
+
 
         //if the user is not logged in
         //that means current user will return null
@@ -94,10 +100,31 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
+        else{
+            id=firebaseAuth.getCurrentUser().getUid();
+        }
+
+        String id_profile=null;
+        Intent intent = getIntent();
+
+        if( intent.getExtras().getString("MY_PROFILE").equals("NO") ){
+             id_profile = intent.getExtras().getString("PROFILE_ID");
+
+
+        }
+
+        if(id_profile!=null){
+            id=id_profile;
+        }
 
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid());
+
+        getandSetImage();
+
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
 
 
 
@@ -105,16 +132,21 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
         textSurname = (TextView) findViewById(R.id.surname_real_profile);
         textEmail = (TextView) findViewById(R.id.email_real_profile);
 
+        if(id_profile==null) {
         buttonModify = (ImageButton) findViewById(R.id.edit_profile_button);
         buttonModify.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.picture_attachment256x256, 100, 100));
-        buttonModify.setOnClickListener(this);
 
+            buttonModify.setOnClickListener(this);
+        }
+
+        if(id_profile==null) {
         buttonCamera = (ImageButton) findViewById(R.id.edit_profile_button_camera);
         buttonCamera.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.icon_camera128x128, 100, 100));
-        buttonCamera.setOnClickListener(this);
 
+            buttonCamera.setOnClickListener(this);
+        }
 
 
         //Read content data
@@ -127,6 +159,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+
                 if(userInformation==null) {
                     textName.setText(R.string.prompt_name_profile);
                     textSurname.setText(R.string.prompt_surname_profile);
@@ -135,7 +169,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                 else{
                     textName.setText(userInformation.Name);
                     textSurname.setText(userInformation.Surname);
-                    textEmail.setText(userInformation.Surname + " " +userInformation.Name);
+                    textEmail.setText(dataSnapshot.child("Email").getValue(String.class));
                 }
             }
 
@@ -335,9 +369,11 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
         //getImage of user
 
+        mProgressDialog3.show();
+
         String url ;
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Image");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -370,6 +406,8 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
 
 
 
+
+
                         // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
                         // Bitmap imageCirle = getclip(imageBitmaptaken);
                         // profile_image.setImageBitmap(imageCirle);
@@ -379,7 +417,7 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
                     }
 
 
-
+                    mProgressDialog3.dismiss();
 
                 }
 

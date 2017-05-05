@@ -77,13 +77,25 @@ class MyUsersGroupRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersGroupR
         public final TextView todoView;
         public final Resources myr;
 
-        public UserHolder(View view) {
+        public UserHolder(final View view) {
             super(view);
             itemView.findViewById(R.id.fragment_user_group_item_button).setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_user_group);
             nameView = (TextView) view.findViewById(R.id.name_user_group);
             balanceView = (TextView) view.findViewById(R.id.money_user_group);
             todoView=(TextView)view.findViewById(R.id.todo_user_group);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(v.getContext(),ReadProfileActivity.class);
+                    i.putExtra("MY_PROFILE","NO");
+                    i.putExtra("PROFILE_ID",user.getId());
+                    v.getContext().startActivity(i);
+
+                }
+            });
 
             myr=view.getResources();
         }
