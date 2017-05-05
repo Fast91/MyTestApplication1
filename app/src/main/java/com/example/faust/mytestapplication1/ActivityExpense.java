@@ -284,7 +284,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     /////////////
 
 
-                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale).child("Users");
+                    databaseReference2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group_iniziale);
 
                     databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -292,12 +292,14 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             if(dataSnapshot.getValue()==null){
 
-                                Intent i = new Intent(ActivityExpense.this, PrimaAttivitaGruppi.class);
 
-                                startActivity(i);
                             }
 
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            else{
+
+
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.child("Users").getChildren()) {
 
 
                                 myusers.put(postSnapshot.getKey(), postSnapshot.child("Name").getValue(String.class));
@@ -431,7 +433,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
 
 
-
                                 //2 users- ACTIVITIES
 
                                 //users - id - activities - key- -----> Total -----> Name
@@ -453,7 +454,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
-
 
 
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);
@@ -600,8 +600,6 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                             bilanciodelgruppo = (Double) dataSnapshot.child("Total").getValue(Double.class);
                                             currencyBilancioDelGruppo = (String) dataSnapshot.child("Currency").getValue(String.class);
-
-
 
 
                                             if (bilanciodelgruppo == null) {
@@ -824,6 +822,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 intent.putExtra("GROUP_NAME", name_group_iniziale);
                                 startActivity(intent);
                                 finish();
+
+                            }
 
 
 

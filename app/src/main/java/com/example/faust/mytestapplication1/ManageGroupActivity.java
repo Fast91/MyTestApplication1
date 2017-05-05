@@ -63,9 +63,7 @@ public class ManageGroupActivity extends AppCompatActivity {
 
                 if(dataSnapshot.getValue()==null){
 
-                    Intent i = new Intent(ManageGroupActivity.this, PrimaAttivitaGruppi.class);
 
-                    startActivity(i);
                 }
 
                 //prendo un amico

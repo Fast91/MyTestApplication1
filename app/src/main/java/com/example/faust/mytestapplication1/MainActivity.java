@@ -61,7 +61,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private int count_b=1;
+    private int count_b = 1;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
     private ImageView profile_image;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private RoundedImageView imageprofile;
     private TextView nameprofile;
-    private boolean isInSideClicked=false;
+    private boolean isInSideClicked = false;
     private ImageButton b4add;
 
 
@@ -90,27 +90,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        id_group= intent.getExtras().getString("GROUP_ID");
-        name_group= intent.getExtras().getString("GROUP_NAME");
+        id_group = intent.getExtras().getString("GROUP_ID");
+        name_group = intent.getExtras().getString("GROUP_NAME");
 
         getSupportActionBar().setElevation(0);
 
         b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
 
 
+        //setTheme(R.style.AppTheme);
 
 
-       //setTheme(R.style.AppTheme);
-
-
-
-        
-
-       if (savedInstanceState != null) {
-           id_group= savedInstanceState.getString("GROUP_ID");
-           name_group= savedInstanceState.getString("GROUP_NAME");
-           count_b=savedInstanceState.getInt("COUNT_B");
-                updateFragAndButton();
+        if (savedInstanceState != null) {
+            id_group = savedInstanceState.getString("GROUP_ID");
+            name_group = savedInstanceState.getString("GROUP_NAME");
+            count_b = savedInstanceState.getInt("COUNT_B");
+            updateFragAndButton();
         }
 
 
@@ -122,13 +117,14 @@ public class MainActivity extends AppCompatActivity {
 
         //if the user is not logged in
         //that means current user will return null
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             //closing this activity
             finish();
             //starting login activity
             startActivity(new Intent(this, LoginActivity.class));
         }
 
+        esisteGruppo();
 
 
         //image profile
@@ -150,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
-
-
         final Button bGlobal = (Button) findViewById(R.id.bGlobal);
         final Button bGroups = (Button) findViewById(R.id.bGroups);
         final Button bActivities = (Button) findViewById(R.id.bActivities);
@@ -161,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
             //Nulla di attivo allora mi attivo il frammento 1 cioè la vista globale
 
 
-           // ((LinearLayout) findViewById(R.id.linear1)).setVisibility(LinearLayout.VISIBLE);
-           // ((LinearLayout) findViewById(R.id.linear2)).setVisibility(LinearLayout.INVISIBLE);
-           // ((LinearLayout) findViewById(R.id.linear3)).setVisibility(LinearLayout.INVISIBLE);
+            // ((LinearLayout) findViewById(R.id.linear1)).setVisibility(LinearLayout.VISIBLE);
+            // ((LinearLayout) findViewById(R.id.linear2)).setVisibility(LinearLayout.INVISIBLE);
+            // ((LinearLayout) findViewById(R.id.linear3)).setVisibility(LinearLayout.INVISIBLE);
 
             bGlobal.setBackground(getResources().getDrawable(R.drawable.shape_toolbar_selected));
             bGroups.setBackground(getResources().getDrawable(R.drawable.shape_toolbar));
@@ -173,18 +167,16 @@ public class MainActivity extends AppCompatActivity {
             //bActivities.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.BreakingMADLightGreen));
 
 
-
-
             //b1.setPressed(true);
 
             FragmentManager fm = getSupportFragmentManager();
-           Fragment fragment = fm.findFragmentById(R.id.fragment1);
-           // Fragment fragment= new GlobalListFragment();
+            Fragment fragment = fm.findFragmentById(R.id.fragment1);
+            // Fragment fragment= new GlobalListFragment();
             if (fragment == null) {
                 fragment = new UsersGroupListFragment();
                 Bundle mBundle;
                 mBundle = new Bundle();
-                mBundle.putString("GROUP_ID",id_group);
+                mBundle.putString("GROUP_ID", id_group);
                 // mBundle.putInt("GROUP_ID",item.getIdgroup());
                 fragment.setArguments(mBundle);
 
@@ -214,36 +206,38 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new UsersGroupListFragment();
+                Fragment f = new UsersGroupListFragment();
                 Bundle mBundle;
                 mBundle = new Bundle();
-                mBundle.putString("GROUP_ID",id_group);
+                mBundle.putString("GROUP_ID", id_group);
                 // mBundle.putInt("GROUP_ID",item.getIdgroup());
                 f.setArguments(mBundle);
 
-                if(count_b==1){
-                     ft.replace(R.id.fragment1, f);}
-                if(count_b==2){
-                    ft.replace(R.id.fragment1, f);}
-                if(count_b==3){
-                    ft.replace(R.id.fragment1, f);}
-            //   ft.addToBackStack(null);
-                   ft.commit();
+                if (count_b == 1) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                if (count_b == 2) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                if (count_b == 3) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                //   ft.addToBackStack(null);
+                ft.commit();
 
                 //
-                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                     fm.popBackStackImmediate();
                 }
 
 
-                count_b=1;
+                count_b = 1;
                 return;
             }
         });
 
 
         bGroups.setOnClickListener(new View.OnClickListener() {
-
 
 
             @Override
@@ -261,29 +255,32 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new PlotFragment();
+                Fragment f = new PlotFragment();
                 Bundle mBundle;
                 mBundle = new Bundle();
-                mBundle.putString("GROUP_ID",id_group);
+                mBundle.putString("GROUP_ID", id_group);
                 // mBundle.putInt("GROUP_ID",item.getIdgroup());
                 f.setArguments(mBundle);
 
-                if(count_b==1){
-                    ft.replace(R.id.fragment1, f);}
-                if(count_b==2){
-                    ft.replace(R.id.fragment1, f);}
-                if(count_b==3){
-                    ft.replace(R.id.fragment1, f);}
+                if (count_b == 1) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                if (count_b == 2) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                if (count_b == 3) {
+                    ft.replace(R.id.fragment1, f);
+                }
                 //   ft.addToBackStack(null);
                 ft.commit();
 
                 //
-                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                     fm.popBackStackImmediate();
                 }
 
 
-                count_b=2;
+                count_b = 2;
                 return;
 
             }
@@ -306,42 +303,41 @@ public class MainActivity extends AppCompatActivity {
                 b4add.setVisibility(View.VISIBLE);
 
                 FragmentTransaction ft = fm.beginTransaction();
-                Fragment f= new ActivityGroupListFragment();
+                Fragment f = new ActivityGroupListFragment();
                 Bundle mBundle;
                 mBundle = new Bundle();
-                mBundle.putString("GROUP_ID",id_group);
+                mBundle.putString("GROUP_ID", id_group);
                 // mBundle.putInt("GROUP_ID",item.getIdgroup());
                 f.setArguments(mBundle);
 
-                if(count_b==1){
-                    ft.replace(R.id.fragment1, f);}
-             //   ft.remove(fm.findFragmentById(R.id.fragment1)).add(R.id.fragment3_activity,f);} sbagliato
-                if(count_b==2){
+                if (count_b == 1) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                //   ft.remove(fm.findFragmentById(R.id.fragment1)).add(R.id.fragment3_activity,f);} sbagliato
+                if (count_b == 2) {
                     //ft.replace(R.id.fragment2_groups, f);} TODO: capire come implementare lo stack dei frammenti
-                    ft.replace(R.id.fragment1, f);}
-                if(count_b==3){
-                    ft.replace(R.id.fragment1, f);}
-               // ft.addToBackStack(null);
+                    ft.replace(R.id.fragment1, f);
+                }
+                if (count_b == 3) {
+                    ft.replace(R.id.fragment1, f);
+                }
+                // ft.addToBackStack(null);
                 ft.commit();
 
-                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                     fm.popBackStackImmediate();
                 }
 
-                count_b=3;
-                 return;
+                count_b = 3;
+                return;
             }
         });
 
         //ADD EXPENSE
 
 
-
         b4add.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.addexpense593x593, 100, 100));
-
-
-
 
 
         b4add.setOnClickListener(new View.OnClickListener() {
@@ -350,24 +346,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Add expense
 
-                Intent intent=new Intent(MainActivity.this,ActivityExpense.class);
-                intent.putExtra("GROUP_ID",id_group);
-                intent.putExtra("GROUP_NAME",name_group);
+                Intent intent = new Intent(MainActivity.this, ActivityExpense.class);
+                intent.putExtra("GROUP_ID", id_group);
+                intent.putExtra("GROUP_NAME", name_group);
                 startActivity(intent);
 
 
-                return ;
+                return;
             }
         });
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -377,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
         //getImage of user
 
-        String url ;
+        String url;
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
 
@@ -398,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Bitmap imageBitmaptaken = decodeFromFirebaseBase64(image);
                             //Bitmap imageCirle = getclip(imageBitmaptaken);
-                           // imageBitmaptaken.reconfigure(600,200, Bitmap.Config.ARGB_4444);
+                            // imageBitmaptaken.reconfigure(600,200, Bitmap.Config.ARGB_4444);
 
                             profile_image.setImageBitmap(imageBitmaptaken);
 
@@ -424,12 +411,9 @@ public class MainActivity extends AppCompatActivity {
                                 .into(profile_image);
 
 
-
-
-                       // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
-                       // Bitmap imageCirle = getclip(imageBitmaptaken);
-                       // profile_image.setImageBitmap(imageCirle);
-
+                        // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                        // Bitmap imageCirle = getclip(imageBitmaptaken);
+                        // profile_image.setImageBitmap(imageCirle);
 
 
                     }
@@ -441,16 +425,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-
-
-
-
 
 
     }
@@ -464,88 +443,84 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-        protected void onSaveInstanceState(Bundle savedInstanceState) {
-            super.onSaveInstanceState(savedInstanceState);
-            savedInstanceState.putInt("COUNT_B",count_b);
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("COUNT_B", count_b);
 
-        }
+    }
 
-         //@Override
+    //@Override
           /*protected void onRestoreInstanceState(Bundle savedInstanceState) {
              super.onRestoreInstanceState(savedInstanceState);
              count_b=savedInstanceState.getInt("COUNT_B");
          }*/
 
-          @Override
-          protected void onRestart(){
-              super.onRestart();
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
-             //updateFragAndButton();
+        //updateFragAndButton();
 
-          }
+    }
 
-         @Override
-         protected void onResume() {
-                super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-         }
+    }
 
-         @Override
-         protected void onPause() {
-              super.onPause();
+    @Override
+    protected void onPause() {
+        super.onPause();
 
-              }
+    }
 
-         @Override
-         protected void onStop() {
-                super.onStop();
-             }
-
-
-        private void updateFragAndButton(){
-            final Button b1 = (Button) findViewById(R.id.bGlobal);
-            final Button b3 = (Button) findViewById(R.id.bActivities);
-            final Button b2 = (Button) findViewById(R.id.bGroups);
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
 
-            //      count_b = savedInstanceState.getInt("COUNT_B");
+    private void updateFragAndButton() {
+        final Button b1 = (Button) findViewById(R.id.bGlobal);
+        final Button b3 = (Button) findViewById(R.id.bActivities);
+        final Button b2 = (Button) findViewById(R.id.bGroups);
 
-            if(count_b==1) {
 
-                b4add.setVisibility(View.VISIBLE);
+        //      count_b = savedInstanceState.getInt("COUNT_B");
 
-                //count_b=1;
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment1));
-             //   ft.addToBackStack(null);
-                ft.commit();
-            }
-            else if (count_b==2){
+        if (count_b == 1) {
 
-                b4add.setVisibility(View.GONE);
+            b4add.setVisibility(View.VISIBLE);
 
-                //count_b = 2;
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment_plot));
-              //  ft.addToBackStack(null);
-                ft.commit();
-            }
-            else  if (count_b==3){
+            //count_b=1;
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment1));
+            //   ft.addToBackStack(null);
+            ft.commit();
+        } else if (count_b == 2) {
 
-                b4add.setVisibility(View.VISIBLE);
+            b4add.setVisibility(View.GONE);
 
-                //count_b=3;
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment3_activity));
-               // ft.addToBackStack(null);
-                ft.commit();
-            }
+            //count_b = 2;
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment_plot));
+            //  ft.addToBackStack(null);
+            ft.commit();
+        } else if (count_b == 3) {
+
+            b4add.setVisibility(View.VISIBLE);
+
+            //count_b=3;
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment3_activity));
+            // ft.addToBackStack(null);
+            ft.commit();
         }
-
-
+    }
 
 
     @Override
@@ -562,28 +537,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int res_id=item.getItemId();
-        if(res_id==R.id.action_addUserToGroup){
+        int res_id = item.getItemId();
+        if (res_id == R.id.action_addUserToGroup) {
 
-            Intent intent=new Intent(MainActivity.this,ActivityAddUserToGroup.class);
-            intent.putExtra("ID_GROUP",id_group);
-            intent.putExtra("NAME_GROUP",name_group);
+            Intent intent = new Intent(MainActivity.this, ActivityAddUserToGroup.class);
+            intent.putExtra("ID_GROUP", id_group);
+            intent.putExtra("NAME_GROUP", name_group);
             startActivity(intent);
 
         }
 
-        if(res_id==R.id.action_modifyGroup){
+        if (res_id == R.id.action_modifyGroup) {
 
-            Intent intent=new Intent(MainActivity.this,ManageGroupActivity.class);
-            intent.putExtra("ID_GROUP",id_group);
-            intent.putExtra("NAME_GROUP",name_group);
+            Intent intent = new Intent(MainActivity.this, ManageGroupActivity.class);
+            intent.putExtra("ID_GROUP", id_group);
+            intent.putExtra("NAME_GROUP", name_group);
             startActivity(intent);
-
 
 
         }
 
-        if(res_id==R.id.action_deleteGroup){
+        if (res_id == R.id.action_deleteGroup) {
 
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle(R.string.deletegroup_title)
@@ -604,13 +578,11 @@ public class MainActivity extends AppCompatActivity {
 
 
             return super.onOptionsItemSelected(item);
-        }
-        else{
+        } else {
 
             mDrawerToggle.setDrawerIndicatorEnabled(true);
 
             drawerLayout.closeDrawers();
-
 
 
         }
@@ -618,11 +590,8 @@ public class MainActivity extends AppCompatActivity {
         // Handle your other action bar items...
 
 
-
         return true;
     }
-
-
 
 
     public static Bitmap getclip(Bitmap bitmap) {
@@ -636,15 +605,12 @@ public class MainActivity extends AppCompatActivity {
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         //canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-          //      bitmap.getWidth() / 2, paint);
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,bitmap.getHeight() / 2, paint);
+        //      bitmap.getWidth() / 2, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getHeight() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
-
-
-
 
 
     public static int calculateInSampleSize(
@@ -669,6 +635,7 @@ public class MainActivity extends AppCompatActivity {
 
         return inSampleSize;
     }
+
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -686,17 +653,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
 
-                        startActivity(new Intent(MainActivity.this,PrimaAttivitaGruppi.class));
-                        finish();
+        startActivity(new Intent(MainActivity.this, PrimaAttivitaGruppi.class));
+        finish();
 
     }
 
 
-    private void buttonDeleteGroup(){
+    private void buttonDeleteGroup() {
 
         //per ogni utente controllare se tutti i bilanci sono 0
         // se ne trovo uno diverso da 0 non posso cancellare altrimenti
@@ -707,7 +673,6 @@ public class MainActivity extends AppCompatActivity {
 
         //step1 prendere tutti gli utenti di quel gruppo
         //user group
-
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
@@ -722,7 +687,7 @@ public class MainActivity extends AppCompatActivity {
                 final ArrayList<String> id_utenti = new ArrayList<String>();
 
 
-                for(DataSnapshot take: dataSnapshot.getChildren()){
+                for (DataSnapshot take : dataSnapshot.getChildren()) {
                     //utenti
                     //
                     id_utenti.add(take.getKey());
@@ -732,9 +697,9 @@ public class MainActivity extends AppCompatActivity {
                 //dopo aver preso gli utenti controllare
                 //se per ogni di questo utente il bilancio di quel gruppo e' 0 cancello altrimenti TOAST
 
-                count_fatti=0;
+                count_fatti = 0;
 
-                for(String id : id_utenti){
+                for (String id : id_utenti) {
 
                     DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("Users").child(id).child("Groups").child(id_group).child("Total");
 
@@ -746,7 +711,7 @@ public class MainActivity extends AppCompatActivity {
                             Double bilancio_singolo = dataSnapshot.getValue(Double.class);
 
 
-                            if(bilancio_singolo!=null) {
+                            if (bilancio_singolo != null) {
                                 if (bilancio_singolo > 0.0) {
                                     bilancio_0 = false;
                                 }
@@ -755,10 +720,9 @@ public class MainActivity extends AppCompatActivity {
                             count_fatti++;
 
 
+                            if (count_fatti == id_utenti.size()) {
 
-                            if(count_fatti==id_utenti.size()){
-
-                                if(bilancio_0==true){
+                                if (bilancio_0 == true) {
                                     //posso eliminare
                                     //   Toast.makeText(getContext(),R.string.yes_delete_group,Toast.LENGTH_LONG).show();
 
@@ -766,7 +730,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                                     //Remove
-
 
 
                                     String id_group2 = new String(id_group);
@@ -779,35 +742,27 @@ public class MainActivity extends AppCompatActivity {
                                     ref.child("Groups").child(id_group2).removeValue();
 
 
-
                                     //problema concorrenza se lo mando in una attivita che vuole usare questo listener sui gruppis
-                                    for(String id : id_utenti) {
+                                    for (String id : id_utenti) {
 
                                         String id2 = new String(id);
                                         ref.child("Users").child(id2).child("Groups").child(id_group2).removeValue();
                                     }
 
 
-
-
-                                    Intent intent=new Intent(MainActivity.this,DeleteGroupActivity.class);
-                                    intent.putExtra("ID_GROUP",id_group);
-                                    intent.putExtra("NAME_GROUP",name_group);
+                                    Intent intent = new Intent(MainActivity.this, DeleteGroupActivity.class);
+                                    intent.putExtra("ID_GROUP", id_group);
+                                    intent.putExtra("NAME_GROUP", name_group);
                                     startActivity(intent);
                                     // activity.finish(); //todoprovo
 
 
-
-                                }
-                                else{
+                                } else {
                                     //qualcuno lo ha diverso da 0 mando il toast
 
-                                    Toast.makeText(MainActivity.this,R.string.no_delete_group,Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, R.string.no_delete_group, Toast.LENGTH_LONG).show();
 
                                 }
-
-
-
 
 
                             }
@@ -824,10 +779,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
-
-
-
             }
 
             @Override
@@ -835,10 +786,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
 
     }
@@ -987,21 +934,13 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
 
-
-
-
-
-
-
-    private void provoMenu(){
+    private void provoMenu() {
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
         // update the actionbar to show the up carat/affordance
-
-
 
 
         //  getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back
@@ -1019,19 +958,16 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
 
-
-
                 //Checking if the item is in checked state or not, if not set it to checked state.
                 if (menuItem.isChecked()) menuItem.setChecked(false);
                 else menuItem.setChecked(true);
-
 
 
                 int res_id = menuItem.getItemId();
 
 
                 //Check to see which item was clicked and perform the appropriate action.
-                if(res_id==R.id.action_settings){
+                if (res_id == R.id.action_settings) {
 
                     //Toast.makeText(getApplicationContext(),R.string.toast_mess_settings,Toast.LENGTH_LONG).show();
 
@@ -1039,7 +975,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                if(res_id==R.id.action_contactus){
+                if (res_id == R.id.action_contactus) {
 
                     //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
 
@@ -1048,22 +984,22 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                if(res_id==R.id.action_myprofile){
+                if (res_id == R.id.action_myprofile) {
                     //logging out the user
                     //starting login activity
                     Intent i = new Intent(MainActivity.this, ReadProfileActivity.class);
-                    i.putExtra("MY_PROFILE","YES");
+                    i.putExtra("MY_PROFILE", "YES");
                     startActivity(i);
 
                 }
 
-                if(res_id==R.id.action_invitation){
+                if (res_id == R.id.action_invitation) {
                     //logging out the user
                     //starting login activity
                     startActivity(new Intent(MainActivity.this, ActivityInvitation.class));
                 }
 
-                if(res_id==R.id.action_logout){
+                if (res_id == R.id.action_logout) {
                     //logging out the user
                     firebaseAuth.signOut();
                     //closing activity
@@ -1080,7 +1016,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializing Drawer Layout and ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
 
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
@@ -1107,10 +1042,7 @@ public class MainActivity extends AppCompatActivity {
         //mDrawerToggle.syncState();
 
 
-
     }
-
-
 
 
     @Override
@@ -1126,7 +1058,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.menulaterale);
         View headerView = navigationView.inflateHeaderView(R.layout.drawer_top);
-
 
 
         imageprofile = (com.makeramen.roundedimageview.RoundedImageView) headerView.findViewById(R.id.menu_profile_image);
@@ -1165,12 +1096,9 @@ public class MainActivity extends AppCompatActivity {
                                 .into(imageprofile);
 
 
-
-
                         // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
                         // Bitmap imageCirle = getclip(imageBitmaptaken);
                         // profile_image.setImageBitmap(imageCirle);
-
 
 
                     }
@@ -1183,7 +1111,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, FullScreenImage.class);
 
                             imageprofile.buildDrawingCache();
-                            Bitmap image2= imageprofile.getDrawingCache();
+                            Bitmap image2 = imageprofile.getDrawingCache();
 
                             Bundle extras = new Bundle();
                             extras.putParcelable("imagebitmap", image2);
@@ -1194,14 +1122,10 @@ public class MainActivity extends AppCompatActivity {
                     });
 
 
-
-
                 }
 
 
-
             }
-
 
 
             @Override
@@ -1211,16 +1135,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
 
 
+    private void esisteGruppo() {
 
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
 
+        //Read content data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                if (dataSnapshot.getValue() == null) {
+
+                    Intent i = new Intent(MainActivity.this, PrimaAttivitaGruppi.class);
+
+                    startActivity(i);
+                    finish();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
+    }
 
 
 }

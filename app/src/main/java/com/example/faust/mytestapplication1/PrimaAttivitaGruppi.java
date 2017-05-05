@@ -235,51 +235,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                 List list = new ArrayList(gruppi_dovuto.values());
 
 
-                /*
-                // Set the adapter forse il primo if non utile
-                if (view instanceof RecyclerView) {
-                    Context context = view.getContext();
-                    RecyclerView recyclerView = (RecyclerView) view;
 
-
-                    if (mColumnCount <= 1) {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    } else {
-                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-                    }
-
-                    adapter = new MyGroupsRecyclerViewAdapter(list, new GroupsListFragment.OnListFragmentInteractionListener() {//cambiato qui
-                        @Override
-                        public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
-                            //TODO LISTENER IMPLEMENTARE
-                            Toast.makeText(getContext(), R.string.toast_clickedgroup + item.getName(), Toast.LENGTH_LONG).show();
-
-                            //You can change the fragment, something like this, not tested, please correct for your desired output:
-                            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                            Fragment myFragment = new UsersGroupListFragment();
-                            //Create a bundle to pass data, add data, set the bundle to your fragment and:
-                            Bundle mBundle;
-                            mBundle = new Bundle();
-
-
-
-                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName())); //Non gestito il fatto che il gruppo può avere nomi uguali
-                            myFragment.setArguments(mBundle);
-
-                            //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-                            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
-
-
-                            for (int i = 0; i < activity.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                                activity.getSupportFragmentManager().popBackStackImmediate();
-                            }
-
-
-                        }
-                    });
-                    recyclerView.setAdapter(adapter);
-
-                } else {*/
 
                     RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.groups_list);
                     //   recyclerView2.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
@@ -289,28 +245,6 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                         public void onListFragmentInteraction(NomeDovuto item) {//cambiato qui
                             //TODO LISTENER IMPLEMENTARE
                             Toast.makeText(PrimaAttivitaGruppi.this, "Cliccato Gruppo: " + item.getName(), Toast.LENGTH_LONG).show();
-
-
-                            //You can change the fragment, something like this, not tested, please correct for your desired output:
-                            /*
-
-                            Fragment myFragment = new UsersGroupListFragment();
-                            //Create a bundle to pass data, add data, set the bundle to your fragment and:
-                            Bundle mBundle;
-                            mBundle = new Bundle();
-                            mBundle.putString("GROUP_ID", id_gruppo.get(item.getName()));
-
-
-
-                            myFragment.setArguments(mBundle);
-
-                            //activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).addToBackStack(null).commit();
-
-                            PrimaAttivitaGruppi.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment1, myFragment).commit();
-
-                            for (int i = 0; i < PrimaAttivitaGruppi.this.getSupportFragmentManager().getBackStackEntryCount(); ++i) {
-                                PrimaAttivitaGruppi.this.getSupportFragmentManager().popBackStackImmediate();
-                            }*/
 
 
                             Intent intent = new Intent(PrimaAttivitaGruppi.this, MainActivity.class);

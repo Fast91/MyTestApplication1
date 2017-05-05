@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     android:padding="50dp"
     tools:context="com.example.faust.mytestapplication1.SpalshScreen"
-    android:background="#30C0D2">
+    android:background="#4EC6A3">
+    <!--#30C0D2-->
 
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash"/>
+        android:src="@drawable/splash3"/>
 
 </RelativeLayout>

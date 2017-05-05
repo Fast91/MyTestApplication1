@@ -89,24 +89,29 @@ myr=view.getResources();
             nameView.setText(u.getName());
             balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
 
-            if (u.getDovuto().toString().charAt(0) == '-') {
-                balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
-            } else {
-                balanceView.setTextColor(Color.parseColor("#08a008"));
+            if(u!=null) {
+
+                if (u.getDovuto() != null) {
+
+                    if (u.getDovuto().toString().charAt(0) == '-') {
+                        balanceView.setTextColor(Color.RED);//parseColor("#d02020"));
+                    } else {
+                        balanceView.setTextColor(Color.parseColor("#08a008"));
+                    }
+
+                    if (u.getDovuto().toString().charAt(0) == '-') {
+                        todoView.setText(R.string.devi);
+                        todoView.setTextColor(Color.RED);
+
+                    } else {
+
+                        todoView.setText(R.string.tideve2);
+                        todoView.setTextColor(Color.parseColor("#08a008"));
+
+                    }
+
+                }
             }
-
-            if(u.getDovuto().toString().charAt(0) == '-'){
-                todoView.setText(R.string.devi);
-                todoView.setTextColor(Color.RED);
-
-            }
-            else{
-
-                todoView.setText(R.string.tideve2);
-                todoView.setTextColor(Color.parseColor("#08a008"));
-
-            }
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

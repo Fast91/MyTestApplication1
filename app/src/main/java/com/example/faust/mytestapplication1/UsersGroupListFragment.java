@@ -153,9 +153,10 @@ public class UsersGroupListFragment extends Fragment{
 
                 if(dataSnapshot.getValue()==null){
 
-                    Intent i = new Intent(view.getContext(), PrimaAttivitaGruppi.class);
+                   /* Intent i = new Intent(getActivity(), PrimaAttivitaGruppi.class);
 
                     startActivity(i);
+                    activity.finish();*/
                 }
 
 

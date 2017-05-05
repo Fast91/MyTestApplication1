@@ -397,7 +397,7 @@ public class PlotFragment  extends Fragment {
         mycount=0;
         totcount=0;
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Activities");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
 
         //Read content data
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -405,300 +405,292 @@ public class PlotFragment  extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.getValue()==null){
+              if(dataSnapshot.getValue()==null){
 
-                    Intent i = new Intent(context, PrimaAttivitaGruppi.class);
+                  //  Intent i = new Intent(context, PrimaAttivitaGruppi.class);
 
-                    startActivity(i);
+                   // startActivity(i);
                 }
 
+                else {
 
 
-                //Per ogni attivita
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                  //Per ogni attivita
+                  for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
 
 
-                    final String id = (String) postSnapshot.getKey();
-                    final String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                   category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+                      final String id = (String) postSnapshot.getKey();
+                      final String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                      category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
 
-                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                    String s = postSnapshot.child("Date").getValue(String.class);
-                    try {
-                        mYearFromDB = Integer.toString((format.parse(s)).getYear()+1900);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    Log.d("FAST", "mYearFromDB: " + mYearFromDB);
+                      DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                      String s = postSnapshot.child("Date").getValue(String.class);
+                      try {
+                          mYearFromDB = Integer.toString((format.parse(s)).getYear() + 1900);
+                      } catch (ParseException e) {
+                          e.printStackTrace();
+                      }
+                      Log.d("FAST", "mYearFromDB: " + mYearFromDB);
 
-                    if(category.equals("Generale") || category.equals("General")) {
-                        category = "Generale";
-                    }
+                      if (category.equals("Generale") || category.equals("General")) {
+                          category = "Generale";
+                      }
 
-                    if(category.equals("Luce") || category.equals("Light")) {
-                        category = "Luce";
-                    }
+                      if (category.equals("Luce") || category.equals("Light")) {
+                          category = "Luce";
+                      }
 
 
-                    if(category.equals("Payment") || category.equals("Pagamento")) {
-                        category = "Pagamento";
-                    }
+                      if (category.equals("Payment") || category.equals("Pagamento")) {
+                          category = "Pagamento";
+                      }
 
-                    if(category.equals("Cibo") || category.equals("Food")) {
-                        category = "Cibo";
-                    }
+                      if (category.equals("Cibo") || category.equals("Food")) {
+                          category = "Cibo";
+                      }
 
-                    if(category.equals("Gift") || category.equals("Regalo")) {
-                        category = "Regalo";
-                    }
+                      if (category.equals("Gift") || category.equals("Regalo")) {
+                          category = "Regalo";
+                      }
 
 
+                      if (category.equals("Pagamento") == false && category.equals("Payment") == false
+                              && mYearFromDB.equals(mYearSelected)) {
 
-                if(category.equals("Pagamento")==false && category.equals("Payment")==false
-                        && mYearFromDB.equals(mYearSelected)) {
+                          if (category_selected.equals("All") == true || category_selected.equals("Tutte")) {
 
-                    if(category_selected.equals("All")==true || category_selected.equals("Tutte")) {
+                              totcount++;
 
-                        totcount++;
 
+                              FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                      .addListenerForSingleValueEvent(new ValueEventListener() {
 
-                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
 
+                                          @Override
+                                          public void onDataChange(DataSnapshot dataSnapshot) {
+                                              mycount++;
 
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        mycount++;
+                                              Double total = null;
 
-                                        Double total = null;
 
+                                              DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                              date = null;
+                                              try {
+                                                  String s = dataSnapshot.child("Date").getValue(String.class);
+                                                  date = format.parse(s);
+                                              } catch (ParseException e) {
+                                                  e.printStackTrace();
+                                              }
 
-                                        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                                        date = null;
-                                        try {
-                                            String s = dataSnapshot.child("Date").getValue(String.class);
-                                            date = format.parse(s);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
+                                              total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
-                                        total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
+                                              if (total == null) {
 
-                                        if (total == null) {
+                                                  total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
-                                            total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
+                                              }
 
-                                        }
+                                              if (total == null) {
+                                                  total = 0.0;
+                                              }
 
-                                        if (total == null) {
-                                            total = 0.0;
-                                        }
+                                              NomeDovuto iniziale = new NomeDovuto(nome, total);
+                                              iniziale.setId(id);
+                                              iniziale.setCategory(category);
+                                              iniziale.setDate(date);
+                                              attivita_dovuto.put(id, iniziale);
 
-                                        NomeDovuto iniziale = new NomeDovuto(nome, total);
-                                        iniziale.setId(id);
-                                        iniziale.setCategory(category);
-                                        iniziale.setDate(date);
-                                        attivita_dovuto.put(id, iniziale);
 
+                                              if (mycount == totcount) {
 
-                                        if (mycount == totcount) {
+                                                  ///Now I have to set the graph
+                                                  clearValue();
+                                                  setValue();
 
-                                            ///Now I have to set the graph
-                                            clearValue();
-                                            setValue();
 
+                                                  graph.getViewport().setXAxisBoundsManual(true);
+                                                  graph.getViewport().setMinX(0);
+                                                  graph.getViewport().setMaxX(13);
 
-                                            graph.getViewport().setXAxisBoundsManual(true);
-                                            graph.getViewport().setMinX(0);
-                                            graph.getViewport().setMaxX(13);
+                                                  // set manual Y bounds
+                                                  graph.getViewport().setYAxisBoundsManual(true);
+                                                  graph.getViewport().setMinY(0);
+                                                  graph.getViewport().setMaxY(mymax);
 
-                                            // set manual Y bounds
-                                            graph.getViewport().setYAxisBoundsManual(true);
-                                            graph.getViewport().setMinY(0);
-                                            graph.getViewport().setMaxY(mymax);
 
+                                                  // graph.getLegendRenderer().setVisible(true);
 
-                                            // graph.getLegendRenderer().setVisible(true);
 
+                                                  //adesso posso lavorare con il grafico
+                                                  BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
 
-                                            //adesso posso lavorare con il grafico
-                                            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                                          new DataPoint(1, gen_val),
+                                                          new DataPoint(2, feb_val),
+                                                          new DataPoint(3, marz_val),
+                                                          new DataPoint(4, apr_val),
+                                                          new DataPoint(5, mag_val),
+                                                          new DataPoint(6, giu_val),
+                                                          new DataPoint(7, lug_val),
+                                                          new DataPoint(8, ago_val),
+                                                          new DataPoint(9, set_val),
+                                                          new DataPoint(10, ott_val),
+                                                          new DataPoint(11, nov_val),
+                                                          new DataPoint(12, dic_val)
+                                                  });
 
-                                                    new DataPoint(1, gen_val),
-                                                    new DataPoint(2, feb_val),
-                                                    new DataPoint(3, marz_val),
-                                                    new DataPoint(4, apr_val),
-                                                    new DataPoint(5, mag_val),
-                                                    new DataPoint(6, giu_val),
-                                                    new DataPoint(7, lug_val),
-                                                    new DataPoint(8, ago_val),
-                                                    new DataPoint(9, set_val),
-                                                    new DataPoint(10, ott_val),
-                                                    new DataPoint(11, nov_val),
-                                                    new DataPoint(12, dic_val)
-                                            });
+                                                  series.setSpacing(20);
+                                                  // draw values on top
+                                                  series.setDrawValuesOnTop(true);
+                                                  series.setValuesOnTopColor(Color.DKGRAY);
 
-                                            series.setSpacing(20);
-                                            // draw values on top
-                                            series.setDrawValuesOnTop(true);
-                                            series.setValuesOnTopColor(Color.DKGRAY);
+                                                  graph.addSeries(series);
 
-                                            graph.addSeries(series);
+                                                  mProgressDialog.dismiss();
 
-                                            mProgressDialog.dismiss();
 
+                                              }
 
 
+                                          }
 
+                                          @Override
+                                          public void onCancelled(DatabaseError databaseError) {
 
-                                        }
+                                          }
+                                      });
 
 
-                                    }
+                          }//all
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                          else {
 
-                                    }
-                                });
+                              //Non è all
 
+                              if (category_selected.equals(category)) {
 
-                    }//all
+                                  totcount++;
 
-                    else{
 
-                        //Non è all
+                                  FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                          .addListenerForSingleValueEvent(new ValueEventListener() {
 
-                        if(category_selected.equals(category)){
 
-                            totcount++;
+                                              @Override
+                                              public void onDataChange(DataSnapshot dataSnapshot) {
+                                                  mycount++;
 
+                                                  Double total = null;
 
-                            FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
 
+                                                  DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                                  date = null;
+                                                  try {
+                                                      String s = dataSnapshot.child("Date").getValue(String.class);
+                                                      date = format.parse(s);
+                                                  } catch (ParseException e) {
+                                                      e.printStackTrace();
+                                                  }
 
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            mycount++;
+                                                  total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
-                                            Double total = null;
 
+                                                  if (total == null) {
 
-                                            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                                            date = null;
-                                            try {
-                                                String s = dataSnapshot.child("Date").getValue(String.class);
-                                                date = format.parse(s);
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                            }
+                                                      total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
-                                            total = dataSnapshot.child("Owner").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
 
+                                                  }
 
-                                            if (total == null) {
+                                                  if (total == null) {
+                                                      total = 0.0;
+                                                  }
 
-                                                total = dataSnapshot.child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Total").getValue(Double.class);
+                                                  NomeDovuto iniziale = new NomeDovuto(nome, total);
+                                                  iniziale.setId(id);
+                                                  iniziale.setCategory(category);
+                                                  iniziale.setDate(date);
+                                                  attivita_dovuto.put(id, iniziale);
 
 
-                                            }
+                                                  if (mycount == totcount) {
 
-                                            if (total == null) {
-                                                total = 0.0;
-                                            }
+                                                      ///Now I have to set the graph
+                                                      clearValue();
+                                                      setValue();
 
-                                            NomeDovuto iniziale = new NomeDovuto(nome, total);
-                                            iniziale.setId(id);
-                                            iniziale.setCategory(category);
-                                            iniziale.setDate(date);
-                                            attivita_dovuto.put(id, iniziale);
 
+                                                      graph.getViewport().setXAxisBoundsManual(true);
+                                                      graph.getViewport().setMinX(0);
+                                                      graph.getViewport().setMaxX(13);
 
-                                            if (mycount == totcount) {
+                                                      // set manual Y bounds
+                                                      graph.getViewport().setYAxisBoundsManual(true);
+                                                      graph.getViewport().setMinY(0);
+                                                      graph.getViewport().setMaxY(mymax);
 
-                                                ///Now I have to set the graph
-                                                clearValue();
-                                                setValue();
 
+                                                      // graph.getLegendRenderer().setVisible(true);
 
-                                                graph.getViewport().setXAxisBoundsManual(true);
-                                                graph.getViewport().setMinX(0);
-                                                graph.getViewport().setMaxX(13);
 
-                                                // set manual Y bounds
-                                                graph.getViewport().setYAxisBoundsManual(true);
-                                                graph.getViewport().setMinY(0);
-                                                graph.getViewport().setMaxY(mymax);
+                                                      //adesso posso lavorare con il grafico
+                                                      BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
 
+                                                              new DataPoint(1, gen_val),
+                                                              new DataPoint(2, feb_val),
+                                                              new DataPoint(3, marz_val),
+                                                              new DataPoint(4, apr_val),
+                                                              new DataPoint(5, mag_val),
+                                                              new DataPoint(6, giu_val),
+                                                              new DataPoint(7, lug_val),
+                                                              new DataPoint(8, ago_val),
+                                                              new DataPoint(9, set_val),
+                                                              new DataPoint(10, ott_val),
+                                                              new DataPoint(11, nov_val),
+                                                              new DataPoint(12, dic_val)
+                                                      });
 
-                                                // graph.getLegendRenderer().setVisible(true);
+                                                      series.setSpacing(20);
+                                                      // draw values on top
+                                                      series.setDrawValuesOnTop(true);
+                                                      series.setValuesOnTopColor(Color.DKGRAY);
 
+                                                      graph.addSeries(series);
 
-                                                //adesso posso lavorare con il grafico
-                                                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                                      mProgressDialog.dismiss();
 
-                                                        new DataPoint(1, gen_val),
-                                                        new DataPoint(2, feb_val),
-                                                        new DataPoint(3, marz_val),
-                                                        new DataPoint(4, apr_val),
-                                                        new DataPoint(5, mag_val),
-                                                        new DataPoint(6, giu_val),
-                                                        new DataPoint(7, lug_val),
-                                                        new DataPoint(8, ago_val),
-                                                        new DataPoint(9, set_val),
-                                                        new DataPoint(10, ott_val),
-                                                        new DataPoint(11, nov_val),
-                                                        new DataPoint(12, dic_val)
-                                                });
 
-                                                series.setSpacing(20);
-                                                // draw values on top
-                                                series.setDrawValuesOnTop(true);
-                                                series.setValuesOnTopColor(Color.DKGRAY);
+                                                  }
 
-                                                graph.addSeries(series);
 
-                                                mProgressDialog.dismiss();
+                                              }
 
+                                              @Override
+                                              public void onCancelled(DatabaseError databaseError) {
 
+                                              }
+                                          });
 
 
+                              }
 
-                                            }
 
+                          }
 
-                                        }
+                      }//category
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
 
-                                        }
-                                    });
+                  }
 
 
+                  mProgressDialog.dismiss();
 
+              }
 
 
-                        }
 
 
-
-
-
-
-                    }
-
-                       }//category
-
-
-
-                }
-
-
-                mProgressDialog.dismiss();
 
             }
 
