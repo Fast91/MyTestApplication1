@@ -145,6 +145,13 @@ public class ActivityGroupListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                if(dataSnapshot.getValue()==null){
+
+                    Intent i = new Intent(view.getContext(), PrimaAttivitaGruppi.class);
+
+                    startActivity(i);
+                }
+
 
 
 

@@ -61,6 +61,13 @@ public class ManageGroupActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                if(dataSnapshot.getValue()==null){
+
+                    Intent i = new Intent(ManageGroupActivity.this, PrimaAttivitaGruppi.class);
+
+                    startActivity(i);
+                }
+
                 //prendo un amico
                 for (DataSnapshot friend : dataSnapshot.getChildren()) {
 

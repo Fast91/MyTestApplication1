@@ -147,9 +147,16 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
                     databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Users");
 
-                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            if(dataSnapshot.getValue()==null){
+
+                                Intent i = new Intent(ActivityAddUserToGroup.this, PrimaAttivitaGruppi.class);
+
+                                startActivity(i);
+                            }
 
                             //Per tutti gli utenti aggiungerli
                             for(DataSnapshot users : dataSnapshot.getChildren()){

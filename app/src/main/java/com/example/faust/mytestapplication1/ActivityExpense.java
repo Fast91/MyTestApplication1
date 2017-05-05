@@ -290,6 +290,13 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
+                            if(dataSnapshot.getValue()==null){
+
+                                Intent i = new Intent(ActivityExpense.this, PrimaAttivitaGruppi.class);
+
+                                startActivity(i);
+                            }
+
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
 

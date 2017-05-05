@@ -2,6 +2,7 @@ package com.example.faust.mytestapplication1;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -89,6 +90,7 @@ public class PlotFragment  extends Fragment {
     List<String> mYearsList;
     String category;
     String mYearFromDB;
+    Context context;
 
     ProgressDialog mProgressDialog;
 
@@ -131,6 +133,8 @@ public class PlotFragment  extends Fragment {
         String msg = getString(R.string.dialog_image_profile_loading);
         mProgressDialog.setMessage(msg);
         mProgressDialog.show();
+
+        context = view.getContext();
 
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
@@ -400,6 +404,13 @@ public class PlotFragment  extends Fragment {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue()==null){
+
+                    Intent i = new Intent(context, PrimaAttivitaGruppi.class);
+
+                    startActivity(i);
+                }
 
 
 
