@@ -507,8 +507,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                                 for (final String name_user : myusers.keySet()) {
 
-                                  //  (new DBShortKeys()).AggiornaBilancioGlobale(name_user);
-                                  //  dbShortKeys.AggiornaBilancioGlobale(name_user);
+                                    //(new DBShortKeys()).AggiornaBilancioGlobale(name_user);
+
 
 
 

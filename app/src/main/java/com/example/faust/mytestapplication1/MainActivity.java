@@ -105,11 +105,25 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       //dbShortKeys = new DBShortKeys();
-        //dbShortKeys.AggiornaBilancioGlobale("k0fWwgOMSmN77HBveT0QVnYpt802");
-
-
+      // dbShortKeys = new DBShortKeys();
         /*
+        new DBShortKeys().AggiornaBilancioGlobale("k0fWwgOMSmN77HBveT0QVnYpt802");
+        new DBShortKeys().AggiornaBilancioGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","OAQlEuOH8mZly2oKyVSZZC8KWLy2","2");
+
+        new DBShortKeys().AggiornaBilancioGlobale("hJqLTxmbV3YNRAM8VPy3HZki5ky2");
+        new DBShortKeys().AggiornaBilancioGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","k0fWwgOMSmN77HBveT0QVnYpt802","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","OAQlEuOH8mZly2oKyVSZZC8KWLy2","2");
+
+        new DBShortKeys().AggiornaBilancioGlobale("OAQlEuOH8mZly2oKyVSZZC8KWLy2");
+        new DBShortKeys().AggiornaBilancioGruppo("OAQlEuOH8mZly2oKyVSZZC8KWLy2","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("OAQlEuOH8mZly2oKyVSZZC8KWLy2","k0fWwgOMSmN77HBveT0QVnYpt802","2");
+        new DBShortKeys().AggiornaBilanciFraUtentiGruppo("OAQlEuOH8mZly2oKyVSZZC8KWLy2","hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
+        */
+/*
+
         dbShortKeys.AggiornaBilancioGlobale("hJqLTxmbV3YNRAM8VPy3HZki5ky2");
         dbShortKeys.AggiornaBilancioGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
         dbShortKeys.AggiornaBilanciFraUtentiGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","k0fWwgOMSmN77HBveT0QVnYpt802","2");

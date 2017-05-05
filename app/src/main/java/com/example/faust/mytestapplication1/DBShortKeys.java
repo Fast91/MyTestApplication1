@@ -190,16 +190,29 @@ public class DBShortKeys
 
                                         total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
 
+                                        Double amount = dataSnapshot.child("Total").getValue(Double.class);
+                                        String s3x = String.format("%.2f", amount);
+                                        s3x = s3x.replace(",", ".");
+                                        amount = Double.parseDouble(s3x);
+
 
                                         if (total == null) {
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
 
                                             group_balance = group_balance  - total;
 
                                         }
                                         else{
-                                            group_balance = group_balance  + total;
+
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
+
+                                            group_balance = group_balance  +( amount- total) ;
                                         }
 
 
@@ -207,7 +220,7 @@ public class DBShortKeys
 
                                             //ho finito
 
-                                            String s3x = String.format("%.2f", group_balance);
+                                             s3x = String.format("%.2f", group_balance);
                                             s3x = s3x.replace(",", ".");
                                             group_balance = Double.parseDouble(s3x);
 
@@ -296,15 +309,24 @@ public class DBShortKeys
                                         total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
 
 
+
+
                                         if (total == null) {
 
                                             // io sono utente
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
+                                            String s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
+
 
                                             //////////
-                                            if(dataSnapshot.child("Owner").getKey().equals(id_other))
+                                            if(dataSnapshot.child("Owner").child(id_other).exists())
                                             {
+                                                s3x = String.format("%.2f", total);
+                                                s3x = s3x.replace(",", ".");
+                                                total = Double.parseDouble(s3x);
                                                 personal_balance = personal_balance  - total;
                                             }
                                             //////////
@@ -313,12 +335,12 @@ public class DBShortKeys
 
                                             // io sono owner
 
-                                            /////////
-                                            //if(dataSnapshot.child("User").getKey().equals(id_other))
-                                            //{
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
+                                            String s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
                                                 personal_balance = personal_balance  + total;
-                                            //}
+
                                             ////////
 
                                         }
