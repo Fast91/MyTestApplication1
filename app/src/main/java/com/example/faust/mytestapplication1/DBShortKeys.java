@@ -108,8 +108,14 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
+                                            group_balance = global_balance  - total;
 
                                         }
+                                        else{
+                                            group_balance = global_balance  + total;
+                                        }
+
+
 
                                         if (total == null) {
 
@@ -117,13 +123,12 @@ public class DBShortKeys
                                             total = 0.0;
                                         }
 
-                                        group_balance += total;
 
 
                                         if (mycount == totcount) {
                                             //ho finito
 
-                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Balance").setValue(global_balance);
+                                            FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("GlobalBalance").setValue(global_balance);
 
 
                                         }
@@ -224,21 +229,24 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
+                                            group_balance = global_balance  - total;
 
                                         }
-
+                                        else{
+                                            group_balance = global_balance  + total;
+                                        }
                                         if (total == null) {
                                             total = 0.0;
                                         }
 
-                                       group_balance += total;
+
 
 
                                         if (mycount == totcount) {
 
                                             //ho finito
 
-                                            databaseReference.child("Users").child(id_user).child("Balance").setValue(group_balance);
+                                            databaseReference.child("Users").child(id_user).child("Total").setValue(group_balance);
 
                                         }
 
@@ -271,7 +279,6 @@ public class DBShortKeys
 
 
     }
-
 
 
 
