@@ -17,6 +17,12 @@ import java.util.Map;
 
 public class DBShortKeys
 {
+
+    private Double global_balance,group_balance;
+    private int mycount,totcount;
+
+
+
     public static void updateUserBalance(String userID)
     {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
@@ -43,4 +49,233 @@ public class DBShortKeys
             }
         });
     }
+
+
+
+    private void AggiornaBilancioGlobale(final String id_user) {
+
+        group_balance = 0.0;
+        mycount=0;
+        totcount=0;
+
+        final DatabaseReference databaseReference;
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
+
+        //Read content data
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() == null) {
+
+
+                } else {
+
+
+                    totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+
+                    //Per ogni attivita
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
+
+
+                        mycount++;
+
+
+                        final String id = (String) postSnapshot.getKey();
+                        final String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                        //category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+
+
+
+
+                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                        Double total = null;
+
+
+                                        total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+
+                                        if (total == null) {
+
+                                            total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+
+
+                                        }
+
+                                        if (total == null) {
+                                            total = 0.0;
+                                        }
+
+                                        group_balance += total;
+
+
+                                        if (mycount == totcount) {
+
+                                            //ho finito
+
+                                            databaseReference.child("Users").child(id_user).child("Balance").setValue(group_balance);
+
+                                        }
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+
+
+                                });
+
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+    private void AggiornaBilancioGruppo(final String id_user, String id_group) {
+
+        group_balance = 0.0;
+        mycount=0;
+        totcount=0;
+
+        final DatabaseReference databaseReference;
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
+
+        //Read content data
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() == null) {
+
+
+                } else {
+
+
+                    totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+
+                    //Per ogni attivita
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
+
+
+                        mycount++;
+
+
+                        final String id = (String) postSnapshot.getKey();
+                        final String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                        //category = (String) postSnapshot.child("Category").getValue(String.class); //todo inserire categoria nel DB groups
+
+
+
+
+                        FirebaseDatabase.getInstance().getReference("Activities").child(postSnapshot.getKey())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                        Double total = null;
+
+
+                                        total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+
+                                        if (total == null) {
+
+                                            total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+
+
+                                        }
+
+                                        if (total == null) {
+                                            total = 0.0;
+                                        }
+
+                                       group_balance += total;
+
+
+                                        if (mycount == totcount) {
+
+                                            //ho finito
+
+                                            databaseReference.child("Users").child(id_user).child("Balance").setValue(group_balance);
+
+                                        }
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+
+
+                                });
+
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+             });
+
+
+    }
+
+
+
+
+
+
+
+
+
 }

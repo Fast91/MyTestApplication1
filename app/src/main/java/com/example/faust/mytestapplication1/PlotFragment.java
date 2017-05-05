@@ -743,70 +743,70 @@ public class PlotFragment  extends Fragment {
                     case 0:
                         gen_val+=nm.getDovuto();
                         if(mymax<gen_val){
-                            mymax=gen_val+10;
+                            mymax=gen_val+20;
                         }
                         break;
 
                     case 1:
                         feb_val+=nm.getDovuto();
                         if(mymax<feb_val){
-                            mymax=feb_val+10;
+                            mymax=feb_val+20;
                         }
                         break;
 
                     case 2:
                         marz_val+=nm.getDovuto();
                         if(mymax<marz_val){
-                            mymax=marz_val+10;
+                            mymax=marz_val+20;
                         }
                         break;
 
                     case 3:
                         apr_val+=nm.getDovuto();
                         if(mymax<apr_val){
-                            mymax=apr_val+10;
+                            mymax=apr_val+20;
                         }
                         break;
 
                     case 4:
                         mag_val+=nm.getDovuto();
                         if(mymax<mag_val){
-                            mymax=mag_val+10;
+                            mymax=mag_val+20;
                         }
                         break;
 
                     case 5:
                         giu_val+=nm.getDovuto();
                         if(mymax<giu_val){
-                            mymax=giu_val+10;
+                            mymax=giu_val+20;
                         }
                         break;
 
                     case 6:
                         lug_val+=nm.getDovuto();
                         if(mymax<lug_val){
-                            mymax=lug_val+10;
+                            mymax=lug_val+20;
                         }
                         break;
 
                     case 7:
                         ago_val+=nm.getDovuto();
                         if(mymax<ago_val){
-                            mymax=ago_val+10;
+                            mymax=ago_val+20;
                         }
                         break;
 
                     case 8:
                         set_val+=nm.getDovuto();
                         if(mymax<set_val){
-                            mymax=set_val+10;
+                            mymax=set_val+20;
                         }
                         break;
 
                     case 9:
                         ott_val+=nm.getDovuto();
                         if(mymax<ott_val){
-                            mymax=ott_val+10;
+                            mymax=ott_val+20;
                         }
                         break;
 
@@ -814,14 +814,14 @@ public class PlotFragment  extends Fragment {
                     case 10:
                         nov_val+=nm.getDovuto();
                         if(mymax<nov_val){
-                            mymax=nov_val+10;
+                            mymax=nov_val+20;
                         }
                         break;
 
                     case 11:
                         dic_val+=nm.getDovuto();
                         if(mymax<dic_val){
-                            mymax=dic_val+10;
+                            mymax=dic_val+20;
                         }
                         break;
 
