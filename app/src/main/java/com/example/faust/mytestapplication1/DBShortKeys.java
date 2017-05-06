@@ -94,7 +94,10 @@ public class DBShortKeys
                             new DBShortKeys()._aggiornaBilancioGruppo(id, group_id);
                             for(String id2 : users_and_owner)
                             {
-                                new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, group_id);
+                                if(!id.equals(id2))
+                                {
+                                    new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, group_id);
+                                }
                             }
                         }
                     }
