@@ -323,9 +323,9 @@ public class ActivityDetailActivity extends AppCompatActivity
                         public void onClick(DialogInterface dialog, int which) {
                             //buttonDeleteGroup();
                             DBShortKeys.eliminaAttività(mExpenseId);
+                            finish();
                         }
                     }).create().show();
-
         }
 
         // Handle your other action bar items...

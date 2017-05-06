@@ -28,6 +28,7 @@ public class DBShortKeys
 
     private String delete_act_group_id;
     private List<String> delete_act_users_and_owner;
+    private Map<String, Object> delete_act_map;
 
     public static void aggiornaBilancioGlobale(final String id_user)
     {
@@ -52,6 +53,9 @@ public class DBShortKeys
 
     private void _eliminaAttività(final String id_activity)
     {
+        delete_act_users_and_owner = new ArrayList<String>();
+        delete_act_map = new HashMap<String, Object>(); // qui metto le query
+
         // RICORDARSI ALLA FINE DI RICHIAMARE I 3 METODI PER RICALCOLARE I BILANCI
         final DatabaseReference ref0 = FirebaseDatabase.getInstance().getReference().child("Activities").child(id_activity);
         ref0.addListenerForSingleValueEvent(new ValueEventListener()
@@ -61,14 +65,12 @@ public class DBShortKeys
             {
                 // DEVO ELIMINARE L'ATTIVITA' DAL GRUPPO, DA TUTTI GLI USERS E DALL'OWNER
                 // ottengo quindi una lista con tutti gli utenti (e owner) e ottengo l'id del gruppo
-                Map<String, Object> map = new HashMap<String, Object>(); // qui metto le query
-                map.put("/Activities/"+id_activity,null);
 
-                delete_act_users_and_owner = new ArrayList<String>();
+                delete_act_map.put("/Activities/"+id_activity,null);
 
-                delete_act_group_id = dataSnapshot.child("GroupId").getKey();
+                delete_act_group_id = dataSnapshot.child("GroupId").getValue(String.class);
                 // ora group_id contiene l'id del gruppo dal quale eliminare l'attività
-                map.put("/Groups/"+delete_act_group_id+"/Activities/"+id_activity, null);
+                delete_act_map.put("/Groups/"+delete_act_group_id+"/Activities/"+id_activity, null);
 
                 delete_act_users_and_owner.add(dataSnapshot.child("Owner").getKey());
                 for(DataSnapshot data : dataSnapshot.child("Users").getChildren())
@@ -79,11 +81,11 @@ public class DBShortKeys
 
                 for(String id : delete_act_users_and_owner)
                 {
-                    map.put("/Users/"+id+"/Activities/"+id_activity,null);
+                    delete_act_map.put("/Users/"+id+"/Activities/"+id_activity,null);
                 }
 
                 DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
-                refRoot.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>()
+                refRoot.updateChildren(delete_act_map).addOnCompleteListener(new OnCompleteListener<Void>()
                 {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
