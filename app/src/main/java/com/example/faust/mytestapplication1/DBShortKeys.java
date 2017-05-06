@@ -109,7 +109,7 @@ public class DBShortKeys
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
-                for(String id : delete_act_users_and_owner)
+                /*for(String id : delete_act_users_and_owner)
                 {
                     new DBShortKeys()._aggiornaBilancioGlobale(id);
                     new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
@@ -120,7 +120,7 @@ public class DBShortKeys
                             new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
                         }
                     }
-                }
+                }*/
             }
         });
     }
