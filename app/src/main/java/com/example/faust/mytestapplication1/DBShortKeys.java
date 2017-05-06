@@ -43,6 +43,11 @@ public class DBShortKeys
         new DBShortKeys()._aggiornaBilanciFraUtentiGruppo(id_user, id_other, id_group);
     }
 
+    public static void eliminaAttività(final String id_activity)
+    {
+        new DBShortKeys()._eliminaAttività(id_activity);
+    }
+
 
     private void _eliminaAttività(final String id_activity)
     {
