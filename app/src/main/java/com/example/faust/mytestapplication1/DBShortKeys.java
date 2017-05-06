@@ -66,7 +66,7 @@ public class DBShortKeys
 
                 delete_act_users_and_owner = new ArrayList<String>();
 
-                delete_act_group_id = dataSnapshot.child("Group").getKey();
+                delete_act_group_id = dataSnapshot.child("GroupId").getKey();
                 // ora group_id contiene l'id del gruppo dal quale eliminare l'attività
                 map.put("/Groups/"+delete_act_group_id+"/Activities/"+id_activity, null);
 
