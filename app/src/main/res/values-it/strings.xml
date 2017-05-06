@@ -138,6 +138,10 @@
     <string name="language_setting">Lingua :</string>
     <string name="deletegroup_title">Eliminare Gruppo?</string>
     <string name="deletegroup_message">Sei sicuro di voler eliminare questo gruppo?</string>
+
+    <string name="deleteactivity_title">Eliminare Attività?</string>
+    <string name="deleteactivity_message">Sei sicuro di voler eliminare questa attività?</string>
+
     <string name="deleteuser_title">Eliminare Utente?</string>
     <string name="deleteuser_message">Sei sicuro di voler eliminare questo utente?</string>
     <string name="button_user_group">UTENTI</string>
@@ -178,5 +182,8 @@
     <string name="category_all">Tutte</string>
 
     <string name="date_picker_title">Data della spesa:</string>
+
+    <string name="modify_activity_menu_item">Modica attività</string>
+    <string name="delete_activity_menu_item">Elimina attività</string>
 
 </resources>

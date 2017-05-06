@@ -17,7 +17,7 @@ public class SpalshScreen extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(2000);
                     Intent i = new Intent ( SpalshScreen.this, RegisterActivity.class);
                     startActivity(i);
                     finish();

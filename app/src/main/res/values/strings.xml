@@ -152,6 +152,9 @@
     <string name="deletegroup_title">Delete Group?</string>
     <string name="deletegroup_message">Are you sure to delete this group?</string>
 
+    <string name="deleteactivity_title">Delete Activity?</string>
+    <string name="deleteactivity_message">Are you sure to delete this activity?</string>
+
 
     <string name="deleteuser_title">Delete User?</string>
     <string name="deleteuser_message">Are you sure to delete this user?</string>
@@ -198,5 +201,10 @@
     <string name="category_all">All</string>
 
     <string name="date_picker_title">Date of expense:</string>
+
+    <string name="modify_activity_menu_item">Modify activity</string>
+    <string name="delete_activity_menu_item">Delete activity</string>
+
+
 
 </resources>

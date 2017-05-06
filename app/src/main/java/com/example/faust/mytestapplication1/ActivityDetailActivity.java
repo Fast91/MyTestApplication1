@@ -1,16 +1,20 @@
 package com.example.faust.mytestapplication1;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -278,6 +282,56 @@ public class ActivityDetailActivity extends AppCompatActivity
 
 
 
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.toolbar_activity_menu, menu);
+        return true;
+    }
+
+
+    //-- azioni per il menù della tool_bar--
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int res_id = item.getItemId();
+        if (res_id == R.id.action_modify_activity)
+        {
+            //TODO DA FARE
+        }
+
+        if (res_id == R.id.action_delete_activity) {
+
+            new AlertDialog.Builder(ActivityDetailActivity.this)
+                    .setTitle(R.string.deleteactivity_title)
+                    .setMessage(R.string.deleteactivity_message)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //buttonDeleteGroup();
+                            DBShortKeys.eliminaAttività(mExpenseId);
+                        }
+                    }).create().show();
+
+        }
+
+        // Handle your other action bar items...
+
+        return true;
+    }
 
 
 

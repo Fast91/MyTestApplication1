@@ -57,8 +57,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
