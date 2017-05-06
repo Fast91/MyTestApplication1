@@ -328,8 +328,8 @@ public class ActivityDetailActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //buttonDeleteGroup();
-                            DBShortKeys.eliminaAttività(mExpenseId);
                             finish();
+                            DBShortKeys.eliminaAttività(mExpenseId);
                         }
                     }).create().show();
         }

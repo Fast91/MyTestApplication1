@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -73,7 +74,10 @@ public class DBShortKeys
                 // ora group_id contiene l'id del gruppo dal quale eliminare l'attività
                 delete_act_map.put("/Groups/"+delete_act_group_id+"/Activities/"+id_activity, null);
 
-                delete_act_users_and_owner.add(dataSnapshot.child("Owner").getKey());
+                for(DataSnapshot data : dataSnapshot.child("Owner").getChildren())
+                {
+                    delete_act_users_and_owner.add(data.getKey());
+                }
                 for(DataSnapshot data : dataSnapshot.child("Users").getChildren())
                 {
                     delete_act_users_and_owner.add(data.getKey());
@@ -85,6 +89,36 @@ public class DBShortKeys
                     delete_act_map.put("/Users/"+id+"/Activities/"+id_activity,null);
                 }
 
+                // versione froza bruta
+                /*DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
+                Log.d("FAST","Activities."+id_activity+".removeValue()");
+                refRoot.child("Activities").child(id_activity).removeValue();
+                Log.d("FAST","Groups."+delete_act_group_id+".Activities."+id_activity+".removeValue()");
+                refRoot.child("Groups").child(delete_act_group_id).child("Activities").child(id_activity).removeValue();
+                for(String id : delete_act_users_and_owner)
+                {
+                    Log.d("FAST", "Users."+id+".Activities."+id_activity+".removeValue()");
+                    refRoot.child("Users").child(id).child("Activities").child(id_activity).removeValue();
+                }
+                for(String id : delete_act_users_and_owner)
+                {
+                    Log.d("FAST", "Aggiorno il bilancio globale");
+                    new DBShortKeys()._aggiornaBilancioGlobale(id);
+                    Log.d("FAST", "Aggiorno il bilancio di gruppo");
+                    new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+                    Log.d("FAST", "Aggiorno il bilancio fra gli utenti");
+                    for(String id2 : delete_act_users_and_owner)
+                    {
+                        if(!id.equals(id2))
+                        {
+                            new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
+                        }
+                    }
+                    Log.d("FAST", "Ho aggiornato i bilanci");
+                }*/
+                // fine versione forza bruta
+
+                // versione più sistemata
                 Log.d("FAST", "Sto per fare la query con tutta la mappa");
                 DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
                 refRoot.updateChildren(delete_act_map, new DatabaseReference.CompletionListener()
@@ -111,6 +145,7 @@ public class DBShortKeys
                         }
                     }
                 });
+                // fine versione più sistemata
             }
 
             @Override
