@@ -26,6 +26,9 @@ public class DBShortKeys
     private Double personal_balance;
     private int personal_mycount, personal_totcount;
 
+    private String delete_act_group_id;
+    private List<String> delete_act_users_and_owner;
+
     public static void aggiornaBilancioGlobale(final String id_user)
     {
         new DBShortKeys()._aggiornaBilancioGlobale(id_user);
@@ -61,21 +64,20 @@ public class DBShortKeys
                 Map<String, Object> map = new HashMap<String, Object>(); // qui metto le query
                 map.put("/Activities/"+id_activity,null);
 
-                final String group_id;
-                final List<String> users_and_owner = new ArrayList<String>();
+                delete_act_users_and_owner = new ArrayList<String>();
 
-                group_id = dataSnapshot.child("Group").getValue(String.class);
+                delete_act_group_id = dataSnapshot.child("Group").getKey();
                 // ora group_id contiene l'id del gruppo dal quale eliminare l'attività
-                map.put("/Groups/"+group_id+"/Activities/"+id_activity, null);
+                map.put("/Groups/"+delete_act_group_id+"/Activities/"+id_activity, null);
 
-                users_and_owner.add(dataSnapshot.child("Owner").getValue(String.class));
+                delete_act_users_and_owner.add(dataSnapshot.child("Owner").getKey());
                 for(DataSnapshot data : dataSnapshot.child("Users").getChildren())
                 {
-                    users_and_owner.add(data.getValue(String.class));
+                    delete_act_users_and_owner.add(data.getKey());
                 }
                 // ora users_and_owner contiene gli id degli utenti dai quali eliminare l'attività
 
-                for(String id : users_and_owner)
+                for(String id : delete_act_users_and_owner)
                 {
                     map.put("/Users/"+id+"/Activities/"+id_activity,null);
                 }
@@ -86,26 +88,39 @@ public class DBShortKeys
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
-                        for(String id : users_and_owner)
+                        for(String id : delete_act_users_and_owner)
                         {
                             new DBShortKeys()._aggiornaBilancioGlobale(id);
-                            new DBShortKeys()._aggiornaBilancioGruppo(id, group_id);
-                            for(String id2 : users_and_owner)
+                            new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+                            for(String id2 : delete_act_users_and_owner)
                             {
                                 if(!id.equals(id2))
                                 {
-                                    new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, group_id);
+                                    new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
                                 }
                             }
                         }
                     }
+
+
                 });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError)
             {
-
+                for(String id : delete_act_users_and_owner)
+                {
+                    new DBShortKeys()._aggiornaBilancioGlobale(id);
+                    new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+                    for(String id2 : delete_act_users_and_owner)
+                    {
+                        if(!id.equals(id2))
+                        {
+                            new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
+                        }
+                    }
+                }
             }
         });
     }
