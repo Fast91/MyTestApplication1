@@ -56,11 +56,15 @@ public class ActivityDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_detail);
 
         firebaseAuth = FirebaseAuth.getInstance();
         mExpenseId = (String) getIntent().getStringExtra(EXTRA_EXPENSE_UUID);
-        Log.d("FAST", mExpenseId);
+        Log.d("FAST", "ID attività: " + mExpenseId);
+        //DBShortKeys.eliminaAttività(mExpenseId);
+        //finish();
+
         //TODO cercare l'uuid nel db per prendere i dati
 
         mTitleTextView = (TextView) findViewById(R.id.title_expense);

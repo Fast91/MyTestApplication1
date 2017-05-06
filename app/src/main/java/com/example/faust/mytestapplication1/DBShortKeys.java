@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,7 +58,7 @@ public class DBShortKeys
         delete_act_map = new HashMap<String, Object>(); // qui metto le query
 
         // RICORDARSI ALLA FINE DI RICHIAMARE I 3 METODI PER RICALCOLARE I BILANCI
-        final DatabaseReference ref0 = FirebaseDatabase.getInstance().getReference().child("Activities").child(id_activity);
+        DatabaseReference ref0 = FirebaseDatabase.getInstance().getReference().child("Activities").child(id_activity);
         ref0.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
@@ -84,16 +85,21 @@ public class DBShortKeys
                     delete_act_map.put("/Users/"+id+"/Activities/"+id_activity,null);
                 }
 
+                Log.d("FAST", "Sto per fare la query con tutta la mappa");
                 DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
-                refRoot.updateChildren(delete_act_map).addOnCompleteListener(new OnCompleteListener<Void>()
+                refRoot.updateChildren(delete_act_map, new DatabaseReference.CompletionListener()
                 {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task)
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference)
                     {
+                        Log.d("FAST", "Ho completato la query con tutta la mappa");
                         for(String id : delete_act_users_and_owner)
                         {
+                            Log.d("FAST", "Aggiorno il bilancio globale");
                             new DBShortKeys()._aggiornaBilancioGlobale(id);
+                            Log.d("FAST", "Aggiorno il bilancio di gruppo");
                             new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+                            Log.d("FAST", "Aggiorno il bilancio fra gli utenti");
                             for(String id2 : delete_act_users_and_owner)
                             {
                                 if(!id.equals(id2))
@@ -101,10 +107,9 @@ public class DBShortKeys
                                     new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
                                 }
                             }
+                            Log.d("FAST", "Ho aggiornato i bilanci");
                         }
                     }
-
-
                 });
             }
 
