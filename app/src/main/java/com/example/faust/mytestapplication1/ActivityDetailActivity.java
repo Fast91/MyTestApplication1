@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,6 +60,7 @@ public class ActivityDetailActivity extends AppCompatActivity
 
         firebaseAuth = FirebaseAuth.getInstance();
         mExpenseId = (String) getIntent().getStringExtra(EXTRA_EXPENSE_UUID);
+        Log.d("FAST", mExpenseId);
         //TODO cercare l'uuid nel db per prendere i dati
 
         mTitleTextView = (TextView) findViewById(R.id.title_expense);
