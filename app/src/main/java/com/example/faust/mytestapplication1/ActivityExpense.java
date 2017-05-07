@@ -470,14 +470,30 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 s = s.replace(",", ".");
                                 Total = Double.parseDouble(s);
 
-                                databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+                               /* databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
 
                                 databaseReference3.child(key).child("Date").setValue(Date);
                                 databaseReference3.child(key).child("Category").setValue(Category);
 
                                 databaseReference3.child(key).child("Name").setValue(Name);
                                 databaseReference3.child(key).child("Total").setValue(Total);
-                                databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);
+                                databaseReference3.child(key).child("Currency").setValue(mycurrency_selected);*/
+
+
+
+                                HashMap<String,Object> mappa2 = new HashMap<>();
+                                mappa2.put("Date",Date);
+                                mappa2.put("Category",Category);
+                                mappa2.put("Name",Name);
+                                mappa2.put("Total",Total);
+                                mappa2.put("Currency",mycurrency_selected);
+
+                                databaseReference3.child(key).setValue(mappa2);
+
+
+
+
+
 
 
                                 //2 users- ACTIVITIES
@@ -496,14 +512,25 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 for (String id_user : myusers.keySet()) {
 
 
-                                    databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
+                                   /* databaseReference4.child(id_user).child("Activities").child(key).child("Date").setValue(Date);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Category").setValue(Category);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Name").setValue(Name);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Total").setValue(Total);
                                     databaseReference4.child(id_user).child("Activities").child(key).child("Currency").setValue(mycurrency_selected);
 
 
-                                    databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);
+                                    databaseReference4.child(id_user).child("Activities").child(key).child("Group").setValue(name_group_iniziale);*/
+
+
+                                    HashMap<String,Object> mappa4 = new HashMap<>();
+                                    mappa4.put("Date",Date);
+                                    mappa4.put("Category",Category);
+                                    mappa4.put("Name",Name);
+                                    mappa4.put("Total",Total);
+                                    mappa4.put("Currency",mycurrency_selected);
+                                    mappa4.put("Group",name_group_iniziale);
+
+                                    databaseReference4.child(id_user).child("Activities").child(key).setValue(mappa4);
 
 
                                 }
