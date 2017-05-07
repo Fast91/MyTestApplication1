@@ -400,7 +400,7 @@ public class PlotFragment  extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("Groups").child(id_group);
 
         //Read content data
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() { //todo era single value
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

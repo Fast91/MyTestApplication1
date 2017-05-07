@@ -61,6 +61,8 @@ public class ManageGroupActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                utenti_dovuto.clear();
+
                 if(dataSnapshot.getValue()==null){
 
 

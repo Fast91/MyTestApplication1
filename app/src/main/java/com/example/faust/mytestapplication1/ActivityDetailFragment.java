@@ -234,6 +234,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                detailEntries.clear();
 
                 for(DataSnapshot user : dataSnapshot.getChildren()){
 
