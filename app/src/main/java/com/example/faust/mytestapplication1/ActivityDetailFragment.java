@@ -419,6 +419,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
         public void onBindViewHolder(ActivityDetailHolder holder, int position)
         {
             NomeDovuto detailEntry = mDetailEntries.get(position);
+            if(detailEntry!=null)
             holder.bind(detailEntry);
         }
 
