@@ -359,6 +359,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             String Date = "" + myDate.getDate() + "/" + myDate.getMonth() + "/" + (myDate.getYear() + 1900);
 
 
+                                /*
+
                             databaseReference.child(key).child("Date").setValue(Date);
                             databaseReference.child(key).child("Category").setValue(Category);
 
@@ -367,12 +369,25 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             databaseReference.child(key).child("Total").setValue(Total);
                             databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
 
-                            databaseReference.child(key).child("GroupId").setValue(GroupId);
+                            databaseReference.child(key).child("GroupId").setValue(GroupId);*/
+
+
+                                HashMap<String,Object> mappa = new HashMap<>();
+                                mappa.put("Date",Date);
+                                mappa.put("Category",Category);
+                                mappa.put("Name",Name);
+                                mappa.put("Total",Total);
+                                mappa.put("Currency",mycurrency_selected);
+                                mappa.put("GroupId",GroupId);
+
+                                databaseReference.child(key).setValue(mappa);
 
 
 
 
-                            int count_users = myusers.size();
+
+
+                                int count_users = myusers.size();
                             //todo
 
                             // prendere il vero owner
@@ -437,6 +452,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                                 }
+
+                            }
 
 
                                 //1 groups-ACTIVITIES
@@ -862,7 +879,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
 
-                            }
+
 
                         }
 
