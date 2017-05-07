@@ -155,20 +155,22 @@ public class ReadProfileActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                UserInformation userInformation = ( UserInformation) dataSnapshot.getValue(UserInformation.class);
+//                UserInformation userInformation = ( UserInformation) dataSnapshot.getValue(UserInformation.class);
+
+            String Name=(String)dataSnapshot.child("Name").getValue(String.class);
+                String Surname=(String)dataSnapshot.child("Surname").getValue(String.class);
 
 
 
 
-
-                if(userInformation==null) {
+                if(Name==null&&Surname==null) {
                     textName.setText(R.string.prompt_name_profile);
                     textSurname.setText(R.string.prompt_surname_profile);
                     textEmail.setText("Email");
                 }
                 else{
-                    textName.setText(userInformation.Name);
-                    textSurname.setText(userInformation.Surname);
+                    textName.setText(Name);
+                    textSurname.setText(Surname);
                     textEmail.setText(dataSnapshot.child("Email").getValue(String.class));
                 }
             }
