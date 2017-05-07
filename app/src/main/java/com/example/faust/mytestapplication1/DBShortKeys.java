@@ -300,6 +300,7 @@ public class DBShortKeys
 
 
 
+
         final DatabaseReference databaseReference;
 
 
@@ -315,6 +316,7 @@ public class DBShortKeys
 
 
                 } else {
+
 
 
                     global_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
@@ -335,7 +337,7 @@ public class DBShortKeys
 
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-
+                                         String category=dataSnapshot.child("Category").getValue(String.class);
                                         global_mycount++;
 
 
@@ -354,20 +356,35 @@ public class DBShortKeys
                                         if (total == null) {
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+
+
+
                                             if(total==null) { total=0.0;}
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
 
+                                            if(category.equals("Pagamento")||category.equals("Payment"))
+                                            {
+                                               total=amount;
 
+                                            }
 
                                             global_balance = global_balance  - total;
 
                                         }
                                         else{
+
+
+
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
+                                            if(category.equals("Pagamento")||category.equals("Payment"))
+
+                                                global_balance = global_balance  + (total);
+
+                                            else
                                             global_balance = global_balance  + (amount-total);
 
 
@@ -467,6 +484,7 @@ public class DBShortKeys
 
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String category=dataSnapshot.child("Category").getValue(String.class);
 
                                         group_mycount++;
 
@@ -489,6 +507,12 @@ public class DBShortKeys
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
 
+
+                                            if(category.equals("Pagamento")||category.equals("Payment"))
+                                            {
+                                                total=amount;
+
+                                            }
                                             group_balance = group_balance  - total;
 
                                         }
@@ -498,7 +522,16 @@ public class DBShortKeys
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
 
-                                            group_balance = group_balance  +( amount- total) ;
+
+
+                                            if(category.equals("Pagamento")||category.equals("Payment"))
+
+                                                group_balance = group_balance  + (total);
+
+                                            else
+                                                group_balance = group_balance  + (amount-total);
+
+
                                         }
 
 
@@ -590,6 +623,7 @@ public class DBShortKeys
 
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String category=dataSnapshot.child("Category").getValue(String.class);
 
                                         personal_mycount++;
 
@@ -617,6 +651,8 @@ public class DBShortKeys
                                                 s3x = String.format("%.2f", total);
                                                 s3x = s3x.replace(",", ".");
                                                 total = Double.parseDouble(s3x);
+
+
                                                 personal_balance = personal_balance  - total;
                                             }
                                             //////////
@@ -726,6 +762,7 @@ public class DBShortKeys
 
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String category=dataSnapshot.child("Category").getValue(String.class);
 
                                         personal_mycount++;
 
@@ -750,9 +787,17 @@ public class DBShortKeys
                                             //////////
                                             if(dataSnapshot.child("Owner").child(id_other).exists())
                                             {
+
+                                                if(category.equals("Pagamento")||category.equals("Payment")){
+                                                    total=dataSnapshot.child("Owner").child(id_other).child("Total").getValue(Double.class);
+
+                                                }
+
                                                 s3x = String.format("%.2f", total);
                                                 s3x = s3x.replace(",", ".");
                                                 total = Double.parseDouble(s3x);
+                                           //prendere l'amount
+
                                                 personal_balance = personal_balance  - total;
                                             }
                                             //////////
@@ -763,6 +808,13 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
                                             if(total==null) { total=0.0;}
+
+
+
+                                            if(category.equals("Pagamento")||category.equals("Payment")){
+                                                total=dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+                                            }
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
