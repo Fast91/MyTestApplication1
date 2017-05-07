@@ -453,7 +453,15 @@ public class UsersGroupListFragment extends Fragment{
 
                 }
                 else{
-                    profile_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.group));
+
+
+
+                //    profile_image.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.group));
+
+
+                    profile_image.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(),R.drawable.group, 100, 100));
+
                 }
 
 
