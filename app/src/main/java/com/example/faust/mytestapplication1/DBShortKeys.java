@@ -42,10 +42,10 @@ public class DBShortKeys
         new DBShortKeys()._aggiornaBilancioGruppo(id_user, id_group);
     }
 
-    public static void aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    /*public static void aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
     {
         new DBShortKeys()._aggiornaBilanciFraUtentiGruppo(id_user, id_other, id_group);
-    }
+    }*/
 
     public static void eliminaAttività(final String id_activity)
     {
@@ -573,7 +573,7 @@ public class DBShortKeys
              });
     }
 
-
+/*
     public void _aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
     {
         personal_balance = 0.0;
@@ -711,7 +711,7 @@ public class DBShortKeys
             }
 
         });
-    }
+    }*/
 
 
     public void _aggiornaBilanciFraUtentiGruppoHALF(final String id_user, final String id_other, final String id_group)
