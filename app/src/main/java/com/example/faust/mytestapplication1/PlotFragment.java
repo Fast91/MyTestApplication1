@@ -432,6 +432,8 @@ public class PlotFragment  extends Fragment {
                       }
                       Log.d("FAST", "mYearFromDB: " + mYearFromDB);
 
+                      if(category!=null){
+
 
                       if (category.equals("Generale") || category.equals("General")) {
                           category = "Generale";
@@ -680,6 +682,9 @@ public class PlotFragment  extends Fragment {
                           }
 
                       }//category
+
+
+                  }//diverso da null
 
 
                   }

@@ -91,6 +91,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
     private ImageView image_activity;
     Integer utente_selezionato = -1;
 
+    private String nameowner;
     private StorageReference mStorage;
 
     private EditText date;
@@ -731,6 +732,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 }
 
 
+                                nameowner = Name;
                                 //lo settiamo come owner
                                 databaseReference.child(key).child("Owner").child(keyowner).child("Name").setValue(Name);
                                 databaseReference.child(key).child("Owner").child(keyowner).child("Total").setValue(Total);
@@ -798,6 +800,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 mappa2.put("Category",Category);
                                 mappa2.put("Name",Name);
                                 mappa2.put("Total",Total);
+                                mappa2.put("NamePagato",nameowner);
                                 mappa2.put("Currency",mycurrency_selected);
 
                                 databaseReference3.child(key).setValue(mappa2);

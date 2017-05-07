@@ -485,6 +485,7 @@ public class PaymentFragment extends Fragment
                     databaseReference3.child(key).child("Date").setValue(Date);
                     databaseReference3.child(key).child("Total").setValue(Total);
                     databaseReference3.child(key).child("Name").setValue(Name);
+                     databaseReference3.child(key).child("NamePagato").setValue(sender_name);
 
         databaseReference3.child(key).child("Category").setValue(Category);
 

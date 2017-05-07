@@ -155,11 +155,19 @@ public class ActivityGroupListFragment extends Fragment {
                                 for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
 
 
+
+
+
                                     String id = (String) postSnapshot.getKey();
                                     String category = (String) postSnapshot.child("Category").getValue(String.class);
                                     String nome = (String) postSnapshot.child("Name").getValue(String.class);
                                     Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
                                     //todo inserire categoria nel DB groups
+
+                                    String a= (String) postSnapshot.child("NamePagato").getValue(String.class);;
+
+
+
 
                                     if (category != null && isAdded()) {
 
@@ -200,6 +208,7 @@ public class ActivityGroupListFragment extends Fragment {
                                     iniziale.setId(id);
                                     iniziale.setCategory(category);
                                     iniziale.setDate(date);
+                                    iniziale.setPagatoDa(a);
                                     attivita_dovuto.put(id, iniziale);
 
 

@@ -135,8 +135,7 @@ public class ActivityDetailActivity extends AppCompatActivity
         }
 
 
-        mImageView.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.giftgreen, 100, 100));
+
 
         mImageView.setOnClickListener(new View.OnClickListener() {
 
@@ -259,6 +258,12 @@ public class ActivityDetailActivity extends AppCompatActivity
                         }
                     });
 
+
+                }
+                else{
+
+                    mImageView.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.giftgreen, 100, 100));
 
                 }
 

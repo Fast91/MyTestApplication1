@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/image_activity_group"
-        android:layout_width="40sp"
+        android:layout_width="0sp"
         android:layout_height="40sp"
         android:textAppearance="?attr/textAppearanceListItem"
 
@@ -36,16 +36,49 @@
         android:layout_toRightOf="@+id/image_activity_group"
         android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:id="@+id/category_activity_global"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:text="@string/category_activity_string"
-            android:textSize="@dimen/fragment_global_text_amount_size"
-            android:layout_marginLeft="@dimen/fragment_global_image_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:layout_centerHorizontal="true"/>
-        <!--android:layout_toRightOf="@+id/name_user_global"-->
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/category_activity_global"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:text="@string/category_activity_string"
+                android:textSize="@dimen/fragment_global_text_amount_size"
+                android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_centerHorizontal="true"/>
+            <!--android:layout_toRightOf="@+id/name_user_global"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:text="-"
+                android:textSize="@dimen/fragment_global_text_amount_size"
+                android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/pagatoda_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:text="@string/expense_label_pagato"
+                android:textSize="@dimen/fragment_global_text_amount_size"
+                android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_centerHorizontal="true"/>
+
+
+
+
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

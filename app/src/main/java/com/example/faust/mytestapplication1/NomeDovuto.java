@@ -16,6 +16,7 @@ public class NomeDovuto implements  Comparable{
     public String Id_Group;
     public String Category;
     public Date date;
+    public String pagatoda;
 
 
     public String Id;
@@ -131,6 +132,12 @@ public class NomeDovuto implements  Comparable{
         return 0;
     }
 
+    public void setPagatoDa(String a){
+        pagatoda=a;
+    }
 
 
+    public String pagatoda() {
+        return pagatoda;
+    }
 }

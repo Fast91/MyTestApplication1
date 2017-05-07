@@ -69,6 +69,7 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
         public final TextView nameView;
         public final TextView balanceView;
         public final TextView categoryView;
+        public final TextView pagatoView;
         public final Resources myr;
 
         public ActivityHolder(View view) {
@@ -80,6 +81,8 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
             nameView = (TextView) view.findViewById(R.id.name_activity_group);
             balanceView = (TextView) view.findViewById(R.id.money_activity_group);
             categoryView = (TextView) view.findViewById(R.id.category_activity_global);
+            pagatoView = (TextView) view.findViewById(R.id.pagatoda_activity);
+
 myr=view.getResources();
         }
 
@@ -90,6 +93,7 @@ myr=view.getResources();
                     decodeSampledBitmapFromResource(myr, R.drawable.giftboxred, 100, 100));
             nameView.setText(u.getName());
             balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
+            pagatoView.setText(u.pagatoda());
 
 
             categoryView.setText(u.getCategory());

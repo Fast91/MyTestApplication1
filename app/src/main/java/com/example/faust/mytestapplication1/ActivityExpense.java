@@ -112,6 +112,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     private HashMap<String, NomeDovuto> utenti_gruppo = new HashMap<>();
     private HashMap<String, NomeDovuto> utenti_gruppo2 = new HashMap<>();
 
+    private String string_image=null;
+
 
     Button button_pagatoda;
     Button button_divide;
@@ -245,7 +247,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
 
                 EditText amount = (EditText) findViewById(R.id.Total_newexpense);
-                String stringamount = amount.getText().toString();
+                final String stringamount = amount.getText().toString();
                 myamount = null;
                 if (!stringamount.equals("")) {
                     myamount = Double.parseDouble(stringamount);
@@ -275,6 +277,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     myDate = df.parse(date.getText().toString());
 
                     String myText = myDate.getDay() + "/" + (myDate.getMonth() + 1) + "/" + (1900 + myDate.getYear());
+
+                   // myDate = new Date(myText);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -356,7 +360,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             String GroupId = id_group_iniziale;
 
                             String Category = mycategory;
-                            String Date = "" + myDate.getDate() + "/" + myDate.getMonth() + "/" + (myDate.getYear() + 1900);
+                            String Date = "" + myDate.getDate() + "/" + (myDate.getMonth()+1) + "/" + (myDate.getYear() + 1900);
 
 
                                 /*
@@ -372,6 +376,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             databaseReference.child(key).child("GroupId").setValue(GroupId);*/
 
 
+
+
+
                                 HashMap<String,Object> mappa = new HashMap<>();
                                 mappa.put("Date",Date);
                                 mappa.put("Category",Category);
@@ -379,6 +386,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 mappa.put("Total",Total);
                                 mappa.put("Currency",mycurrency_selected);
                                 mappa.put("GroupId",GroupId);
+
+                                if(string_image!=null){
+                                    mappa.put("Image",string_image);
+                                }
 
                                 databaseReference.child(key).setValue(mappa);
 
@@ -416,6 +427,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
                             }
 
+
+                            String nameowner= Name;
 
                             //lo settiamo come owner
                             databaseReference.child(key).child("Owner").child(keyowner).child("Name").setValue(Name);
@@ -487,6 +500,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 mappa2.put("Name",Name);
                                 mappa2.put("Total",Total);
                                 mappa2.put("Currency",mycurrency_selected);
+                                mappa2.put("NamePagato",nameowner);
 
                                 databaseReference3.child(key).setValue(mappa2);
 
@@ -1319,7 +1333,10 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                             .child("Activities")
                             .child(key)
                             .child("Image");
-                    ref.setValue(downloadUri.toString());
+
+                    string_image = downloadUri.toString();
+
+                    ref.setValue(string_image);
 
 
                     // Picasso.with(ReadProfileActivity.this).load(downloadUri).fit().centerCrop().into(image_profile);
@@ -1378,7 +1395,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                     .child("Activities")
                     .child(key)
                     .child("Image");
-            ref.setValue(imageEncoded);
+
+            string_image = imageEncoded;
+            ref.setValue(string_image);
 
 
             if (!imageEncoded.contains("http")) {
