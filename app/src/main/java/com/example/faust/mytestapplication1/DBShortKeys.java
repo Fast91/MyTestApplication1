@@ -344,9 +344,11 @@ public class DBShortKeys
                                         Double total = null;
 
                                         Double amount = dataSnapshot.child("Total").getValue(Double.class);
-                                        String s3x = String.format("%.2f", amount);
+                                        String s3x;
+                                        if(amount!=null){
+                                         s3x = String.format("%.2f", amount);
                                         s3x = s3x.replace(",", ".");
-                                        amount = Double.parseDouble(s3x);
+                                        amount = Double.parseDouble(s3x);}
 
 
                                         total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
@@ -364,6 +366,7 @@ public class DBShortKeys
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
 
+                                            if(category!=null)
                                             if(category.equals("Pagamento")||category.equals("Payment"))
                                             {
                                                total=amount;
