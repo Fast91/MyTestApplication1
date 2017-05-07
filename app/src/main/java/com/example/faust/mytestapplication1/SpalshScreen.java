@@ -12,7 +12,7 @@ public class SpalshScreen extends AppCompatActivity {
         setContentView(R.layout.activity_spalsh_screen);
 
 
-        Thread myThread = new Thread(){
+      Thread myThread = new Thread(){
 
             @Override
             public void run() {

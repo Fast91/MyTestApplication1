@@ -55,6 +55,7 @@ public class ActivityGroupListFragment extends Fragment {
     String id_group;
     private FirebaseAuth firebaseAuth;
     private HashMap<String,NomeDovuto> attivita_dovuto;
+    private AppCompatActivity myactivity;
 
 
     public ActivityGroupListFragment() {
@@ -90,7 +91,7 @@ public class ActivityGroupListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_activity_group_list, container, false);
 
 
-        final AppCompatActivity myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
+       myactivity = (android.support.v7.app.AppCompatActivity) view.getContext();
 
         profile_image = (com.makeramen.roundedimageview.RoundedImageView) myactivity.findViewById(R.id.row1_image1);
 
@@ -140,87 +141,108 @@ public class ActivityGroupListFragment extends Fragment {
 
 
                     //Read content data
-                    databaseReference.addValueEventListener(new ValueEventListener() {
+                    databaseReference.addValueEventListener(new ValueEventListener() { //todo cambiare value event
 
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
+                            attivita_dovuto.clear();
 
-                            //Per ogni attivita
-                            for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
+                            if(dataSnapshot.getChildrenCount()>0) {
 
 
-                                String id = (String) postSnapshot.getKey();
-                                String category = (String) postSnapshot.child("Category").getValue(String.class);
-                                String nome = (String) postSnapshot.child("Name").getValue(String.class);
-                                Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
-                                //todo inserire categoria nel DB groups
+                                //Per ogni attivita
+                                for (DataSnapshot postSnapshot : dataSnapshot.child("Activities").getChildren()) {
 
-                                if (category != null) {
 
-                                    if (category.equals("Generale") || category.equals("General")) {
-                                        category = getString(R.string.category_generale);
+                                    String id = (String) postSnapshot.getKey();
+                                    String category = (String) postSnapshot.child("Category").getValue(String.class);
+                                    String nome = (String) postSnapshot.child("Name").getValue(String.class);
+                                    Double dovuto = (Double) postSnapshot.child("Total").getValue(Double.class);
+                                    //todo inserire categoria nel DB groups
+
+                                    if (category != null && isAdded()) {
+
+                                        if (category.equals("Generale") || category.equals("General")) {
+                                            category = getString(R.string.category_generale);
+                                        }
+
+                                        if (category.equals("Luce") || category.equals("Light")) {
+                                            category = getString(R.string.category_luce);
+                                        }
+
+
+                                        if (category.equals("Payment") || category.equals("Pagamento")) {
+                                            category = getString(R.string.payment_title);
+                                        }
+
+                                        if (category.equals("Cibo") || category.equals("Food")) {
+                                            category = getString(R.string.category_cibo);
+                                        }
+
+                                        if (category.equals("Gift") || category.equals("Regalo")) {
+                                            category = getString(R.string.category_generale);
+                                        }
+
                                     }
 
-                                    if (category.equals("Luce") || category.equals("Light")) {
-                                        category = getString(R.string.category_luce);
+                                    DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date date = null;
+                                    try {
+                                        String s = postSnapshot.child("Date").getValue(String.class);
+                                        date = format.parse(s);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
                                     }
 
 
-                                    if (category.equals("Payment") || category.equals("Pagamento")) {
-                                        category = getString(R.string.payment_title);
-                                    }
+                                    NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
+                                    iniziale.setId(id);
+                                    iniziale.setCategory(category);
+                                    iniziale.setDate(date);
+                                    attivita_dovuto.put(id, iniziale);
 
-                                    if (category.equals("Cibo") || category.equals("Food")) {
-                                        category = getString(R.string.category_cibo);
-                                    }
-
-                                    if (category.equals("Gift") || category.equals("Regalo")) {
-                                        category = getString(R.string.category_generale);
-                                    }
 
                                 }
 
-                                DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                                Date date = null;
-                                try {
-                                    String s = postSnapshot.child("Date").getValue(String.class);
-                                    date = format.parse(s);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
+
+                                //Adapter
+
+                                // Set the adapter
+                                if (view instanceof RecyclerView) {
+                                    Context context = view.getContext();
+                                    RecyclerView recyclerView = (RecyclerView) view;
+
+
+                                    if (mColumnCount <= 1) {
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                                    } else {
+                                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                                    }
+                                    List list = new ArrayList(attivita_dovuto.values());
+                                    //todo: ordinare la lista
+                                    Collections.sort(list);
+
+                                    adapter = new MyActivityGroupRecyclerViewAdapter(list);
+                                    recyclerView.setAdapter(adapter);
+                                } else {
+
+                                    RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
+                                    recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
+                                    List list = new ArrayList(attivita_dovuto.values());
+                                    //todo: ordinare la lista
+                                    Collections.sort(list);
+
+
+                                    adapter = new MyActivityGroupRecyclerViewAdapter(list);
+                                    recyclerView2.setAdapter(adapter);
                                 }
 
 
-                                NomeDovuto iniziale = new NomeDovuto(nome, dovuto);
-                                iniziale.setId(id);
-                                iniziale.setCategory(category);
-                                iniziale.setDate(date);
-                                attivita_dovuto.put(id, iniziale);
-
+                                //End adapter
 
                             }
-
-
-                            //Adapter
-
-                            // Set the adapter
-                            if (view instanceof RecyclerView) {
-                                Context context = view.getContext();
-                                RecyclerView recyclerView = (RecyclerView) view;
-
-
-                                if (mColumnCount <= 1) {
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                                } else {
-                                    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-                                }
-                                List list = new ArrayList(attivita_dovuto.values());
-                                //todo: ordinare la lista
-                                Collections.sort(list);
-
-                                adapter = new MyActivityGroupRecyclerViewAdapter(list);
-                                recyclerView.setAdapter(adapter);
-                            } else {
+                            else{
 
                                 RecyclerView recyclerView2 = (RecyclerView) view.findViewById(R.id.activity_group_list);
                                 recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -231,10 +253,8 @@ public class ActivityGroupListFragment extends Fragment {
 
                                 adapter = new MyActivityGroupRecyclerViewAdapter(list);
                                 recyclerView2.setAdapter(adapter);
+
                             }
-
-
-                            //End adapter
 
 
                         }

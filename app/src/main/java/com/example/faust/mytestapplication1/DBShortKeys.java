@@ -53,6 +53,94 @@ public class DBShortKeys
     }
 
 
+    public static void eliminaAttività2(final String id_activity)
+    {
+        new DBShortKeys()._eliminaAttività2(id_activity);
+    }
+
+
+
+
+
+
+
+    public void _eliminaAttività2(final String id_activity)
+    {
+        delete_act_users_and_owner = new ArrayList<String>();
+        delete_act_map = new HashMap<String, Object>(); // qui metto le query
+
+        // RICORDARSI ALLA FINE DI RICHIAMARE I 3 METODI PER RICALCOLARE I BILANCI
+        DatabaseReference ref0 = FirebaseDatabase.getInstance().getReference().child("Activities").child(id_activity);
+        ref0.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                // DEVO ELIMINARE L'ATTIVITA' DAL GRUPPO, DA TUTTI GLI USERS E DALL'OWNER
+                // ottengo quindi una lista con tutti gli utenti (e owner) e ottengo l'id del gruppo
+
+
+
+                delete_act_group_id = dataSnapshot.child("GroupId").getValue(String.class);
+                // ora group_id contiene l'id del gruppo dal quale eliminare l'attività
+
+
+                for(DataSnapshot data : dataSnapshot.child("Owner").getChildren())
+                {
+                    delete_act_users_and_owner.add(data.getKey());
+                }
+                for(DataSnapshot data : dataSnapshot.child("Users").getChildren())
+                {
+                    delete_act_users_and_owner.add(data.getKey());
+                }
+                // ora users_and_owner contiene gli id degli utenti dai quali eliminare l'attività
+
+
+                //ELIMINO
+
+                FirebaseDatabase.getInstance().getReference().child("Groups").child(delete_act_group_id).child("Activities").child(id_activity).removeValue();
+
+                FirebaseDatabase.getInstance().getReference().child("Activities").child(id_activity).removeValue();
+
+                for(String id : delete_act_users_and_owner)
+                {
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(id).child("Activities").child(id_activity).removeValue();
+                }
+
+                //AGGIORNO
+
+                for(String id : delete_act_users_and_owner)
+                {
+
+                    new DBShortKeys()._aggiornaBilancioGlobale(id);
+
+                    new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+
+
+                    for(String id2 : delete_act_users_and_owner)
+                    {
+                        if(!id.equals(id2))
+                        {
+                            new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
+                        }
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
+
+
+
+
     private void _eliminaAttività(final String id_activity)
     {
         delete_act_users_and_owner = new ArrayList<String>();
@@ -118,7 +206,10 @@ public class DBShortKeys
                 }*/
                 // fine versione forza bruta
 
+
+
                 // versione più sistemata
+
                 Log.d("FAST", "Sto per fare la query con tutta la mappa");
                 DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
                 refRoot.updateChildren(delete_act_map, new DatabaseReference.CompletionListener()
@@ -145,6 +236,40 @@ public class DBShortKeys
                         }
                     }
                 });
+
+
+
+
+
+/*
+                for(String id : delete_act_users_and_owner)
+                {
+
+                    new DBShortKeys()._aggiornaBilancioGlobale(id);
+
+                    new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
+
+
+                    for(String id2 : delete_act_users_and_owner)
+                    {
+                        if(!id.equals(id2))
+                        {
+                            new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
+                        }
+                    }
+
+                }*/
+
+
+
+
+
+
+
+
+
+
+
                 // fine versione più sistemata
             }
 
@@ -167,7 +292,7 @@ public class DBShortKeys
         });
     }
 
-    private void _aggiornaBilancioGlobale(final String id_user) {
+    public void _aggiornaBilancioGlobale(final String id_user) {
 
         global_balance = 0.0;
         global_mycount=0;
@@ -178,7 +303,7 @@ public class DBShortKeys
         final DatabaseReference databaseReference;
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id_user).child("Activities");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(id_user);
 
         //Read content data
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -192,10 +317,16 @@ public class DBShortKeys
                 } else {
 
 
-                    global_totcount = (int) dataSnapshot.getChildrenCount();
+                    global_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+                    if(global_totcount==0){
+                        Double tmp=0.0;
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("GlobalBalance").setValue(tmp);
+
+                    }
 
 
-                    for (DataSnapshot databaseSnapshot1 : dataSnapshot.getChildren()) {
+                    for (DataSnapshot databaseSnapshot1 : dataSnapshot.child("Activities").getChildren()) {
 
 
                         FirebaseDatabase.getInstance().getReference("Activities").child(databaseSnapshot1.getKey())
@@ -223,9 +354,12 @@ public class DBShortKeys
                                         if (total == null) {
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+                                            if(total==null) { total=0.0;}
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
+
+
 
                                             global_balance = global_balance  - total;
 
@@ -284,7 +418,7 @@ public class DBShortKeys
     }
 
 
-    private void _aggiornaBilancioGruppo(final String id_user, final String id_group)
+    public void _aggiornaBilancioGruppo(final String id_user, final String id_group)
     {
         group_balance = 0.0;
         group_mycount=0;
@@ -308,6 +442,12 @@ public class DBShortKeys
 
 
                     group_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+                    if(group_totcount==0){
+                        Double tmp=0.0;
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Total").setValue(tmp);
+
+                    }
 
 
                     //Per ogni attivita
@@ -344,6 +484,7 @@ public class DBShortKeys
                                         if (total == null) {
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
+                                            if(total==null) { total=0.0;}
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
@@ -400,7 +541,7 @@ public class DBShortKeys
     }
 
 
-    private void _aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
+    public void _aggiornaBilanciFraUtentiGruppo(final String id_user, final String id_other, final String id_group)
     {
         personal_balance = 0.0;
         personal_mycount=0;
@@ -424,6 +565,12 @@ public class DBShortKeys
 
 
                     personal_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+                    if(global_totcount==0){
+                        Double tmp=0.0;
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Users").child(id_other).child("Total").setValue(tmp);
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(id_other).child("Groups").child(id_group).child("Users").child(id_user).child("Total").setValue(tmp);
+                    }
 
 
                     //Per ogni attivita
@@ -458,7 +605,7 @@ public class DBShortKeys
 
                                             // io sono utente
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
-
+                                            if(total==null) { total=0.0;}
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
@@ -479,6 +626,7 @@ public class DBShortKeys
                                             // io sono owner
 
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
+                                            if(total==null) { total=0.0;}
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
@@ -530,7 +678,7 @@ public class DBShortKeys
     }
 
 
-    private void _aggiornaBilanciFraUtentiGruppoHALF(final String id_user, final String id_other, final String id_group)
+    public void _aggiornaBilanciFraUtentiGruppoHALF(final String id_user, final String id_other, final String id_group)
     {
         personal_balance = 0.0;
         personal_mycount=0;
@@ -554,6 +702,11 @@ public class DBShortKeys
 
 
                     personal_totcount = (int) dataSnapshot.child("Activities").getChildrenCount();
+
+                    if(global_totcount==0){
+                        Double tmp=0.0;
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(id_user).child("Groups").child(id_group).child("Users").child(id_other).child("Total").setValue(tmp);
+                    }
 
 
                     //Per ogni attivita
@@ -588,7 +741,7 @@ public class DBShortKeys
 
                                             // io sono utente
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
-
+                                            if(total==null) { total=0.0;}
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
@@ -609,6 +762,7 @@ public class DBShortKeys
                                             // io sono owner
 
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
+                                            if(total==null) { total=0.0;}
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);

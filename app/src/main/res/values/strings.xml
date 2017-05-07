@@ -201,6 +201,8 @@
     <string name="category_all">All</string>
 
     <string name="date_picker_title">Date of expense:</string>
+    <string name="welcome">Welcome!</string>
+    <string name="text">Let\'s start to split your expenses</string>
 
     <string name="modify_activity_menu_item">Modify activity</string>
     <string name="delete_activity_menu_item">Delete activity</string>

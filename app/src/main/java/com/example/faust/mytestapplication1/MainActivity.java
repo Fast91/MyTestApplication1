@@ -1,6 +1,8 @@
 package com.example.faust.mytestapplication1;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,11 +23,13 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
@@ -45,6 +49,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
+import com.google.firebase.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +58,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.makeramen.roundedimageview.*;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -60,6 +66,8 @@ import com.squareup.picasso.Target;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -76,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView nameprofile;
     private boolean isInSideClicked = false;
     private ImageButton b4add;
-
+    static MainActivity activityA;
 
 
     private DBShortKeys dbShortKeys;
@@ -87,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Log.d("MAIN", "onCreate()");
         setContentView(R.layout.activity_main);
+
+        activityA = this;
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.drawer_layout).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -105,13 +117,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-      // dbShortKeys = new DBShortKeys();
-/*
-        DBShortKeys.aggiornaBilancioGlobale("k0fWwgOMSmN77HBveT0QVnYpt802");
-        DBShortKeys.aggiornaBilancioGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","2");
-        DBShortKeys.aggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
-        DBShortKeys.aggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","OAQlEuOH8mZly2oKyVSZZC8KWLy2","2");
 
+      //  sendNotificationToUser("puf", "Hi there puf!"); todo: migliorato
+
+       // FirebaseMessaging.getInstance().subscribeToTopic("news");
+
+
+
+      // dbShortKeys = new DBShortKeys();
+
+       /*(new DBShortKeys())._aggiornaBilancioGlobale("k0fWwgOMSmN77HBveT0QVnYpt802");
+        (new DBShortKeys())._aggiornaBilancioGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","2");
+        (new DBShortKeys())._aggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
+        (new DBShortKeys())._aggiornaBilanciFraUtentiGruppo("k0fWwgOMSmN77HBveT0QVnYpt802","OAQlEuOH8mZly2oKyVSZZC8KWLy2","2");
+
+*/
+/*
         DBShortKeys.aggiornaBilancioGlobale("hJqLTxmbV3YNRAM8VPy3HZki5ky2");
         DBShortKeys.aggiornaBilancioGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","2");
         DBShortKeys.aggiornaBilanciFraUtentiGruppo("hJqLTxmbV3YNRAM8VPy3HZki5ky2","k0fWwgOMSmN77HBveT0QVnYpt802","2");
@@ -143,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
         //FIREBASE
         //initializing firebase authentication object
-        firebaseAuth = FirebaseAuth.getInstance();
+
         provoMenu();
 
 
@@ -1204,6 +1225,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public static void sendNotificationToUser(String user, final String message) {
+
+        final DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child("notificationRequests");
+        Map notification = new HashMap< >();
+        notification.put("username", user);
+        notification.put("message", message);
+        notifications.push().setValue(notification);
+    }
+
+
+    public static MainActivity getInstance(){
+        return   activityA;
+    }
 
 }
 

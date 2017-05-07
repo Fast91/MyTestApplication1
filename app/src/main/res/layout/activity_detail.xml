@@ -30,25 +30,25 @@
     <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:orientation="horizontal"-->
+        android:orientation="horizontal">
 
 
-        <TextView
+    <TextView
 
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:textAlignment="textStart"
-            android:gravity="start|center_vertical"
-            android:text="@string/textview_detail_Expense"
-            android:paddingLeft="10dp"
-            android:textStyle="bold"
-            android:background="@color/BreakingMADLightGreen"
-            android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_weight="1"
+        android:background="@color/BreakingMADLightGreen"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/textview_detail_Expense"
+        android:textAlignment="textStart"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
 
-            />
+        />
 
-        <!--/LinearLayout-->
+    </LinearLayout>-->
 
     <RelativeLayout
         android:id="@+id/internal_linear_layout_detail_activity"

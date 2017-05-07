@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -24,9 +25,11 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
 
 
 
+
     //public MyActivityRecyclerViewAdapter(List<NomeDovuto> items, OnListFragmentInteractionListener listener) {
     public MyActivityRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
+
         // mListener = listener;
     }
 
@@ -35,6 +38,8 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
     public MyActivityRecyclerViewAdapter.ActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_activity, parent, false);
+
+
         return new MyActivityRecyclerViewAdapter.ActivityHolder(view);
     }
 
@@ -77,6 +82,7 @@ class MyActivityRecyclerViewAdapter extends RecyclerView.Adapter<MyActivityRecyc
         public ActivityHolder(View view) {
             super(view);
             mContext = view.getContext();
+
             itemView.setOnClickListener(this);
             imageView = (ImageView) view.findViewById(R.id.image_activity_global);
             nameView = (TextView) view.findViewById(R.id.name_activity_global);
@@ -108,6 +114,7 @@ myr=view.getResources();
             //TODO PASSARE AL POSTO DI "1" L'UUID DELL'ATTIVITA' PRESO DAL DB
             Intent intent = ActivityDetailActivity.newIntent(mContext,activity.getId());
             mContext.startActivity(intent);
+
         }
 
     }

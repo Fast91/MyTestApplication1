@@ -1,5 +1,6 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -31,6 +32,8 @@ public class MyActivityGroupRecyclerViewAdapter  extends RecyclerView.Adapter<My
     public MyActivityGroupRecyclerViewAdapter(List<NomeDovuto> items) {
         this.items = items;
         // mListener = listener;
+
+
     }
 
 
@@ -98,6 +101,9 @@ myr=view.getResources();
             //TODO PASSARE AL POSTO DI "1" L'UUID DELL'ATTIVITA' PRESO DAL DB
             Intent intent = ActivityDetailActivity.newIntent(mContext,activity.getId());
             mContext.startActivity(intent);
+
+            //MainActivity.getInstance().finish(); todo brutto
+
         }
     }
 

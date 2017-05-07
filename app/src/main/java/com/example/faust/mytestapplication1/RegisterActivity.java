@@ -1,16 +1,21 @@
 package com.example.faust.mytestapplication1;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -157,6 +162,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     //setSurname
                     String Surname = new String(surname);
                     databaseReference.child("Users").child(fireuser.getUid()).child("Surname").setValue(Surname);
+
+                    ///////
+                    //prova notifiche
+
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(RegisterActivity.this);
+                    mBuilder.setSmallIcon(R.drawable.appname);
+                    String title = getString(R.string.welcome);
+                    mBuilder.setContentTitle(title);
+                    String text = getString(R.string.text);
+                    mBuilder.setContentText(text);
+
+                    Intent resultIntent = new Intent(RegisterActivity.this, PrimaAttivitaGruppi.class);
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(RegisterActivity.this);
+                    stackBuilder.addParentStack(PrimaAttivitaGruppi.class);
+
+                    // Adds the Intent that starts the Activity to the top of the stack
+                    stackBuilder.addNextIntent(resultIntent);
+                    PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                    mBuilder.setContentIntent(resultPendingIntent);
+
+                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    // notificationID allows you to update the notification later on.
+
+                    mNotificationManager.notify(0, mBuilder.build());
+
+                    ////////////
+                    ////
+                    //////////
 
 
                     finish();

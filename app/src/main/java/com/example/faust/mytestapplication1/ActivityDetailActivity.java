@@ -41,6 +41,7 @@ public class ActivityDetailActivity extends AppCompatActivity
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
+    private String id_group;
 
     private FirebaseAuth firebaseAuth;
 
@@ -62,6 +63,30 @@ public class ActivityDetailActivity extends AppCompatActivity
         firebaseAuth = FirebaseAuth.getInstance();
         mExpenseId = (String) getIntent().getStringExtra(EXTRA_EXPENSE_UUID);
         Log.d("FAST", "ID attività: " + mExpenseId);
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("Activities").child(mExpenseId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount()>0) {
+                    id_group= dataSnapshot.child("GroupId").getValue(String.class);
+
+                }
+                else{
+                    Intent i = new Intent(ActivityDetailActivity.this, PrimaAttivitaGruppi.class);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         //DBShortKeys.eliminaAttività(mExpenseId);
         //finish();
 
@@ -283,20 +308,38 @@ public class ActivityDetailActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onBackPressed() {
+            super.onBackPressed();
+        /*
+
+        FirebaseDatabase.getInstance().getReference().child("Activities").child(mExpenseId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount()>0) {
+                    Intent i = new Intent(ActivityDetailActivity.this, MainActivity.class);
+                    i.putExtra("GROUP_ID", dataSnapshot.child("GroupId").getValue(String.class));
+                    i.putExtra("GROUP_NAME", "XD");
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(ActivityDetailActivity.this, PrimaAttivitaGruppi.class);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+*/ //todo brutto brutta
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -328,13 +371,27 @@ public class ActivityDetailActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //buttonDeleteGroup();
+
+                            Intent i = new Intent(ActivityDetailActivity.this,PrimaAttivitaGruppi.class);
+
+                            startActivity(i);
+
+                            /*
+
+
+                             Intent i = new Intent(ActivityDetailActivity.this, MainActivity.class);
+                    i.putExtra("GROUP_ID", id_group);
+                    i.putExtra("GROUP_NAME", "XD");
+                    startActivity(i);
+                             */
+
+
                             finish();
-                            DBShortKeys.eliminaAttività(mExpenseId);
+                            DBShortKeys.eliminaAttività2(mExpenseId);
                         }
                     }).create().show();
         }
 
-        // Handle your other action bar items...
 
         return true;
     }

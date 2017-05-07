@@ -44,6 +44,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.makeramen.roundedimageview.*;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -116,6 +118,11 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         //FIREBASE
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("user_puf");
+
 
         //Set Name of the group
 

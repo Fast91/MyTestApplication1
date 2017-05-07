@@ -96,58 +96,61 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //prendere il titolo della spesa
-                mTitleTextView.setText( dataSnapshot.child("Name").getValue(String.class) );
+
+                if(dataSnapshot.getChildrenCount()>0) {
+
+                    //prendere il titolo della spesa
+                    mTitleTextView.setText(dataSnapshot.child("Name").getValue(String.class));
 
 
+                    //prendere l'id del gruppi
+                    String id_group = dataSnapshot.child("GroupId").getValue(String.class);
+                    //prendere il nome del gruppo e settarlo
 
+                    dbref2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Name");
+                    dbref2.addValueEventListener(new ValueEventListener() {
+                                                     @Override
+                                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                                         mGroupTextView.setText(dataSnapshot.getValue(String.class));
+                                                     }
 
-                //prendere l'id del gruppi
-                String id_group =  dataSnapshot.child("GroupId").getValue(String.class);
-                //prendere il nome del gruppo e settarlo
+                                                     @Override
+                                                     public void onCancelled(DatabaseError databaseError) {
 
-                dbref2 = FirebaseDatabase.getInstance().getReference("Groups").child(id_group).child("Name");
-                dbref2.addValueEventListener(new ValueEventListener() {
-                                                 @Override
-                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                     mGroupTextView.setText(dataSnapshot.getValue(String.class));
+                                                     }
                                                  }
+                    );
 
-                                                 @Override
-                                                 public void onCancelled(DatabaseError databaseError) {
+                    mDateTextView.setText(dataSnapshot.child("Date").getValue(String.class));
+                    mAmountTextView.setText(String.format("%.2f", dataSnapshot.child("Total").getValue(Double.class)));
+                    //mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
+                    mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
 
-                                                 }
-                                             }
-                );
+                    String category = dataSnapshot.child("Category").getValue(String.class);
 
-                mDateTextView.setText(dataSnapshot.child("Date").getValue(String.class));
-                mAmountTextView.setText(String.format("%.2f",dataSnapshot.child("Total").getValue(Double.class)));
-                //mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class), "€"));
-                mAmountCurrencyTextView.setText(CurrencyEditor.getShortSymbolFromSymbol(dataSnapshot.child("Currency").getValue(String.class),"€"));
+                    if (category.equals("Generale") || category.equals("General")) {
+                        category = getString(R.string.category_generale);
+                    }
 
-                String category = dataSnapshot.child("Category").getValue(String.class);
+                    if (category.equals("Luce") || category.equals("Light")) {
+                        category = getString(R.string.category_luce);
+                    }
 
-                if(category.equals("Generale") || category.equals("General")) {
-                    category = getString(R.string.category_generale);
+
+                    if (category.equals("Payment") || category.equals("Pagamento")) {
+                        category = getString(R.string.payment_title);
+                    }
+
+                    if (category.equals("Cibo") || category.equals("Food")) {
+                        category = getString(R.string.category_cibo);
+                    }
+
+                    if (category.equals("Gift") || category.equals("Regalo")) {
+                        category = getString(R.string.category_generale);
+                    }
+                    mCategoryTextView.setText(category);
+
                 }
-
-                if(category.equals("Luce") || category.equals("Light")) {
-                    category = getString(R.string.category_luce);
-                }
-
-
-                if(category.equals("Payment") || category.equals("Pagamento")) {
-                    category = getString(R.string.payment_title);
-                }
-
-                if(category.equals("Cibo") || category.equals("Food")) {
-                    category = getString(R.string.category_cibo);
-                }
-
-                if(category.equals("Gift") || category.equals("Regalo")) {
-                    category = getString(R.string.category_generale);
-                }
-                mCategoryTextView.setText(category);
 
 
 
