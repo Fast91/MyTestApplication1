@@ -52,6 +52,7 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
     private TextView mPagatoDaTextView;
 
     private FirebaseAuth firebaseAuth;
+    private Boolean inizio=true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -199,6 +200,15 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
+                if(inizio==true){
+                    inizio=false;
+                    detailEntries.clear();
+
+                }
+                else{
+                    inizio=true;
+                }
+
                 for(DataSnapshot user : dataSnapshot.getChildren()){
 
 
@@ -234,7 +244,16 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                detailEntries.clear();
+                if(inizio==true){
+                    inizio=false;
+                    detailEntries.clear();
+
+                }else{
+                    inizio=true;
+                }
+
+
+
 
                 for(DataSnapshot user : dataSnapshot.getChildren()){
 
