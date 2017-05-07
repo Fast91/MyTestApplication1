@@ -222,8 +222,8 @@ public class PlotFragment  extends Fragment {
                     category_selected = "Luce";
                 }
 
-                if(category_selected.equals("Cibo") || category_selected.equals("Food")) {
-                    category_selected = "Cibo";
+                if(category_selected.equals("Alimentari") || category_selected.equals("Food")) {
+                    category_selected = "Alimentari";
                 }
 
                 if(category_selected.equals("Gift") || category_selected.equals("Regalo")) {
@@ -273,8 +273,8 @@ public class PlotFragment  extends Fragment {
             category_selected = "Luce";
         }
 
-        if(category_selected.equals("Cibo") || category_selected.equals("Food")) {
-            category_selected = "Cibo";
+        if(category_selected.equals("Alimentari") || category_selected.equals("Food")) {
+            category_selected = "Alimentari";
         }
 
         if(category_selected.equals("Gift") || category_selected.equals("Regalo")) {
@@ -445,8 +445,8 @@ public class PlotFragment  extends Fragment {
                           category = "Pagamento";
                       }
 
-                      if (category.equals("Cibo") || category.equals("Food")) {
-                          category = "Cibo";
+                      if (category.equals("Alimentari") || category.equals("Food")) {
+                          category = "Alimentari";
                       }
 
                       if (category.equals("Gift") || category.equals("Regalo")) {

@@ -36,7 +36,7 @@
         android:id="@+id/linearLayoutMain"
         >
 
-        <FrameLayout
+      <!--  <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/fragment1"
@@ -58,12 +58,12 @@
             android:id="@+id/fragment3_activity"
             android:name="com.example.faust.mytestapplication1.ActivityListFragment">
 
-        </FrameLayout>
+        </FrameLayout> -->
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment4_users_group"
+            android:id="@+id/fragment1"
             android:name="com.example.faust.mytestapplication1.UsersGroupListFragment">
 
         </FrameLayout>
@@ -71,7 +71,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment5_activity_group"
+            android:id="@+id/fragment_activity_group"
             android:name="com.example.faust.mytestapplication1.ActivityGroupListFragment">
 
         </FrameLayout>

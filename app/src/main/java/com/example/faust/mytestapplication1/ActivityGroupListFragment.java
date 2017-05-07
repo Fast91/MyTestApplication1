@@ -176,7 +176,7 @@ public class ActivityGroupListFragment extends Fragment {
                                             category = getString(R.string.payment_title);
                                         }
 
-                                        if (category.equals("Cibo") || category.equals("Food")) {
+                                        if (category.equals("Alimentari") || category.equals("Food")) {
                                             category = getString(R.string.category_cibo);
                                         }
 

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +42,7 @@ public class ActivityDetailActivity extends AppCompatActivity
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
-    private String id_group;
+    private String id_group,name_group,category;
 
     private FirebaseAuth firebaseAuth;
 
@@ -72,6 +73,25 @@ public class ActivityDetailActivity extends AppCompatActivity
 
                 if(dataSnapshot.getChildrenCount()>0) {
                     id_group= dataSnapshot.child("GroupId").getValue(String.class);
+                    category = dataSnapshot.child("Category").getValue(String.class);
+
+
+                    FirebaseDatabase.getInstance().getReference().child("Groups").child(id_group).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            name_group= dataSnapshot.child("Name").getValue(String.class);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
 
                 }
                 else{
@@ -359,6 +379,26 @@ public class ActivityDetailActivity extends AppCompatActivity
         if (res_id == R.id.action_modify_activity)
         {
             //TODO DA FARE
+
+            if(category.equals("Payment") || category.equals("Pagamento")){
+
+                Toast.makeText(this,R.string.impossible_to_delete_act,Toast.LENGTH_LONG).show();
+            }
+            else {
+
+               // MainActivity.getInstance().finish();
+
+                Intent i = new Intent(ActivityDetailActivity.this, ModifyExpense.class);
+                i.putExtra("ID_EX", mExpenseId);
+                i.putExtra("GROUP_ID", id_group);
+                i.putExtra("GROUP_NAME", name_group);
+                startActivity(i);
+                finish();
+
+
+            }
+
+
         }
 
         if (res_id == R.id.action_delete_activity) {

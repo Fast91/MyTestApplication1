@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             id_group = savedInstanceState.getString("GROUP_ID");
             name_group = savedInstanceState.getString("GROUP_NAME");
             count_b = savedInstanceState.getInt("COUNT_B");
-            updateFragAndButton();
+           // updateFragAndButton(); todo eliminato
         }
 
 
@@ -566,12 +566,22 @@ public class MainActivity extends AppCompatActivity {
 
             b4add.setVisibility(View.VISIBLE);
 
+
+
             //count_b=3;
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment3_activity));
-            // ft.addToBackStack(null);
-            ft.commit();
+
+            Fragment fragment = fm.findFragmentById(R.id.fragment1);
+
+
+
+            if(fragment!=null && ft!=null) {
+
+                ft.replace(R.id.fragment1, fm.findFragmentById(R.id.fragment_activity_group));
+                // ft.addToBackStack(null);
+                ft.commit();
+            }
         }
     }
 

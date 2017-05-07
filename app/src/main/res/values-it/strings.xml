@@ -187,5 +187,9 @@
 
     <string name="modify_activity_menu_item">Modica attività</string>
     <string name="delete_activity_menu_item">Elimina attività</string>
+    <string name="textview_modifyExpense">Modifica Spesa</string>
+    <string name="impossible_to_delete_act">Impossibile modificare un Pagamento, eliminalo</string>
+    <string name="backmodify_title">Eliminare?</string>
+    <string name="backmodify_message">Sei sicuro di eliminare le modifiche?</string>
 
 </resources>
