@@ -659,9 +659,9 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
                                 //genero nuovo id per l'attività
 
-                                if (key == null) {
-                                    key = databaseReference.push().getKey();
-                                }
+
+                                    key = id_spesa_iniziale;
+
 
                                 String Name = mytitle;
                                 Double Total = myamount;
@@ -675,6 +675,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 String Date = "" + myDate.getDate() + "/" + myDate.getMonth() + "/" + (myDate.getYear() + 1900);
 
 
+
                                 databaseReference.child(key).child("Date").setValue(Date);
                                 databaseReference.child(key).child("Category").setValue(Category);
 
@@ -684,6 +685,18 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
 
                                 databaseReference.child(key).child("GroupId").setValue(GroupId);
+
+                                /*
+                                HashMap<String,Object> mappa = new HashMap<>();
+                                mappa.put("Date",Date);
+                                mappa.put("Category",Category);
+                                mappa.put("Name",Name);
+                                mappa.put("Total",Total);
+                                mappa.put("Currency",mycurrency_selected);
+                                mappa.put("GroupId",GroupId);
+
+                                databaseReference.child(key).setValue(mappa);
+                                */
 
 
 
@@ -754,6 +767,8 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
 
                                     }
 
+                                }//todo chiusa operazione
+
 
                                     //1 groups-ACTIVITIES
                                     //2 users- ACTIVITIES x te e x tutti
@@ -807,374 +822,38 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
 
                                     }
 
+                                    //Aggiornare i bilanci
 
-                                    //3 USERS - BILANCIO Globale x te e x tutti
-                                    //per l'owner deve ricevere +
-                                    //per gli altri devono dare -
+                                //AGGIORNO
 
-                                    Total2 = myamount / count_users; // per persona
-                                    String s3 = String.format("%.2f", Total2);
-                                    s3 = s3.replace(",", ".");
-                                    Total2 = Double.parseDouble(s3);
-                                    //First sarebbe in questo momento chi paga owner
+                                for(String id : myusers.keySet())
+                                {
 
+                                    new DBShortKeys()._aggiornaBilancioGlobale(id);
 
-                                    for (final String name_user : myusers.keySet()) {
-
-                                        //DBShortKeys.aggiornaBilancioGlobale(name_user);
+                                    new DBShortKeys()._aggiornaBilancioGruppo(id, GroupId);
 
 
-
-
-                                        //Prendermi il bilancio
-                                        ////////// INIZIO
-                                        ///////////////
-                                        databaseReference5 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance");
-
-
-                                        //Read content data
-                                        databaseReference5.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                bilancioGlobale = (Double) dataSnapshot.getValue(Double.class);
-                                                currencyBilancioGlobale = (String) dataSnapshot.child("Currency").getValue(String.class);
-
-                                                if (bilancioGlobale == null) {
-                                                    bilancioGlobale = 0.0;
-                                                }
-                                                Log.d("EXPENSE", "bilancioGlobale: " + bilancioGlobale);
-                                                Log.d("EXPENSE", "Id: " + name_user);
-
-                                                String s3x = String.format("%.2f", bilancioGlobale);
-                                                s3x = s3x.replace(",", ".");
-                                                bilancioGlobale = Double.parseDouble(s3x);
-
-                                                if (!name_user.equals(keyowner)) {
-                                                    //devo levare
-                                                    //Ricerca di quanto ha pagato l'owner
-
-                                                    for (int i = 0; i < listato_id.length; i++) {
-
-                                                        if (listato_id[i].equals(name_user)) {
-
-                                                            Total2 = amountBox3[i];
-                                                            String s3 = String.format("%.2f", Total2);
-                                                            s3 = s3.replace(",", ".");
-                                                            Total2 = Double.parseDouble(s3);
-                                                        }
-
-
-                                                    }
-
-
-                                                    Double tmp = bilancioGlobale - Total2; //todo sbagliato
-                                                    s3x = String.format("%.2f", tmp);
-                                                    s3x = s3x.replace(",", ".");
-                                                    tmp = Double.parseDouble(s3x);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
-
-                                                    //databaseReference5.removeEventListener(this);
-                                                    Log.d("EXPENSE", "bilancioGlobale-Total2: " + (tmp));
-                                                } else {
-                                                    //sono chi ha pagato l'owner devo aggiungere
-
-                                                    //Ricerca di quanto ha pagato l'owner
-
-                                                    for (int i = 0; i < listato_id.length; i++) {
-
-                                                        if (listato_id[i].equals(name_user)) {
-
-                                                            Total2 = amountBox3[i];
-                                                            String s3 = String.format("%.2f", Total2);
-                                                            s3 = s3.replace(",", ".");
-                                                            Total2 = Double.parseDouble(s3);
-                                                        }
-
-
-                                                    }
-
-
-                                                    Double tmp = bilancioGlobale + (Amount - Total2); //todo sbagliato
-                                                    s3x = String.format("%.2f", tmp);
-                                                    s3x = s3x.replace(",", ".");
-                                                    tmp = Double.parseDouble(s3x);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("GlobalBalance").setValue(tmp);
-
-                                                    //databaseReference5.removeEventListener(this);
-                                                    Log.d("EXPENSE", "bilancioGlobale+Total2: " + (tmp));
-                                                }
-                                                databaseReference5.removeEventListener(this);
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-
-                                        });
-
-
-                                        ///////////// FINE BILANCIO GLOBALE
-
-
+                                    for(String id2 : myusers.keySet())
+                                    {
+                                        if(!id.equals(id2))
+                                        {
+                                            new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, GroupId);
+                                        }
                                     }
 
+                                }
 
-                                    ////////////////////////////////////////////
-                                    ////////////////////////////////////////////
-                                    // 4 USERS - GROUPS - per quel gruppo ID - Users   ---> Total ---> Name  ( x owner e x tutti )
-                                    ////////////////////////////////////////////
-                                    ////////////////////////////////////////////
 
-                                    Total = myamount / count_users; // per persona
-                                    String s2 = String.format("%.2f", Total);
-                                    s2 = s2.replace(",", ".");
-                                    Total = Double.parseDouble(s2);
-                                    //First sarebbe in questo momento chi paga owner
 
 
-                                    for (final String name_user : myusers.keySet()) {
-
-                                        databaseReference6 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                                .child(id_group_iniziale);
-
-
-                                        //ABBIAMO AGGIORNATO IL BILANCIO DEL GRUPPO
-
-                                        //Read  il bilancio del gruppo
-                                        databaseReference6.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                                bilanciodelgruppo = (Double) dataSnapshot.child("Total").getValue(Double.class);
-                                                currencyBilancioDelGruppo = (String) dataSnapshot.child("Currency").getValue(String.class);
-
-
-                                                if (bilanciodelgruppo == null) {
-                                                    bilanciodelgruppo = 0.0;
-                                                }
-
-                                                String s3x = String.format("%.2f", bilanciodelgruppo);
-                                                s3x = s3x.replace(",", ".");
-                                                bilanciodelgruppo = Double.parseDouble(s3x);
-
-
-                                                if (!name_user.equals(keyowner)) {
-                                                    //devo levare
-
-                                                    //Ricerca di quanto ha pagato l'owner
-
-                                                    for (int i = 0; i < listato_id.length; i++) {
-
-                                                        if (listato_id[i].equals(name_user)) {
-
-                                                            Total2 = amountBox3[i];
-                                                            String s3 = String.format("%.2f", Total2);
-                                                            s3 = s3.replace(",", ".");
-                                                            Total2 = Double.parseDouble(s3);
-                                                        }
-
-
-                                                    }
-
-                                                    //aggiorno il bilancio del gruppo
-                                                    Double tmp = bilanciodelgruppo - Total2;//todo sbagliato
-                                                    s3x = String.format("%.2f", tmp);
-                                                    s3x = s3x.replace(",", ".");
-                                                    tmp = Double.parseDouble(s3x);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
-                                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
-
-                                                    //databaseReference6.child("Total").setValue((bilanciodelgruppo-Total2));
-
-                                                    //adesso devo modificare a chi devo i soldi
-
-
-                                                } else {
-                                                    //sono chi ha pagato l'owner devo aggiungere
-
-                                                    //Ricerca di quanto ha pagato l'owner
-
-                                                    for (int i = 0; i < listato_id.length; i++) {
-
-                                                        if (listato_id[i].equals(name_user)) {
-
-                                                            Total2 = amountBox3[i];
-
-                                                            String s3 = String.format("%.2f", Total2);
-                                                            s3 = s3.replace(",", ".");
-                                                            Total2 = Double.parseDouble(s3);
-                                                        }
-
-
-                                                    }
-
-                                                    //aggiorno il bilancio del gruppo
-                                                    Double tmp = bilanciodelgruppo - Total2 + myamount;//todo sbagliato
-                                                    s3x = String.format("%.2f", tmp);
-                                                    s3x = s3x.replace(",", ".");
-                                                    tmp = Double.parseDouble(s3x);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale).child("Total").setValue(tmp);
-                                                    // TODO finchè aggiorno il bilancio in questo modo non potrò mai salvare le expenses con la loro moneta originale ma solo in euro
-
-                                                    //  databaseReference6.child("Total").setValue(bilanciodelgruppo+myamount-Total);
-
-
-                                                    //adesso devo modificare da chi devo ricevere i soldi
-
-
-                                                    //per tutti gli utenti a cui ho prestato soldi
-
-
-                                                    //step 1 prendere il totale per quella persona
-
-
-                                                    //step 2 aggiornalo
-
-
-                                                }
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-
-                                        });
-
-
-                                        ///////////// FINE BILANCIO del gruppo
-
-
-                                    }//fine for
-
-
-                                    ////// punto 5 aggiornare i singoli bilanci all'interno del gruppo
-                                    // per quelle persone convolte
-
-
-                                    id_owner = keyowner;
-                                    for (final String name_user : myusers.keySet()) {
-
-                                        //step 1 prendere il totale per quella persona
-
-                                        Log.d("SINGOLO", " inizio il primo id : " + name_user);
-
-                                        if (!name_user.equals(id_owner)) {
-
-                                            Log.d("SINGOLO", " io sono : " + name_user + " " + " quindi non sono owner " + id_owner);
-                                            //Read content i dati del singolo utente
-                                            databaseReference7 = FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups")
-                                                    .child(id_group_iniziale).child("Users");
-                                            databaseReference7.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                                                    for (DataSnapshot persone : dataSnapshot.getChildren()) {
-
-                                                        Log.d("SINGOLO", "io sono   " + name_user + " trovo come amico : " + persone.getKey());
-
-                                                    }
-
-
-                                                    Log.d("SINGOLO", " Provo a prendere il bilancio per quella persona: ");
-
-
-                                                    bilanciosingolo = (Double) dataSnapshot.child(id_owner).child("Total").getValue(Double.class);
-                                                    currencyBilancioSingolo = (String) dataSnapshot.child(id_owner).child("Currency").getValue(String.class);
-
-
-                                                    String s3x = String.format("%.2f", bilanciosingolo);
-                                                    s3x = s3x.replace(",", ".");
-                                                    bilanciosingolo = Double.parseDouble(s3x);
-
-                                                    if (bilanciosingolo == null) {
-                                                        bilanciosingolo = 0.0;
-                                                    }
-
-                                                    //Ricerca di quanto ha pagato l'owner
-
-                                                    for (int i = 0; i < listato_id.length; i++) {
-
-                                                        if (listato_id[i].equals(name_user)) {
-
-                                                            Total2 = amountBox3[i];
-
-                                                            String s3 = String.format("%.2f", Total2);
-                                                            s3 = s3.replace(",", ".");
-                                                            Total2 = Double.parseDouble(s3);
-                                                        }
-
-
-                                                    }
-
-
-                                                    Log.d("SINGOLO", " bilancio singolo : " + bilanciosingolo);
-
-                                                    //step 2 aggiornalo
-                                                    Double tmp = bilanciosingolo - Total2;//todo sbagliato
-                                                    s3x = String.format("%.2f", tmp);
-                                                    s3x = s3x.replace(",", ".");
-                                                    tmp = Double.parseDouble(s3x);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
-                                                            .child("Users").child(id_owner).child("Total").setValue(tmp);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(name_user).child("Groups").child(id_group_iniziale)
-                                                            .child("Users").child(id_owner).child("Currency").setValue(mycurrency_selected);
-
-
-                                                    Log.d("SINGOLO", " bilancio aggiornato : " + tmp);
-
-
-                                                    //databaseReference6.child("Users").child(id_owner).child("Total").setValue(bilanciosingolo-Total);
-
-                                                    //DEVO FARE L'INVERSO
-                                                    //DEVO SETTARE A ROBERTO L'OPPOSTO bilanciosingolo+Total
-
-                                                    tmp = -tmp; //todo sbagliato
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                            .child(id_group_iniziale).child("Users").child(name_user).child("Total").setValue(tmp);
-                                                    FirebaseDatabase.getInstance().getReference("Users").child(id_owner).child("Groups")
-                                                            .child(id_group_iniziale).child("Users").child(name_user).child("Currency").setValue(mycurrency_selected);
-
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-
-                                            });
-
-
-                                            ///////////// FINE BILANCIO singolo
-
-
-                                        }//fine if
-
-                                    }//fine for
-
-
-                                    //////////
-                                    ///////////
-                                    //// FINE DB
-                                    //////////
-                                    //////////
-
-                                    Intent intent = new Intent(ModifyExpense.this, MainActivity.class);
+                                Intent intent = new Intent(ModifyExpense.this, MainActivity.class);
                                     intent.putExtra("GROUP_ID", id_group_iniziale);
                                     intent.putExtra("GROUP_NAME", name_group_iniziale);
                                     startActivity(intent);
                                     finish();
 
-                                }
+
 
 
 
@@ -1379,10 +1058,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
 
                     downloadUri = taskSnapshot.getDownloadUrl();
 
-                    if (key == null) {
-                        databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
-                        key = databaseReference.push().getKey();
-                    }
+                    key = id_spesa_iniziale;
 
 
                     DatabaseReference ref = FirebaseDatabase.getInstance()
@@ -1439,10 +1115,9 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
-            if (key == null) {
-                databaseReference = FirebaseDatabase.getInstance().getReference("Activities");
-                key = databaseReference.push().getKey();
-            }
+
+                key = id_spesa_iniziale;
+
 
             DatabaseReference ref = FirebaseDatabase.getInstance()
                     .getReference()

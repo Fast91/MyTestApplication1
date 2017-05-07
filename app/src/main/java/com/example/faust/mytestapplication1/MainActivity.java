@@ -1203,35 +1203,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void esisteGruppo() {
 
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
-
-        //Read content data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(id_group!=null) {
 
 
-                if (dataSnapshot.getValue() == null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group);
 
-                    Intent i = new Intent(MainActivity.this, PrimaAttivitaGruppi.class);
+            //Read content data
+            databaseReference.addValueEventListener(new ValueEventListener() {
 
-                    startActivity(i);
-                    finish();
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                    if (dataSnapshot.getValue() == null) {
+
+                        Intent i = new Intent(MainActivity.this, PrimaAttivitaGruppi.class);
+
+                        startActivity(i);
+                        finish();
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
 
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            });
 
 
-        });
-
+        }
 
     }
 
