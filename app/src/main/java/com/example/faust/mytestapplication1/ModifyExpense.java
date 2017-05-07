@@ -825,6 +825,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                     //Aggiornare i bilanci
 
                                 //AGGIORNO
+                                int i=0;
 
                                 for(String id : myusers.keySet())
                                 {
@@ -841,17 +842,25 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                             new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, GroupId);
                                         }
                                     }
+                                    i++;
+
+
+                                    if(i==myusers.keySet().size()){
+
+                                        Intent intent = new Intent(ModifyExpense.this, MainActivity.class);
+                                        intent.putExtra("GROUP_ID", id_group_iniziale);
+                                        intent.putExtra("GROUP_NAME", name_group_iniziale);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
 
                                 }
 
 
 
 
-                                Intent intent = new Intent(ModifyExpense.this, MainActivity.class);
-                                    intent.putExtra("GROUP_ID", id_group_iniziale);
-                                    intent.putExtra("GROUP_NAME", name_group_iniziale);
-                                    startActivity(intent);
-                                    finish();
+
 
 
 
