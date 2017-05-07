@@ -470,8 +470,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 s = s.replace(",", ".");
                                 Total = Double.parseDouble(s);
 
-                               /* databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
-
+                               databaseReference3 = FirebaseDatabase.getInstance().getReference("Groups").child(GroupId).child("Activities");
+                                /*
                                 databaseReference3.child(key).child("Date").setValue(Date);
                                 databaseReference3.child(key).child("Category").setValue(Category);
 
