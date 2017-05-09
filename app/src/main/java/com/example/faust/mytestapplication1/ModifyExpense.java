@@ -64,6 +64,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
     private NomeDovuto mygroup_selected;
     private CurrencyDetail mycurrency_selected_from_spinner;
     private String mycurrency_selected = "EUR"; // IMPOSTO SEMPRE EURO AL MOMENTO, PER ORA NON SI PUò CAMBIARE SENNò SOTTO SBALLA TUTTO
+    private String string_image=null;
 
 
     private Double Total2;
@@ -673,11 +674,11 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 String GroupId = id_group_iniziale;
 
                                 String Category = mycategory;
-                                String Date = "" + myDate.getDate() + "/" + myDate.getMonth() + "/" + (myDate.getYear() + 1900);
+                                String Date = "" + myDate.getDate() + "/" + (myDate.getMonth()+1) + "/" + (myDate.getYear() + 1900);
 
 
 
-                                databaseReference.child(key).child("Date").setValue(Date);
+                               /* databaseReference.child(key).child("Date").setValue(Date);
                                 databaseReference.child(key).child("Category").setValue(Category);
 
 
@@ -685,7 +686,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 databaseReference.child(key).child("Total").setValue(Total);
                                 databaseReference.child(key).child("Currency").setValue(mycurrency_selected);
 
-                                databaseReference.child(key).child("GroupId").setValue(GroupId);
+                                databaseReference.child(key).child("GroupId").setValue(GroupId);*/
 
 
                                 HashMap<String,Object> mappa = new HashMap<>();
@@ -695,6 +696,10 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                                 mappa.put("Total",Total);
                                 mappa.put("Currency",mycurrency_selected);
                                 mappa.put("GroupId",GroupId);
+
+                                if(string_image!=null){
+                                    mappa.put("Image",string_image);
+                                }
 
                                 databaseReference.child(key).setValue(mappa);
 
@@ -1097,7 +1102,11 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                             .child("Activities")
                             .child(key)
                             .child("Image");
-                    ref.setValue(downloadUri.toString());
+
+                    string_image = downloadUri.toString();
+
+                    ref.setValue(string_image);
+
 
 
                     // Picasso.with(ReadProfileActivity.this).load(downloadUri).fit().centerCrop().into(image_profile);
@@ -1155,7 +1164,8 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
                     .child("Activities")
                     .child(key)
                     .child("Image");
-            ref.setValue(imageEncoded);
+            string_image = imageEncoded;
+            ref.setValue(string_image);
 
 
             if (!imageEncoded.contains("http")) {
