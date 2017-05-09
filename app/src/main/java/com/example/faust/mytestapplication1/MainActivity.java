@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-      //  sendNotificationToUser("puf", "Hi there puf!"); todo: migliorato
+        FirebaseMessaging.getInstance().subscribeToTopic("user_"+id_group);
+        sendNotificationToUser("puf", "Hi there puf!"); //todo: migliorato
 
        // FirebaseMessaging.getInstance().subscribeToTopic("news");
 
@@ -1240,11 +1240,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void sendNotificationToUser(String user, final String message) {
+    private void sendNotificationToUser(String user, final String message) {
 
         final DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child("notificationRequests");
         Map notification = new HashMap< >();
-        notification.put("username", user);
+        notification.put("username", id_group);
         notification.put("message", message);
         notifications.push().setValue(notification);
     }

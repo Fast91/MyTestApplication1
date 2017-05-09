@@ -191,5 +191,7 @@
     <string name="impossible_to_delete_act">Impossibile modificare un Pagamento, eliminalo</string>
     <string name="backmodify_title">Eliminare?</string>
     <string name="backmodify_message">Sei sicuro di eliminare le modifiche?</string>
+    <string name="newexpense_title2">Nuova spesa</string>
 
+    <string name="newexpense_title3">Nuova spesa nel Gruppo</string>
 </resources>

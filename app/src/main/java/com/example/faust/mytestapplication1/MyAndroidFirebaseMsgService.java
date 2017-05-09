@@ -8,6 +8,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -34,24 +40,48 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
     private void createNotification( String messageBody) {
 
-        Intent intent = new Intent( this , PrimaAttivitaGruppi.class );
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
 
-        Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Prima notifica")
-                .setContentText(messageBody)
-                .setAutoCancel( true )
-                .setSound(notificationSoundURI)
-                .setContentIntent(resultIntent);
+        messageBody = messageBody.trim();
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        FirebaseDatabase.getInstance().getReference().child("Groups").child(messageBody).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        notificationManager.notify(0, mNotificationBuilder.build());
+                String name = dataSnapshot.child("Name").getValue(String.class);
+
+                Intent intent = new Intent( MyAndroidFirebaseMsgService.this , PrimaAttivitaGruppi.class );
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                PendingIntent resultIntent = PendingIntent.getActivity( MyAndroidFirebaseMsgService.this , 0, intent,
+                        PendingIntent.FLAG_ONE_SHOT);
+
+                String s = getString(R.string.newexpense_title2);
+                String s3 = getString(R.string.newexpense_title3);
+
+                Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( MyAndroidFirebaseMsgService.this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(s)
+                        .setContentText(s3 +" : "+name)
+                        .setAutoCancel( true )
+                        .setSound(notificationSoundURI)
+                        .setContentIntent(resultIntent);
+
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                notificationManager.notify(0, mNotificationBuilder.build());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
     }
 
 
