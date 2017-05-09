@@ -35,8 +35,11 @@ public class MyAndroidFirebaseInstanceIdService extends FirebaseInstanceIdServic
     private void sendRegistrationToServer(String token) {
         //Implement this method if you want to store the token on your server
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid())
-                .child("Token").setValue(token);
+        if(firebaseAuth.getCurrentUser() != null){
+      FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid())
+              .child("Token").setValue(token);
+
+             }
     }
 
 
