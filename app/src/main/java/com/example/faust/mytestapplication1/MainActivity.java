@@ -420,7 +420,9 @@ public class MainActivity extends AppCompatActivity {
 
         String url;
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+      //  DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Image");
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Groups").child(id_group).child("Image");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -471,6 +473,17 @@ public class MainActivity extends AppCompatActivity {
 
 
                     }
+
+
+                }
+                else{
+
+
+
+
+
+                    profile_image.setImageBitmap(
+                            decodeSampledBitmapFromResource(getResources(), R.drawable.group, 100, 100));
 
 
                 }
