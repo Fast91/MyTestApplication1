@@ -365,9 +365,6 @@ public class DBShortKeys
 
 
 
-                                            s3x = String.format("%.2f", total);
-                                            s3x = s3x.replace(",", ".");
-                                            total = Double.parseDouble(s3x);
 
                                             if(category!=null)
                                             {
@@ -388,6 +385,11 @@ public class DBShortKeys
                                             {
                                                 total=0.0;
                                             }
+
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
+
                                             global_balance = global_balance  - total;
 
                                         }
@@ -522,9 +524,7 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
 
-                                            s3x = String.format("%.2f", total);
-                                            s3x = s3x.replace(",", ".");
-                                            total = Double.parseDouble(s3x);
+
 
 
                                             if(category.equals("Pagamento")||category.equals("Payment"))
@@ -538,6 +538,10 @@ public class DBShortKeys
                                             }
 
                                             if(total==null) { total=0.0;}
+
+                                            s3x = String.format("%.2f", total);
+                                            s3x = s3x.replace(",", ".");
+                                            total = Double.parseDouble(s3x);
 
                                             group_balance = group_balance  - total;
 
