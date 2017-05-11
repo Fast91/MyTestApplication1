@@ -91,7 +91,18 @@ myr=view.getResources();
             //imageView.setImageResource(R.drawable.profilecircle);
             imageView.setImageBitmap(
                     decodeSampledBitmapFromResource(myr, R.drawable.giftboxred, 100, 100));
-            nameView.setText(u.getName());
+            //prendere il titolo della spesa
+            if(u.getName().equals("Pagamento") || u.getName().equals("Payment") ){
+
+
+                nameView.setText(myr.getString(R.string.textview_payment));
+            }
+            else{
+                nameView.setText(u.getName());
+            }
+
+
+
             balanceView.setText(""+(String.format("%.2f", u.getDovuto())+"€"));
             pagatoView.setText(u.pagatoda());
 

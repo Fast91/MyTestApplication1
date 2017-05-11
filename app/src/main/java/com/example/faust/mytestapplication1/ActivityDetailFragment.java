@@ -101,7 +101,17 @@ public class ActivityDetailFragment extends android.support.v4.app.Fragment
                 if(dataSnapshot.getChildrenCount()>0) {
 
                     //prendere il titolo della spesa
-                    mTitleTextView.setText(dataSnapshot.child("Name").getValue(String.class));
+                    if(dataSnapshot.child("Name").getValue(String.class).equals("Pagamento") || dataSnapshot.child("Name").getValue(String.class).equals("Payment") ){
+
+                        mTitleTextView.setText(getString(R.string.textview_payment));
+                    }
+                    else{
+
+                        mTitleTextView.setText(dataSnapshot.child("Name").getValue(String.class));
+                    }
+
+
+
 
 
                     //prendere l'id del gruppi
