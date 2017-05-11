@@ -26,11 +26,11 @@ public class MyAndroidFirebaseInstanceIdService extends FirebaseInstanceIdServic
 
         //todo provo a eliminare
 
-        try {
+        /*try {
             FirebaseInstanceId.getInstance().deleteInstanceId();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();

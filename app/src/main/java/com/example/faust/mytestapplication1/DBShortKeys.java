@@ -210,21 +210,21 @@ public class DBShortKeys
 
                 // versione più sistemata
 
-                Log.d("FAST", "Sto per fare la query con tutta la mappa");
+                //Log.d("FAST", "Sto per fare la query con tutta la mappa");
                 DatabaseReference refRoot = FirebaseDatabase.getInstance().getReference();
                 refRoot.updateChildren(delete_act_map, new DatabaseReference.CompletionListener()
                 {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference)
                     {
-                        Log.d("FAST", "Ho completato la query con tutta la mappa");
+                        //Log.d("FAST", "Ho completato la query con tutta la mappa");
                         for(String id : delete_act_users_and_owner)
                         {
-                            Log.d("FAST", "Aggiorno il bilancio globale");
+                            //Log.d("FAST", "Aggiorno il bilancio globale");
                             new DBShortKeys()._aggiornaBilancioGlobale(id);
-                            Log.d("FAST", "Aggiorno il bilancio di gruppo");
+                            //Log.d("FAST", "Aggiorno il bilancio di gruppo");
                             new DBShortKeys()._aggiornaBilancioGruppo(id, delete_act_group_id);
-                            Log.d("FAST", "Aggiorno il bilancio fra gli utenti");
+                            //Log.d("FAST", "Aggiorno il bilancio fra gli utenti");
                             for(String id2 : delete_act_users_and_owner)
                             {
                                 if(!id.equals(id2))
@@ -232,7 +232,7 @@ public class DBShortKeys
                                     new DBShortKeys()._aggiornaBilanciFraUtentiGruppoHALF(id, id2, delete_act_group_id);
                                 }
                             }
-                            Log.d("FAST", "Ho aggiornato i bilanci");
+                            //Log.d("FAST", "Ho aggiornato i bilanci");
                         }
                     }
                 });

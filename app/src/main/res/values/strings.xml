@@ -27,7 +27,7 @@
     <string name="contact_menu">Contact us</string>
     <string name="newexpense_title">Title</string>
     <string name="newexpense_title2">New Expense</string>
-    <string name="newexpense_title3">New Expense on Group</string>
+    <string name="newexpense_title3">New Expense on group</string>
     <string name="newexpense_amount">Amount</string>
     <string name="newexpense_description">Description</string>
     <string name="newexpense_data">Date</string>

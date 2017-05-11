@@ -33,8 +33,10 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
         //create notification
-
-        createNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
+        Log.d(TAG, "GetData().title: " + remoteMessage.getData().get("title"));
+        Log.d(TAG, "GetData().text: " + remoteMessage.getData().get("text"));
+        //createNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
+        createNotification(remoteMessage.getData().get("text"),remoteMessage.getData().get("title"));
     }
 
 
@@ -65,7 +67,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
                 NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( MyAndroidFirebaseMsgService.this)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(s)
-                        .setContentText(s3 +" : "+name)
+                        .setContentText(s3 +" "/*: "*/+name)
                         .setAutoCancel( true )
                         .setSound(notificationSoundURI)
                         .setContentIntent(resultIntent);

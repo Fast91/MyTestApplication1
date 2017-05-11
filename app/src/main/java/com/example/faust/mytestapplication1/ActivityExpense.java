@@ -2001,7 +2001,9 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         final DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child("notificationRequests");
         Map notification = new HashMap< >();
-        notification.put("username", id_group);
+        Log.d("FAST", "id_act: " + id_act);
+        Log.d("FAST", "user: " + user);
+        notification.put("username", user);
         notification.put("message", id_act);
         notifications.push().setValue(notification);
     }
