@@ -25,7 +25,7 @@ public class DBShortKeys
 {
     private Double global_balance,group_balance;
     private int group_mycount,group_totcount,global_mycount,global_totcount;
-    private Double personal_balance;
+    private Double personal_balance =0.0;
     private int personal_mycount, personal_totcount;
 
     private String delete_act_group_id;
@@ -292,6 +292,9 @@ public class DBShortKeys
         });
     }
 
+
+
+
     public void _aggiornaBilancioGlobale(final String id_user) {
 
         global_balance = 0.0;
@@ -515,9 +518,10 @@ public class DBShortKeys
 
 
                                         if (total == null) {
+                                            //L'UTENTE NON E' OWNER
 
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
-                                            if(total==null) { total=0.0;}
+
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
@@ -525,13 +529,22 @@ public class DBShortKeys
 
                                             if(category.equals("Pagamento")||category.equals("Payment"))
                                             {
-                                                total=amount;
+
+                                                if(total==null) { total=0.0;}
+                                                else {
+                                                    total = amount;
+                                                }
 
                                             }
+
+                                            if(total==null) { total=0.0;}
+
                                             group_balance = group_balance  - total;
 
                                         }
                                         else{
+
+                                            //utente selezione e' owner
 
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
@@ -791,50 +804,57 @@ public class DBShortKeys
 
                                         if (total == null) {
 
-                                            // io sono utente
+                                            // io sono utente non owner
+
                                             total = dataSnapshot.child("Users").child(id_user).child("Total").getValue(Double.class);
-                                            if(total==null) { total=0.0;}
-                                            String s3x = String.format("%.2f", total);
-                                            s3x = s3x.replace(",", ".");
-                                            total = Double.parseDouble(s3x);
 
+                                            if(total!=null) {
 
-                                            //////////
-                                            if(dataSnapshot.child("Owner").child(id_other).exists())
-                                            {
-
-                                                if(category.equals("Pagamento")||category.equals("Payment")){
-                                                    total=dataSnapshot.child("Owner").child(id_other).child("Total").getValue(Double.class);
-
-                                                }
-
-                                                s3x = String.format("%.2f", total);
+                                                String s3x = String.format("%.2f", total);
                                                 s3x = s3x.replace(",", ".");
                                                 total = Double.parseDouble(s3x);
-                                           //prendere l'amount
 
-                                                personal_balance = personal_balance  - total;
+
+                                                //////////
+                                                if (dataSnapshot.child("Owner").child(id_other).exists()) {
+
+                                                    if (category.equals("Pagamento") || category.equals("Payment")) {
+                                                        total = dataSnapshot.child("Owner").child(id_other).child("Total").getValue(Double.class);
+
+                                                    }
+
+                                                    s3x = String.format("%.2f", total);
+                                                    s3x = s3x.replace(",", ".");
+                                                    total = Double.parseDouble(s3x);
+                                                    //prendere l'amount
+
+                                                    personal_balance = personal_balance - total;
+                                                }
+                                                //////////
+
+
                                             }
-                                            //////////
                                         }
                                         else{
 
                                             // io sono owner
 
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
-                                            if(total==null) { total=0.0;}
+                                            if(total!=null) {
 
 
+                                                if (category.equals("Pagamento") || category.equals("Payment")) {
+                                                    total = dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
 
-                                            if(category.equals("Pagamento")||category.equals("Payment")){
-                                                total=dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+                                                }
+                                                String s3x = String.format("%.2f", total);
+                                                s3x = s3x.replace(",", ".");
+                                                total = Double.parseDouble(s3x);
+                                                personal_balance = personal_balance + total;
+
 
                                             }
-                                            String s3x = String.format("%.2f", total);
-                                            s3x = s3x.replace(",", ".");
-                                            total = Double.parseDouble(s3x);
-                                            personal_balance = personal_balance  + total;
-
                                             ////////
 
                                         }
