@@ -64,7 +64,7 @@ public class DBShortKeys
 
 
 
-    public void _eliminaAttività2(final String id_activity)
+    private void _eliminaAttività2(final String id_activity)
     {
         delete_act_users_and_owner = new ArrayList<String>();
         delete_act_map = new HashMap<String, Object>(); // qui metto le query
@@ -361,18 +361,30 @@ public class DBShortKeys
 
 
 
-                                            if(total==null) { total=0.0;}
+
                                             s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);
 
                                             if(category!=null)
-                                            if(category.equals("Pagamento")||category.equals("Payment"))
                                             {
-                                               total=amount;
-
+                                                if (category.equals("Pagamento") || category.equals("Payment"))
+                                                {
+                                                    // TODO devo dare questi soldi solo a una persona (a cui ho effettuato il pagamento)
+                                                    if(total == null)
+                                                    {
+                                                        total = 0.0;
+                                                    }
+                                                    else
+                                                    {
+                                                        total = amount;
+                                                    }
+                                                }
                                             }
-
+                                            if(total==null)
+                                            {
+                                                total=0.0;
+                                            }
                                             global_balance = global_balance  - total;
 
                                         }
