@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         Intent intent = getIntent();
         id_group = intent.getExtras().getString("GROUP_ID");
         name_group = intent.getExtras().getString("GROUP_NAME");
@@ -115,12 +117,11 @@ public class MainActivity extends AppCompatActivity {
 
         b4add = (ImageButton) findViewById(R.id.bAddNewExpense);
 
-
-
         FirebaseMessaging.getInstance().subscribeToTopic("user_"+id_group);
-        sendNotificationToUser("puf", "Hi there puf!"); //todo: migliorato
 
-       // FirebaseMessaging.getInstance().subscribeToTopic("news");
+
+
+
 
 
 
@@ -799,6 +800,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                                     finish();
+
+                                    FirebaseMessaging.getInstance().unsubscribeFromTopic("user_"+id_group2);
 
 
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

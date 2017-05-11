@@ -54,6 +54,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ActivityExpense extends AppCompatActivity implements View.OnClickListener {
     //private Date mydata;
@@ -909,6 +910,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
                                 //// FINE DB
                                 //////////
                                 //////////
+
+                                sendNotificationToUser(id_group_iniziale,key);
 
                                 Intent intent = new Intent(ActivityExpense.this, MainActivity.class);
                                 intent.putExtra("GROUP_ID", id_group_iniziale);
@@ -1989,6 +1992,18 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         }
 
+    }
+
+
+
+
+    private void sendNotificationToUser(String user, final String id_act) {
+
+        final DatabaseReference notifications = FirebaseDatabase.getInstance().getReference().child("notificationRequests");
+        Map notification = new HashMap< >();
+        notification.put("username", id_group);
+        notification.put("message", id_act);
+        notifications.push().setValue(notification);
     }
 
 

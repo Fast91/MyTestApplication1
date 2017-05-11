@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -118,6 +119,9 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
 
                     //setto il nome
                     databaseReference.child(id_group).child("Name").setValue(name_group);
+
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("user_"+id_group);
 
 
 

@@ -8,6 +8,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import java.io.IOException;
+
 /**
  * Created by robertospaziani on 06/05/17.
  */
@@ -21,6 +23,16 @@ public class MyAndroidFirebaseInstanceIdService extends FirebaseInstanceIdServic
     @Override
     public void onTokenRefresh() {
         //Get hold of the registration token
+
+        //todo provo a eliminare
+
+        try {
+            FirebaseInstanceId.getInstance().deleteInstanceId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         //Log the token
         Log.d(TAG, "Refreshed token: " + refreshedToken);

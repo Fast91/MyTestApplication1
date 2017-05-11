@@ -121,7 +121,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-        FirebaseMessaging.getInstance().subscribeToTopic("user_puf");
+
 
 
         //Set Name of the group
@@ -224,6 +224,8 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
                     id_gruppo.put(postSnapshot.child("Name").getValue(String.class),postSnapshot.getKey());
 
                     String id = (String) postSnapshot.getKey();
+
+                    FirebaseMessaging.getInstance().subscribeToTopic("user_"+id);
 
                     //prendo nome gruppo
                     String gruppo = postSnapshot.child("Name").getValue(String.class);

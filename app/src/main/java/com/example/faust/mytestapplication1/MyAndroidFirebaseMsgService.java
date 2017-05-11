@@ -24,6 +24,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
     private static final String TAG = "MyAndroidFCMService";
+    private static final String EXTRA_EXPENSE_UUID = ".extra_expense_uuid";
 
 
     @Override
@@ -32,13 +33,14 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
         //create notification
-        createNotification(remoteMessage.getNotification().getBody());
+
+        createNotification(remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTitle());
     }
 
 
 
 
-    private void createNotification( String messageBody) {
+    private void createNotification( String messageBody,final String id) {
 
 
         messageBody = messageBody.trim();
@@ -49,7 +51,9 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
                 String name = dataSnapshot.child("Name").getValue(String.class);
 
-                Intent intent = new Intent( MyAndroidFirebaseMsgService.this , PrimaAttivitaGruppi.class );
+               // Intent intent = new Intent( MyAndroidFirebaseMsgService.this , PrimaAttivitaGruppi.class );
+                Intent intent = new Intent( MyAndroidFirebaseMsgService.this , ActivityDetailActivity.class );
+                intent.putExtra(EXTRA_EXPENSE_UUID, id);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 PendingIntent resultIntent = PendingIntent.getActivity( MyAndroidFirebaseMsgService.this , 0, intent,
                         PendingIntent.FLAG_ONE_SHOT);
