@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -138,6 +139,8 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         id_group_iniziale = inte.getExtras().getString("GROUP_ID");
         name_group_iniziale = inte.getExtras().getString("GROUP_NAME");
 
+        image_activity = (ImageView) findViewById(R.id.imagePicture);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -151,6 +154,17 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
 
         if (savedInstanceState != null) {
 
+
+            string_image = savedInstanceState.getString("BitmapImage");
+
+            if(string_image.equals("no")){
+                string_image=null;
+            }
+            else {
+                //esiste la stringa allora ricaricala coglione
+                getandSetImage2();
+
+            }
         }
 
 
@@ -1162,11 +1176,7 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
 
-    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -2008,6 +2018,47 @@ public class ActivityExpense extends AppCompatActivity implements View.OnClickLi
         notifications.push().setValue(notification);
     }
 
+
+    @Override public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(string_image==null){string_image = "no";}
+        outState.putString("BitmapImage", string_image);
+    }
+
+
+    private void getandSetImage2() {
+
+
+        if (string_image != null) {
+
+            if (!string_image.contains("http")) {
+                try {
+                    Bitmap imageBitmaptaken = decodeFromFirebaseBase64(string_image);
+                    //Bitmap imageCirle = getclip(imageBitmaptaken);
+                    image_activity.setImageBitmap(imageBitmaptaken);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+
+
+                Picasso.with(ActivityExpense.this)
+                        .load(string_image)
+                        .fit()
+                        .centerCrop()
+                        .into(image_activity);
+
+
+                // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                // Bitmap imageCirle = getclip(imageBitmaptaken);
+                // profile_image.setImageBitmap(imageCirle);
+
+
+            }
+
+
+        }
+    }
 
 
 

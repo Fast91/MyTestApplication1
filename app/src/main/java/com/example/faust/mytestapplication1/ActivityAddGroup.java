@@ -49,6 +49,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
     private StorageReference mStorage;
     private Uri downloadUri;
     private ImageView image_activity;
+    private String string_image;
 
     private static final int GALLERY_INTENT = 2, CAMERA_REQUEST_CODE = 1;
 
@@ -59,8 +60,24 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        image_activity = (ImageView) findViewById(R.id.imagePicture_activity_group);
 
 
+
+        if(savedInstanceState!=null){
+
+            string_image = savedInstanceState.getString("BitmapImage");
+
+            if(string_image.equals("no")){
+                string_image=null;
+            }
+            else{
+                getandSetImage2();
+            }
+
+
+
+        }
 
 
         buttonCamera= (ImageButton)  findViewById(R.id.buttonPhoto_activity_group);
@@ -78,7 +95,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
         buttonGallery.setOnClickListener(this);
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        image_activity = (ImageView) findViewById(R.id.imagePicture_activity_group);
+
 
         Button submitGroup = (Button) findViewById(R.id.buttonSubmit_activity_group);
         mProgressDialog = new ProgressDialog(this);
@@ -313,6 +330,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
                                 .child("Groups")
                                 .child(id_group)
                                 .child("Image");
+                        string_image = downloadUri.toString();
                         ref.setValue(downloadUri.toString());
 
 
@@ -372,6 +390,7 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
                         .child("Groups")
                         .child(id_group)
                         .child("Image");
+                string_image = imageEncoded;
                 ref.setValue(imageEncoded);
 
 
@@ -446,6 +465,52 @@ public class ActivityAddGroup extends AppCompatActivity implements View.OnClickL
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+
+
+
+
+    @Override public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(string_image==null){string_image = "no";}
+        outState.putString("BitmapImage", string_image);
+    }
+
+
+    private void getandSetImage2() {
+
+
+        if (string_image != null) {
+
+            if (!string_image.contains("http")) {
+                try {
+                    Bitmap imageBitmaptaken = decodeFromFirebaseBase64(string_image);
+                    //Bitmap imageCirle = getclip(imageBitmaptaken);
+                    image_activity.setImageBitmap(imageBitmaptaken);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+
+
+                Picasso.with(ActivityAddGroup.this)
+                        .load(string_image)
+                        .fit()
+                        .centerCrop()
+                        .into(image_activity);
+
+
+                // Bitmap imageBitmaptaken = ((BitmapDrawable) profile_image.getDrawable()).getBitmap();
+                // Bitmap imageCirle = getclip(imageBitmaptaken);
+                // profile_image.setImageBitmap(imageCirle);
+
+
+            }
+
+
+        }
+
     }
 
 

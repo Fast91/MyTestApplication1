@@ -139,6 +139,8 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
         id_group_iniziale = inte.getExtras().getString("GROUP_ID");
         name_group_iniziale = inte.getExtras().getString("GROUP_NAME");
 
+        image_activity = (ImageView) findViewById(R.id.imagePicture);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -151,6 +153,13 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
 
 
         if (savedInstanceState != null) {
+
+            string_image = savedInstanceState.getString("BitmapImage");
+
+            if(string_image.equals("no")){
+                string_image=null;
+            }
+
 
         }
 
@@ -935,11 +944,7 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
     }
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
 
-    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -1813,6 +1818,16 @@ public class ModifyExpense extends AppCompatActivity implements View.OnClickList
 
 
             }
+
+
+
+
+    @Override public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(string_image==null){string_image = "no";}
+        outState.putString("BitmapImage", string_image);
+    }
+
 
 
 

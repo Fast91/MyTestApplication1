@@ -99,15 +99,11 @@
             <ImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/imageDetailPicture"
-                android:layout_width="wrap_content"
-                android:minWidth="80dp"
-                android:maxWidth="120dp"
-                android:layout_height="wrap_content"
-                android:minHeight="80dp"
-                android:maxHeight="120dp"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
                 android:layout_gravity="center"
                 android:padding="2dp"
-                android:scaleType="fitCenter"
+                android:scaleType="centerInside"
                 android:adjustViewBounds="true"
                 android:background="@drawable/sketched_white_rect_shape"
                 />
