@@ -52,11 +52,22 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="0.60"
-        android:orientation="vertical"
-
         android:gravity="center"
 
+        android:orientation="vertical"
+
         >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:gravity="center"
+
+            android:orientation="vertical"
+
+            >
 
         <TextView
             android:id="@+id/todo_groups_group"
@@ -81,5 +92,40 @@
             android:textAppearance="?attr/textAppearanceListItem" />
 
 
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:gravity="center"
+
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:id="@+id/todo_groups_group_below"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/image_activity_group"
+                android:text="@string/name_user_global_string"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textSize="@dimen/fragment_global_text_amount_size" />
+
+            <TextView
+                android:id="@+id/money_groups_group_below"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+
+                android:layout_marginLeft="@dimen/fragment_global_image_margin"
+                android:text="@string/total_user_global_string"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
