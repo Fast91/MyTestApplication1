@@ -52,7 +52,7 @@
     <string name="progress_bar_register">Registrazione...</string>
     <string name="successful_registration">Registrazione completata</string>
     <string name="unsuccessful_registration">Registrazione fallita, password minimo 6 caratteri</string>
-    <string name="already_registered">Già registrato? Accedi quì</string>
+    <string name="already_registered">Già registrato? Accedi qui</string>
     <string name="titleregisteractivity">Registrazione</string>
     <string name="titleloginactivity">Accedi</string>
     <string name="action_login">Entra</string>
