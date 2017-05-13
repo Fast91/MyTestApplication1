@@ -96,6 +96,8 @@ myr=view.getResources();
 
 
                 nameView.setText(myr.getString(R.string.textview_payment));
+                imageView.setImageBitmap(
+                        decodeSampledBitmapFromResource(myr, R.drawable.business, 100, 100));
             }
             else{
                 nameView.setText(u.getName());
