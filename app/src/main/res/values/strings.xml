@@ -212,6 +212,7 @@
     <string name="impossible_to_delete_act">Impossible to modify a Payment, delete it</string>
     <string name="backmodify_title">Delete?</string>
     <string name="backmodify_message">Are you sure to delete changes?</string>
+    <string name="groups_menu">Your Groups</string>
 
 
 </resources>

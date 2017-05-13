@@ -76,7 +76,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     private TextView nameprofile;
     private boolean isInSideClicked=false;
     private ProgressDialog mProgressDialog;
-
+    private TextView click_bilanci;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,6 +152,16 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.getCurrentUser().getUid()).child("GlobalBalance");
 
         Double  bilancioGlobale;
+
+        click_bilanci = (TextView) findViewById(R.id.row1_text2);
+
+        click_bilanci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alert_bilanci();
+            }
+        });
 
         //Read content data
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -737,6 +747,42 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
+    }
+
+
+
+    private void alert_bilanci(){
+
+        //Bilancio Globale
+        String s1 = getString(R.string.balance_name);
+        double x1 = 10.0;
+
+
+        //devi
+        String s2 = getString(R.string.devi);
+        double x2 = 10.0;
+
+
+        //Devi ricevere
+        String s3 = getString(R.string.tideve2);
+        double x3 = -00.0;
+
+        String finale = s1 + " " + x1 + " :\n" +
+                         s2 + " " + x2 + " \n" +
+                          s3 + " " + x3 ;
+
+
+
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.balance_name)
+                .setMessage(finale)
+              .create().show();
 
 
 

@@ -194,4 +194,5 @@
     <string name="newexpense_title2">Nuova spesa</string>
 
     <string name="newexpense_title3">Nuova spesa nel gruppo</string>
+    <string name="groups_menu">I tuoi Gruppi</string>
 </resources>

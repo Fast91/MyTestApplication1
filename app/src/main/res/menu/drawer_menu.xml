@@ -12,6 +12,14 @@
             />
 
         <item
+            android:id="@+id/action_groups"
+            android:title="@string/groups_menu"
+
+
+
+            />
+
+        <item
             android:id="@+id/action_invitation"
             android:title="@string/invitation_menu"
 
@@ -34,6 +42,8 @@
 
 
             />
+
+
 
 
 

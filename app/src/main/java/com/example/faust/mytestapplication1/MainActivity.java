@@ -650,6 +650,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             mDrawerToggle.setDrawerIndicatorEnabled(false);
 
@@ -1059,6 +1061,15 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(MainActivity.this, ContactActivity.class));
+
+                }
+
+                if (res_id == R.id.action_groups) {
+
+                    //Toast.makeText(getApplicationContext(),R.string.toast_mess_contactus,Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(MainActivity.this, PrimaAttivitaGruppi.class));
+                    finish();
 
                 }
 
