@@ -116,7 +116,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
 
-                EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
+                final EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
                  userMail = editTextUserMail.getText().toString();
                 userMail=userMail.trim();
                 if(!userMail.equals("")){
@@ -208,6 +208,8 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
                                                 Toast.makeText(getApplicationContext(), R.string.toast_addedusergroup, Toast.LENGTH_LONG).show();
                                                 Log.d("EXISTS", "Fine toast");
+                                                editTextUserMail.setText("");
+
                                             }
                                         } else {
 
