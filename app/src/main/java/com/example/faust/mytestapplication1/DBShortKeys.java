@@ -680,6 +680,12 @@ public class DBShortKeys
                                             //////////
                                             if(dataSnapshot.child("Owner").child(id_other).exists())
                                             {
+
+                                                if(category.equals("Pagamento")||category.equals("Payment")){
+                                                    total=dataSnapshot.child("Owner").child(id_other).child("Total").getValue(Double.class);
+
+                                                }
+
                                                 s3x = String.format("%.2f", total);
                                                 s3x = s3x.replace(",", ".");
                                                 total = Double.parseDouble(s3x);
@@ -695,6 +701,13 @@ public class DBShortKeys
 
                                             total = dataSnapshot.child("Users").child(id_other).child("Total").getValue(Double.class);
                                             if(total==null) { total=0.0;}
+
+                                            if(category.equals("Pagamento")||category.equals("Payment")){
+                                                total=dataSnapshot.child("Owner").child(id_user).child("Total").getValue(Double.class);
+
+                                            }
+
+
                                             String s3x = String.format("%.2f", total);
                                             s3x = s3x.replace(",", ".");
                                             total = Double.parseDouble(s3x);

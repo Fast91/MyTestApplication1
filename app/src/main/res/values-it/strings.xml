@@ -145,7 +145,7 @@
     <string name="deleteuser_title">Eliminare Utente?</string>
     <string name="deleteuser_message">Sei sicuro di voler eliminare questo utente?</string>
     <string name="button_user_group">UTENTI</string>
-    <string name="button_attivita_group">ATIVITA\'</string>
+    <string name="button_attivita_group">ATTIVITA\'</string>
     <string name="button_grafico_group">STATISTICHE</string>
 
     <string name="addUserToGroup_menu">Aggiungi Utente</string>
