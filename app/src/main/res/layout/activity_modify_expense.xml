@@ -159,7 +159,8 @@
                     android:nextFocusDown="@+id/pass_reg"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/darker_gray"
-                    android:textCursorDrawable="@android:color/black"
+                    android:textCursorDrawable="@null"
+                    android:cursorVisible="true"
 
                     android:background="@drawable/sketched_white_rect_shape_rounded"
                     android:textSize="25sp" />
@@ -186,7 +187,8 @@
                         android:padding="1dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/darker_gray"
-                        android:textCursorDrawable="@android:color/black"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"
                         android:textSize="20sp" />
 
                     <ImageButton
@@ -239,7 +241,8 @@
                 android:maxLines="1"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray"
-                android:textCursorDrawable="@android:color/black"
+                android:textCursorDrawable="@null"
+                android:cursorVisible="true"
                 android:textSize="25sp" />
 
             <Spinner

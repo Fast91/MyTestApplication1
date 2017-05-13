@@ -51,7 +51,10 @@
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:cursorVisible="true"
+                 />
 
 
             <EditText
@@ -66,7 +69,9 @@
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:cursorVisible="true"/>
 
     <TextView
         android:layout_width="match_parent"

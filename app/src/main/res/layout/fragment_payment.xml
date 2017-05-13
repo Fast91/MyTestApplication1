@@ -102,7 +102,9 @@
                 android:text="Custom Amount"
                 android:inputType="numberDecimal"
                 android:digits="0123456789."
-                android:background="@drawable/sketched_white_rect_shape_rounded"/>
+                android:background="@drawable/sketched_white_rect_shape_rounded"
+                android:textCursorDrawable="@null"
+                android:cursorVisible="true"/>
         </RelativeLayout>
     </LinearLayout>
 
