@@ -213,6 +213,7 @@
     <string name="backmodify_title">Delete?</string>
     <string name="backmodify_message">Are you sure to delete changes?</string>
     <string name="groups_menu">Your Groups</string>
+    <string name="balancegroup_name">Group Balance</string>
 
 
 </resources>

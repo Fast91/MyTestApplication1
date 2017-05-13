@@ -34,6 +34,7 @@ import android.widget.Button;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +77,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
     private TextView nameprofile;
     private boolean isInSideClicked=false;
     private ProgressDialog mProgressDialog;
-    private TextView click_bilanci;
+    private LinearLayout click_bilanci;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,7 +154,7 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
         Double  bilancioGlobale;
 
-        click_bilanci = (TextView) findViewById(R.id.row1_text2);
+        click_bilanci = (LinearLayout) findViewById(R.id.linear_bilanci);
 
         click_bilanci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -758,31 +759,101 @@ public class PrimaAttivitaGruppi extends AppCompatActivity {
 
     private void alert_bilanci(){
 
-        //Bilancio Globale
-        String s1 = getString(R.string.balance_name);
-        double x1 = 10.0;
+        FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-        //devi
-        String s2 = getString(R.string.devi);
-        double x2 = 10.0;
-
-
-        //Devi ricevere
-        String s3 = getString(R.string.tideve2);
-        double x3 = -00.0;
-
-        String finale = s1 + " " + x1 + " :\n" +
-                         s2 + " " + x2 + " \n" +
-                          s3 + " " + x3 ;
+                //Bilancio Globale
+                final String s1 = getString(R.string.balance_name);
+                final double x1 = dataSnapshot.child("GlobalBalance").getValue(Double.class);
 
 
 
+                FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
 
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.balance_name)
-                .setMessage(finale)
-              .create().show();
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        int totcount = (int)dataSnapshot.getChildrenCount();
+                        int mycount =0;
+
+                        //devi€
+                        String s2 = getString(R.string.devi);
+                        double x2 = 0.0;
+
+
+                        //Devi ricevere
+                        String s3 = getString(R.string.tideve2);
+                        double x3 = 0.0;
+
+
+                        for(DataSnapshot data : dataSnapshot.getChildren()){
+
+                            mycount++;
+
+                            Double tot = data.child("Total").getValue(Double.class);
+
+                            if(tot>0){
+                                x2 = x2 +tot;
+                            }
+                            else{
+                                x3 = x3 - tot;
+                            }
+
+
+
+                            if(mycount==totcount){
+
+
+                                String finale = s1 + " " + x1 + "€ :\n\n" +
+                                        s2 + " " + x3 + "€ \n\n" +
+                                        s3 + " " + x2 +"€";
+
+
+
+
+                                new AlertDialog.Builder(PrimaAttivitaGruppi.this)
+                                        .setTitle(R.string.balance_name)
+                                        .setMessage(finale)
+                                        .create().show();
+
+                            }
+
+
+
+                        }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 

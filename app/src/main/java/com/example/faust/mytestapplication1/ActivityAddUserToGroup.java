@@ -1,6 +1,7 @@
 package com.example.faust.mytestapplication1;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,6 +34,7 @@ import android.net.Uri;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,6 +67,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
     String id_nuovoutentedaaggiungere, name_nuovoutentedaaggiungere;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
+    private ProgressDialog mProgressDialog;
 
     private Activity myactivity;
     private GoogleApiClient mGoogleApiClient;
@@ -84,6 +89,12 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         Log.d("EXISTS", "finito di prenderli" );
         key_nameuser= new HashMap<>();
 
+      mProgressDialog = new ProgressDialog(this);
+
+        String msg = getString(R.string.dialog_image_profile_loading);
+        mProgressDialog.setMessage(msg);
+        mProgressDialog.show();
+
 
         TextView text_name =(TextView) findViewById(R.id.textGroup_activity_group_members);
         text_name.setText(name_group);
@@ -93,6 +104,10 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
         iv.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.group, 100, 100));
+
+
+        autocomplete();
+
 
 
 
@@ -116,7 +131,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
 
 
 
-                final EditText editTextUserMail = (EditText) findViewById(R.id.memberMail_activity_group_members);
+               final AutoCompleteTextView editTextUserMail = (AutoCompleteTextView) findViewById(R.id.memberMail_activity_group_members);
                  userMail = editTextUserMail.getText().toString();
                 userMail=userMail.trim();
                 if(!userMail.equals("")){
@@ -142,6 +157,7 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
                     // GROUPS - ID - USERS
 
                     Log.d("EXISTS", "PROVO a prendere i vecchi utenti" );
+
 
 
 
@@ -781,6 +797,62 @@ public class ActivityAddUserToGroup extends AppCompatActivity {// implements Goo
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
+
+    public void autocomplete(){
+
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ArrayList<String> strings = new ArrayList<String>();
+
+                for(DataSnapshot dp : dataSnapshot.getChildren()){
+
+                    String name = dp.child("Email").getValue(String.class);
+                    strings.add(name);
+
+                }
+
+                String[] myarray = new String[strings.size()];
+                strings.toArray(myarray);
+
+
+
+                ///aggiungere adapter ecc
+
+                //Creating the instance of ArrayAdapter containing list of language names
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                        (ActivityAddUserToGroup.this,android.R.layout.select_dialog_item,myarray);
+
+                //Getting the instance of AutoCompleteTextView
+                AutoCompleteTextView actv= (AutoCompleteTextView)findViewById(R.id.memberMail_activity_group_members);
+                actv.setThreshold(1);//will start working from first character
+                actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+                actv.setTextColor(Color.RED);
+
+                mProgressDialog.dismiss();
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+    }
 
 
 

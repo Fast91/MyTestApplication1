@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isInSideClicked = false;
     private ImageButton b4add;
     static MainActivity activityA;
-
+    private LinearLayout click_bilanci;
 
     private DBShortKeys dbShortKeys;
 
@@ -188,6 +188,16 @@ public class MainActivity extends AppCompatActivity {
 
         getandSetImage();
         getandSetImage2();
+
+        click_bilanci = (LinearLayout) findViewById(R.id.linear_bilanci);
+
+        click_bilanci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alert_bilanci();
+            }
+        });
 
 
 
@@ -1280,6 +1290,114 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity getInstance(){
         return   activityA;
     }
+
+
+
+
+    private void alert_bilanci(){
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                //Bilancio Globale
+                final String s1 = getString(R.string.balancegroup_name);
+                final double x1 = dataSnapshot.child("Total").getValue(Double.class);
+
+
+
+                FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseAuth.getCurrentUser().getUid()).child("Groups").child(id_group).child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        int totcount = (int)dataSnapshot.getChildrenCount();
+                        int mycount =0;
+
+                        //devi€
+                        String s2 = getString(R.string.devi);
+                        double x2 = 0.0;
+
+
+                        //Devi ricevere
+                        String s3 = getString(R.string.tideve2);
+                        double x3 = 0.0;
+
+
+                        for(DataSnapshot data : dataSnapshot.getChildren()){
+
+                            mycount++;
+
+                            Double tot = data.child("Total").getValue(Double.class);
+
+                            if(tot>0){
+                                x2 = x2 +tot;
+                            }
+                            else{
+                                x3 = x3 - tot;
+                            }
+
+
+
+                            if(mycount==totcount){
+
+
+                                String finale = s1 + " " + x1 + "€ :\n\n" +
+                                        s2 + " " + x3 + "€ \n\n" +
+                                        s3 + " " + x2 +"€";
+
+
+
+
+                                new AlertDialog.Builder(MainActivity.this)
+                                        .setTitle(R.string.balancegroup_name)
+                                        .setMessage(finale)
+                                        .create().show();
+
+                            }
+
+
+
+                        }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+    }
+
 
 }
 
