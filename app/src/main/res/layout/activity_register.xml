@@ -101,7 +101,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/already_registered"
-        android:background="@color/wallet_bright_foreground_holo_dark"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
         android:layout_marginTop="5dp"

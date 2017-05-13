@@ -52,11 +52,11 @@
     <string name="progress_bar_register">Registrazione...</string>
     <string name="successful_registration">Registrazione completata</string>
     <string name="unsuccessful_registration">Registrazione fallita, password minimo 6 caratteri</string>
-    <string name="already_registered">Già registrato? Accedi qui</string>
+    <string name="already_registered"><u>Già registrato? Accedi qui</u></string>
     <string name="titleregisteractivity">Registrazione</string>
     <string name="titleloginactivity">Accedi</string>
     <string name="action_login">Entra</string>
-    <string name="not_registered">Non sei registrato? Registrati qui</string>
+    <string name="not_registered"><u>Non sei registrato? Registrati qui</u></string>
     <string name="logout_menu">Esci</string>
     <string name="progress_bar_login">Accesso in corso..</string>
     <string name="profile_menu">Profilo</string>

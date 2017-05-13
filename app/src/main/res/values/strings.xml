@@ -61,11 +61,11 @@
     <string name="progress_bar_register">Registering user...</string>
     <string name="successful_registration">Registered successful</string>
     <string name="unsuccessful_registration">Register unsuccesfully, password at least 6 chars </string>
-    <string name="already_registered">Already registered? Sign here</string>
+    <string name="already_registered"><u>Already registered? Sign here</u></string>
     <string name="titleregisteractivity">Registration</string>
     <string name="titleloginactivity">Log in</string>
     <string name="action_login">Log in</string>
-    <string name="not_registered">Not registered? Register here</string>
+    <string name="not_registered"><u>Not registered? Register here</u></string>
     <string name="logout_menu">Log out</string>
     <string name="progress_bar_login">Login Please wait..</string>
     <string name="profile_menu">Profile</string>
